@@ -1,0 +1,139 @@
+type Subscription {
+  onCreateMessage(chatRoomID: ID!): Message @aws_subscribe(mutations: ["createMessage"])
+}
+
+type User @model {
+  id: ID!
+  gender: String!
+  name: String!
+  campus: String!
+  graduate: String!
+  year: Int!
+  department: String
+  division: String
+  imageKeys: [String]
+  profileMessage: String
+  profileDescription: String
+  status: String
+}
+
+type Signal @model
+@key(name: "byFrom", fields: ["fromID", "createdAt"], queryField: "signalByFrom")
+@key(name: "byTo", fields: ["toID", "createdAt"], queryField: "signalByTo"){
+  id: ID!
+  fromID: ID!
+  toID: ID!
+  alive: Boolean!
+  message: String
+  createdAt: AWSDateTime!
+  receiver: User @connection(fields: ["toID"])
+  sender: User @connection(fields: ["fromID"])
+}
+
+type Match @model
+@key(name: "byFrom", fields: ["fromID", "createdAt"], queryField: "matchByFrom")
+@key(name: "byChatRoom", fields: ["chatRoomID", "fromID"]) {
+  id: ID!
+  fromID: ID!
+  toID: ID!
+  chatRoomID: ID!
+  createdAt: AWSDateTime!
+  matcher: User @connection(fields: ["toID"])
+  chatRoom: ChatRoom @connection(fields: ["chatRoomID"])
+}
+
+type ChatRoom @model {
+  id: ID!
+  lastMessageID: ID!
+  lastMessage: Message @connection(fields: ["lastMessageID"])
+  matches: [Match] @connection(keyName: "byChatRoom", fields: ["id"])
+  messages: [Message]  @connection(keyName: "byChatRoom", fields: ["id"])
+}
+
+type Message
+@model(subscriptions: null)
+@key(name: "byChatRoom", fields: ["chatRoomID", "createdAt"], queryField: "messagesByChatRoom") {
+  id: ID!
+  type: String!
+  createdAt: AWSDateTime!
+  content: String!
+  userID: ID!
+  chatRoomID: ID!
+  user: User @connection(fields: ["userID"])
+  chatRoom: ChatRoom @connection(fields: ["chatRoomID"])
+}
+
+type LikePost
+@key(name: "byPost", fields: ["postID", "createdAt"], queryField:"likeByPost") 
+@model {
+  id: ID!
+  userID: ID!
+  postID: ID!
+  createdAt: AWSDateTime!
+}
+
+type LikeComment
+@key(name: "byComment", fields: ["commentID", "createdAt"], queryField:"likeByComment") 
+@model {
+  id: ID!
+  userID: ID!
+  commentID: ID!
+  createdAt: AWSDateTime!
+}
+
+type Board
+@model {
+  id: ID!
+  userID: ID!
+  name: String!
+  description: String!
+  type: String!
+}
+
+type Post 
+@model 
+@key(name: "byBoard", fields: ["boardID", "createdAt"], queryField:"postByBoard") 
+@key(name: "byUser", fields: ["userID", "createdAt"], queryField:"postByUser") {
+  id: ID!
+  userID: ID!
+  boardID: ID!
+  nickname: String!
+  title: String!
+  content: String!
+  imageKeys: [String]
+  deleted: Boolean!
+  comments: [Comment] @connection(keyName: "byPost", fields: ["id"])
+  likes: [LikePost] @connection(keyName: "byPost", fields: ["id"])
+  createdAt: AWSDateTime!
+}
+
+type Comment
+@model 
+@key(name: "byPost", fields: ["postID", "createdAt"], queryField: "commentByPost") 
+@key(name: "byUser", fields: ["userID", "createdAt"], queryField:"commentByUser") {
+  id: ID!
+  userID: ID!
+  postID: ID!
+  nickname: String!
+  content: String!
+  deleted: Boolean!
+  nestedComments: [NestedComment] @connection(keyName: "byComment", fields: ["id"])
+  likes: [LikeComment] @connection(keyName: "byComment", fields: ["id"])
+  createdAt: AWSDateTime!
+}
+
+type NestedComment
+@model 
+@key(name: "byComment", fields: ["commentID", "createdAt"]) 
+@key(name: "byUser", fields: ["userID", "createdAt"], queryField:"nestedCommentByUser") {
+  id: ID!
+  userID: ID!
+  commentID: ID!
+  nickname: String!
+  content: String!
+  deleted: Boolean!
+  likes: [LikeComment] @connection(keyName: "byComment", fields: ["id"])
+  createdAt: AWSDateTime!
+}
+
+

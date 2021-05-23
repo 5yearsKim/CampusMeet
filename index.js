@@ -1,8 +1,8 @@
-import { registerRootComponent } from 'expo';
-
+import {registerRootComponent} from 'expo';
+import awsconfig from 'src/aws-exports';
 import App from './App';
+import Amplify from 'aws-amplify';
 
-// registerRootComponent calls AppRegistry.registerComponent('main', () => App);
-// It also ensures that whether you load the app in the Expo client or in a native build,
-// the environment is set up appropriately
+Amplify.configure(awsconfig);
+
 registerRootComponent(App);

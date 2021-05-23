@@ -1,0 +1,32 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-webcampus-dev-153812-authRole",
+      "UnauthRoleArn": "arn:aws:iam::303045752476:role/amplify-webcampus-dev-153812-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::303045752476:role/amplify-webcampus-dev-153812-authRole",
+      "Region": "ap-northeast-2",
+      "DeploymentBucketName": "amplify-webcampus-dev-153812-deployment",
+      "UnauthRoleName": "amplify-webcampus-dev-153812-unauthRole",
+      "StackName": "amplify-webcampus-dev-153812",
+      "StackId": "arn:aws:cloudformation:ap-northeast-2:303045752476:stack/amplify-webcampus-dev-153812/35bd5e80-7346-11eb-9295-06023b59cc4c",
+      "AmplifyAppId": "d3threcsxauzip"
+    },
+    "categories": {
+      "auth": {
+        "webcampus0f42a810": {
+          "userPoolId": "ap-northeast-2_RVWkkCfhn",
+          "userPoolName": "campusUser",
+          "webClientId": "5gncum46eo4v1umnqvfqla646u",
+          "nativeClientId": "5gncum46eo4v1umnqvfqla646u",
+          "identityPoolId": "ap-northeast-2:a7232e3d-3c13-47cb-9046-38fa7dc5d780",
+          "identityPoolName": "campusIdentity",
+          "allowUnauthenticatedIdentities": false,
+          "authRoleArn": "arn:aws:iam::303045752476:role/Cognito_campusIdentityAuth_Role",
+          "authRoleName": "Cognito_campusIdentityAuth_Role",
+          "unauthRoleArn": "arn:aws:iam::303045752476:role/Cognito_campusIdentityUnauth_Role",
+          "unauthRoleName": "Cognito_campusIdentityUnauth_Role"
+        }
+      }
+    }
+  }
+}
