@@ -1,0 +1,12 @@
+{
+  "name": "campusMeet2",
+  "displayName": "campusMeet2",
+  "expo": {
+    "name": "campusMeet2",
+    "slug": "campusMeet2",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  }
+}
