@@ -14,9 +14,9 @@ export const getPosition = (position) => {
 
 export const getOrder = (tx, ty, max) => {
   'worklet';
-  let col = Math.round(tx / IMGWIDTH);
+  let col = Math.round((tx - PADDING) / (IMGWIDTH + PADDING));
   col = Math.min(Math.max(col, 0), COL -1);
-  let row = Math.round(ty / IMGHEIGHT);
+  let row = Math.round((ty - PADDING) / (IMGHEIGHT + PADDING));
   row = Math.max(row, 0);
   return Math.min(row * COL + col, max);
 };

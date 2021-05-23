@@ -1,5 +1,5 @@
 import React, {useContext} from 'react';
-import {View, Button, Image, StyleSheet} from 'react-native';
+import {View, Image, TouchableOpacity, StyleSheet} from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import {Storage} from 'aws-amplify';
 import {PanGestureHandler} from 'react-native-gesture-handler';
@@ -19,6 +19,7 @@ function AnimatedPicture({imgKey, positions}) {
   const translateX = useSharedValue(pos.x);
   const translateY = useSharedValue(pos.y);
   const isGestureActive = useSharedValue(false);
+
   useAnimatedReaction(
       () => positions.value[imgKey],
       (newOrder) => {
@@ -85,25 +86,10 @@ function AnimatedPicture({imgKey, positions}) {
   );
 }
 
-function AddPicture({index}) {
-  const pos = getPosition(index);
-  return (
-    <View style={[styles.imageFrame, {top: pos.y, left: pos.x}]}>
-      <Image
-        source={require('src/assets/images/add_picture.png')}
-        style={{width: IMGWIDTH, height: IMGHEIGHT, borderWidth: 3, borderColor: 'black'}}
-      />
-    </View>
-  );
-}
-
-function UploadPicture({imgList, setImgList}) {
-  const imgIndex = imgList.map((img, idx) => ({[img]: idx}));
-  const initpos = Object.assign({}, ...imgIndex);
-  const positions = useSharedValue(initpos);
-  positions.value = initpos;
-
+function AddPicture({index, imgList, setImgList}) {
   const auth = useContext(MyContext);
+  const pos = getPosition(index);
+
   const uploadImage = async () => {
     if (imgList.length > 5) {
       return;
@@ -133,21 +119,28 @@ function UploadPicture({imgList, setImgList}) {
   };
 
   return (
-    <React.Fragment>
-      <View style={{flex: 1, backgroundColor: '#eeeeee', height: IMGHEIGHT * 2 + 30}}>
-        {[0, 1, 2, 3, 4, 5].map((idx) => {
-          if (idx < imgList.length) {
-            return <AnimatedPicture key={idx} imgKey={imgList[idx]} positions={positions}/>;
-          } else {
-            return <AddPicture key={idx} index={idx}/>;
-          }
-        })}
-      </View>
-      <Button
-        title='image'
-        onPress={() => uploadImage()}
-      />
-    </React.Fragment>
+    <View style={[styles.imageFrame, {top: pos.y, left: pos.x}]}>
+      <TouchableOpacity onPress={() => uploadImage()}>
+        <Image
+          source={require('src/assets/images/add_picture.png')}
+          style={{width: IMGWIDTH, height: IMGHEIGHT, borderWidth: 3, borderColor: 'black'}}
+        />
+      </TouchableOpacity>
+    </View>
+  );
+}
+
+function UploadPicture({imgList, setImgList, positions}) {
+  return (
+    <View style={{flex: 1, backgroundColor: '#eeeeee', height: IMGHEIGHT * 2 + 30}}>
+      {[0, 1, 2, 3, 4, 5].map((idx) => {
+        if (idx < imgList.length) {
+          return <AnimatedPicture key={idx} imgKey={imgList[idx]} positions={positions}/>;
+        } else {
+          return <AddPicture key={idx} index={idx} imgList={imgList} setImgList={setImgList}/>;
+        }
+      })}
+    </View>
   );
 }
 

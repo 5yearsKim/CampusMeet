@@ -1,4 +1,5 @@
 import React, {useState, useContext, useEffect} from 'react';
+import {useSharedValue} from 'react-native-reanimated';
 import {View} from 'react-native';
 import UploadPicture from './UploadPicture';
 import {Button} from 'react-native-paper';
@@ -9,7 +10,13 @@ import {bringUser, modifyUser} from 'src/utils/User';
 function ModifyProfile({navigation}) {
   const auth = useContext(MyContext);
   const userSub = auth.user.attributes.sub;
+
   const [imgList, setImgList] = useState([]);
+  const imgIndex = imgList.map((img, idx) => ({[img]: idx}));
+  const initpos = Object.assign({}, ...imgIndex);
+  const positions = useSharedValue(initpos);
+  positions.value = initpos;
+
   const [name, setName] = useState('');
   const [year, setYear] = useState('');
   const [campus, setCampus] = useState('');
@@ -33,8 +40,9 @@ function ModifyProfile({navigation}) {
   }, []);
 
   const onSubmit = () => {
+    const newImgList = Object.keys(positions.value).sort((a, b) => positions.value[a] - positions.value[b]);
     const newUser = {
-      imageKeys: imgList,
+      imageKeys: newImgList,
       name: name,
       year: year,
       campus: campus,
@@ -46,8 +54,8 @@ function ModifyProfile({navigation}) {
     navigation.navigate('Mypage');
   };
   return (
-    <View style={{padding: 20, flex: 1, backgroundColor: 'pink'}}>
-      <UploadPicture imgList={imgList} setImgList={setImgList}/>
+    <View style={{padding: 20, flex: 1}}>
+      <UploadPicture imgList={imgList} setImgList={setImgList} positions={positions}/>
       <EditableText
         label='이름'
         value={name}
