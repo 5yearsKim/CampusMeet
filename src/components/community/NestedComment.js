@@ -8,7 +8,7 @@ import {relativeTimePrettify} from 'src/utils/Time';
 import {MyContext} from 'src/context';
 
 function NestedComment({item, board}) {
-  console.log(item);
+  // console.log(item);
   const auth = useContext(MyContext);
   const userSub = auth.user.attributes.sub;
   const likeList = item.likes.items.map((item) => item.userID);
@@ -67,7 +67,7 @@ const styles = StyleSheet.create({
     paddingLeft: 15,
     marginRight: 5,
     margin: 1,
-    backgroundColor: '#dddddd',
+    backgroundColor: '#444444',
     borderRadius: 15,
   },
   belowBox: {

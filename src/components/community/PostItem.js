@@ -10,14 +10,11 @@ import {ThemeContext} from 'src/context';
 
 function ImgPreview({imageKeys}) {
   if (imageKeys.length == 0) {
-    return (
-      <View>
-      </View>
-    );
+    return null;
   }
   return (
-    <View style={styles.imageBackground}>
-      <KeyImage imgKey={imageKeys[0]} cached={false}/>
+    <View style={{height: 60, justifyContent: 'center', alignItem: 'center'}}>
+      <KeyImage style={styles.image} imgKey={imageKeys[0]} cached={false}/>
     </View>
   );
 }
@@ -38,15 +35,15 @@ function BelowContent({type, createdAt, comments, likes, nickname, imageKeys}) {
       <View style={styles.iconList}>
         {imgCount > 0 &&
           <React.Fragment>
-            <FontAwesome name='picture-o' size={16} color='green'>
+            <FontAwesome style={styles.icon} name='picture-o' size={16} color='green'>
               {imgCount}
             </FontAwesome>
           </React.Fragment>
         }
-        <FontAwesome name='thumbs-o-up' size={16} color='blue'>
+        <FontAwesome style={styles.icon} name='thumbs-o-up' size={16} color='blue'>
           {likes.length}
         </FontAwesome>
-        <FontAwesome name='comments-o' size={16} color='red'>
+        <FontAwesome style={styles.icon} name='comments-o' size={16} color='red'>
           {commentCount}
         </FontAwesome>
       </View>
@@ -70,10 +67,10 @@ function PostItem({item, board, navigation}) {
       <TouchableOpacity
         onPress={() => onClickItem()}
       >
-        <View style={styles.imageWrapper}>
-          <View style={styles.textWrapper}>
-            <Text ellipsizeMode='tail' numberOfLines={1} style={[styles.title, {color: theme.text}]}>{item.title}</Text>
-            <Text ellipsizeMode='tail' numberOfLines={1} style={[styles.content, {color: theme.subText}]}>{item.content}</Text>
+        <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+          <View style={{flex: 1, justifyContent: 'space-between'}}>
+            <Text ellipsizeMode='tail' numberOfLines={1} style={[styles.titleText, {color: theme.text}]}>{item.title}</Text>
+            <Text ellipsizeMode='tail' numberOfLines={1} style={[styles.contentText, {color: theme.subText}]}>{item.content}</Text>
             <BelowContent type={board.type} createdAt={item.createdAt} likes={item.likes.items} nickname={item.nickname} comments={item.comments.items} imageKeys={item.imageKeys}/>
           </View>
           <ImgPreview imageKeys={item.imageKeys}/>
@@ -85,37 +82,33 @@ function PostItem({item, board, navigation}) {
 
 const styles = StyleSheet.create({
   container: {
-    height: 60,
+    height: 75,
+    padding: 5,
     borderBottomWidth: 1,
   },
-  imageWrapper: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-  textWrapper: {
-    flex: 1,
-  },
-  imageBackground: {
-    justifyContent: 'center',
-    backgroundColor: 'blue',
-    padding: 3,
+  icon: {
     margin: 3,
-    borderRadius: 10,
   },
-  title: {
+  titleText: {
     fontSize: 18,
     fontWeight: 'bold',
+    margin: 2,
   },
-  content: {
+  contentText: {
     fontSize: 13,
+    margin: 2,
   },
   image: {
-    width: 80,
+    width: 60,
     height: 60,
+    borderRadius: 10,
+    borderWidth: 2,
+    borderColor: 'white',
   },
   belowContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
+    margin: 2,
   },
   iconList: {
     flexDirection: 'row',

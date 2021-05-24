@@ -12,6 +12,7 @@ function MypageList({navigation}) {
   const [user, setUser] = useState({
     campus: '',
     year: '',
+    imageKeys: [],
   });
 
   useEffect(() => {
@@ -19,7 +20,9 @@ function MypageList({navigation}) {
       try {
         const userData = await bringUser(userSub);
         setUser(userData);
-        // console.log(userData);
+        if (user.imageKeys == [] && !user.profileDescription && !user.profileMessage ) {
+          navigation.navigate('CreateProfile');
+        }
       } catch (err) {
         console.warn(err);
       }

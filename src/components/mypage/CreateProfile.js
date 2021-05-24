@@ -3,6 +3,7 @@ import {useSharedValue} from 'react-native-reanimated';
 import {View, StyleSheet} from 'react-native';
 import UploadPicture from './UploadPicture';
 import {TextInput, Button} from 'react-native-paper';
+import Text from 'src/blocks/Text';
 // import DropDownPicker from 'react-native-dropdown-picker';
 import {MyContext} from 'src/context';
 import {modifyUser} from 'src/utils/User';
@@ -33,6 +34,8 @@ function CreateProfile(props) {
   };
   return (
     <View style={{padding: 20, flex: 1}}>
+      <Text style={styles.introText}>프로필 사진(최소 1장)과 자기소개를 등록해주세요!</Text>
+
       <UploadPicture {...props} imgList={imgList} setImgList={setImgList}/>
       {/* <DropDownPicker
         items={departmentOptions.map((item) => ({label: item, value: item}))}
@@ -72,6 +75,10 @@ const styles = StyleSheet.create({
   },
   textInput: {
     backgroundColor: 'transparent',
+  },
+  introText: {
+    fontSize: 16,
+    margin: 10,
   },
 });
 

@@ -9,7 +9,7 @@ import {relativeTimePrettify} from 'src/utils/Time';
 import NestedComment from './NestedComment';
 import {MyContext, ChatContext, ThemeContext} from 'src/context';
 
-function Comment({item, board}) {
+function Comment({item, index, board, focusComment}) {
   const auth = useContext(MyContext);
   const userSub = auth.user.attributes.sub;
   const {theme} = useContext(ThemeContext);
@@ -48,6 +48,7 @@ function Comment({item, board}) {
   };
 
   const visTime = relativeTimePrettify(item.createdAt);
+  console.log(theme);
   return (
     <View>
       <TouchableWithoutFeedback
@@ -55,7 +56,7 @@ function Comment({item, board}) {
       >
         <View style={[
           styles.container,
-          nested.isNested == item.id && styles.nestFocus,
+          nested.isNested == item.id && {backgroundColor: theme.nestedComment},
           {borderColor: theme.subText},
         ]}>
           <Nickname type={board.type} nickname={item.nickname} style={styles.nickname} />
@@ -76,11 +77,12 @@ function Comment({item, board}) {
             <TouchableOpacity onPress={() => {
               nested.setIsNested(item.id);
               setDialog(false);
+              focusComment(index);
             }}>
-              <Text>대댓글 달기</Text>
+              <Text style={{color: 'black'}}>대댓글 달기</Text>
             </TouchableOpacity>
             <TouchableOpacity onPress={() => {}}>
-              <Text>신고</Text>
+              <Text style={{color: 'black'}}>신고</Text>
             </TouchableOpacity>
           </Dialog.Content>
         </Dialog>
@@ -99,9 +101,6 @@ const styles = StyleSheet.create({
     padding: 5,
     paddingLeft: 15,
     borderTopWidth: 1,
-  },
-  nestFocus: {
-    backgroundColor: '#ffffdd',
   },
   belowBox: {
     flexDirection: 'row',

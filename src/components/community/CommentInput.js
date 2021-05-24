@@ -26,7 +26,7 @@ function CommentInput({board, post, refresh}) {
 
   useEffect(() => {
     if (nested.isNested) {
-      console.log(nested.isNested);
+      // console.log(nested.isNested);
       chatInput.current.focus();
     }
   }, [nested.isNested]);
@@ -49,7 +49,8 @@ function CommentInput({board, post, refresh}) {
   };
 
   return (
-    <View style={[styles.container, {height: inputHeight + 10, backgroundColor: nested.isNested?'green':'blue'}]}>
+    // <View style={[styles.container, {height: inputHeight + 10, backgroundColor: nested.isNested?'green':'blue'}]}>
+    <View style={[styles.container, {height: inputHeight + 10}]}>
       <KeyboardAvoidingView
         behavior={Platform.OS == 'ios'? 'padding': 'height'}
         keyboardVerticalOffset={100}
@@ -58,7 +59,7 @@ function CommentInput({board, post, refresh}) {
           height: '100%',
         }}
       >
-        <View style={styles.rowWrapper}>
+        <View style={{flexDirection: 'row'}}>
           <View style={styles.leftBox}>
             <Nickname type={board.type} nickname={nickname} style={styles.nickname}/>
           </View>
@@ -98,11 +99,8 @@ const styles = StyleSheet.create({
     padding: 5,
     borderWidth: 1,
     borderRadius: 15,
+    // backgroundColor: 'white',
     // justifyContent: 'flex-end',
-  },
-  rowWrapper: {
-    flexDirection: 'row',
-    // alignItems: 'stretch',
   },
   leftBox: {
     flex: 1,

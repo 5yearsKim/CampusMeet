@@ -1,6 +1,6 @@
 export default config = {
   campus: {
-    departmentOptions: ['공대', '자연대', '음악', '미술/디자인', '체육/스포츠', '인문/사회대', '상경대', '교양', '의학', '법률', '군사']
+    departmentOptions: ['공대', '자연대', '음악', '미술/디자인', '체육/스포츠', '인문/사회대', '상경대', '교양', '의학', '법률', '군사'],
   },
   community: {
     boardOptions: ['익명', '학교/학과 공개'],
@@ -33,11 +33,13 @@ export default config = {
       text: '#000000',
       subText: '#222222',
       background: '#eeeeee',
+      nestedComment: '#eeee99',
     },
     dark: {
       text: '#ffffff',
       subText: 'rgba(255, 255, 255, 0.5)',
       background: '#333333',
+      nestedComment: '#332211',
     },
   },
   manage: {

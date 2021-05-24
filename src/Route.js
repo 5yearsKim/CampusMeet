@@ -30,7 +30,7 @@ const BottomTab = createBottomTabNavigator();
 
 function HomeTab({navigation}) {
   return (
-    <BottomTab.Navigator initialRouteName='Candidate'>
+    <BottomTab.Navigator initialRouteName='Community'>
       <BottomTab.Screen
         name='Candidate'
         component={CandidateScreen}

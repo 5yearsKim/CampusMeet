@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useRef} from 'react';
 import {View, FlatList, StyleSheet} from 'react-native';
 import {bringComment} from 'src/utils/Community';
 import CommentInput from './CommentInput';
@@ -11,6 +11,7 @@ function Post({navigation, route}) {
   const [isNested, setIsNested] = useState(false); // false when not turned on, commentID when turned on
   const [refresh, setRefresh] = useState(false);
   const [comment, setComment] = useState('');
+  const commentList = useRef(null);
 
   useEffect(() => {
     const m_bringComment = async () => {
@@ -24,14 +25,21 @@ function Post({navigation, route}) {
     setRefresh(!refresh);
   };
 
+  const focusComment = (idx) => {
+    // console.log(idx);
+    console.log(idx);
+    commentList.current.scrollToIndex({index: idx, viewPosition: 0.3});
+  };
+
   return (
     <View style={styles.container}>
-      <ChatContext.Provider value={{nested: {isNested, setIsNested}}}>
+      <ChatContext.Provider value={{isNested, setIsNested}}>
         <FlatList
+          ref={commentList}
           data={comment}
           contentContainerStyle={styles.flatlistContainer}
           ListHeaderComponent={() => <PostHeader post={post} board={board} />}
-          renderItem={({item}) => <Comment item={item} board={board} />}
+          renderItem={({item, index}) => <Comment item={item} index={index} board={board} focusComment={focusComment}/>}
           keyExtractor={(item) => item.id}
         />
         <View style={styles.commentInput}>
@@ -51,7 +59,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   flatlistContainer: {
-    paddingBottom: 100, // textinput not to hide contents
+    paddingBottom: 350, // textinput not to hide contents
   },
   commentInput: {
     position: 'absolute',
@@ -59,7 +67,6 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     bottom: 0,
-    backgroundColor: 'green',
   },
 });
 
