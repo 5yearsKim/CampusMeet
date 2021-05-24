@@ -19,7 +19,7 @@ function MypageList({navigation}) {
       try {
         const userData = await bringUser(userSub);
         setUser(userData);
-        console.log(userData);
+        // console.log(userData);
       } catch (err) {
         console.warn(err);
       }

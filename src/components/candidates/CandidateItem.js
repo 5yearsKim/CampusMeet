@@ -36,7 +36,7 @@ function CandidateItem({item, signalCnt, refresh}) {
       <TouchableOpacity onPress={() => setPopupVisible(true)}>
         <View style={{flexDirection: 'row'}}>
           <LeftContent gender={item.gender} />
-          <View style={styles.contentWrapper}>
+          <View style={{marginLeft: 10}}>
             <Text style={[styles.titleText, {color: theme.text}]}>{item.campus} {item.graduate}</Text>
             <Text style={[styles.subtitleText, {color: theme.subText}]}>{item.division} {item.year}학번</Text>
           </View>
@@ -55,7 +55,7 @@ function CandidateItem({item, signalCnt, refresh}) {
         <TouchableWithoutFeedback onPress={() => setPopupVisible(false)}>
           <View style={styles.modalContainer}>
             <TouchableWithoutFeedback onPress={() => {}}>
-              <View style={styles.cardContainer}>
+              <View style={[styles.cardContainer, {backgroundColor: theme.background}]}>
                 <CandidateDetail item={item} signalCnt={signalCnt} useAction={true} refresh={refresh}/>
               </View>
             </TouchableWithoutFeedback>
@@ -83,9 +83,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'flex-end',
     marginRight: 20,
-  },
-  contentWrapper: {
-    marginLeft: 10,
   },
   titleText: {
     fontWeight: 'bold',

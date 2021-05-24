@@ -4,18 +4,19 @@ import Text from 'src/blocks/Text';
 import {TextInput} from 'react-native-paper';
 import {Button} from 'react-native-paper';
 import config from 'src/config';
-import {MyContext} from 'src/context';
+import {MyContext, ThemeContext} from 'src/context';
 import {makeSignal} from 'src/utils/Signal';
+
 
 const {width, height} = Dimensions.get('window');
 
 function CandidateDetail({item, signalCnt, refresh, useAction}) {
   const auth = useContext(MyContext);
+  const {theme} = useContext(ThemeContext);
   const [sent, setSent] = useState(false);
   const [popupVisible, setPopupVisible] = useState(false);
   const [message, setMessage] = useState('');
   const [popupError, setPopupError] = useState('');
-  console.log(item);
 
   const onSendSignal = () => {
     const userSub = auth.user.attributes.sub;
@@ -35,9 +36,9 @@ function CandidateDetail({item, signalCnt, refresh, useAction}) {
             source={require('src/assets/images/no_profile3.png')}
             style={[styles.avatar, {borderColor: item.gender=='남자'?config.colors.main.men: config.colors.main.women}]}
           />
-          <Text style={styles.messageText}> {item.profileMessage}</Text>
+          <Text style={styles.messageText}>{item.profileMessage}</Text>
         </View>
-        <View style={styles.contentWrapper}>
+        <View style={{padding: 5}}>
           <View style={styles.itemWrapper}>
             <Text style={styles.categoryText}>성별</Text>
             <Text style={styles.detailText}>{item.gender}</Text>
@@ -74,7 +75,7 @@ function CandidateDetail({item, signalCnt, refresh, useAction}) {
         <TouchableWithoutFeedback onPress={() => setPopupVisible(false)}>
           <View style={styles.modalContainer}>
             <TouchableWithoutFeedback onPress={() => {}}>
-              <View style={styles.popupContainer}>
+              <View style={[styles.popupContainer, {backgroundColor: theme.background}]}>
                 <Text style={styles.popupTitleText}>한 줄로 메세지를 전해보세요!</Text>
                 <TextInput
                   mode='flat'
@@ -83,7 +84,7 @@ function CandidateDetail({item, signalCnt, refresh, useAction}) {
                   value={message}
                   onChangeText={(text) => setMessage(text)}
                   multiline={true}
-                  style = {{backgroundColor: 'white'}}
+                  style = {{backgroundColor: 'transparent'}}
                 />
                 {popupError.length > 0 &&
                   <Text style={styles.errorText}>{popupError}</Text>
@@ -159,9 +160,6 @@ const styles = StyleSheet.create({
     color: 'gray',
     fontWeight: 'bold',
   },
-  contentWrapper: {
-    padding: 5,
-  },
   itemWrapper: {
     margin: 10,
   },
@@ -183,14 +181,13 @@ const styles = StyleSheet.create({
   modalContainer: {
     flex: 1,
     justifyContent: 'center',
-    backgroundColor: 'rgba(0,0,0,0.1)',
+    backgroundColor: 'rgba(0,0,0, 0.5)',
     alignItems: 'center',
   },
   popupContainer: {
     width: width*0.9,
     // height: height*0.3,
     borderRadius: 15,
-    backgroundColor: 'white',
     padding: 10,
   },
   popupButtonWrapper: {

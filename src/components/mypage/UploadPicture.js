@@ -2,6 +2,7 @@ import React, {useContext} from 'react';
 import {View, Image, TouchableOpacity, StyleSheet} from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import {Storage} from 'aws-amplify';
+import {AntDesign} from '@expo/vector-icons';
 import {PanGestureHandler} from 'react-native-gesture-handler';
 import Animated, {
   useAnimatedGestureHandler,
@@ -15,7 +16,11 @@ import {KeyImage} from 'src/blocks/Image';
 import {MyContext} from 'src/context';
 
 function AnimatedPicture({imgKey, positions}) {
+  if (Object.keys(positions.value).length == 0) {
+    return <View></View>;
+  }
   const pos = getPosition(positions.value[imgKey]);
+
   const translateX = useSharedValue(pos.x);
   const translateY = useSharedValue(pos.y);
   const isGestureActive = useSharedValue(false);
@@ -70,26 +75,36 @@ function AnimatedPicture({imgKey, positions}) {
       position: 'absolute',
       width: IMGWIDTH,
       height: IMGHEIGHT,
-      borderColor: 'black',
-      borderWidth: 3,
+      zIndex: 0,
       transform: [{translateX: translateX.value}, {translateY: translateY.value}],
     }));
   return (
     <Animated.View>
       <PanGestureHandler onGestureEvent={onGestureEvent}>
         <Animated.View style={boxStyle}>
-          <KeyImage imgKey={imgKey} cached={false} style={{height: IMGHEIGHT, width: IMGWIDTH}}/>
-          {/* <KeyImage imgKey={imgKey} cached={false}/> */}
+          <KeyImage imgKey={imgKey} cached={false} style={{height: IMGHEIGHT - 6, width: IMGWIDTH - 6}}/>
         </Animated.View>
       </PanGestureHandler>
     </Animated.View>
   );
 }
 
-function AddPicture({index, imgList, setImgList}) {
-  const auth = useContext(MyContext);
+function AddPicture({index, addPicture}) {
   const pos = getPosition(index);
+  return (
+    <View style={[styles.imageFrame, {top: pos.y, left: pos.x}]}>
+      <TouchableOpacity onPress={() => addPicture()}>
+        <Image
+          source={require('src/assets/images/add_picture.png')}
+          style={{width: IMGWIDTH - 6, height: IMGHEIGHT - 6, borderWidth: 3, borderColor: 'black'}}
+        />
+      </TouchableOpacity>
+    </View>
+  );
+}
 
+function UploadPicture({imgList, setImgList, positions}) {
+  const auth = useContext(MyContext);
   const uploadImage = async () => {
     if (imgList.length > 5) {
       return;
@@ -117,28 +132,39 @@ function AddPicture({index, imgList, setImgList}) {
       console.log('error:', err);
     }
   };
+  const deletePicture = (order) => {
+    const keyToDelete = Object.keys(positions.value).find(
+        (key) => positions.value[key] === order,
+    );
+    if (imgList.includes(keyToDelete)) {
+      const newImgList = imgList.filter((item) => item != keyToDelete);
+      setImgList(newImgList);
+    }
+  };
 
-  return (
-    <View style={[styles.imageFrame, {top: pos.y, left: pos.x}]}>
-      <TouchableOpacity onPress={() => uploadImage()}>
-        <Image
-          source={require('src/assets/images/add_picture.png')}
-          style={{width: IMGWIDTH, height: IMGHEIGHT, borderWidth: 3, borderColor: 'black'}}
-        />
-      </TouchableOpacity>
-    </View>
-  );
-}
-
-function UploadPicture({imgList, setImgList, positions}) {
   return (
     <View style={{flex: 1, backgroundColor: '#eeeeee', height: IMGHEIGHT * 2 + 30}}>
       {[0, 1, 2, 3, 4, 5].map((idx) => {
         if (idx < imgList.length) {
-          return <AnimatedPicture key={idx} imgKey={imgList[idx]} positions={positions}/>;
+          return (
+            <AnimatedPicture key={idx} imgKey={imgList[idx]} positions={positions}/>
+          );
         } else {
-          return <AddPicture key={idx} index={idx} imgList={imgList} setImgList={setImgList}/>;
+          return <AddPicture key={idx} index={idx} addPicture={uploadImage}/>;
         }
+      })}
+
+      {imgList.map((key, idx) => {
+        const pos = getPosition(idx);
+        return (
+          <AntDesign
+            key={idx}
+            size={20}
+            name="closecircle"
+            style={{position: 'absolute', left: pos.x, top: pos.y}}
+            onPress={() => deletePicture(idx)}
+          />
+        );
       })}
     </View>
   );
@@ -149,8 +175,9 @@ const styles = StyleSheet.create({
     position: 'absolute',
     width: IMGWIDTH,
     height: IMGHEIGHT,
-    borderColor: 'black',
-    borderWidth: 3,
+  },
+  closeIcon: {
+    position: 'absolute',
   },
 });
 

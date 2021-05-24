@@ -49,7 +49,15 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
-  <key>UIStatusBarStyle</key>
-  <string>UIStatusBarStyleDefault</string>
+	<key>UIStatusBarStyle</key>
+	<string>UIStatusBarStyleDefault</string>
+	<key>UIAppFonts</key>
+	<array>
+		<string>GamjaFlower-Regular.ttf</string>
+		<string>NanumSquareRoundB.ttf</string>
+		<string>NanumSquareRoundEB.ttf</string>
+		<string>NanumSquareRoundL.ttf</string>
+		<string>NanumSquareRoundR.ttf</string>
+	</array>
 </dict>
 </plist>

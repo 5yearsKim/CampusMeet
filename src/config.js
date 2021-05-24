@@ -44,4 +44,3 @@ export default config = {
     signalMax: 3,
   },
 };
-

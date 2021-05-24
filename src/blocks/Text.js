@@ -1,29 +1,9 @@
-import React, {useState, useEffect} from 'react';
-import {View, Text as NativeText, Keyboard} from 'react-native';
-import {IconButton, TextInput as PaperTextInput} from 'react-native-paper';
-import {useFonts} from 'expo-font';
+import React, {useState} from 'react';
+import {View, Keyboard} from 'react-native';
+import {Text as PaperText} from 'react-native-paper';
+import {IconButton, TextInput} from 'react-native-paper';
 
 export default function Text(props) {
-  let mounted = true;
-  useEffect(() => {
-    return () => {
-      mounted = false;
-    };
-  }, []);
-  if (mounted == false) {
-    return;
-  }
-  const [loaded] = useFonts({
-    nanumB: require('src/assets/fonts/NanumSquareRoundB.ttf'),
-    nanumR: require('src/assets/fonts/NanumSquareRoundR.ttf'),
-    nanumL: require('src/assets/fonts/NanumSquareRoundL.ttf'),
-    gamja: require('src/assets/fonts/GamjaFlower-Regular.ttf'),
-  });
-  if (!loaded) {
-  // if (true) {
-    // return <NativeText {...props}>{props.children}</NativeText>;
-    return <NativeText> </NativeText>;
-  }
   let style = props.style;
   if (style == undefined) {
     style = {};
@@ -43,16 +23,16 @@ export default function Text(props) {
     }
   }
   return (
-    <NativeText {...props} style={[props.style, {fontFamily: font, fontWeight: undefined}]} >{props.children}</NativeText>
+    <PaperText {...props} style={[props.style, {fontFamily: font, fontWeight: undefined}]} >{props.children}</PaperText>
   );
 }
 
 export function EditableText({label, value, onChangeText, keyboardType}) {
   const [editMode, setEditMode] = useState(false);
   return (
-    <View>
+    <View style={styles.container}>
       {editMode?
-        <PaperTextInput
+        <TextInput
           label={label}
           value={value}
           keyboardType={keyboardType}
@@ -61,17 +41,28 @@ export function EditableText({label, value, onChangeText, keyboardType}) {
             Keyboard.dismiss;
             setEditMode(false);
           }}
+          style={{backgroundColor: 'transparent'}}
         />:
-        <Text>
-          {value}
-        </Text>
+        <Text style={styles.text}>{value}</Text>
       }
       <IconButton
         icon="pencil"
         size={20}
-        onPress={() => setEditMode(!editMode)}
+        onPress={() => {
+          setEditMode(!editMode);
+        }}
       />
     </View>
   );
 }
 
+const styles = {
+  container: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  text: {
+    fontSize: 16,
+    margin: 10,
+  },
+};

@@ -33,6 +33,7 @@ function MatchListItem({item, navigation}) {
   const onClickItem = () => {
     navigation.push('ChatRoom', {
       chatRoomID: item.chatRoomID,
+      name: matcher.name,
     });
   };
   if (matcher == null ) {

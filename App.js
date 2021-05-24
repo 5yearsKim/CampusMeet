@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from 'react';
+import {useFonts} from 'expo-font';
 import {Auth} from 'aws-amplify';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {DefaultTheme as PaperTheme, Provider as PaperProvider} from 'react-native-paper';
@@ -15,6 +16,13 @@ function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [user, setUser] = useState([]);
   const [scheme, setScheme] = useState('dark');
+
+  const [loaded] = useFonts({
+    nanumB: require('src/assets/fonts/NanumSquareRoundB.ttf'),
+    nanumR: require('src/assets/fonts/NanumSquareRoundR.ttf'),
+    nanumL: require('src/assets/fonts/NanumSquareRoundL.ttf'),
+    gamja: require('src/assets/fonts/GamjaFlower-Regular.ttf'),
+  });
 
   useEffect(() => {
     console.log('app loaded');
@@ -60,17 +68,21 @@ function App() {
       theme: config.themes[scheme],
     };
   };
-  return (
-    <MyContext.Provider value={authProps()}>
-      <ThemeContext.Provider value={themeProps()}>
-        <PaperProvider theme={isAuthenticated ? paperTheme[scheme] : paperTheme['light']}>
-          <NavigationContainer theme={navigationTheme[scheme]}>
-            <Route/>
-          </NavigationContainer>
-        </PaperProvider>
-      </ThemeContext.Provider>
-    </MyContext.Provider>
-  );
+  if (loaded) {
+    return (
+      <MyContext.Provider value={authProps()}>
+        <ThemeContext.Provider value={themeProps()}>
+          <PaperProvider theme={isAuthenticated ? paperTheme[scheme] : paperTheme['light']}>
+            <NavigationContainer theme={navigationTheme[scheme]}>
+              <Route/>
+            </NavigationContainer>
+          </PaperProvider>
+        </ThemeContext.Provider>
+      </MyContext.Provider>
+    );
+  } else {
+    return null;
+  }
 }
 
 const paperTheme = {

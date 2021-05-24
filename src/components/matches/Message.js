@@ -90,12 +90,14 @@ const styles = StyleSheet.create({
     alignItems: 'flex-end',
   },
   time: {
+    color: 'black',
     margin: 5,
   },
   date: {
     padding: 3,
     paddingLeft: 5,
     paddingRight: 5,
+    color: 'black',
     backgroundColor: 'white',
     borderRadius: 15,
   },

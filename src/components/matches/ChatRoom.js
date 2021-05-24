@@ -8,7 +8,7 @@ import {API, graphqlOperation} from 'aws-amplify';
 import {onCreateMessage} from 'src/graphql/subscriptions';
 
 function ChatRoom({navigation, route}) {
-  const {chatRoomID} = route.params;
+  const {chatRoomID, name} = route.params;
   const [messageList, setMessageList] = useState([]);
   const [nextToken, setNextToken] = useState('');
 
@@ -46,6 +46,12 @@ function ChatRoom({navigation, route}) {
       },
     });
     return () => subscription.unsubscribe();
+  }, []);
+
+  useEffect(() => {
+    navigation.setOptions({
+      title: name,
+    });
   }, []);
 
   const renderMessage = ({item, index}) => {

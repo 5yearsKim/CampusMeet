@@ -1,9 +1,8 @@
 import React, {useState, useContext, useEffect} from 'react';
 import {useSharedValue} from 'react-native-reanimated';
-import {View} from 'react-native';
+import {View, StyleSheet} from 'react-native';
 import UploadPicture from './UploadPicture';
-import {Button} from 'react-native-paper';
-import {EditableText} from 'src/blocks/Text';
+import {Button, TextInput} from 'react-native-paper';
 import {MyContext} from 'src/context';
 import {bringUser, modifyUser} from 'src/utils/User';
 
@@ -56,45 +55,60 @@ function ModifyProfile({navigation}) {
   return (
     <View style={{padding: 20, flex: 1}}>
       <UploadPicture imgList={imgList} setImgList={setImgList} positions={positions}/>
-      <EditableText
+      <TextInput
         label='이름'
         value={name}
         onChangeText={(text) => setName(text)}
+        style={styles.textInput}
       />
-      <EditableText
+      <TextInput
         label='학번'
         value={String(year)}
         keyboardType='numeric'
         onChangeText={(text) => setYear(text)}
+        style={styles.textInput}
       />
-      <EditableText
+      <TextInput
         label='캠퍼스'
         value={campus}
         onChangeText={(text) => setCampus(text)}
+        style={styles.textInput}
       />
-      <EditableText
+      <TextInput
         label='학과'
         value={division}
         onChangeText={(text) => setDivision(text)}
+        style={styles.textInput}
       />
-      <EditableText
+      <TextInput
         label='친구에게 한마디'
         value={profileMessage}
         onChangeText={(text) => setProfileMessage(text)}
+        style={styles.textInput}
       />
-      <EditableText
+      <TextInput
         label='자기 소개'
         value={profileDescription}
         onChangeText={(text) => setProfileDescription(text)}
+        style={styles.textInput}
+        multiline={true}
       />
       <Button
-        mode="outlined"
+        mode="contained"
         onPress={onSubmit}
+        style={{marginTop: 20}}
+        labelStyle={{color: 'white'}}
       >
         제출하기
       </Button>
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  textInput: {
+    backgroundColor: 'transparent',
+  },
+});
 
 export default ModifyProfile;

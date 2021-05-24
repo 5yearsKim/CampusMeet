@@ -55,7 +55,7 @@ function HomeTab({navigation}) {
         name='Match'
         component={MatchScreen}
         options={{
-          title: 'Match',
+          title: 'Chat',
           tabBarIcon: ({focused, color, size}) => {
             return <AntDesign name='message1' size={size} color={color}/>;
           },
@@ -93,15 +93,15 @@ function Route() {
     const routeName = getFocusedRouteNameFromRoute(route) ?? 'Feed';
     switch (routeName) {
       case 'Candidate':
-        return 'Cards';
+        return '카드';
       case 'Signal':
-        return 'Signals';
+        return '시그널';
       case 'Match':
-        return 'Match';
+        return '채팅';
       case 'Community':
-        return 'Community';
+        return '커뮤니티';
       case 'Mypage':
-        return 'My Page';
+        return '마이페이지';
     }
   };
 
@@ -126,13 +126,13 @@ function Route() {
           }) }
         />
         <MainStack.Screen name='ChatRoom' component={ChatRoomScreen}/>
-        <MainStack.Screen name='CreateProfile' component={CreateProfileScreen}/>
-        <MainStack.Screen name='ModifyProfile' component={ModifyProfileScreen}/>
-        <MainStack.Screen name='ViewProfile' component={ViewProfileScreen}/>
-        <MainStack.Screen name='Board' component={BoardScreen}/>
-        <MainStack.Screen name='Post' component={PostScreen}/>
-        <MainStack.Screen name='CreateBoard' component={CreateBoardScreen}/>
-        <MainStack.Screen name='CreatePost' component={CreatePostScreen}/>
+        <MainStack.Screen name='CreateProfile' component={CreateProfileScreen} options={{title: '프로필작성'}}/>
+        <MainStack.Screen name='ModifyProfile' component={ModifyProfileScreen} options={{title: '프로필수정'}}/>
+        <MainStack.Screen name='ViewProfile' component={ViewProfileScreen} options={{title: '프로필보기'}}/>
+        <MainStack.Screen name='Board' component={BoardScreen} options={{title: '게시판'}}/>
+        <MainStack.Screen name='Post' component={PostScreen} options={{title: ''}}/>
+        <MainStack.Screen name='CreateBoard' component={CreateBoardScreen} options={{title: '게시판만들기'}}/>
+        <MainStack.Screen name='CreatePost' component={CreatePostScreen} options={{title: '글쓰기'}}/>
       </MainStack.Navigator>
     );
   } else {

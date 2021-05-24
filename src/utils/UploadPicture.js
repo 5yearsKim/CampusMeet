@@ -1,8 +1,12 @@
+import {Dimensions} from 'react-native';
+
+const {width, height} = Dimensions.get('window');
+
 const COL = 3;
 
-export const IMGWIDTH = 100;
-export const IMGHEIGHT = 100;
 export const PADDING = 10;
+export const IMGWIDTH = Math.floor((width - 40 - PADDING)/COL - PADDING );
+export const IMGHEIGHT = IMGWIDTH;
 
 export const getPosition = (position) => {
   'worklet';

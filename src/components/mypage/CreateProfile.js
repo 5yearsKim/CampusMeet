@@ -1,46 +1,30 @@
-import React, {useState, useContext, useEffect} from 'react';
+import React, {useState, useContext} from 'react';
+import {useSharedValue} from 'react-native-reanimated';
 import {View, StyleSheet} from 'react-native';
 import UploadPicture from './UploadPicture';
 import {TextInput, Button} from 'react-native-paper';
-import DropDownPicker from 'react-native-dropdown-picker';
-import {EditableText} from 'src/blocks/Text';
+// import DropDownPicker from 'react-native-dropdown-picker';
 import {MyContext} from 'src/context';
-import {bringUser, modifyUser} from 'src/utils/User';
-import config from 'src/config';
+import {modifyUser} from 'src/utils/User';
 
 function CreateProfile(props) {
   const auth = useContext(MyContext);
-  const departmentOptions = config.campus.departmentOptions;
+  // const departmentOptions = config.campus.departmentOptions;
+
   const [imgList, setImgList] = useState([]);
-  const [name, setName] = useState('');
-  const [year, setYear] = useState('');
-  const [campus, setCampus] = useState('');
-  const [department, setDepartment] = useState('');
-  const [division, setDivision] = useState('');
+  const imgIndex = imgList.map((img, idx) => ({[img]: idx}));
+  const initpos = Object.assign({}, ...imgIndex);
+  const positions = useSharedValue(initpos);
+  positions.value = initpos;
+
+  // const [department, setDepartment] = useState('');
   const [profileMessage, setProfileMessage] = useState('');
   const [profileDescription, setProfileDescription] = useState('');
-
-  const m_bringUser = async () => {
-    const userID = auth.user.attributes.sub;
-    const userData = await bringUser(userID);
-    setName(userData.name);
-    setYear(userData.year);
-    setCampus(userData.campus);
-    setDivision(userData.division);
-  };
-
-  useEffect(() => {
-    m_bringUser();
-  }, []);
 
   const onSubmit = () => {
     const userID = auth.user.attributes.sub;
     const newUser = {
       imageKeys: imgList,
-      name: name,
-      year: year,
-      campus: campus,
-      division: division,
       profileMessage: profileMessage,
       profileDescription: profileDescription,
     };
@@ -48,50 +32,33 @@ function CreateProfile(props) {
     props.navigation.navigate('Mypage');
   };
   return (
-    <View>
+    <View style={{padding: 20, flex: 1}}>
       <UploadPicture {...props} imgList={imgList} setImgList={setImgList}/>
-      <EditableText
-        label='이름'
-        value={name}
-        onChangeText={(text) => setName(text)}
-      />
-      <EditableText
-        label='학번'
-        value={String(year)}
-        keyboardType='numeric'
-        onChangeText={(text) => setYear(text)}
-      />
-      <EditableText
-        label='캠퍼스'
-        value={campus}
-        onChangeText={(text) => setCampus(text)}
-      />
-      <EditableText
-        label='학과'
-        value={division}
-        onChangeText={(text) => setDivision(text)}
-      />
-      <DropDownPicker
+      {/* <DropDownPicker
         items={departmentOptions.map((item) => ({label: item, value: item}))}
         defaultIndex={0}
         onChangeItem={(item) => setDepartment(item.value)}
         placeholder='단과대학'
         style={styles.department}
-      />
-
+      /> */}
       <TextInput
         label='친구에게 한마디'
         value={profileMessage}
         onChangeText={(text) => setProfileMessage(text)}
+        style={styles.textInput}
       />
       <TextInput
         label='자기 소개'
         value={profileDescription}
         onChangeText={(text) => setProfileDescription(text)}
+        style={styles.textInput}
+        multiline={true}
       />
       <Button
-        mode="outlined"
+        mode="contained"
         onPress={onSubmit}
+        style={{marginTop: 20}}
+        labelStyle={{color: 'white'}}
       >
         제출하기
       </Button>
@@ -102,7 +69,10 @@ function CreateProfile(props) {
 const styles = StyleSheet.create({
   department: {
     backgroundColor: 'white',
-  }
-})
+  },
+  textInput: {
+    backgroundColor: 'transparent',
+  },
+});
 
 export default CreateProfile;
