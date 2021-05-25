@@ -4,13 +4,11 @@ import {View, StyleSheet} from 'react-native';
 import UploadPicture from './UploadPicture';
 import {TextInput, Button} from 'react-native-paper';
 import Text from 'src/blocks/Text';
-// import DropDownPicker from 'react-native-dropdown-picker';
 import {MyContext} from 'src/context';
 import {modifyUser} from 'src/utils/User';
 
 function CreateProfile(props) {
   const auth = useContext(MyContext);
-  // const departmentOptions = config.campus.departmentOptions;
 
   const [imgList, setImgList] = useState([]);
   const imgIndex = imgList.map((img, idx) => ({[img]: idx}));
@@ -18,7 +16,6 @@ function CreateProfile(props) {
   const positions = useSharedValue(initpos);
   positions.value = initpos;
 
-  // const [department, setDepartment] = useState('');
   const [profileMessage, setProfileMessage] = useState('');
   const [profileDescription, setProfileDescription] = useState('');
 
@@ -32,18 +29,18 @@ function CreateProfile(props) {
     modifyUser(userID, newUser);
     props.navigation.navigate('Mypage');
   };
+  const checkDisabled =() => {
+    if (imgList == '') {
+      return true;
+    }
+    return false;
+  };
+
   return (
     <View style={{padding: 20, flex: 1}}>
       <Text style={styles.introText}>프로필 사진(최소 1장)과 자기소개를 등록해주세요!</Text>
 
-      <UploadPicture {...props} imgList={imgList} setImgList={setImgList}/>
-      {/* <DropDownPicker
-        items={departmentOptions.map((item) => ({label: item, value: item}))}
-        defaultIndex={0}
-        onChangeItem={(item) => setDepartment(item.value)}
-        placeholder='단과대학'
-        style={styles.department}
-      /> */}
+      <UploadPicture imgList={imgList} setImgList={setImgList} positions={positions}/>
       <TextInput
         label='친구에게 한마디'
         value={profileMessage}
@@ -60,6 +57,7 @@ function CreateProfile(props) {
       <Button
         mode="contained"
         onPress={onSubmit}
+        disabled={checkDisabled()}
         style={{marginTop: 20}}
         labelStyle={{color: 'white'}}
       >

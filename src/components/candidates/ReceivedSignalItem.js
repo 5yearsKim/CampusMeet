@@ -82,7 +82,6 @@ function ReceivedSignalItem({item, navigation}) {
     try {
       makeMatch(userSub, sender.id);
       removeSignal(item.id);
-      setHide(true);
     } catch (err) {
       console.warn(err);
     }

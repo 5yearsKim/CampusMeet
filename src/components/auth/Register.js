@@ -14,6 +14,8 @@ const {width, height} = Dimensions.get('window');
 function Register({navigation}) {
   const auth = useContext(MyContext);
   const departmentOptions = config.campus.departmentOptions;
+  const [dropOpen, setDropOpen] = useState(false);
+  const [dropItems, setDropItems] = useState(departmentOptions.map((item) => ({label: item, value: item})));
   const [currentStep, setCurrentStep] = useState(0);
   const [errText, setErrText] = useState('');
 
@@ -51,7 +53,7 @@ function Register({navigation}) {
   const checkFormat = () => {
     if (currentStep == 0) {
       if (gender.length == 0) {
-        setErrText('성별을 선택해주세요')
+        setErrText('성별을 선택해주세요');
         return false;
       }
     }
@@ -85,19 +87,19 @@ function Register({navigation}) {
       setEmail(email.trim());
       setEmailVerification(emailVerification.trim());
       if (username.length == 0) {
-        setErrText('ID를 설정해주세요.')
+        setErrText('ID를 설정해주세요.');
         return false;
       }
       if (username.length < 4) {
-        setErrText('ID가 너무 짧습니다')
+        setErrText('ID가 너무 짧습니다');
         return false;
       }
       if (password.length < 8) {
-        setErrText('비밀번호가 너무 짧습니다.')
+        setErrText('비밀번호가 너무 짧습니다.');
         return false;
       }
       if (password.search(/[a-zA-Z]/) < 0) {
-        setErrText('비밀번호는 최소 1개의 알파벳을 포함해야 합니다.')
+        setErrText('비밀번호는 최소 1개의 알파벳을 포함해야 합니다.');
         return false;
       }
       if (password.search(/\d/) < 0) {
@@ -119,7 +121,7 @@ function Register({navigation}) {
     }
     if (currentStep == 3) {
       if (emailVerification.length == 0) {
-        setErrText('메일 인증 코드를 입력해주세요')
+        setErrText('메일 인증 코드를 입력해주세요');
         return false;
       }
     }
@@ -257,12 +259,16 @@ function Register({navigation}) {
         />
         {graduateButton()}
         <DropDownPicker
-          items={departmentOptions.map((item) => ({label: item, value: item}))}
-          defaultIndex={0}
-          onChangeItem={(item) => setDepartment(item.value)}
+          open={dropOpen}
+          value={department}
+          items={dropItems}
+          setOpen={setDropOpen}
+          setValue={setDepartment}
+          setItems={setDropItems}
           placeholder='단과대학'
-          style={styles.department}
-          containerStyle={styles.departmentContainer}
+          // style={styles.department}
+          // containerStyle={styles.departmentContainer}
+          dropDownContainerStyle={{backgroundColor: 'white'}}
         />
         <View>
           <TextInput
@@ -420,7 +426,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
     marginBottom: 10,
     flexDirection: 'row',
-    justifyContent:'space-evenly',
+    justifyContent: 'space-evenly',
   },
   genderImage: {
     width: width* 0.3,
@@ -436,7 +442,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-evenly',
-    height: 50, 
+    height: 50,
   },
   graduateItem: {
     flexDirection: 'row',
@@ -445,14 +451,8 @@ const styles = StyleSheet.create({
   graduateText: {
     fontWeight: 'bold',
   },
-  department: {
-    backgroundColor: 'white',
-  },
-  departmentContainer: {
-    height: 40,
-  },
   buttonWrapper: {
-    marginTop: 30, 
+    marginTop: 30,
     flexDirection: 'row',
     justifyContent: 'center',
   },

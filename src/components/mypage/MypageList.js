@@ -5,24 +5,27 @@ import {logout} from 'src/utils/Auth';
 import {bringUser} from 'src/utils/User';
 import {MyContext, ThemeContext} from 'src/context';
 
+// import {makeMessage} from 'src/utils/Chat';
+
 function MypageList({navigation}) {
   const auth = useContext(MyContext);
   const userSub = auth.user.attributes.sub;
   const {theme} = useContext(ThemeContext);
   const [user, setUser] = useState({
     campus: '',
+    graduate: '',
+    division: '',
     year: '',
-    imageKeys: [],
+    name: '',
   });
+  // makeMessage(userSub, 'no', 'start', 'text');
 
   useEffect(() => {
     const m_bringUser = async () => {
       try {
         const userData = await bringUser(userSub);
         setUser(userData);
-        if (user.imageKeys == [] && !user.profileDescription && !user.profileMessage ) {
-          navigation.navigate('CreateProfile');
-        }
+        console.log(user);
       } catch (err) {
         console.warn(err);
       }

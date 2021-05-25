@@ -16,13 +16,14 @@ import Route from 'src/Route';
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [user, setUser] = useState([]);
-  const [scheme, setScheme] = useState('dark');
+  const [scheme, setScheme] = useState('light');
   const [signalCnt, setSignalCnt] = useState(0);
 
   const [refreshCandidate, setRefreshCandidate] = useState(false);
   const [refreshSentSignal, setRefreshSentSignal] = useState(false);
 
   const [loaded] = useFonts({
+    nanumEB: require('src/assets/fonts/NanumSquareRoundEB.ttf'),
     nanumB: require('src/assets/fonts/NanumSquareRoundB.ttf'),
     nanumR: require('src/assets/fonts/NanumSquareRoundR.ttf'),
     nanumL: require('src/assets/fonts/NanumSquareRoundL.ttf'),

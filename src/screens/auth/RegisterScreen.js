@@ -4,14 +4,14 @@ import Register from 'src/components/auth/Register';
 import {LinearGradient} from 'expo-linear-gradient';
 import config from 'src/config';
 
-import DropDownPicker from 'react-native-dropdown-picker';
 
 const colors = config.colors;
 const {width, height} = Dimensions.get('window');
 
 function RegisterScreen(props) {
   return (
-    <ScrollView contentContainerStyle={styles.container}>
+    // <ScrollView contentContainerStyle={styles.container}>
+    <View style={styles.container}>
       <LinearGradient
         // colors={[colors.main.primary, colors.main.primary_]}
         colors={[colors.main.primary, 'transparent']}
@@ -20,7 +20,8 @@ function RegisterScreen(props) {
       <View style={styles.mainBox}>
         <Register {...props}/>
       </View>
-    </ScrollView>
+    </View>
+    // </ScrollView>
   );
 }
 

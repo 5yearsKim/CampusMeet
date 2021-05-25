@@ -6,15 +6,12 @@ import {Button} from 'react-native-paper';
 import config from 'src/config';
 import {MyContext, ThemeContext, UserContext} from 'src/context';
 
-
-
 function CandidateDetail({item, useAction}) {
   // const auth = useContext(MyContext);
   // const userSub = auth.user.attributes.sub;
   // const {theme} = useContext(ThemeContext);
   const {signalCnt} = useContext(UserContext);
   const [popupVisible, setPopupVisible] = useState(false);
-
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <View style={styles.topContainer}>
@@ -59,7 +56,7 @@ function CandidateDetail({item, useAction}) {
           </Button>
         </View>
       }
-      <SendSignalModal toID={item.userID} popupVisible={popupVisible} setPopupVisible={setPopupVisible}/>
+      <SendSignalModal toID={item.id} popupVisible={popupVisible} setPopupVisible={setPopupVisible}/>
     </ScrollView>
 
   );
