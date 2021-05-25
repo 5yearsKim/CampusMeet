@@ -6,7 +6,7 @@ import CandidateDetail from './CandidateDetail';
 import {removeSignal} from 'src/utils/Signal';
 import {relativeTimePrettify} from 'src/utils/Time';
 import config from 'src/config';
-import {ThemeContext} from 'src/context';
+import {ThemeContext, UserContext} from 'src/context';
 
 const {width, height} = Dimensions.get('window');
 
@@ -19,10 +19,11 @@ function LeftContent({gender}) {
   );
 }
 
-function SentSignalItem({item, refresh}) {
+function SentSignalItem({item}) {
   const receiver = item.receiver;
   const [popupVisible, setPopupVisible] = useState(false);
   const {theme} = useContext(ThemeContext);
+  const {refreshSentSignal, setRefreshSentSignal} = useContext(UserContext);
 
   const alertRemoveSignal = () => {
     Alert.alert(
@@ -34,7 +35,10 @@ function SentSignalItem({item, refresh}) {
             onPress: () => {},
             style: 'cancel',
           },
-          {text: 'OK', onPress: () => onRemoveSignal()},
+          {
+            text: 'OK',
+            onPress: () => onRemoveSignal(),
+          },
         ],
     );
   };
@@ -42,7 +46,7 @@ function SentSignalItem({item, refresh}) {
   const onRemoveSignal = async () => {
     try {
       await removeSignal(item.id);
-      refresh();
+      setRefreshSentSignal(!refreshSentSignal);
     } catch (err) {
       console.warn(err);
     }

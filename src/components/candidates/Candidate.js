@@ -4,15 +4,15 @@ import Text from 'src/blocks/Text';
 import {Button} from 'react-native-paper';
 import {FontAwesome5} from '@expo/vector-icons';
 import {bringCandidate} from 'src/utils/User';
-import {bringSentSignalToday} from 'src/utils/Signal';
 import CandidateItem from './CandidateItem';
-import {MyContext, ThemeContext} from 'src/context';
+import {MyContext, ThemeContext, UserContext} from 'src/context';
 import config from 'src/config';
 
 const signalMax = config.manage.signalMax;
 
-function CandidateHeader({signalCnt}) {
+function CandidateHeader() {
   const {theme} = useContext(ThemeContext);
+  const {signalCnt} = useContext(UserContext);
   return (
     <View style={styles.headerContainer} key='header'>
       <View style={{flexDirection: 'row'}}>
@@ -31,12 +31,8 @@ function CandidateHeader({signalCnt}) {
 }
 
 function Candidate() {
-  const auth = useContext(MyContext);
-  const userSub = auth.user.attributes.sub;
   const [userList, setUserList] = useState([]);
-  const [signalCnt, setSignalCnt] = useState(signalMax); // total sent signal today
-  const [refresh, setRefresh] = useState(false);
-  const refreshCandidate = () => setRefresh(!refresh);
+  const {refreshCandidate} = useContext(UserContext);
 
   useEffect(() => {
     const m_bringCandidate = async () => {
@@ -49,31 +45,16 @@ function Candidate() {
       }
     };
     m_bringCandidate();
-  }, []);
+  }, [refreshCandidate]);
 
-  useEffect(() => {
-    const m_bringSentSignalToday = async (fromID) => {
-      try {
-        const signalData = await bringSentSignalToday(userSub);
-        setSignalCnt(signalData.length);
-      } catch (err) {
-        console.warn(err);
-      }
-    };
-    m_bringSentSignalToday();
-  }, [refresh]);
-
-  const renderCandidate = ({item}) => {
-    return <CandidateItem item={item} signalCnt={signalCnt} refresh={refreshCandidate}/>;
-  };
 
   return (
     <View>
       <FlatList
         data={userList}
-        renderItem={renderCandidate}
+        renderItem={({item}) => <CandidateItem item={item} />}
         keyExtractor={(item) => item.id}
-        ListHeaderComponent={() => <CandidateHeader signalCnt={signalCnt}/>}
+        ListHeaderComponent={() => <CandidateHeader/>}
       />
     </View>
   );

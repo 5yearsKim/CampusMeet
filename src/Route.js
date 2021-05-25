@@ -30,7 +30,7 @@ const BottomTab = createBottomTabNavigator();
 
 function HomeTab({navigation}) {
   return (
-    <BottomTab.Navigator initialRouteName='Community'>
+    <BottomTab.Navigator initialRouteName='Match'>
       <BottomTab.Screen
         name='Candidate'
         component={CandidateScreen}
@@ -90,7 +90,7 @@ function Route() {
   const {scheme} = useContext(ThemeContext);
 
   const getHeaderTitle = (route) => {
-    const routeName = getFocusedRouteNameFromRoute(route) ?? 'Feed';
+    const routeName = getFocusedRouteNameFromRoute(route);
     switch (routeName) {
       case 'Candidate':
         return '카드';

@@ -3,15 +3,13 @@ import {View, FlatList, StyleSheet} from 'react-native';
 import Text from 'src/blocks/Text';
 import {bringSentSignal} from 'src/utils/Signal';
 import SentSignalItem from './SentSignalItem';
-import {MyContext} from 'src/context';
+import {MyContext, UserContext} from 'src/context';
 
-function SentSignal({navigation, parentNavigation}) {
+function SentSignal({navigation}) {
   const auth = useContext(MyContext);
   const userSub = auth.user.attributes.sub;
   const [userList, setUserList] = useState([]);
-  const [refresh, setRefresh] = useState(false);
-
-  const refreshSignal = () => setRefresh(!refresh);
+  const {refreshSentSignal} = useContext(UserContext);
 
   useEffect(() => {
     const m_bringSentSignal = async () => {
@@ -24,18 +22,7 @@ function SentSignal({navigation, parentNavigation}) {
       }
     };
     m_bringSentSignal();
-  }, [refresh]);
-
-  useEffect(() => {
-    const unsubscribe = parentNavigation.addListener('tabPress', (e) => {
-      refreshSignal();
-    });
-    return unsubscribe;
-  }, [parentNavigation]);
-
-  const renderSentSignal = ({item}) => {
-    return <SentSignalItem item={item} refresh={refreshSignal}/>;
-  };
+  }, [refreshSentSignal]);
 
   if (userList.length <= 0) {
     return (
@@ -48,7 +35,7 @@ function SentSignal({navigation, parentNavigation}) {
     <View>
       <FlatList
         data={userList}
-        renderItem={renderSentSignal}
+        renderItem={({item}) => <SentSignalItem item={item}/>}
         keyExtractor={(item) => item.id}
       />
     </View>

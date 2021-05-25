@@ -33,16 +33,16 @@ export default config = {
       text: '#000000',
       subText: '#222222',
       background: '#eeeeee',
-      nestedComment: '#eeee99',
+      nestedComment: '#rgba(0, 0, 0, 0.3)',
     },
     dark: {
       text: '#ffffff',
-      subText: 'rgba(255, 255, 255, 0.5)',
+      subText: '#eeeeee',
       background: '#333333',
-      nestedComment: '#332211',
+      nestedComment: 'rgba(255, 255, 255, 0.2)',
     },
   },
   manage: {
-    signalMax: 3,
+    signalMax: 10,
   },
 };

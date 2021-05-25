@@ -48,7 +48,6 @@ function Comment({item, index, board, focusComment}) {
   };
 
   const visTime = relativeTimePrettify(item.createdAt);
-  console.log(theme);
   return (
     <View>
       <TouchableWithoutFeedback
@@ -59,7 +58,7 @@ function Comment({item, index, board, focusComment}) {
           nested.isNested == item.id && {backgroundColor: theme.nestedComment},
           {borderColor: theme.subText},
         ]}>
-          <Nickname type={board.type} nickname={item.nickname} style={styles.nickname} />
+          <Nickname type={board.type} nickname={item.nickname} userID={item.userID} style={styles.nickname} />
           <View>
             <Text style={{color: theme.subText}}>{item.content}</Text>
           </View>

@@ -26,8 +26,6 @@ function Post({navigation, route}) {
   };
 
   const focusComment = (idx) => {
-    // console.log(idx);
-    console.log(idx);
     commentList.current.scrollToIndex({index: idx, viewPosition: 0.3});
   };
 

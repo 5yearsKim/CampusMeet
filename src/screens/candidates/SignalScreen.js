@@ -50,7 +50,7 @@ function SignalScreen(props) {
           title: 'Received',
         }}
       >
-        {(tabProps) => <ReceivedSignalScreen {...tabProps} parentNavigation={props.navigation}/>}
+        {(tabProps) => <ReceivedSignalScreen {...tabProps}/>}
       </SignalTab.Screen>
       <SignalTab.Screen
         name="SentSignal"
@@ -58,7 +58,7 @@ function SignalScreen(props) {
           title: 'Sent',
         }}
       >
-        {(tabProps) => <SentSignalScreen {...tabProps} parentNavigation={props.navigation}/>}
+        {(tabProps) => <SentSignalScreen {...tabProps}/>}
       </SignalTab.Screen>
     </SignalTab.Navigator>
   );

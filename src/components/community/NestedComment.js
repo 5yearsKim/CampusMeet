@@ -47,7 +47,7 @@ function NestedComment({item, board}) {
     <View style={{flexDirection: 'row'}}>
       <MaterialIcons name="subdirectory-arrow-right" size={15} color='#111155'/>
       <View style={styles.container}>
-        <Nickname type={board.type} nickname={item.nickname} style={styles.nickname} />
+        <Nickname type={board.type} nickname={item.nickname} userID={item.userID} style={styles.nickname} />
         <Text>{item.content}</Text>
         <View style={styles.belowBox}>
           <Text>{visTime}</Text>

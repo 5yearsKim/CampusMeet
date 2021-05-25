@@ -9,13 +9,18 @@ import {
   DarkTheme as NavDarkTheme,
 } from '@react-navigation/native';
 import config from 'src/config';
-import {ThemeContext, MyContext} from 'src/context';
+import {bringSentSignalToday} from 'src/utils/Signal';
+import {ThemeContext, MyContext, UserContext} from 'src/context';
 import Route from 'src/Route';
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [user, setUser] = useState([]);
   const [scheme, setScheme] = useState('dark');
+  const [signalCnt, setSignalCnt] = useState(0);
+
+  const [refreshCandidate, setRefreshCandidate] = useState(false);
+  const [refreshSentSignal, setRefreshSentSignal] = useState(false);
 
   const [loaded] = useFonts({
     nanumB: require('src/assets/fonts/NanumSquareRoundB.ttf'),
@@ -24,6 +29,7 @@ function App() {
     gamja: require('src/assets/fonts/GamjaFlower-Regular.ttf'),
   });
 
+  // auth init
   useEffect(() => {
     console.log('app loaded');
     const bringCurrentUser = async () => {
@@ -38,6 +44,7 @@ function App() {
     bringCurrentUser();
   }, []);
 
+  // theme schem load
   useEffect(() => {
     const getScheme = async () => {
       try {
@@ -51,6 +58,22 @@ function App() {
     };
     getScheme();
   }, []);
+
+  // user state load
+  useEffect(() => {
+    const m_bringSentSignalToday = async () => {
+      try {
+        const userSub = user.attributes.sub;
+        const signalData = await bringSentSignalToday(userSub);
+        setSignalCnt(signalData.length);
+      } catch (err) {
+        console.warn(err);
+      }
+    };
+    if (!!user.attributes) {
+      m_bringSentSignalToday();
+    }
+  }, [user]);
 
   const authProps = () => {
     return {
@@ -68,15 +91,29 @@ function App() {
       theme: config.themes[scheme],
     };
   };
+  const userProps = () => {
+    return {
+      signalCnt: signalCnt,
+      setSignalCnt: setSignalCnt,
+
+      refreshCandidate: refreshCandidate,
+      setRefreshCandidate: setRefreshCandidate,
+      refreshSentSignal: refreshSentSignal,
+      setRefreshSentSignal: setRefreshSentSignal,
+    };
+  };
+
   if (loaded) {
     return (
       <MyContext.Provider value={authProps()}>
         <ThemeContext.Provider value={themeProps()}>
-          <PaperProvider theme={isAuthenticated ? paperTheme[scheme] : paperTheme['light']}>
-            <NavigationContainer theme={navigationTheme[scheme]}>
-              <Route/>
-            </NavigationContainer>
-          </PaperProvider>
+          <UserContext.Provider value={userProps()}>
+            <PaperProvider theme={isAuthenticated ? paperTheme[scheme] : paperTheme['light']}>
+              <NavigationContainer theme={navigationTheme[scheme]}>
+                <Route/>
+              </NavigationContainer>
+            </PaperProvider>
+          </UserContext.Provider>
         </ThemeContext.Provider>
       </MyContext.Provider>
     );

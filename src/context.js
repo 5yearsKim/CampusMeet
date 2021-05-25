@@ -12,3 +12,13 @@ export const ChatContext = React.createContext({
 });
 
 export const ThemeContext = React.createContext(config.themes.light);
+
+export const UserContext = React.createContext({
+  signalCnt: 0,
+  setSignalCnt: undefined,
+
+  refreshSentSignal: false,
+  setReshSentSignal: undefined,
+  refreshCandidate: false,
+  setRefreshCandidate: undefined,
+});

@@ -20,17 +20,17 @@ function ImgPreview({imageKeys}) {
 }
 
 
-function BelowContent({type, createdAt, comments, likes, nickname, imageKeys}) {
+function BelowContent({type, item}) {
   // console.log(comments, createdAt, like, nickname, imageKeys);
   const {theme} = useContext(ThemeContext);
-  const imgCount = imageKeys.length;
-  const commentCount = comments.length;
-  const visTime = relativeTimePrettify(createdAt);
+  const imgCount = item.imageKeys.length;
+  const commentCount = item.comments.items.length;
+  const visTime = relativeTimePrettify(item.createdAt);
   return (
     <View style={styles.belowContainer}>
       <View style={{flexDirection: 'row'}}>
         <Text style={[styles.time, {color: theme.subText}]}>{visTime}  </Text>
-        <Nickname type={type} nickname={nickname} style={styles.nickname}/>
+        <Nickname type={type} nickname={item.nickname} userID={item.userID} style={styles.nickname}/>
       </View>
       <View style={styles.iconList}>
         {imgCount > 0 &&
@@ -41,7 +41,7 @@ function BelowContent({type, createdAt, comments, likes, nickname, imageKeys}) {
           </React.Fragment>
         }
         <FontAwesome style={styles.icon} name='thumbs-o-up' size={16} color='blue'>
-          {likes.length}
+          {item.likes.items.length}
         </FontAwesome>
         <FontAwesome style={styles.icon} name='comments-o' size={16} color='red'>
           {commentCount}
@@ -71,7 +71,7 @@ function PostItem({item, board, navigation}) {
           <View style={{flex: 1, justifyContent: 'space-between'}}>
             <Text ellipsizeMode='tail' numberOfLines={1} style={[styles.titleText, {color: theme.text}]}>{item.title}</Text>
             <Text ellipsizeMode='tail' numberOfLines={1} style={[styles.contentText, {color: theme.subText}]}>{item.content}</Text>
-            <BelowContent type={board.type} createdAt={item.createdAt} likes={item.likes.items} nickname={item.nickname} comments={item.comments.items} imageKeys={item.imageKeys}/>
+            <BelowContent type={board.type} item={item}/>
           </View>
           <ImgPreview imageKeys={item.imageKeys}/>
         </View>
@@ -87,7 +87,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
   },
   icon: {
-    margin: 3,
+    margin: 2,
   },
   titleText: {
     fontSize: 18,

@@ -19,7 +19,7 @@ function LeftContent({gender}) {
   );
 }
 
-function CandidateItem({item, signalCnt, refresh}) {
+function CandidateItem({item}) {
   const [popupVisible, setPopupVisible] = useState(false);
   const [isHide, setIsHide] = useState(false);
   const {theme} = useContext(ThemeContext);
@@ -56,7 +56,7 @@ function CandidateItem({item, signalCnt, refresh}) {
           <View style={styles.modalContainer}>
             <TouchableWithoutFeedback onPress={() => {}}>
               <View style={[styles.cardContainer, {backgroundColor: theme.background}]}>
-                <CandidateDetail item={item} signalCnt={signalCnt} useAction={true} refresh={refresh}/>
+                <CandidateDetail item={item} useAction={true}/>
               </View>
             </TouchableWithoutFeedback>
           </View>
