@@ -141,9 +141,8 @@ function UploadPicture({imgList, setImgList, positions}) {
       setImgList(newImgList);
     }
   };
-
   return (
-    <View style={{flex: 1, backgroundColor: '#eeeeee', height: IMGHEIGHT * 2 + 30}}>
+    <View style={{backgroundColor: '#eeeeee', height: IMGHEIGHT * 2 + 30}}>
       {[0, 1, 2, 3, 4, 5].map((idx) => {
         if (idx < imgList.length) {
           return (

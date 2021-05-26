@@ -3,7 +3,7 @@ import {createUser, updateUser} from 'src/graphql/mutations';
 import {getUser} from 'src/graphql/queries';
 import {listCandidateUsers} from 'src/graphql/customQueries';
 
-export async function makeUser(userSub, gender, name, campus, graduate, year, department, division) {
+export async function makeUser(userSub, gender, name, campus, graduate, year, department, division, imageKeys, profileMessage, profileDescription) {
   const newUser = {
     id: userSub,
     gender: gender,
@@ -13,7 +13,9 @@ export async function makeUser(userSub, gender, name, campus, graduate, year, de
     year: year,
     department: department,
     division: division,
-    imageKeys: [],
+    imageKeys: imageKeys,
+    profileMessage: profileMessage,
+    profileDescription: profileDescription,
     status: 'active',
   };
   const rsp = await API.graphql(

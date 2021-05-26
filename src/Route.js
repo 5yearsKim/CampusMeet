@@ -1,9 +1,10 @@
-import React, {useContext} from 'react';
+import React, {useContext, useEffect} from 'react';
 import {getFocusedRouteNameFromRoute} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {MaterialCommunityIcons, FontAwesome, AntDesign, Feather} from '@expo/vector-icons';
 import {MyContext, ThemeContext} from 'src/context';
+import {bringUser} from 'src/utils/User';
 import config from 'src/config';
 // Before login
 import LoginScreen from 'src/screens/auth/LoginScreen';
@@ -29,6 +30,23 @@ const MainStack = createStackNavigator();
 const BottomTab = createBottomTabNavigator();
 
 function HomeTab({navigation}) {
+  const auth = useContext(MyContext);
+  const userSub = auth.user.attributes.sub;
+
+  useEffect(() => {
+    const m_bringUser = async () => {
+      try {
+        const userData = await bringUser(userSub);
+        if (userData == null) {
+          navigation.navigate('CreateProfile');
+        }
+      } catch (err) {
+        console.warn(err);
+      }
+    };
+    m_bringUser();
+  }, []);
+
   return (
     <BottomTab.Navigator initialRouteName='Candidate'>
       <BottomTab.Screen

@@ -3,7 +3,7 @@ import {View, FlatList, StyleSheet} from 'react-native';
 import Text from 'src/blocks/Text';
 import {Button} from 'react-native-paper';
 import {FontAwesome5} from '@expo/vector-icons';
-import {bringCandidate, bringUser} from 'src/utils/User';
+import {bringCandidate} from 'src/utils/User';
 import CandidateItem from './CandidateItem';
 import {MyContext, ThemeContext, UserContext} from 'src/context';
 import config from 'src/config';
@@ -13,6 +13,7 @@ const signalMax = config.manage.signalMax;
 function CandidateHeader() {
   const {theme} = useContext(ThemeContext);
   const {signalCnt} = useContext(UserContext);
+
   return (
     <View style={styles.headerContainer} key='header'>
       <View style={{flexDirection: 'row'}}>
@@ -32,24 +33,7 @@ function CandidateHeader() {
 
 function Candidate({navigation}) {
   const {refreshCandidate} = useContext(UserContext);
-  const auth = useContext(MyContext);
-  const userSub = auth.user.attributes.sub;
   const [userList, setUserList] = useState([]);
-
-  useEffect(() => {
-    const m_bringUser = async () => {
-      try {
-        const userData = await bringUser(userSub);
-        // console.log(userData);
-        if (userData.imageKeys == '' && !userData.profileDescription && !userData.profileMessage ) {
-          navigation.navigate('CreateProfile');
-        }
-      } catch (err) {
-        console.warn(err);
-      }
-    };
-    m_bringUser();
-  }, []);
 
 
   useEffect(() => {

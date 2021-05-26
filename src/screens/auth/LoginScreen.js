@@ -19,12 +19,12 @@ function HomeScreen(props) {
       <View style={styles.loginBox}>
         <Login {...props}/>
         <Button
-          mode='text'
+          mode='outlined'
           onPress={() => {
             props.navigation.navigate('Register');
           }}
         >
-           회원가입
+          회원가입
         </Button>
         <View style={{alignItems: 'center', marginTop: 10}}>
           <TouchableOpacity onPress={() => props.navigation.navigate('ForgotPassword')}>
@@ -54,6 +54,7 @@ const styles = StyleSheet.create({
   forgotPassword: {
     fontSize: 12,
     fontWeight: 'bold',
+    color: '#444444',
   },
   background: {
     position: 'absolute',
