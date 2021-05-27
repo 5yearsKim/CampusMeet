@@ -8,8 +8,8 @@ export function KeyImage({imgKey, style, cached, resizeMode}) {
   if (style === undefined) {
     style = {width: 40, height: 40};
   }
-  if (imgKey == undefined) {
-    return <View></View>;
+  if (!imgKey) {
+    return null;
   }
   useEffect(() => {
     const getCachedImage = async () => {
@@ -54,14 +54,13 @@ export function KeyImage({imgKey, style, cached, resizeMode}) {
         resizeMode={resizeMode}
       />
     );
-  } else {
-    return (
-      <Image
-        source={require('src/assets/images/image_loading.jpg')}
-        style={style}
-      />
-    );
   }
+  return (
+    <Image
+      source={require('src/assets/images/image_loading.jpg')}
+      style={style}
+    />
+  );
 };
 
 export function KeyAvatar({imgKey, style, size, username}) {

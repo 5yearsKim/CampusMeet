@@ -5,16 +5,16 @@ import {Button} from 'react-native-paper';
 import CandidateDetail from './CandidateDetail';
 import {removeSignal} from 'src/utils/Signal';
 import {relativeTimePrettify} from 'src/utils/Time';
-import config from 'src/config';
 import {ThemeContext, UserContext} from 'src/context';
 
 const {width, height} = Dimensions.get('window');
 
 function LeftContent({gender}) {
+  const {theme} = useContext(ThemeContext);
   return (
     <Image
       source={require('src/assets/images/no_profile3.png')}
-      style={[styles.avatar, {borderColor: gender=='남자'?config.colors.main.men:config.colors.main.women}]}
+      style={[styles.avatar, {borderColor: gender=='남자'?theme.men:theme.women}]}
     />
   );
 }

@@ -2,6 +2,7 @@ import {API, graphqlOperation} from 'aws-amplify';
 import {messagesByChatRoom} from 'src/graphql/customQueries';
 import {createMessage} from 'src/graphql/customMutations';
 import {onCreateMessage} from 'src/graphql/customSubscriptions';
+import {updateChatRoom} from 'src/graphql/mutations';
 
 export async function bringMessages(chatRoomID, nextToken, limit=20) {
   const inputData = {
@@ -40,11 +41,19 @@ export async function makeMessage(userID, chatRoomID, content, type) {
     const message = await API.graphql(
         graphqlOperation(createMessage, {input: newMessage}),
     );
-    return message;
+    return message.data.createMessage;
   } catch (err) {
     console.error(err);
   }
 };
+
+export async function modifyChatRoom(chatRoomID, chatData) {
+  chatData.id = chatRoomID;
+  API.graphql(
+      graphqlOperation(updateChatRoom, {input: chatData}),
+  );
+}
+
 
 // async function onMakeMessage(chatRoomID, callback) {
 //   const subscription = await API.graphql(

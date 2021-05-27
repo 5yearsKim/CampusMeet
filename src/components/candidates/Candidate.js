@@ -5,8 +5,9 @@ import {Button} from 'react-native-paper';
 import {FontAwesome5} from '@expo/vector-icons';
 import {bringCandidate} from 'src/utils/User';
 import CandidateItem from './CandidateItem';
-import {MyContext, ThemeContext, UserContext} from 'src/context';
+import {ThemeContext, UserContext} from 'src/context';
 import config from 'src/config';
+
 
 const signalMax = config.manage.signalMax;
 

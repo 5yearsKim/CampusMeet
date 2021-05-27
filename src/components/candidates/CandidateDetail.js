@@ -4,12 +4,12 @@ import Text from 'src/blocks/Text';
 import SendSignalModal from 'src/blocks/SendSignalModal';
 import {Button} from 'react-native-paper';
 import config from 'src/config';
-import {MyContext, ThemeContext, UserContext} from 'src/context';
+import {ThemeContext, UserContext} from 'src/context';
 
 function CandidateDetail({item, useAction}) {
   // const auth = useContext(MyContext);
   // const userSub = auth.user.attributes.sub;
-  // const {theme} = useContext(ThemeContext);
+  const {theme} = useContext(ThemeContext);
   const {signalCnt} = useContext(UserContext);
   const [popupVisible, setPopupVisible] = useState(false);
   return (
@@ -22,7 +22,7 @@ function CandidateDetail({item, useAction}) {
         <View style={styles.imageWrapper}>
           <Image
             source={require('src/assets/images/no_profile3.png')}
-            style={[styles.avatar, {borderColor: item.gender=='남자'?config.colors.main.men: config.colors.main.women}]}
+            style={[styles.avatar, {borderColor: item.gender=='남자'?theme.men: theme.women}]}
           />
           <Text style={styles.messageText}>{item.profileMessage}</Text>
         </View>

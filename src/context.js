@@ -21,4 +21,6 @@ export const UserContext = React.createContext({
   setReshSentSignal: undefined,
   refreshCandidate: false,
   setRefreshCandidate: undefined,
+  refreshMypage: false,
+  setRefreshMypage: undefined,
 });

@@ -26,7 +26,7 @@ export function Nickname({type, nickname, userID, style}) {
     return (
       <View>
         <TouchableOpacity onPress={() => setDialog(true)}>
-          <Text style={[style, gender=='남자'?{color: config.colors.main.men}:{color: config.colors.main.women}]}>{name}</Text>
+          <Text style={[style, gender=='남자'?{color: theme.men}:{color: theme.women}]}>{name}</Text>
         </TouchableOpacity>
 
         <Portal>

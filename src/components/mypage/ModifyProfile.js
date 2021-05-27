@@ -3,12 +3,13 @@ import {useSharedValue} from 'react-native-reanimated';
 import {View, StyleSheet} from 'react-native';
 import UploadPicture from './UploadPicture';
 import {Button, TextInput} from 'react-native-paper';
-import {MyContext} from 'src/context';
+import {MyContext, UserContext} from 'src/context';
 import {bringUser, modifyUser} from 'src/utils/User';
 
 function ModifyProfile({navigation}) {
   const auth = useContext(MyContext);
   const userSub = auth.user.attributes.sub;
+  const {refreshMypage, setRefreshMypage} = useContext(UserContext);
 
   const [imgList, setImgList] = useState([]);
   const imgIndex = imgList.map((img, idx) => ({[img]: idx}));
@@ -50,6 +51,7 @@ function ModifyProfile({navigation}) {
       profileDescription: profileDescription,
     };
     modifyUser(userSub, newUser);
+    setRefreshMypage(!refreshMypage);
     navigation.navigate('Mypage');
   };
   return (

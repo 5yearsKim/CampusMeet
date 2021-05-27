@@ -14,8 +14,6 @@ export default config = {
       primary: '#889DF8',
       primary_: '#6681F4', // color for gradient
       secondary: 'green',
-      men: '#083965',
-      women: '#FF9AA2',
     },
     inputBox: {
       mainButton: '#0C6157',
@@ -33,13 +31,17 @@ export default config = {
       text: '#000000',
       subText: '#222222',
       background: '#eeeeee',
-      nestedComment: '#rgba(0, 0, 0, 0.8)',
+      nestedComment: '#rgba(0, 0, 0, 0.2)',
+      men: '#083965',
+      women: '#d62252',
     },
     dark: {
       text: '#ffffff',
       subText: '#eeeeee',
       background: '#333333',
       nestedComment: 'rgba(255, 255, 255, 0.2)',
+      men: '#083965',
+      women: '#FF9AA2',
     },
   },
   manage: {

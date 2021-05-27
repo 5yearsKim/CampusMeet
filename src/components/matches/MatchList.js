@@ -8,38 +8,30 @@ function MatchList({navigation}) {
   const auth = useContext(MyContext);
   const userSub = auth.user.attributes.sub;
   const [userList, setUserList] = useState([]);
-  const [refresh, setRefresh] = useState(false);
-
-  const refreshMatch = () => setRefresh(!refresh);
 
   useEffect(() => {
-    const m_bringMatch = async () => {
-      try {
-        const userData = await bringMatch(userSub);
-        setUserList(userData);
-      } catch (err) {
-        console.warn(err);
-        setUserList([]);
-      }
-    };
-    m_bringMatch();
-  }, [refresh]);
-
-  useEffect(() => {
-    const unsubscribe = navigation.addListener('tabPress', (e) => {
-      refreshMatch();
+    const unsubscribe = navigation.addListener('focus', () => {
+      m_bringMatch();
     });
+    // Return the function to unsubscribe from the event so it gets removed on unmount
     return unsubscribe;
   }, [navigation]);
 
-  const renderMatch = ({item}) => {
-    return <MatchListItem item={item} navigation={navigation}/>;
+  const m_bringMatch = async () => {
+    try {
+      const userData = await bringMatch(userSub);
+      setUserList(userData);
+    } catch (err) {
+      console.warn(err);
+      setUserList([]);
+    }
   };
+
   return (
     <View>
       <FlatList
         data={userList}
-        renderItem={renderMatch}
+        renderItem={({item}) => <MatchListItem item={item} navigation={navigation}/>}
         keyExtractor={(item) => item.id}
       />
     </View>

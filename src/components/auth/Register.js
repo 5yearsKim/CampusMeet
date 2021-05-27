@@ -1,7 +1,7 @@
-import React, {useState, useEffect, useContext} from 'react';
-import {View, Image, Dimensions, TouchableOpacity, StyleSheet} from 'react-native';
+import React, {useState, useContext} from 'react';
+import {View, StyleSheet} from 'react-native';
 import Text from 'src/blocks/Text';
-import {RadioButton, Button, TextInput} from 'react-native-paper';
+import {Button, TextInput} from 'react-native-paper';
 import {handleSignup, confirmSignup, login} from 'src/utils/Auth';
 import {MyContext} from 'src/context';
 

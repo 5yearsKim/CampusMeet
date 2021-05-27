@@ -3,7 +3,8 @@ import {StyleSheet, View, TextInput, TouchableOpacity, KeyboardAvoidingView, Pla
 import {Portal, Modal} from 'react-native-paper';
 import {Ionicons, MaterialCommunityIcons} from '@expo/vector-icons';
 import {GifSearch, poweredByGiphyLogoGrey} from 'react-native-gif-search';
-import {makeMessage} from 'src/utils/Chat';
+import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
+import {makeMessage, modifyChatRoom} from 'src/utils/Chat';
 import {MyContext} from 'src/context';
 import config from 'src/config';
 
@@ -12,12 +13,15 @@ function InputBox({route}) {
   const auth = useContext(MyContext);
   const [message, setMessage] = useState('');
   const [gifVisible, setGifVisible] = useState(false);
-  const sendMessage = (content, type) => {
+  const sendMessage = async (content, type) => {
     const userSub = auth.user.attributes.sub;
-    makeMessage(userSub, chatRoomID, content, type);
-  };
-  const onGifEnable = () => {
-    setGifVisible(true);
+    const message = await makeMessage(userSub, chatRoomID, content, type);
+    try {
+      const data = {lastMessageID: message.id};
+      modifyChatRoom(chatRoomID, data);
+    } catch (err) {
+      console.warn(err);
+    }
   };
   const onGifSelected = (gifUrl) => {
     sendMessage(gifUrl, 'gif');
@@ -28,6 +32,14 @@ function InputBox({route}) {
       sendMessage(message, 'text');
       setMessage('');
     } else {
+      launchImageLibrary(
+          {
+            mediaType: 'photo',
+            maxHeight: 500,
+            maxWidth: 500,
+          },
+          () => {},
+      );
     }
   };
   return (
@@ -64,7 +76,7 @@ function InputBox({route}) {
               value={message}
               onChangeText={setMessage}
             />
-            <TouchableOpacity onPress={onGifEnable}>
+            <TouchableOpacity onPress={() => setGifVisible(true)}>
               <MaterialCommunityIcons name='gif' size={28}/>
             </TouchableOpacity>
           </View>

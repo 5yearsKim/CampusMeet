@@ -1,37 +1,66 @@
 import React, {useContext, useEffect, useState} from 'react';
-import {View, TouchableOpacity, StyleSheet} from 'react-native';
+import {View, Image, TouchableOpacity, StyleSheet} from 'react-native';
 import Text from 'src/blocks/Text';
+import {KeyImage} from 'src/blocks/Image';
 import {logout} from 'src/utils/Auth';
 import {bringUser} from 'src/utils/User';
-import {MyContext, ThemeContext} from 'src/context';
+import {MyContext, ThemeContext, UserContext} from 'src/context';
 
 // import {makeMessage} from 'src/utils/Chat';
+
+function TopIntro({user, navigation}) {
+  if (!user || user.id == '') {
+    return null;
+  }
+  const {theme} = useContext(ThemeContext);
+  console.log(user);
+  return (
+    <View style={{alignItems: 'center'}}>
+      <TouchableOpacity onPress={() => navigation.navigate('ViewProfile', {userID: user.id})}>
+        {user.imageKeys.length > 0 ?
+          <KeyImage
+            imgKey={user.imageKeys[0]}
+            cached={false}
+            resizemode='contain'
+            style={[styles.avatar, {borderColor: user.gender=='남자'?theme.men:theme.women}]}
+          /> :
+          <Image
+            source={require('src/assets/images/no_profile3.png')}
+            style={[styles.avatar, {borderColor: user.gender=='남자'?theme.men:theme.women}]}
+          />
+        }
+      </TouchableOpacity>
+      <Text style={styles.nameText}>{user.name}</Text>
+      <Text style={styles.messageText}>{user.profileMessage}</Text>
+    </View>
+  );
+}
 
 function MypageList({navigation}) {
   const auth = useContext(MyContext);
   const userSub = auth.user.attributes.sub;
   const {theme} = useContext(ThemeContext);
   const [user, setUser] = useState({
+    id: '',
     campus: '',
     graduate: '',
     division: '',
     year: '',
     name: '',
   });
-  // makeMessage(userSub, 'no', 'start', 'text');
+  const {refreshMypage} = useContext(UserContext);
 
   useEffect(() => {
     const m_bringUser = async () => {
       try {
         const userData = await bringUser(userSub);
         setUser(userData);
-        console.log(user);
       } catch (err) {
         console.warn(err);
       }
     };
     m_bringUser();
-  }, []);
+  }, [refreshMypage]);
 
   const onLogout = async () => {
     try {
@@ -42,11 +71,7 @@ function MypageList({navigation}) {
   };
   return (
     <View style={styles.container}>
-      <View style={styles.sectionBox}>
-        <Text style={[styles.itemText, {color: theme.text}]}>{user.campus} {user.graduate}</Text>
-        <Text>{user.division} {user.year}학번</Text>
-        <Text>{user.name}</Text>
-      </View>
+      <TopIntro navigation={navigation} user={user}/>
       <View style={styles.sectionBox}>
         <Text style={[styles.sectionText, {color: theme.text}]}>프로필</Text>
         <TouchableOpacity onPress={() => navigation.navigate('ModifyProfile')}>
@@ -64,8 +89,25 @@ function MypageList({navigation}) {
 }
 
 const styles = StyleSheet.create({
+  avatar: {
+    margin: 5,
+    height: 80,
+    width: 80,
+    borderRadius: 50,
+    borderWidth: 4,
+  },
+  nameText: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    margin: 3,
+  },
+  messageText: {
+    fontSize: 14,
+    color: 'gray',
+    marginBottom: 15,
+  },
   container: {
-    padding: 10,
+    padding: 15,
   },
   sectionBox: {
     borderRadius: 10,

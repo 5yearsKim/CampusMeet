@@ -21,6 +21,8 @@ function App() {
 
   const [refreshCandidate, setRefreshCandidate] = useState(false);
   const [refreshSentSignal, setRefreshSentSignal] = useState(false);
+  const [refreshMypage, setRefreshMypage] = useState(false);
+  const [refreshMatch, setRefreshMatch] = useState(false);
 
   const [loaded] = useFonts({
     nanumEB: require('src/assets/fonts/NanumSquareRoundEB.ttf'),
@@ -101,6 +103,8 @@ function App() {
       setRefreshCandidate: setRefreshCandidate,
       refreshSentSignal: refreshSentSignal,
       setRefreshSentSignal: setRefreshSentSignal,
+      refreshMypage: refreshMypage,
+      setRefreshMypage: setRefreshMypage,
     };
   };
 

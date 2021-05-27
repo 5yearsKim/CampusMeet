@@ -5,12 +5,13 @@ import {Nickname} from 'src/blocks/Board';
 import {AntDesign, MaterialIcons} from '@expo/vector-icons';
 import {makeLikeComment} from 'src/utils/Community';
 import {relativeTimePrettify} from 'src/utils/Time';
-import {MyContext} from 'src/context';
+import {MyContext, ThemeContext} from 'src/context';
 
 function NestedComment({item, board}) {
   // console.log(item);
   const auth = useContext(MyContext);
   const userSub = auth.user.attributes.sub;
+  const {theme} = useContext(ThemeContext);
   const likeList = item.likes.items.map((item) => item.userID);
   const [isLike, setIsLike] = useState(false);
   const [likeCnt, setLikeCnt] = useState('');
@@ -41,12 +42,11 @@ function NestedComment({item, board}) {
       }
     }
   };
-
   const visTime = relativeTimePrettify(item.createdAt);
   return (
     <View style={{flexDirection: 'row'}}>
       <MaterialIcons name="subdirectory-arrow-right" size={15} color='#111155'/>
-      <View style={styles.container}>
+      <View style={[styles.container, {backgroundColor: theme.nestedComment}]}>
         <Nickname type={board.type} nickname={item.nickname} userID={item.userID} style={styles.nickname} />
         <Text>{item.content}</Text>
         <View style={styles.belowBox}>
@@ -67,7 +67,6 @@ const styles = StyleSheet.create({
     paddingLeft: 15,
     marginRight: 5,
     margin: 1,
-    backgroundColor: '#444444',
     borderRadius: 15,
   },
   belowBox: {

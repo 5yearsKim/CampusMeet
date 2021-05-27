@@ -38,7 +38,7 @@ function ChatRoom({navigation, route}) {
     ).subscribe({
       next: ({value}) => {
         const message = value.data.onCreateMessage;
-        console.log(message);
+        // console.log(message);
         m_bringMessages();
       },
       error: (err) => {

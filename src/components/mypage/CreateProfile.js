@@ -7,6 +7,7 @@ import Text from 'src/blocks/Text';
 import AutoComplete from 'src/blocks/AutoComplete';
 import {makeUser} from 'src/utils/User';
 import {MyContext} from 'src/context';
+import campusList from 'src/assets/campusLogos';
 import DropDownPicker from 'react-native-dropdown-picker';
 
 const {width, height} = Dimensions.get('window');
@@ -24,6 +25,7 @@ function CreateProfile({navigation}) {
   const departmentOptions = config.campus.departmentOptions;
   const [dropOpen, setDropOpen] = useState(false);
   const [dropItems, setDropItems] = useState(departmentOptions.map((item) => ({label: item, value: item})));
+  const campusCand = campusList.map((item) => item.name);
 
   const [currentStep, setCurrentStep] = useState(1);
   const [errText, setErrText] = useState('');
@@ -35,7 +37,6 @@ function CreateProfile({navigation}) {
   const [department, setDepartment] = useState('');
   const [division, setDivision] = useState('');
   const [year, setYear] = useState('');
-  const [campusList, setCampusList] = useState([]);
   const [profileMessage, setProfileMessage] = useState('');
   const [profileDescription, setProfileDescription] = useState('');
 
@@ -176,7 +177,7 @@ function CreateProfile({navigation}) {
           style={styles.textInput}
         />
         <AutoComplete
-          candList={campusList}
+          candList={campusCand}
           value={campus}
           onClickText={(text) => {
             setCampus(text);

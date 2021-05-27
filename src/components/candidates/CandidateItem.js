@@ -1,20 +1,34 @@
 import React, {useState, useContext} from 'react';
 import {View, Dimensions, Modal, TouchableOpacity, TouchableWithoutFeedback, StyleSheet} from 'react-native';
+import {KeyImage} from 'src/blocks/Image';
 import Text from 'src/blocks/Text';
 import {Button} from 'react-native-paper';
-import {AntDesign} from '@expo/vector-icons';
 import CandidateDetail from './CandidateDetail';
-import config from 'src/config';
 import {ThemeContext} from 'src/context';
+import {campusDict} from 'src/assets/campusLogos';
 
 const {width, height} = Dimensions.get('window');
 
-function LeftContent({gender}) {
-  return (
-    <View style={styles.leftContainer}>
-      <View style={styles.avatar}>
-        <AntDesign name='heart' size={40} color={gender=='남자'?config.colors.main.men:config.colors.main.women}/>
+function LeftContent({item}) {
+  const {theme} = useContext(ThemeContext);
+  const logo = campusDict[item.campus];
+  const customStyle = {};
+  customStyle.borderColor = item.gender=='남자'? theme.men : theme.women;
+  if (!logo) {
+    return (
+      <View style={{justifyContent: 'center', marginLeft: 20}}>
+        <View style={[styles.logo, customStyle, {justifyContent: 'center', backgroundColor: 'white', alignItems: 'center'}]}>
+          <Text style={styles.avatarText}>{item.campus.slice(0, 3)}</Text>
+        </View>
       </View>
+    );
+  }
+  if (logo.logo.includes('.gif')) {
+    customStyle.overlayColor= theme.background;
+  }
+  return (
+    <View style={{justifyContent: 'center', marginLeft: 20}}>
+      <KeyImage imgKey={logo.logo} style={[styles.logo, customStyle]}/>
     </View>
   );
 }
@@ -23,7 +37,6 @@ function CandidateItem({item}) {
   const [popupVisible, setPopupVisible] = useState(false);
   const [isHide, setIsHide] = useState(false);
   const {theme} = useContext(ThemeContext);
-
   if (isHide) {
     console.log('hide:', isHide);
     return (
@@ -35,8 +48,8 @@ function CandidateItem({item}) {
     <View style={styles.container}>
       <TouchableOpacity onPress={() => setPopupVisible(true)}>
         <View style={{flexDirection: 'row'}}>
-          <LeftContent gender={item.gender} />
-          <View style={{marginLeft: 10}}>
+          <LeftContent item={item} />
+          <View style={{marginLeft: 10, paddingTop: 10}}>
             <Text style={[styles.titleText, {color: theme.text}]}>{item.campus} {item.graduate}</Text>
             <Text style={[styles.subtitleText, {color: theme.subText}]}>{item.division} {item.year}학번</Text>
           </View>
@@ -69,15 +82,21 @@ function CandidateItem({item}) {
 const styles = StyleSheet.create({
   container: {
   },
-  leftContainer: {
-    justifyContent: 'center',
-    marginLeft: 20,
+  logo: {
+    height: 70,
+    width: 70,
+    borderRadius: 50,
+    borderWidth: 3,
   },
   avatar: {
     backgroundColor: '#fffac4',
     justifyContent: 'center',
     borderRadius: 50,
     padding: 15,
+  },
+  avatarText: {
+    fontSize: 20,
+    fontWeight: 'bold',
   },
   buttonWrapper: {
     flexDirection: 'row',

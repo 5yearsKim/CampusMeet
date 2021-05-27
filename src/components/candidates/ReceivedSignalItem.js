@@ -7,9 +7,9 @@ import {MyContext, ThemeContext} from 'src/context';
 import {makeMatch} from 'src/utils/Match';
 import {removeSignal, rejectSignal} from 'src/utils/Signal';
 import {relativeTimePrettify} from 'src/utils/Time';
-import config from 'src/config';
 
 function LeftContent({sender, navigation}) {
+  const {theme} = useContext(ThemeContext);
   return (
     <TouchableOpacity onPress={() => navigation.navigate('ViewProfile', {userID: sender.id})}>
       {sender.imageKeys.length > 0 ?
@@ -17,11 +17,11 @@ function LeftContent({sender, navigation}) {
           imgKey={sender.imageKeys[0]}
           cached={false}
           resizemode='contain'
-          style={[styles.avatar, {borderColor: sender.gender=='남자'?config.colors.main.men:config.colors.main.women}]}
+          style={[styles.avatar, {borderColor: sender.gender=='남자'?theme.men:theme.women}]}
         /> :
         <Image
           source={require('src/assets/images/no_profile3.png')}
-          style={[styles.avatar, {borderColor: sender.gender=='남자'?config.colors.main.men:config.colors.main.women}]}
+          style={[styles.avatar, {borderColor: sender.gender=='남자'?theme.men:theme.women}]}
         />
       }
     </TouchableOpacity>
