@@ -5,8 +5,6 @@ import {FontAwesome} from '@expo/vector-icons';
 import * as ImagePicker from 'expo-image-picker';
 import {Storage} from 'aws-amplify';
 
-
-
 export function PostImagesCreate({boardID, imgList, setImgList}) {
   const uploadPostImage = async (boardID) => {
     try {
@@ -20,7 +18,7 @@ export function PostImagesCreate({boardID, imgList, setImgList}) {
         try {
           const rsp = await fetch(result.uri);
           const blob = await rsp.blob();
-          const path = `/board/${boardID}/`;
+          const path = `board/${boardID}/`;
           const key = result.uri.split('/').pop();
           const awsrsp = await Storage.put(path + key, blob);
           setImgList([...imgList, awsrsp.key]);
