@@ -1,6 +1,8 @@
-import React from 'react';
-import {Image, StyleSheet} from 'react-native';
+import React, {useState} from 'react';
+import {View, Image, TouchableOpacity, Modal, StyleSheet} from 'react-native';
 import Text from 'src/blocks/Text';
+import {KeyImage} from 'src/blocks/Image';
+import {ImageViewer} from 'src/blocks/ImageViewer';
 import config from 'src/config';
 
 export function TextMessage({text, isMyMessage}) {
@@ -31,8 +33,17 @@ export function GifMessage({gifUrl, isMyMessage}) {
 }
 
 export function ImageMessage({imageKey, isMyMessage}) {
+  const [modalVisible, setModalVisible] = useState(false);
+  const modalSwitch = () => setModalVisible(!modalVisible);
   return (
-    <Text>Image</Text>
+    <View>
+      <TouchableOpacity onPress={() => setModalVisible(true)}>
+        <KeyImage imgKey={imageKey} style={styles.image}/>
+      </TouchableOpacity>
+      <Modal visible={modalVisible}>
+        <ImageViewer imageKeys={[imageKey]} modalSwitch={modalSwitch}/>
+      </Modal>
+    </View>
   );
 }
 
@@ -52,5 +63,9 @@ const styles = StyleSheet.create({
     backgroundColor: colors.yourMessageBox,
     color: colors.yourMessageText,
     marginLeft: 10,
+  },
+  image: {
+    width: 160,
+    height: 120,
   },
 });

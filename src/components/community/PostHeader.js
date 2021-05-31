@@ -1,6 +1,7 @@
 import React, {useEffect, useState, useContext} from 'react';
 import {View, FlatList, Alert, TouchableOpacity, Modal, StyleSheet} from 'react-native';
 import Text from 'src/blocks/Text';
+import {Nickname} from 'src/blocks/Board';
 import {Button} from 'react-native-paper';
 import {makeLikePost} from 'src/utils/Community';
 import {absoluteTime} from 'src/utils/Time';
@@ -68,7 +69,10 @@ function PostHeader({post, board}) {
   return (
     <View style={styles.container}>
       <Text style={[styles.titleText, {color: theme.text}]}>{post.title}</Text>
-      <Text style={[styles.timeText, {color: theme.subText}]}>{visTime}</Text>
+      <View style={{flexDirection: 'row', justifyContent: 'space-between', marginTop: 10}}>
+        <Nickname type={board.type} nickname={post.nickname} userID={userSub} style={styles.nicknameText}/>
+        <Text style={[styles.timeText, {color: theme.subText}]}>{visTime}</Text>
+      </View>
       <Text style={[styles.contentText, {color: theme.subText}]}>{post.content}</Text>
       <Button icon={() => <AntDesign name='like2'/>} mode='outlined' onPress={onClickLike} style={styles.like}>
         {likeCnt}
@@ -114,10 +118,13 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   timeText: {
-    fontSize: 13,
+    fontSize: 12,
+  },
+  nicknameText: {
+    fontSize: 12,
   },
   contentText: {
-    marginTop: 15,
+    marginTop: 20,
     marginBottom: 10,
     fontSize: 14,
   },

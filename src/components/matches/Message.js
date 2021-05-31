@@ -52,7 +52,7 @@ function Message({item, showTime, showDate, navigation}) {
       );
     } else if (type == 'image') {
       return (
-        <ImageMessage imageKey={'yettobeset'} isMyMessage={isMyMessage}/>
+        <ImageMessage imageKey={content} isMyMessage={isMyMessage}/>
       );
     }
   };

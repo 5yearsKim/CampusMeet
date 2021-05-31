@@ -15,16 +15,12 @@ export function PostImagesCreate({boardID, imgList, setImgList}) {
         quality: 1,
       });
       if (!result.cancelled) {
-        try {
-          const rsp = await fetch(result.uri);
-          const blob = await rsp.blob();
-          const path = `board/${boardID}/`;
-          const key = result.uri.split('/').pop();
-          const awsrsp = await Storage.put(path + key, blob);
-          setImgList([...imgList, awsrsp.key]);
-        } catch (err) {
-          console.log(err);
-        }
+        const rsp = await fetch(result.uri);
+        const blob = await rsp.blob();
+        const path = `board/${boardID}/`;
+        const key = result.uri.split('/').pop();
+        const awsrsp = await Storage.put(path + key, blob);
+        setImgList([...imgList, awsrsp.key]);
       }
     } catch (err) {
       console.log('error:', err);

@@ -1,6 +1,7 @@
 import {API, graphqlOperation} from 'aws-amplify';
 import {createBoard, createPost, createComment, createNestedComment, createLikePost, createLikeComment} from 'src/graphql/customMutations';
 import {getUser, listBoards, boardByType, postByBoard, commentByPost} from 'src/graphql/customQueries';
+import {campusDict} from 'src/assets/campusLogos';
 import config from 'src/config';
 
 export const makeBoard = async (userID, boardName, description, type) => {
@@ -180,7 +181,7 @@ export const bringComment = async (postID) => {
 };
 
 
-export const getNickname = async (userID, boardType) => {
+export const getNickname = async (userID, boardType, short=false) => {
   const boardOptions = config.community.boardOptions;
   try {
     const userData = await API.graphql(
@@ -190,10 +191,17 @@ export const getNickname = async (userID, boardType) => {
     );
     const user = userData.data.getUser;
     // if boardType == '학교/학과 공개'
-    if (boardType == boardOptions[1]) {
-      return `${user.gender}|${user.campus} ${user.division} ${user.year}`;
-    } else {
+    if (boardType == boardOptions[0]) {
       return `${user.gender}|익명`;
+    } else {
+      if (!short) {
+        return `${user.gender}|${user.campus} ${user.division} ${user.year}`;
+      } else {
+        const campusShort = campusDict[user.campus];
+        const campus = campusShort ? campusShort.short : user.campus.slice(0, 3);
+        console.log(campus);
+        return `${user.gender}|${campus} ${user.year}`;
+      }
     }
   } catch (err) {
     console.warn(err);

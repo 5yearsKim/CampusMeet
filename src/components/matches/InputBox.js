@@ -1,9 +1,10 @@
 import React, {useState, useContext} from 'react';
 import {StyleSheet, View, TextInput, TouchableOpacity, KeyboardAvoidingView, Platform} from 'react-native';
 import {Portal, Modal} from 'react-native-paper';
+import * as ImagePicker from 'expo-image-picker';
+import {Storage} from 'aws-amplify';
 import {Ionicons, MaterialCommunityIcons} from '@expo/vector-icons';
 import {GifSearch, poweredByGiphyLogoGrey} from 'react-native-gif-search';
-import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 import {makeMessage, modifyChatRoom} from 'src/utils/Chat';
 import {MyContext} from 'src/context';
 import config from 'src/config';
@@ -13,6 +14,7 @@ function InputBox({route}) {
   const auth = useContext(MyContext);
   const [message, setMessage] = useState('');
   const [gifVisible, setGifVisible] = useState(false);
+
   const sendMessage = async (content, type) => {
     const userSub = auth.user.attributes.sub;
     const message = await makeMessage(userSub, chatRoomID, content, type);
@@ -23,23 +25,39 @@ function InputBox({route}) {
       console.warn(err);
     }
   };
+
+  const onSendImage = async () => {
+    try {
+      const result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.All,
+        allowsEditing: true,
+        aspect: [4, 3],
+        quality: 1,
+      });
+      if (!result.cancelled) {
+        const rsp = await fetch(result.uri);
+        const blob = await rsp.blob();
+        const path = `chat/${chatRoomID}/`;
+        const key = result.uri.split('/').pop();
+        const awsrsp = await Storage.put(path + key, blob);
+        sendMessage(awsrsp.key, 'image');
+      }
+    } catch (err) {
+      console.log('error:', err);
+    }
+  };
+
   const onGifSelected = (gifUrl) => {
     sendMessage(gifUrl, 'gif');
     setGifVisible(false);
   };
+
   const onClickSendIcon = () => {
     if (message) {
       sendMessage(message, 'text');
       setMessage('');
     } else {
-      launchImageLibrary(
-          {
-            mediaType: 'photo',
-            maxHeight: 500,
-            maxWidth: 500,
-          },
-          () => {},
-      );
+      onSendImage();
     }
   };
   return (

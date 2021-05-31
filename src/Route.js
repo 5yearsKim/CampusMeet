@@ -108,7 +108,7 @@ function Route() {
   const {scheme} = useContext(ThemeContext);
 
   const getHeaderTitle = (route) => {
-    const routeName = getFocusedRouteNameFromRoute(route);
+    const routeName = getFocusedRouteNameFromRoute(route) ?? '카드';
     switch (routeName) {
       case 'Candidate':
         return '카드';
@@ -140,6 +140,7 @@ function Route() {
           name='Home'
           component={HomeTab}
           options={ ({route}) => ({
+            title: '카드', // initial route title name
             headerTitle: getHeaderTitle(route),
           }) }
         />

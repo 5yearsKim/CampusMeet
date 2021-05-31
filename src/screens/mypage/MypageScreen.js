@@ -10,12 +10,6 @@ function MypageScreen(props) {
       <MypageList {...props}/>
       <Button
         mode='outlined'
-        onPress={() => props.navigation.navigate('ModifyProfile')}
-      >
-        Modify Profile
-      </Button>
-      <Button
-        mode='outlined'
         onPress={() => props.navigation.navigate('CreateProfile')}
       >
         Create Profile

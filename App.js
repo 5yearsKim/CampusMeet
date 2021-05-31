@@ -14,6 +14,7 @@ import {ThemeContext, MyContext, UserContext} from 'src/context';
 import Route from 'src/Route';
 
 function App() {
+  const [authChecked, setAuthChecked] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [user, setUser] = useState([]);
   const [scheme, setScheme] = useState('light');
@@ -22,9 +23,8 @@ function App() {
   const [refreshCandidate, setRefreshCandidate] = useState(false);
   const [refreshSentSignal, setRefreshSentSignal] = useState(false);
   const [refreshMypage, setRefreshMypage] = useState(false);
-  const [refreshMatch, setRefreshMatch] = useState(false);
 
-  const [loaded] = useFonts({
+  const [fontLoaded] = useFonts({
     nanumEB: require('src/assets/fonts/NanumSquareRoundEB.ttf'),
     nanumB: require('src/assets/fonts/NanumSquareRoundB.ttf'),
     nanumR: require('src/assets/fonts/NanumSquareRoundR.ttf'),
@@ -43,6 +43,7 @@ function App() {
       } catch (err) {
         console.log(err);
       }
+      setAuthChecked(true);
     };
     bringCurrentUser();
   }, []);
@@ -107,8 +108,7 @@ function App() {
       setRefreshMypage: setRefreshMypage,
     };
   };
-
-  if (loaded) {
+  if (fontLoaded && authChecked) {
     return (
       <MyContext.Provider value={authProps()}>
         <ThemeContext.Provider value={themeProps()}>

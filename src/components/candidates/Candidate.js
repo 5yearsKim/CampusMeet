@@ -17,11 +17,11 @@ function CandidateHeader() {
 
   return (
     <View style={styles.headerContainer} key='header'>
-      <View style={{flexDirection: 'row'}}>
-        <Text style={[styles.heartText, {color: theme.subText}]}>signal left:</Text>
+      <View style={{flexDirection: 'row', alignItems: 'center'}}>
+        <Text style={[styles.heartText, {color: theme.subText}]}>signal left: </Text>
         {[...Array(Math.max(0, signalMax - signalCnt))].map((_, index) => {
           return (
-            <FontAwesome5 name="heartbeat" size={24} color="pink" key={index}/>
+            <FontAwesome5 name="heartbeat" size={24} color="pink" key={index} style={{margin: 2}}/>
           );
         })}
       </View>
@@ -68,6 +68,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
+    padding: 5,
+    paddingLeft: 20,
   },
   heartText: {
     fontWeight: 'bold',

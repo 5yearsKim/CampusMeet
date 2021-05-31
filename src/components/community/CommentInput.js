@@ -18,7 +18,7 @@ function CommentInput({board, post, refresh}) {
 
   useEffect(() => {
     const m_getNickname = async () => {
-      const nicknameData = await getNickname(userSub, board.type);
+      const nicknameData = await getNickname(userSub, board.type, true);
       setNickname(nicknameData);
     };
     m_getNickname();
@@ -60,10 +60,8 @@ function CommentInput({board, post, refresh}) {
         }}
       >
         <View style={{flexDirection: 'row'}}>
-          <View style={styles.leftBox}>
+          <View style={{flex: 1, flexDirection: 'row', alignItems: 'center'}}>
             <Nickname type={board.type} nickname={nickname} style={styles.nickname}/>
-          </View>
-          <View style={styles.middleBox}>
             <TextInput
               onChangeText={(text) => setMessage(text)}
               ref={chatInput}
@@ -77,7 +75,7 @@ function CommentInput({board, post, refresh}) {
               style={{height: Math.max(inputHeight, 30)}}
             />
           </View>
-          <View style={styles.rightBox}>
+          <View style={{marginRight: 15}}>
             <TouchableOpacity
               onPress={onSend}
             >
@@ -102,19 +100,9 @@ const styles = StyleSheet.create({
     // backgroundColor: 'white',
     // justifyContent: 'flex-end',
   },
-  leftBox: {
-    flex: 1,
-    justifyContent: 'center',
-  },
-  rightBox: {
-    flex: 1,
-  },
-  middleBox: {
-    flex: 6,
-    // backgroundColor: 'red',
-  },
   nickname: {
     fontSize: 13,
+    marginRight: 10,
   },
 });
 

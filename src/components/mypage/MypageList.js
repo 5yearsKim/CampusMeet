@@ -13,7 +13,6 @@ function TopIntro({user, navigation}) {
     return null;
   }
   const {theme} = useContext(ThemeContext);
-  console.log(user);
   return (
     <View style={{alignItems: 'center'}}>
       <TouchableOpacity onPress={() => navigation.navigate('ViewProfile', {userID: user.id})}>

@@ -1,5 +1,5 @@
-import React, {useState, useContext} from 'react';
-import {ScrollView, View, Image, Alert, StyleSheet} from 'react-native';
+import React, {useState, useContext, useRef} from 'react';
+import {ScrollView, Animated, View, Image, Alert, TouchableWithoutFeedback, StyleSheet} from 'react-native';
 import Text from 'src/blocks/Text';
 import SendSignalModal from 'src/blocks/SendSignalModal';
 import {Button} from 'react-native-paper';
@@ -12,6 +12,16 @@ function CandidateDetail({item, useAction}) {
   const {theme} = useContext(ThemeContext);
   const {signalCnt} = useContext(UserContext);
   const [popupVisible, setPopupVisible] = useState(false);
+  const fadeAnim = useRef(new Animated.Value(0)).current;
+  const onImageClicked = () => {
+    fadeAnim.setValue(1);
+    Animated.timing(fadeAnim, {
+      toValue: 0,
+      duration: 1000,
+      useNativeDriver: true,
+    }).start();
+  };
+
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <View style={styles.topContainer}>
@@ -20,11 +30,16 @@ function CandidateDetail({item, useAction}) {
       </View>
       <View style={styles.middleContainer}>
         <View style={styles.imageWrapper}>
-          <Image
-            source={require('src/assets/images/no_profile3.png')}
-            style={[styles.avatar, {borderColor: item.gender=='남자'?theme.men: theme.women}]}
-          />
+          <TouchableWithoutFeedback onPress={() => onImageClicked()}>
+            <Image
+              source={require('src/assets/images/no_profile3.png')}
+              style={[styles.avatar, {borderColor: item.gender=='남자'?theme.men: theme.women}]}
+            />
+          </TouchableWithoutFeedback>
           <Text style={styles.messageText}>{item.profileMessage}</Text>
+          <Animated.View style={{opacity: fadeAnim}}>
+            <Text style={{fontSize: 13, color: 'red'}}>매칭 이전에 프로필 사진을 볼 수 없습니다.</Text>
+          </Animated.View>
         </View>
         <View style={{padding: 5}}>
           <View style={styles.itemWrapper}>

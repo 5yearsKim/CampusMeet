@@ -39,6 +39,18 @@ function MatchListItem({item, navigation}) {
   if (matcher == null ) {
     return <Text> null </Text>;
   }
+  const lastMessage = () => {
+    const message = chatRoom.lastMessage;
+    let content = '';
+    if (message.type == 'image') {
+      content = 'Image';
+    } else if (message.type == 'gif') {
+      content = 'GIF';
+    } else {
+      content = message.content;
+    }
+    return <Text style={[styles.messageText, {color: theme.subText}]}>{content}</Text>;
+  };
   return (
     <TouchableOpacity onPress={() => onClickItem()}>
       <View style={styles.container}>
@@ -46,7 +58,7 @@ function MatchListItem({item, navigation}) {
           <LeftContent matcher={item.matcher} navigation={navigation}/>
           <View style={styles.textWrapper}>
             <Text style={[styles.nameText, {color: theme.text}]}>{matcher.name}</Text>
-            <Text style={[styles.messageText, {color: theme.subText}]}>{chatRoom.lastMessage.content}</Text>
+            {lastMessage()}
           </View>
         </View>
         <Text style={{color: theme.subText}}>{absoluteTimePrettify(chatRoom.lastMessage.createdAt)}</Text>
