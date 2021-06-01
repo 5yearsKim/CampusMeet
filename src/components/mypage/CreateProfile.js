@@ -7,8 +7,8 @@ import Text from 'src/blocks/Text';
 import AutoComplete from 'src/blocks/AutoComplete';
 import {makeUser} from 'src/utils/User';
 import {MyContext} from 'src/context';
+import {Picker} from '@react-native-picker/picker';
 import campusList from 'src/assets/campusLogos';
-import DropDownPicker from 'react-native-dropdown-picker';
 
 const {width, height} = Dimensions.get('window');
 
@@ -23,8 +23,6 @@ function CreateProfile({navigation}) {
   positions.value = initpos;
 
   const departmentOptions = config.campus.departmentOptions;
-  const [dropOpen, setDropOpen] = useState(false);
-  const [dropItems, setDropItems] = useState(departmentOptions.map((item) => ({label: item, value: item})));
   const campusCand = campusList.map((item) => item.name);
 
   const [currentStep, setCurrentStep] = useState(1);
@@ -179,27 +177,27 @@ function CreateProfile({navigation}) {
         <AutoComplete
           candList={campusCand}
           value={campus}
-          onClickText={(text) => {
-            setCampus(text);
-          }}
-          onChangeText={(text) => {
-            setCampus(text);
-          }}
+          onClickText={(text) => setCampus(text)}
+          onChangeText={(text) => setCampus(text)}
           placeholder='campus'
         />
         {graduateButton()}
-        <DropDownPicker
-          open={dropOpen}
-          value={department}
-          items={dropItems}
-          setOpen={setDropOpen}
-          setValue={setDepartment}
-          setItems={setDropItems}
-          placeholder='단과대학'
-          // style={styles.department}
-          // containerStyle={styles.departmentContainer}
-          dropDownContainerStyle={{backgroundColor: 'white'}}
-        />
+        <View style={{flexDirection: 'row', alignItems: 'center'}}>
+          <Text style={{fontWeight: 'bold', margin: 20}}>단과대학 선택: </Text>
+          <View style={{backgroundColor: 'white', borderRadius: 10,}}>
+            <Picker
+              selectedValue={department}
+              onValueChange={(value) => setDepartment(value)}
+              style={{width: 150, height: 50}}
+            >
+              {departmentOptions.map((item) => {
+                return (
+                  <Picker.Item label={item} value={item} key={item}/>
+                );
+              })}
+            </Picker>
+          </View>
+        </View>
         <View>
           <TextInput
             mode='flat'

@@ -1,19 +1,21 @@
 import React, {useState, useEffect, useContext} from 'react';
-import {View, FlatList, StyleSheet} from 'react-native';
+import {Dimensions, View, FlatList, Modal, TouchableWithoutFeedback, StyleSheet} from 'react-native';
 import Text from 'src/blocks/Text';
 import {Button} from 'react-native-paper';
 import {FontAwesome5} from '@expo/vector-icons';
 import {bringCandidate} from 'src/utils/User';
 import CandidateItem from './CandidateItem';
+import Preference from './Preference';
 import {ThemeContext, UserContext} from 'src/context';
 import config from 'src/config';
 
-
+const {width, height} = Dimensions.get('window');
 const signalMax = config.manage.signalMax;
 
 function CandidateHeader() {
   const {theme} = useContext(ThemeContext);
   const {signalCnt} = useContext(UserContext);
+  const [modalVisible, setModalVisible] = useState(false);
 
   return (
     <View style={styles.headerContainer} key='header'>
@@ -25,9 +27,20 @@ function CandidateHeader() {
           );
         })}
       </View>
-      <Button icon='filter' mode='text'>
+      <Button icon='filter' mode='text' onPress={() => setModalVisible(true)}>
         FILTER
       </Button>
+      <Modal visible={modalVisible} onRequestClose={() => setModalVisible(false)} transparent={true}>
+        <TouchableWithoutFeedback onPress={() => setModalVisible(false)}>
+          <View style={styles.modalContainer}>
+            <TouchableWithoutFeedback onPress={() => {}}>
+              <View style={[styles.filterContainer, {backgroundColor: theme.background}]}>
+                <Preference onClose={() => setModalVisible(false)}/>
+              </View>
+            </TouchableWithoutFeedback>
+          </View>
+        </TouchableWithoutFeedback>
+      </Modal>
     </View>
   );
 }
@@ -35,7 +48,6 @@ function CandidateHeader() {
 function Candidate({navigation}) {
   const {refreshCandidate} = useContext(UserContext);
   const [userList, setUserList] = useState([]);
-
 
   useEffect(() => {
     const m_bringCandidate = async () => {
@@ -74,6 +86,17 @@ const styles = StyleSheet.create({
   heartText: {
     fontWeight: 'bold',
     fontSize: 16,
+  },
+  modalContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    backgroundColor: 'rgba(0,0,0,0.5)',
+    alignItems: 'center',
+  },
+  filterContainer: {
+    width: width*0.85,
+    // height: height*0.7,
+    borderRadius: 15,
   },
 });
 

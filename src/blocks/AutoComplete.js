@@ -2,11 +2,8 @@ import React, {useState} from 'react';
 import {Text, View, TouchableOpacity, ScrollView, StyleSheet} from 'react-native';
 import {Searchbar} from 'react-native-paper';
 
-function AutoComplete({candList, value, onClickText, onChangeText, placeholder}) {
+function AutoComplete({candList, value, onClickText, onChangeText, placeholder, style}) {
   const [clicked, setClicked] = useState(false);
-  if (typeof(placeholder) == 'undefined') {
-    placeholder = 'type message to search';
-  }
   const queryFilter = (x) => {
     if (x.includes(value)) {
       return true;
@@ -51,6 +48,7 @@ function AutoComplete({candList, value, onClickText, onChangeText, placeholder})
           setClicked(false);
         }}
         value={value}
+        style={style}
       />
       {showCandList()}
     </View>

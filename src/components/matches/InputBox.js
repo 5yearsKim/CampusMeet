@@ -7,6 +7,7 @@ import {Ionicons, MaterialCommunityIcons} from '@expo/vector-icons';
 import {GifSearch, poweredByGiphyLogoGrey} from 'react-native-gif-search';
 import {makeMessage, modifyChatRoom} from 'src/utils/Chat';
 import {MyContext} from 'src/context';
+import {sendPushNotification} from 'src/utils/PushNotification';
 import config from 'src/config';
 
 function InputBox({route}) {
@@ -21,6 +22,7 @@ function InputBox({route}) {
     try {
       const data = {lastMessageID: message.id};
       modifyChatRoom(chatRoomID, data);
+      sendPushNotification()
     } catch (err) {
       console.warn(err);
     }
@@ -43,7 +45,7 @@ function InputBox({route}) {
         sendMessage(awsrsp.key, 'image');
       }
     } catch (err) {
-      console.log('error:', err);
+      console.warn('error:', err);
     }
   };
 

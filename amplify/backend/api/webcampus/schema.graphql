@@ -15,6 +15,14 @@ type User @model {
   profileMessage: String
   profileDescription: String
   status: String
+  pushToken: String
+}
+
+type Preference @model {
+  id: ID!
+  likeGender: Float 
+  likeCampus: [String]
+  likeDepartment: [String]
 }
 
 type Signal @model

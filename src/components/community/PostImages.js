@@ -23,7 +23,7 @@ export function PostImagesCreate({boardID, imgList, setImgList}) {
         setImgList([...imgList, awsrsp.key]);
       }
     } catch (err) {
-      console.log('error:', err);
+      console.warn('error:', err);
     }
   };
   return (

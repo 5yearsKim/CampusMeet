@@ -81,7 +81,7 @@ export const makeNestedComment = async (userID, commentID, nickname, content) =>
     );
     return commentData;
   } catch (err) {
-    console.log(err);
+    console.warn(err);
   }
 };
 
@@ -199,7 +199,6 @@ export const getNickname = async (userID, boardType, short=false) => {
       } else {
         const campusShort = campusDict[user.campus];
         const campus = campusShort ? campusShort.short : user.campus.slice(0, 3);
-        console.log(campus);
         return `${user.gender}|${campus} ${user.year}`;
       }
     }

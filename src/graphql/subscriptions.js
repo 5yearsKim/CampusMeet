@@ -23,6 +23,7 @@ export const onCreateMessage = /* GraphQL */ `
         profileMessage
         profileDescription
         status
+        pushToken
         createdAt
         updatedAt
       }
@@ -51,6 +52,7 @@ export const onCreateUser = /* GraphQL */ `
       profileMessage
       profileDescription
       status
+      pushToken
       createdAt
       updatedAt
     }
@@ -71,6 +73,7 @@ export const onUpdateUser = /* GraphQL */ `
       profileMessage
       profileDescription
       status
+      pushToken
       createdAt
       updatedAt
     }
@@ -91,6 +94,43 @@ export const onDeleteUser = /* GraphQL */ `
       profileMessage
       profileDescription
       status
+      pushToken
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onCreatePreference = /* GraphQL */ `
+  subscription OnCreatePreference {
+    onCreatePreference {
+      id
+      likeGender
+      likeCampus
+      likeDepartment
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onUpdatePreference = /* GraphQL */ `
+  subscription OnUpdatePreference {
+    onUpdatePreference {
+      id
+      likeGender
+      likeCampus
+      likeDepartment
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onDeletePreference = /* GraphQL */ `
+  subscription OnDeletePreference {
+    onDeletePreference {
+      id
+      likeGender
+      likeCampus
+      likeDepartment
       createdAt
       updatedAt
     }
@@ -118,6 +158,7 @@ export const onCreateSignal = /* GraphQL */ `
         profileMessage
         profileDescription
         status
+        pushToken
         createdAt
         updatedAt
       }
@@ -134,6 +175,7 @@ export const onCreateSignal = /* GraphQL */ `
         profileMessage
         profileDescription
         status
+        pushToken
         createdAt
         updatedAt
       }
@@ -163,6 +205,7 @@ export const onUpdateSignal = /* GraphQL */ `
         profileMessage
         profileDescription
         status
+        pushToken
         createdAt
         updatedAt
       }
@@ -179,6 +222,7 @@ export const onUpdateSignal = /* GraphQL */ `
         profileMessage
         profileDescription
         status
+        pushToken
         createdAt
         updatedAt
       }
@@ -208,6 +252,7 @@ export const onDeleteSignal = /* GraphQL */ `
         profileMessage
         profileDescription
         status
+        pushToken
         createdAt
         updatedAt
       }
@@ -224,6 +269,7 @@ export const onDeleteSignal = /* GraphQL */ `
         profileMessage
         profileDescription
         status
+        pushToken
         createdAt
         updatedAt
       }
@@ -252,6 +298,7 @@ export const onCreateMatch = /* GraphQL */ `
         profileMessage
         profileDescription
         status
+        pushToken
         createdAt
         updatedAt
       }
@@ -286,6 +333,7 @@ export const onUpdateMatch = /* GraphQL */ `
         profileMessage
         profileDescription
         status
+        pushToken
         createdAt
         updatedAt
       }
@@ -320,6 +368,7 @@ export const onDeleteMatch = /* GraphQL */ `
         profileMessage
         profileDescription
         status
+        pushToken
         createdAt
         updatedAt
       }

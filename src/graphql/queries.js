@@ -16,6 +16,7 @@ export const getUser = /* GraphQL */ `
       profileMessage
       profileDescription
       status
+      pushToken
       createdAt
       updatedAt
     }
@@ -41,6 +42,38 @@ export const listUsers = /* GraphQL */ `
         profileMessage
         profileDescription
         status
+        pushToken
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const getPreference = /* GraphQL */ `
+  query GetPreference($id: ID!) {
+    getPreference(id: $id) {
+      id
+      likeGender
+      likeCampus
+      likeDepartment
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listPreferences = /* GraphQL */ `
+  query ListPreferences(
+    $filter: ModelPreferenceFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listPreferences(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        likeGender
+        likeCampus
+        likeDepartment
         createdAt
         updatedAt
       }
@@ -70,6 +103,7 @@ export const getSignal = /* GraphQL */ `
         profileMessage
         profileDescription
         status
+        pushToken
         createdAt
         updatedAt
       }
@@ -86,6 +120,7 @@ export const getSignal = /* GraphQL */ `
         profileMessage
         profileDescription
         status
+        pushToken
         createdAt
         updatedAt
       }
@@ -134,6 +169,7 @@ export const getMatch = /* GraphQL */ `
         profileMessage
         profileDescription
         status
+        pushToken
         createdAt
         updatedAt
       }
@@ -230,6 +266,7 @@ export const getMessage = /* GraphQL */ `
         profileMessage
         profileDescription
         status
+        pushToken
         createdAt
         updatedAt
       }

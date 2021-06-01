@@ -50,9 +50,13 @@ function ModifyProfile({navigation}) {
       profileMessage: profileMessage,
       profileDescription: profileDescription,
     };
-    modifyUser(userSub, newUser);
-    setRefreshMypage(!refreshMypage);
-    navigation.navigate('Mypage');
+    try {
+      modifyUser(userSub, newUser);
+      setRefreshMypage(!refreshMypage);
+      navigation.navigate('Mypage');
+    } catch (err) {
+      console.warn(err);
+    }
   };
   return (
     <View style={{padding: 20, flex: 1}}>

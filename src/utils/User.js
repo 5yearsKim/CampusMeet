@@ -1,6 +1,6 @@
 import {API, graphqlOperation} from 'aws-amplify';
-import {createUser, updateUser} from 'src/graphql/mutations';
-import {getUser} from 'src/graphql/queries';
+import {createUser, updateUser, createPreference, updatePreference} from 'src/graphql/mutations';
+import {getUser, getPreference} from 'src/graphql/queries';
 import {listCandidateUsers} from 'src/graphql/customQueries';
 
 export async function makeUser(userSub, gender, name, campus, graduate, year, department, division, imageKeys, profileMessage, profileDescription) {
@@ -29,17 +29,40 @@ export async function bringUser(userSub) {
       graphqlOperation(getUser, {id: userSub}),
   );
   return userData['data']['getUser'];
-}
+};
 
 export async function modifyUser(userSub, newUser) {
   newUser.id = userSub;
-  try {
-    API.graphql(
-        graphqlOperation(updateUser, {input: newUser}),
-    );
-  } catch (err) {
-    console.log(err);
-  }
+  API.graphql(
+      graphqlOperation(updateUser, {input: newUser}),
+  );
+};
+
+export async function bringPreference(userSub) {
+  const rsp = await API.graphql(
+      graphqlOperation(getPreference, {id: userSub}),
+  );
+  return rsp.data.getPreference;
+};
+
+export async function makePreference(userID, likeGender, likeCampus, likeDepartment) {
+  const newPreference = {
+    id: userID,
+    likeGender: likeGender,
+    likeCampus: likeCampus,
+    likeDepartment: likeDepartment,
+  };
+  const rsp = await API.graphql(
+      graphqlOperation(createPreference, {input: newPreference}),
+  );
+  return rsp;
+};
+
+export async function modifyPreference(userID, newPreference) {
+  newPreference.id = userID;
+  API.graphql(
+      graphqlOperation(updatePreference, {input: newPreference}),
+  );
 }
 
 export async function bringCandidate() {

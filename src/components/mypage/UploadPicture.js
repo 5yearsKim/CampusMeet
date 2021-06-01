@@ -125,11 +125,11 @@ function UploadPicture({imgList, setImgList, positions}) {
           const awsrsp = await Storage.put(path + key, blob);
           setImgList([...imgList, awsrsp.key]);
         } catch (err) {
-          console.log(err);
+          console.warn(err);
         }
       }
     } catch (err) {
-      console.log('error:', err);
+      console.warn('error:', err);
     }
   };
   const deletePicture = (order) => {
@@ -145,14 +145,11 @@ function UploadPicture({imgList, setImgList, positions}) {
     <View style={{backgroundColor: '#eeeeee', height: IMGHEIGHT * 2 + 30}}>
       {[0, 1, 2, 3, 4, 5].map((idx) => {
         if (idx < imgList.length) {
-          return (
-            <AnimatedPicture key={idx} imgKey={imgList[idx]} positions={positions}/>
-          );
+          return <AnimatedPicture key={idx} imgKey={imgList[idx]} positions={positions}/>;
         } else {
           return <AddPicture key={idx} index={idx} addPicture={uploadImage}/>;
         }
       })}
-
       {imgList.map((key, idx) => {
         const pos = getPosition(idx);
         return (

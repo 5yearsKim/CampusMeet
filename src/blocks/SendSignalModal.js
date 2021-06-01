@@ -4,6 +4,7 @@ import {Button, TextInput} from 'react-native-paper';
 import {View, Dimensions, TouchableWithoutFeedback, Modal, Alert, StyleSheet} from 'react-native';
 import {MyContext, ThemeContext, UserContext} from 'src/context';
 import {makeSignal} from 'src/utils/Signal';
+import {sendPushNotification} from 'src/utils/PushNotification';
 
 const {width, height} = Dimensions.get('window');
 
@@ -17,6 +18,7 @@ export default function SendSignalModal({toID, popupVisible, setPopupVisible}) {
 
   const onSendSignal = async () => {
     await makeSignal(userSub, toID, message);
+    sendPushNotification(toID, 'New Signal', '누군가 나에게 시그널을 보냈어요!');
     setSignalCnt(signalCnt + 1);
     setRefreshCandidate(!refreshCandidate);
     setRefreshSentSignal(!refreshSentSignal);

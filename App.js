@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useRef} from 'react';
 import {useFonts} from 'expo-font';
 import {Auth} from 'aws-amplify';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -12,8 +12,19 @@ import config from 'src/config';
 import {bringSentSignalToday} from 'src/utils/Signal';
 import {ThemeContext, MyContext, UserContext} from 'src/context';
 import Route from 'src/Route';
+import * as Notifications from 'expo-notifications';
+import {registerForPushNotificationsAsync} from 'src/utils/PushNotification';
 
-function App() {
+Notifications.setNotificationHandler({
+  handleNotification: async () => ({
+    shouldShowAlert: true,
+    shouldPlaySound: false,
+    shouldSetBadge: false,
+  }),
+});
+
+
+export default function App() {
   const [authChecked, setAuthChecked] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [user, setUser] = useState([]);
@@ -31,6 +42,45 @@ function App() {
     nanumL: require('src/assets/fonts/NanumSquareRoundL.ttf'),
     gamja: require('src/assets/fonts/GamjaFlower-Regular.ttf'),
   });
+
+  const [notification, setNotification] = useState(false);
+  const notificationListener = useRef();
+  // const responseListener = useRef();
+
+  useEffect(() => {
+    // This listener is fired whenever a notification is received while the app is foregrounded
+    notificationListener.current = Notifications.addNotificationReceivedListener((notification) => {
+      setNotification(notification);
+    });
+
+    // // This listener is fired whenever a user taps on or interacts with a notification (works when app is foregrounded, backgrounded, or killed)
+    // responseListener.current = Notifications.addNotificationResponseReceivedListener((response) => {
+    //   console.log(response);
+    // });
+
+    return () => {
+      Notifications.removeNotificationSubscription(notificationListener.current);
+      // Notifications.removeNotificationSubscription(responseListener.current);
+    };
+  }, []);
+
+  useEffect(() => {
+    const tokenSetting = async () => {
+      if (!isAuthenticated) {
+        return;
+      }
+      const token = await registerForPushNotificationsAsync();
+      console.log(token);
+      if (token) {
+        try {
+          modifyUser(user.attributes.sub, {pushToken: token});
+        } catch(err) {
+          console.warn(err);
+        }
+      }
+    };
+    tokenSetting();
+  }, [isAuthenticated]);
 
   // auth init
   useEffect(() => {
@@ -168,6 +218,4 @@ const navigationTheme = {
     },
   },
 };
-
-export default App;
 
