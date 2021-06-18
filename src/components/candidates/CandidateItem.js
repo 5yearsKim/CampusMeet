@@ -5,7 +5,7 @@ import Text from 'src/blocks/Text';
 import {Button} from 'react-native-paper';
 import CandidateDetail from './CandidateDetail';
 import {ThemeContext} from 'src/context';
-import {campusDict} from 'src/assets/campusLogos';
+import {campusDict} from 'assets/campusLogos';
 
 const {width, height} = Dimensions.get('window');
 

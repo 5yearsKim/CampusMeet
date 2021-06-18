@@ -24,7 +24,7 @@ function TopIntro({user, navigation}) {
             style={[styles.avatar, {borderColor: user.gender=='남자'?theme.men:theme.women}]}
           /> :
           <Image
-            source={require('src/assets/images/no_profile3.png')}
+            source={require('assets/images/no_profile3.png')}
             style={[styles.avatar, {borderColor: user.gender=='남자'?theme.men:theme.women}]}
           />
         }

@@ -30,17 +30,17 @@ export default function App() {
   const [user, setUser] = useState([]);
   const [scheme, setScheme] = useState('light');
   const [signalCnt, setSignalCnt] = useState(0);
-
+  // console.log(user.signInUserSession.accessToken.jwtToken);
   const [refreshCandidate, setRefreshCandidate] = useState(false);
   const [refreshSentSignal, setRefreshSentSignal] = useState(false);
   const [refreshMypage, setRefreshMypage] = useState(false);
 
   const [fontLoaded] = useFonts({
-    nanumEB: require('src/assets/fonts/NanumSquareRoundEB.ttf'),
-    nanumB: require('src/assets/fonts/NanumSquareRoundB.ttf'),
-    nanumR: require('src/assets/fonts/NanumSquareRoundR.ttf'),
-    nanumL: require('src/assets/fonts/NanumSquareRoundL.ttf'),
-    gamja: require('src/assets/fonts/GamjaFlower-Regular.ttf'),
+    nanumEB: require('assets/fonts/NanumSquareRoundEB.ttf'),
+    nanumB: require('assets/fonts/NanumSquareRoundB.ttf'),
+    nanumR: require('assets/fonts/NanumSquareRoundR.ttf'),
+    nanumL: require('assets/fonts/NanumSquareRoundL.ttf'),
+    gamja: require('assets/fonts/GamjaFlower-Regular.ttf'),
   });
 
   const [notification, setNotification] = useState(false);
@@ -70,11 +70,11 @@ export default function App() {
         return;
       }
       const token = await registerForPushNotificationsAsync();
-      console.log(token);
+      // console.log(token);
       if (token) {
         try {
           modifyUser(user.attributes.sub, {pushToken: token});
-        } catch(err) {
+        } catch (err) {
           console.warn(err);
         }
       }

@@ -16,7 +16,7 @@ function LeftContent({navigation, matcher}) {
           style={styles.avatar}
         /> :
         <Image
-          source={require('src/assets/images/no_profile3.png')}
+          source={require('assets/images/no_profile3.png')}
           style={styles.avatar}
         />
       }

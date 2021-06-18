@@ -13,7 +13,7 @@ function LeftContent({gender}) {
   const {theme} = useContext(ThemeContext);
   return (
     <Image
-      source={require('src/assets/images/no_profile3.png')}
+      source={require('assets/images/no_profile3.png')}
       style={[styles.avatar, {borderColor: gender=='남자'?theme.men:theme.women}]}
     />
   );

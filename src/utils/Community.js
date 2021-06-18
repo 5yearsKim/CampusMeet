@@ -1,7 +1,7 @@
 import {API, graphqlOperation} from 'aws-amplify';
 import {createBoard, createPost, createComment, createNestedComment, createLikePost, createLikeComment} from 'src/graphql/customMutations';
 import {getUser, listBoards, boardByType, postByBoard, commentByPost} from 'src/graphql/customQueries';
-import {campusDict} from 'src/assets/campusLogos';
+import {campusDict} from 'assets/campusLogos';
 import config from 'src/config';
 
 export const makeBoard = async (userID, boardName, description, type) => {

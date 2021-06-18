@@ -32,7 +32,7 @@ function CandidateDetail({item, useAction}) {
         <View style={styles.imageWrapper}>
           <TouchableWithoutFeedback onPress={() => onImageClicked()}>
             <Image
-              source={require('src/assets/images/no_profile3.png')}
+              source={require('assets/images/no_profile3.png')}
               style={[styles.avatar, {borderColor: item.gender=='남자'?theme.men: theme.women}]}
             />
           </TouchableWithoutFeedback>

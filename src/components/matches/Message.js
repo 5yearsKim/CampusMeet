@@ -23,7 +23,7 @@ function LeftContent({user, showTime, navigation}) {
             style={styles.avatar}
           /> :
           <Image
-            source={require('src/assets/images/no_profile3.png')}
+            source={require('assets/images/no_profile3.png')}
             style={styles.avatar}
           />
         }

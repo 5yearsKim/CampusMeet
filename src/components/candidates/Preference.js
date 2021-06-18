@@ -5,7 +5,7 @@ import Text from 'src/blocks/Text';
 import AutoComplete from 'src/blocks/AutoComplete';
 import Slider from '@react-native-community/slider';
 import {MyContext, ThemeContext} from 'src/context';
-import campusList from 'src/assets/campusLogos';
+import campusList from 'assets/campusLogos';
 import {AntDesign} from '@expo/vector-icons';
 import {Picker} from '@react-native-picker/picker';
 import {bringPreference, makePreference, modifyPreference} from 'src/utils/User';

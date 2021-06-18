@@ -95,7 +95,7 @@ function AddPicture({index, addPicture}) {
     <View style={[styles.imageFrame, {top: pos.y, left: pos.x}]}>
       <TouchableOpacity onPress={() => addPicture()}>
         <Image
-          source={require('src/assets/images/add_picture.png')}
+          source={require('assets/images/add_picture.png')}
           style={{width: IMGWIDTH - 6, height: IMGHEIGHT - 6, borderWidth: 3, borderColor: 'black'}}
         />
       </TouchableOpacity>

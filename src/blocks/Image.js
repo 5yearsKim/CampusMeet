@@ -57,7 +57,7 @@ export function KeyImage({imgKey, style, cached, resizeMode}) {
   }
   return (
     <Image
-      source={require('src/assets/images/image_loading.jpg')}
+      source={require('assets/images/image_loading.jpg')}
       style={style}
     />
   );

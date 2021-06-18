@@ -1,12 +1,12 @@
+const isLocal = true;
+export const backURL = isLocal ? 'http://127.0.0.1:8000' : 'https://9pgkfe0rs0.execute-api.ap-northeast-2.amazonaws.com/api';
+
 export default config = {
   campus: {
     departmentOptions: ['공대', '자연대', '음악', '미술/디자인', '체육/스포츠', '인문/사회대', '상경대', '교양', '의학', '법률', '군사'],
   },
   community: {
     boardOptions: ['익명', '학교/학과 공개'],
-  },
-  api: {
-    campusURL: 'https://3eq8n8hqih.execute-api.ap-northeast-2.amazonaws.com/api',
   },
   giphyApiKey: '04zr69Z91E39ROGO6C8fGDSMPtae5cEW',
   colors: {
@@ -48,3 +48,4 @@ export default config = {
     signalMax: 3,
   },
 };
+

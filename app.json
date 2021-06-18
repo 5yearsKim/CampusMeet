@@ -8,9 +8,9 @@
     "assetBundlePatterns": [
       "**/*"
     ],
-    "icon": "./src/assets/images/campusmeet_icon.png",
+    "icon": "./assets/images/campusmeet_icon.png",
     "splash": {
-      "image": "./src/assets/images/campusmeet_splash.png",
+      "image": "./assets/images/campusmeet_splash.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -18,7 +18,7 @@
       "versionCode": 1.0,
       "package": "com.onion.campusMeet",
       "adaptiveIcon": {
-        "foregroundImage": "./src/assets/images/campusmeet_adaptive_icon.png",
+        "foregroundImage": "./assets/images/campusmeet_adaptive_icon.png",
         "backgroundColor": "#FFF"
       }
     }

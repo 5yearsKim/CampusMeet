@@ -8,7 +8,7 @@ import AutoComplete from 'src/blocks/AutoComplete';
 import {makeUser} from 'src/utils/User';
 import {MyContext} from 'src/context';
 import {Picker} from '@react-native-picker/picker';
-import campusList from 'src/assets/campusLogos';
+import campusList from 'assets/campusLogos';
 
 const {width, height} = Dimensions.get('window');
 
@@ -117,14 +117,14 @@ function CreateProfile({navigation}) {
         <View style={styles.genderWrapper}>
           <TouchableOpacity onPress={() => setGender('남자')}>
             <Image
-              source={require('src/assets/images/male.png')}
+              source={require('assets/images/male.png')}
               style={[styles.genderImage, gender=='남자'&& styles.genderClicked]}
               resizeMode='stretch'
             />
           </TouchableOpacity>
           <TouchableOpacity onPress={() => setGender('여자')}>
             <Image
-              source={require('src/assets/images/female.png')}
+              source={require('assets/images/female.png')}
               style={[styles.genderImage, gender=='여자'&& styles.genderClicked]}
               resizeMode='stretch'
             />
