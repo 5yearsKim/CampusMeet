@@ -73,7 +73,7 @@ function HomeTab({navigation}) {
         name='Match'
         component={MatchScreen}
         options={{
-          title: 'Chat',
+          title: 'Message',
           tabBarIcon: ({focused, color, size}) => {
             return <AntDesign name='message1' size={size} color={color}/>;
           },
@@ -115,7 +115,7 @@ function Route() {
       case 'Signal':
         return '시그널';
       case 'Match':
-        return '채팅';
+        return '쪽지';
       case 'Community':
         return '커뮤니티';
       case 'Mypage':

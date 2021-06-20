@@ -23,12 +23,14 @@ export function GifMessage({gifUrl, isMyMessage}) {
     height: 90,
   };
   return (
-    <Image
-      source={{
-        uri: gifUrl,
-      }}
-      style={style}
-    />
+    <View style={styles.gifContainer}>
+      <Image
+        source={{
+          uri: gifUrl,
+        }}
+        style={style}
+      />
+    </View>
   );
 }
 
@@ -36,7 +38,7 @@ export function ImageMessage({imageKey, isMyMessage}) {
   const [modalVisible, setModalVisible] = useState(false);
   const modalSwitch = () => setModalVisible(!modalVisible);
   return (
-    <View>
+    <View style={styles.imageContainer}>
       <TouchableOpacity onPress={() => setModalVisible(true)}>
         <KeyImage imgKey={imageKey} style={styles.image}/>
       </TouchableOpacity>
@@ -50,7 +52,7 @@ export function ImageMessage({imageKey, isMyMessage}) {
 const colors = config.colors.chat;
 const styles = StyleSheet.create({
   messageBox: {
-    borderRadius: 15,
+    borderRadius: 10,
     padding: 9,
     fontSize: 14,
   },
@@ -67,5 +69,11 @@ const styles = StyleSheet.create({
   image: {
     width: 160,
     height: 120,
+  },
+  imageContainer: {
+    margin: 10,
+  },
+  gifContainer: {
+    margin: 10,
   },
 });

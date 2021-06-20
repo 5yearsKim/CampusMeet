@@ -9,6 +9,8 @@
   <!-- These require runtime permissions on M -->
   <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
   <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+  <!-- network permission-->
+  <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
   <!-- END OPTIONAL PERMISSIONS -->
   <application
     android:name=".MainApplication"
@@ -17,6 +19,7 @@
     android:roundIcon="@mipmap/ic_launcher_round"
     android:allowBackup="false"
     android:theme="@style/AppTheme"
+    android:usesCleartextTraffic="true"
   >
     <meta-data android:name="expo.modules.updates.EXPO_UPDATE_URL" android:value="https://exp.host/@flow2hyun/campusMeet" />
     <meta-data android:name="expo.modules.updates.EXPO_SDK_VERSION" android:value="41.0.0" />

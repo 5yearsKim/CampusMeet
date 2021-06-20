@@ -2,7 +2,6 @@ import {API, graphqlOperation, Auth} from 'aws-amplify';
 import {createUser, updateUser, createPreference, updatePreference} from 'src/graphql/mutations';
 import {getUser, getPreference} from 'src/graphql/queries';
 import {server} from './axios';
-import axios from 'axios';
 
 export async function makeUser(userSub, gender, name, campus, graduate, year, department, division, imageKeys, profileMessage, profileDescription) {
   const newUser = {
@@ -69,9 +68,9 @@ export async function modifyPreference(userID, newPreference) {
 export async function bringCandidate() {
   const sess = await Auth.currentSession();
   const token = sess.getAccessToken().getJwtToken();
-  const rsp = await axios.get('http://127.0.0.1:8000/');
-  console.log(rsp);
-  // const headers = {'Authorization': `Bearer ${token}`};
+  const headers = {'Authorization': `Bearer ${token}`};
+  const rsp = await server.get('/list_candidate', {headers: headers});
+  return rsp.data;
   // const rsp = await server.get('/list_candidate', {headers: headers});
   // console.log(rsp);
 }
