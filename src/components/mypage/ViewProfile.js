@@ -56,8 +56,18 @@ function ViewProfile({navigation, route}) {
         <Text style={[styles.campusText, {color: theme.subText}]}>{user.campus} {user.division} {user.year} 학번</Text>
       </View>
       <View style={{padding: 10}}>
-        <Text style={[styles.messageText, {color: theme.text}]}> {user.profileMessage}</Text>
-        <Text style={[styles.descriptionText, {color: theme.subText}]}> {user.profileDescription}</Text>
+        <View style={styles.itemWrapper}>
+          <Text style={styles.categoryText}>성별</Text>
+          <Text style={styles.detailText}>{user.gender}</Text>
+        </View>
+        <View style={styles.itemWrapper}>
+          <Text style={styles.categoryText}>프로필 메세지</Text>
+          <Text style={styles.detailText}>{user.profileMessage}</Text>
+        </View>
+        <View style={styles.itemWrapper}>
+          <Text style={styles.categoryText}>소개</Text>
+          <Text style={styles.detailText}>{user.profileDescription}</Text>
+        </View>
       </View>
     </ScrollView>
   );
@@ -70,6 +80,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   container: {
+    padding: 10,
   },
   profileContainer: {
     flex: 1,
@@ -82,22 +93,26 @@ const styles = StyleSheet.create({
     width: width,
     height: Math.min(width, height) * 0.8,
   },
+  itemWrapper: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    margin: 10,
+  },
+  categoryText: {
+    fontWeight: 'bold',
+    fontSize: 16,
+    marginRight: 10,
+  },
+  detailText: {
+    color: 'gray',
+    fontSize: 16,
+  },
   nameText: {
-    fontSize: 18,
+    fontSize: 20,
     fontWeight: 'bold',
   },
   campusText: {
-    fontSize: 14,
-  },
-  yearText: {
-    fontSize: 11,
-  },
-  messageText: {
-    fontSize: 18,
-    fontWeight: 'bold',
-  },
-  descriptionText: {
-    fontSize: 18,
+    fontSize: 16,
   },
 });
 

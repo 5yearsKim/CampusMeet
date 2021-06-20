@@ -49,6 +49,7 @@ function MypageList({navigation}) {
   });
   const {refreshMypage} = useContext(UserContext);
 
+
   useEffect(() => {
     const m_bringUser = async () => {
       try {
