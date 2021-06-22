@@ -11,7 +11,10 @@ const {width, height} = Dimensions.get('window');
 function RegisterScreen(props) {
   return (
     // <ScrollView contentContainerStyle={styles.container}>
-    <View style={styles.container}>
+    <KeyboardAvoidingView
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      style={styles.container}
+    >
       <LinearGradient
         // colors={[colors.main.primary, colors.main.primary_]}
         colors={[colors.main.primary, 'transparent']}
@@ -20,7 +23,7 @@ function RegisterScreen(props) {
       <View style={styles.mainBox}>
         <Register {...props}/>
       </View>
-    </View>
+    </KeyboardAvoidingView>
     // </ScrollView>
   );
 }

@@ -54,7 +54,7 @@ function Candidate({navigation}) {
 
 
   return (
-    <View>
+    <View style={{flex: 1}}>
       <FlatList
         data={userList}
         renderItem={({item}) => <CandidateItem item={item} />}

@@ -1,5 +1,5 @@
 import React, {useEffect, useState, useRef} from 'react';
-import {View, FlatList, StyleSheet} from 'react-native';
+import {KeyboardAvoidingView, View, FlatList, StyleSheet} from 'react-native';
 import {bringComment} from 'src/utils/Community';
 import CommentInput from './CommentInput';
 import Comment from './Comment';
@@ -30,7 +30,11 @@ function Post({navigation, route}) {
   };
 
   return (
-    <View style={styles.container}>
+    <KeyboardAvoidingView
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      keyboardVerticalOffset={150}
+      style={styles.container}
+    >
       <ChatContext.Provider value={{isNested, setIsNested}}>
         <FlatList
           ref={commentList}
@@ -48,7 +52,7 @@ function Post({navigation, route}) {
           />
         </View>
       </ChatContext.Provider>
-    </View>
+    </KeyboardAvoidingView>
   );
 }
 
@@ -60,10 +64,10 @@ const styles = StyleSheet.create({
     paddingBottom: 350, // textinput not to hide contents
   },
   commentInput: {
-    position: 'absolute',
+    // position: 'fixed',
     flex: 1,
-    left: 0,
-    right: 0,
+    // left: 0,
+    // right: 0,
     bottom: 0,
   },
 });

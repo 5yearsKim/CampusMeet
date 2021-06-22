@@ -7,7 +7,7 @@ import Text from 'src/blocks/Text';
 import AutoComplete from 'src/blocks/AutoComplete';
 import {makeUser} from 'src/utils/User';
 import {MyContext} from 'src/context';
-import {Picker} from '@react-native-picker/picker';
+import MyPicker from 'src/blocks/Picker';
 import campusList from 'assets/campusLogos';
 
 const {width, height} = Dimensions.get('window');
@@ -183,20 +183,13 @@ function CreateProfile({navigation}) {
         />
         {graduateButton()}
         <View style={{flexDirection: 'row', alignItems: 'center'}}>
-          <Text style={{fontWeight: 'bold', margin: 20}}>단과대학 선택: </Text>
-          <View style={{backgroundColor: 'white', borderRadius: 10,}}>
-            <Picker
-              selectedValue={department}
-              onValueChange={(value) => setDepartment(value)}
-              style={{width: 150, height: 50}}
-            >
-              {departmentOptions.map((item) => {
-                return (
-                  <Picker.Item label={item} value={item} key={item}/>
-                );
-              })}
-            </Picker>
-          </View>
+          <Text style={{fontWeight: 'bold', marginLeft: 20, margin: 10}}>단과대학 선택: </Text>
+          <Text style={{fontWeight: 'bold', marginRight: 20}}>{department}</Text>
+          <MyPicker
+            candidate={departmentOptions.map((item) => ({label: item, value: item}))}
+            placeholder='선택'
+            onSelectItem={(item) => setDepartment(item.value)}
+          />
         </View>
         <View>
           <TextInput

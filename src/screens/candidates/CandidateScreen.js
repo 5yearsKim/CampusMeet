@@ -1,12 +1,12 @@
 import React from 'react';
-import {View} from 'react-native';
+import {SafeAreaView} from 'react-native';
 import Candidate from 'src/components/candidates/Candidate';
 
 function CandidateScreen(props) {
   return (
-    <View>
+    <SafeAreaView style={{flex: 1}}>
       <Candidate {...props}/>
-    </View>
+    </SafeAreaView>
   );
 }
 

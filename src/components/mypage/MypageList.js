@@ -19,7 +19,7 @@ function TopIntro({user, navigation}) {
         {user.imageKeys.length > 0 ?
           <KeyImage
             imgKey={user.imageKeys[0]}
-            cached={false}
+            cached={true}
             resizemode='contain'
             style={[styles.avatar, {borderColor: user.gender=='남자'?theme.men:theme.women}]}
           /> :

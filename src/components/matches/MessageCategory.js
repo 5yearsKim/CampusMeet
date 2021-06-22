@@ -8,9 +8,7 @@ import config from 'src/config';
 export function TextMessage({text, isMyMessage}) {
   return (
     <Text
-      style={[
-        styles.messageBox, isMyMessage? styles.myBox: styles.yourBox,
-      ]}
+      style={[styles.messageBox, isMyMessage? styles.myBox : styles.yourBox]}
     >
       {text}
     </Text>
@@ -55,6 +53,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     padding: 9,
     fontSize: 14,
+    overflow: 'hidden'
   },
   myBox: {
     backgroundColor: colors.myMessageBox,

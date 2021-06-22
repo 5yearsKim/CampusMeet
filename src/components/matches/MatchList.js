@@ -38,7 +38,7 @@ function MatchList({navigation}) {
   };
 
   return (
-    <View>
+    <View style={{flex: 1}}>
       <FlatList
         data={userList}
         renderItem={({item}) => <MatchListItem item={item} navigation={navigation}/>}

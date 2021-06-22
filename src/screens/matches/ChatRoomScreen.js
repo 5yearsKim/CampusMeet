@@ -1,22 +1,21 @@
 import React from 'react';
 import ChatRoom from 'src/components/matches/ChatRoom';
 import InputBox from 'src/components/matches/InputBox';
-import {View, StyleSheet} from 'react-native';
+import {SafeAreaView, StyleSheet} from 'react-native';
 import config from 'src/config';
 
 function ChatRoomScreen(props) {
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <ChatRoom {...props}/>
       <InputBox {...props}/>
-    </View>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    width: '100%',
-    height: '100%',
+    flex: 1,
     justifyContent: 'flex-end',
     backgroundColor: config.colors.chat.background,
   },

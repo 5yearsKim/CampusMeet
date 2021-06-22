@@ -1,9 +1,12 @@
 import React from 'react';
+import {SafeAreaView} from 'react-native';
 import CreatePost from 'src/components/community/CreatePost';
 
 function CreatePostScreen(props) {
   return (
-    <CreatePost {...props}/>
+    <SafeAreaView style={{flex: 1}}>
+      <CreatePost {...props}/>
+    </SafeAreaView>
   );
 }
 

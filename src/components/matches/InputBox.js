@@ -63,7 +63,11 @@ function InputBox({route}) {
     }
   };
   return (
-    <View>
+    <KeyboardAvoidingView
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      keyboardVerticalOffset={100}
+      // style={{flex: 1}}
+    >
       <Portal>
         <Modal visible={gifVisible} onDismiss={() => setGifVisible(false)} contentContainerStyle={styles.gifContainer}>
           <GifSearch
@@ -81,47 +85,34 @@ function InputBox({route}) {
           />
         </Modal>
       </Portal>
-      <KeyboardAvoidingView
-        behavior={Platform.OS == 'ios'? 'padding': 'height'}
-        keyboardVerticalOffset={100}
-        style={{
-          width: '100%',
-        }}
-      >
+      <View style={{flexDirection: 'row', paddingLeft: 10, paddingRight: 10}}>
         <View style={styles.container}>
-          <View style={styles.mainContainer}>
-            <TextInput
-              style={styles.textInput}
-              multiline
-              value={message}
-              onChangeText={setMessage}
-            />
-            <TouchableOpacity onPress={() => setGifVisible(true)}>
-              <MaterialCommunityIcons name='gif' size={28}/>
-            </TouchableOpacity>
-          </View>
-          <TouchableOpacity onPress={onClickSendIcon}>
-            <View style={styles.buttonContainer}>
-              {!message?
-                <Ionicons name='camera' size={28} color='white'/>:
-                <Ionicons name='send-sharp' size={28} color='white'/>
-              }
-            </View>
+          <TextInput
+            style={styles.textInput}
+            multiline
+            value={message}
+            onChangeText={setMessage}
+          />
+          <TouchableOpacity onPress={() => setGifVisible(true)}>
+            <MaterialCommunityIcons name='gif' size={28}/>
           </TouchableOpacity>
         </View>
-      </KeyboardAvoidingView>
-    </View>
-
+        <TouchableOpacity onPress={onClickSendIcon}>
+          <View style={styles.buttonContainer}>
+            {!message?
+              <Ionicons name='camera' size={28} color='white'/>:
+              <Ionicons name='send-sharp' size={28} color='white'/>
+            }
+          </View>
+        </TouchableOpacity>
+      </View>
+    </KeyboardAvoidingView>
   );
 }
 
 const colors = config.colors.inputBox;
 const styles = StyleSheet.create({
   container: {
-    flexDirection: 'row',
-    margin: 10,
-  },
-  mainContainer: {
     flexDirection: 'row',
     backgroundColor: 'white',
     padding: 10,

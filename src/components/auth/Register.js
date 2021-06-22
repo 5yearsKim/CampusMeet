@@ -15,6 +15,7 @@ function Register() {
   const [password, setPassword] = useState('');
   const [passwordConfirm, setPasswordConfirm] = useState('');
   const [emailVerification, setEmailVerification] = useState('');
+
   const checkFormat = () => {
     if (emailSent == false) {
       setUsername(username.trim());

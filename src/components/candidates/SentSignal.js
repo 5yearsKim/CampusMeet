@@ -32,7 +32,7 @@ function SentSignal({navigation}) {
     );
   }
   return (
-    <View>
+    <View style={{flex: 1}}>
       <FlatList
         data={userList}
         renderItem={({item}) => <SentSignalItem item={item}/>}

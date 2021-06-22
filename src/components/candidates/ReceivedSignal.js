@@ -33,7 +33,7 @@ function ReceivedSignal({navigation}) {
     );
   }
   return (
-    <View>
+    <View style={{flex: 1}}>
       <FlatList
         data={userList}
         renderItem={renderReceivedSignal}

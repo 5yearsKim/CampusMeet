@@ -7,7 +7,7 @@ import Slider from '@react-native-community/slider';
 import {MyContext, ThemeContext} from 'src/context';
 import campusList from 'assets/campusLogos';
 import {AntDesign} from '@expo/vector-icons';
-import {Picker} from '@react-native-picker/picker';
+import MyPicker from 'src/blocks/Picker';
 import {bringPreference, makePreference, modifyPreference} from 'src/utils/User';
 import config from 'src/config';
 
@@ -123,25 +123,20 @@ export default function Preference({filterOpen, setFilterOpen}) {
                   })}
                 </View>
 
+
                 <View style={{flexDirection: 'row', alignItems: 'center'}}>
                   <Text style={[styles.sectionText, {margin: 20}]}>선호 학과: </Text>
                   <View style={{backgroundColor: 'white', borderRadius: 10}}>
-                    <Picker
-                      selectedValue={department}
-                      onValueChange={(value) => {
-                        setDepartment(value);
-                        if (!departmentLike.includes(value)) {
-                          setDepartmentLike([...departmentLike, value]);
+                    <MyPicker
+                      candidate={departmentOptions.map((item) => ({label: item, value: item}))}
+                      placeholder='선택'
+                      onSelectItem={(item) => {
+                        setDepartment(item.value);
+                        if (!departmentLike.includes(item.value)) {
+                          setDepartmentLike([...departmentLike, item.value]);
                         }
                       }}
-                      style={{width: 150, height: 50}}
-                    >
-                      {departmentOptions.map((item) => {
-                        return (
-                          <Picker.Item label={item} value={item} key={item}/>
-                        );
-                      })}
-                    </Picker>
+                    />
                   </View>
                 </View>
                 <View style={{flexWrap: 'wrap', flexDirection: 'row', minHeight: 20}}>

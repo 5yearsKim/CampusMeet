@@ -1,5 +1,5 @@
 import React, {useContext} from 'react';
-import {StyleSheet, Dimensions, TouchableOpacity, Text, View} from 'react-native';
+import {StyleSheet, Dimensions, TouchableOpacity, Text, View, KeyboardAvoidingView} from 'react-native';
 import {Button} from 'react-native-paper';
 import {LinearGradient} from 'expo-linear-gradient';
 import Login from 'src/components/auth/Login';
@@ -10,7 +10,10 @@ const {width, height} = Dimensions.get('window');
 
 function HomeScreen(props) {
   return (
-    <View style={styles.container}>
+    <KeyboardAvoidingView
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      style={styles.container}
+    >
       <LinearGradient
         // colors={[colors.main.primary, colors.main.primary_]}
         colors={[colors.main.primary, 'transparent']}
@@ -32,7 +35,7 @@ function HomeScreen(props) {
           </TouchableOpacity>
         </View>
       </View>
-    </View>
+    </KeyboardAvoidingView>
   );
 }
 

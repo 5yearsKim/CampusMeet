@@ -94,12 +94,13 @@ const styles = StyleSheet.create({
     margin: 5,
   },
   date: {
-    padding: 3,
+    padding: 5,
     paddingLeft: 5,
     paddingRight: 5,
     color: 'black',
     backgroundColor: 'white',
     borderRadius: 15,
+    overflow: 'hidden',
   },
 });
 

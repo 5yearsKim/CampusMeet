@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, Dimensions, View} from 'react-native';
+import {StyleSheet, Dimensions, View, KeyboardAvoidingView} from 'react-native';
 import {LinearGradient} from 'expo-linear-gradient';
 import ForgotPassword from 'src/components/auth/ForgotPassword';
 import config from 'src/config';
@@ -9,7 +9,10 @@ const {width, height} = Dimensions.get('window');
 
 function ForgotPasswordScreen(props) {
   return (
-    <View style={styles.container}>
+    <KeyboardAvoidingView
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      style={styles.container}
+    >
       <LinearGradient
         // colors={[colors.main.primary, colors.main.primary_]}
         colors={[colors.main.primary, 'transparent']}
@@ -18,7 +21,7 @@ function ForgotPasswordScreen(props) {
       <View style={styles.passwordBox}>
         <ForgotPassword {...props}/>
       </View>
-    </View>
+    </KeyboardAvoidingView>
   );
 }
 
@@ -31,8 +34,8 @@ const styles = StyleSheet.create({
   },
   passwordBox: {
     width: width * 0.8,
-    height: height * 0.5,
-    padding: 10,
+    minHeight: height * 0.25,
+    padding: 25,
     backgroundColor: 'white',
     borderRadius: 30,
     justifyContent: 'center',
