@@ -1,7 +1,11 @@
+export const date2local = (date) => {
+  // return new Date(date.getTime() + date.getTimezoneOffset() * 60000)
+  return new Date(date.getTime())
+}
 
 export const relativeTimePrettify = (dateString, mode='day') => {
-  const date = new Date(dateString);
-  const now = new Date();
+  const date = date2local(new Date(dateString));
+  const now = date2local(new Date());
   const abssec = (now - date) / (1000);
   if (abssec < 59) {
     return '방금 전';
@@ -23,76 +27,55 @@ export const relativeTimePrettify = (dateString, mode='day') => {
       return `${absday.toFixed(0)}일 전`;
     }
   }
-  const koreanDate= date.toLocaleDateString('ko-KR');
-  return koreanDate.slice(0, 5);
+  const month = date.getMonth();
+  const day = date.getDate();
+  return `${month}/${day}`;
 };
 
-const date2Korean = (dateString) => {
-  const month = Number(dateString.slice(0, 2));
-  const day = Number(dateString.slice(3, 5));
-  const format = `${month}월 ${day}일`;
-  return format;
-};
-
-export const absoluteTimePrettify = (dateString) => {
-  const now = new Date();
-  const yesterday = new Date();
-  yesterday.setDate(yesterday.getDate() - 1);
-  const date = new Date(dateString);
-
-  const nowDay = now.toLocaleDateString('ko-KR');
-  const dateDay = date.toLocaleDateString('ko-KR');
-  const yesterdayDay = yesterday.toLocaleDateString('ko-KR');
-
-  const nowTime = now.toLocaleTimeString('kr-KR');
-  // console.log(nowDay, dateDay, yesterdayDay)
-  // console.log(nowTime);
-  if (dateDay == nowDay) {
-    return nowTime.slice(0, 5);
-  } else if (dateDay == yesterdayDay) {
-    return '어제';
-  } else {
-    return date2Korean(dateDay);
-  }
-};
 
 export const absoluteTime = (dateString) => {
-  const inputDate = new Date(dateString);
-  const time = inputDate.toLocaleTimeString('kr-KR');
-  const date = inputDate.toLocaleDateString('kr-KR');
-  return `${date.slice(0, 5)} ${time.slice(0, 5)}`;
+  const date = date2local(new Date(dateString));
+  const year = date.getFullYear();
+  const month = date.getMonth();
+  const day = date.getDate();
+  const hour = date.getHours();
+  const minute = date.getMinutes();
+  return `${month}/${day} ${hour}:${minute}`;
 };
 
 export function strTime2Min(strTime) {
-  const locale = 'kr-KR';
-  const date = new Date(Date.parse(strTime));
-  const localTime = date.toLocaleString(locale);
-  let hour = parseInt(localTime.slice(11, 13));
+  const date = date2local(new Date(strTime));
+
+  let hour = date.getHours();
   let overnoon = 'am';
   if (hour > 12) {
     hour = hour - 12;
     overnoon = 'pm';
   }
-  const min = localTime.slice(14, 16);
+  const min = date.getMinutes();
   return `${hour}:${min} ${overnoon}`;
 }
 
 export function strTime2Date(strTime) {
-  const locale = 'kr-KR';
-  const date = new Date(Date.parse(strTime));
-  const localDate= date.toLocaleDateString(locale);
-  return date2Korean(localDate);
+  const date = date2local(new Date(strTime));
+  const month = date.getMonth();
+  const day = date.getDate();
+  return `${month}월 ${day}일`;
 }
 
 export function isMinDifferent(strTime1, strTime2) {
-  if (strTime1.slice(0, 16) != strTime2.slice(0, 16)) {
+  const date1 = date2local(new Date(strTime1));
+  const date2 = date2local(new Date(strTime2));
+  if (date1.getMinutes() != date2.getMinutes()) {
     return true;
   }
   return false;
 }
 
 export function isDateDifferent(strTime1, strTime2) {
-  if (strTime2Date(strTime1) != strTime2Date(strTime2)) {
+  const date1 = date2local(new Date(strTime1));
+  const date2 = date2local(new Date(strTime2));
+  if ((date1.getDate() != date2.getDate()) && (date1.getMonth() != date2.getMonth())) {
     return true;
   }
   return false;

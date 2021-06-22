@@ -1,7 +1,7 @@
 import React, {useContext} from 'react';
 import {View, Image, TouchableOpacity, StyleSheet} from 'react-native';
 import Text from 'src/blocks/Text';
-import {absoluteTimePrettify} from 'src/utils/Time';
+import {relativeTimePrettify} from 'src/utils/Time';
 import {KeyImage} from 'src/blocks/Image';
 import {ThemeContext} from 'src/context';
 
@@ -60,7 +60,7 @@ function MatchListItem({item, navigation}) {
             <Text style={[styles.nameText, {color: theme.text}]}>{matcher.name}</Text>
             <View style={{flexDirection: 'row', flex: 1, justifyContent: 'space-between'}}>
               {lastMessage()}
-              <Text style={[styles.timeText, {color: theme.subText}]}>{absoluteTimePrettify(chatRoom.lastMessage.createdAt)}</Text>
+              <Text style={[styles.timeText, {color: theme.subText}]}>{relativeTimePrettify(chatRoom.lastMessage.createdAt, 'week')}</Text>
             </View>
           </View>
         </View>
