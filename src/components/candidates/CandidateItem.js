@@ -35,15 +35,7 @@ function LeftContent({item}) {
 
 function CandidateItem({item}) {
   const [popupVisible, setPopupVisible] = useState(false);
-  const [isHide, setIsHide] = useState(false);
   const {theme} = useContext(ThemeContext);
-  if (isHide) {
-    console.log('hide:', isHide);
-    return (
-      <View>
-      </View>
-    );
-  }
   return (
     <View style={styles.container}>
       <TouchableOpacity onPress={() => setPopupVisible(true)}>
@@ -52,16 +44,8 @@ function CandidateItem({item}) {
           <View style={{marginLeft: 10, paddingTop: 10}}>
             <Text style={[styles.titleText, {color: theme.text}]}>{item.campus} {item.graduate}</Text>
             <Text style={[styles.subtitleText, {color: theme.subText}]}>{item.division} {item.year}학번</Text>
+            <Text style={[styles.messageText]}>{item.profileMessage}</Text>
           </View>
-        </View>
-        <View style={styles.buttonWrapper}>
-          <Button
-            mode='text'
-            onPress={() => setIsHide(true)}
-            labelStyle={styles.buttonText}
-          >
-            숨기기
-          </Button>
         </View>
       </TouchableOpacity>
       <Modal visible={popupVisible} onRequestClose={() => setPopupVisible(false)} transparent={true}>
@@ -81,6 +65,8 @@ function CandidateItem({item}) {
 
 const styles = StyleSheet.create({
   container: {
+    margin: 5,
+    marginBottom: 20,
   },
   logo: {
     height: 70,
@@ -98,22 +84,21 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold',
   },
-  buttonWrapper: {
-    flexDirection: 'row',
-    justifyContent: 'flex-end',
-    marginRight: 20,
-  },
   titleText: {
     fontWeight: 'bold',
     fontSize: 18,
   },
   subtitleText: {
-    fontSize: 12,
-    color: 'gray',
-    marginTop: 5,
-  },
-  buttonText: {
+    fontSize: 14,
     fontWeight: 'bold',
+    marginTop: 5,
+    marginLeft: 70,
+  },
+  messageText: {
+    fontSize: 13,
+    marginTop: 8,
+    fontStyle: 'italic',
+    color: 'gray',
   },
   modalContainer: {
     flex: 1,
@@ -123,7 +108,7 @@ const styles = StyleSheet.create({
   },
   cardContainer: {
     width: width*0.8,
-    height: height*0.6,
+    minHeight: height*0.3,
     borderRadius: 15,
   },
 });

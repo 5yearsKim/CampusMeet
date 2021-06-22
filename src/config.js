@@ -1,4 +1,4 @@
-const isLocal = true;
+const isLocal = false;
 export const backURL = isLocal ? 'http://127.0.0.1:8000' : 'https://9pgkfe0rs0.execute-api.ap-northeast-2.amazonaws.com/api';
 
 export default config = {
@@ -19,10 +19,10 @@ export default config = {
       mainButton: '#0C6157',
     },
     chat: {
-      background: '#B3B2FF',
-      myMessageBox: '#0E0C52',
+      background: '#FFF0F5',
+      myMessageBox: '#000080',
       myMessageText: 'white',
-      yourMessageBox: '#B0E0E6',
+      yourMessageBox: '#FAFAD2',
       yourMessageText: 'black',
     },
   },

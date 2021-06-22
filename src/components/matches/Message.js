@@ -86,7 +86,7 @@ const styles = StyleSheet.create({
     borderRadius: 50,
   },
   container: {
-    padding: 5,
+    padding: 2,
     alignItems: 'flex-end',
   },
   time: {

@@ -1,5 +1,7 @@
 import React, {useEffect, useState, useRef} from 'react';
 import {useFonts} from 'expo-font';
+import AppLoading from 'expo-app-loading';
+import {StatusBar} from 'expo-status-bar';
 import {Auth} from 'aws-amplify';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {DefaultTheme as PaperTheme, Provider as PaperProvider} from 'react-native-paper';
@@ -165,6 +167,7 @@ export default function App() {
           <UserContext.Provider value={userProps()}>
             <PaperProvider theme={isAuthenticated ? paperTheme[scheme] : paperTheme['light']}>
               <NavigationContainer theme={navigationTheme[scheme]}>
+                <StatusBar style='auto'/>
                 <Route/>
               </NavigationContainer>
             </PaperProvider>
@@ -173,7 +176,11 @@ export default function App() {
       </MyContext.Provider>
     );
   } else {
-    return null;
+    return (
+      <AppLoading
+        onError={console.warn}
+      />
+    );
   }
 }
 

@@ -113,9 +113,9 @@ function ReceivedSignalItem({item, navigation}) {
           </Button>
           <Button
             onPress={() => alertMatch()}
-            // labelStyle={styles.buttonText}
+            labelStyle={styles.buttonText}
           >
-            Match!
+            수락
           </Button>
         </View>
       </View>
@@ -130,7 +130,7 @@ const styles = StyleSheet.create({
     height: 70,
     width: 70,
     borderRadius: 50,
-    borderWidth: 5,
+    borderWidth: 3,
   },
   container: {
   },

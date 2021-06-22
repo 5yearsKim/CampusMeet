@@ -36,7 +36,6 @@ function CandidateDetail({item, useAction}) {
               style={[styles.avatar, {borderColor: item.gender=='남자'?theme.men: theme.women}]}
             />
           </TouchableWithoutFeedback>
-          <Text style={styles.messageText}>{item.profileMessage}</Text>
           <Animated.View style={{opacity: fadeAnim}}>
             <Text style={{fontSize: 13, color: 'red'}}>매칭 이전에 프로필 사진을 볼 수 없습니다.</Text>
           </Animated.View>
@@ -79,6 +78,8 @@ function CandidateDetail({item, useAction}) {
 
 const styles = StyleSheet.create({
   container: {
+    paddingTop: 10,
+    paddingBottom: 10,
   },
   topContainer: {
     alignItems: 'center',
@@ -106,19 +107,17 @@ const styles = StyleSheet.create({
     height: 100,
     margin: 5,
     borderRadius: 50,
-    borderWidth: 5,
-  },
-  messageText: {
-    fontSize: 18,
-    color: 'gray',
-    fontWeight: 'bold',
+    borderWidth: 3,
   },
   itemWrapper: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
     margin: 10,
   },
   categoryText: {
     fontWeight: 'bold',
     fontSize: 14,
+    marginRight: 5,
   },
   detailText: {
     color: 'gray',

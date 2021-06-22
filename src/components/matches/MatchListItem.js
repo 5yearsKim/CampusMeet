@@ -58,10 +58,12 @@ function MatchListItem({item, navigation}) {
           <LeftContent matcher={item.matcher} navigation={navigation}/>
           <View style={styles.textWrapper}>
             <Text style={[styles.nameText, {color: theme.text}]}>{matcher.name}</Text>
-            {lastMessage()}
+            <View style={{flexDirection: 'row', flex: 1, justifyContent: 'space-between'}}>
+              {lastMessage()}
+              <Text style={[styles.timeText, {color: theme.subText}]}>{absoluteTimePrettify(chatRoom.lastMessage.createdAt)}</Text>
+            </View>
           </View>
         </View>
-        <Text style={{color: theme.subText}}>{absoluteTimePrettify(chatRoom.lastMessage.createdAt)}</Text>
       </View>
     </TouchableOpacity>
   );
@@ -80,9 +82,10 @@ const styles = StyleSheet.create({
   },
   contentContainer: {
     flexDirection: 'row',
+    flex: 1,
   },
   textWrapper: {
-
+    flex: 1,
   },
   nameText: {
     fontSize: 18,
@@ -92,6 +95,10 @@ const styles = StyleSheet.create({
   messageText: {
     fontSize: 13,
     marginLeft: 5,
+  },
+  timeText: {
+    fontSize: 12,
+    marginRight: 5,
   },
 });
 export default MatchListItem;
