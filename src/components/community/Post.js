@@ -30,30 +30,25 @@ function Post({navigation, route}) {
   };
 
   return (
-    <View style={styles.container}>
-      <ChatContext.Provider value={{isNested, setIsNested}}>
-        <FlatList
-          ref={commentList}
-          data={comment}
-          contentContainerStyle={styles.flatlistContainer}
-          ListHeaderComponent={() => <PostHeader post={post} board={board} />}
-          renderItem={({item, index}) => <Comment item={item} index={index} board={board} focusComment={focusComment}/>}
-          keyExtractor={(item) => item.id}
-        />
-        <CommentInput
-          board={board}
-          post={post}
-          refresh={refreshComment}
-        />
-      </ChatContext.Provider>
-    </View>
+    <ChatContext.Provider value={{isNested, setIsNested}}>
+      <FlatList
+        ref={commentList}
+        data={comment}
+        contentContainerStyle={styles.flatlistContainer}
+        ListHeaderComponent={() => <PostHeader post={post} board={board} />}
+        renderItem={({item, index}) => <Comment item={item} index={index} board={board} focusComment={focusComment}/>}
+        keyExtractor={(item) => item.id}
+      />
+      <CommentInput
+        board={board}
+        post={post}
+        refresh={refreshComment}
+      />
+    </ChatContext.Provider>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
   flatlistContainer: {
     // paddingBottom: 350, // textinput not to hide contents
   },

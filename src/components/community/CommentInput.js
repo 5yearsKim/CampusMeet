@@ -94,7 +94,7 @@ function CommentInput({board, post, refresh}) {
 const styles = StyleSheet.create({
   container: {
     flex: 0,
-    margin: 6,
+    margin: 5,
     padding: 5,
     borderWidth: 1,
     borderRadius: 15,
@@ -106,11 +106,11 @@ const styles = StyleSheet.create({
     marginRight: 10,
   },
   commentInput: {
-    position: 'absolute',
-    flex: 1,
-    left: 0,
-    right: 0,
-    bottom: 0,
+    // position: 'absolute',
+    // flex: 1,
+    // left: 0,
+    // right: 0,
+    // bottom: 0,
     // height: 50,
   },
 });
