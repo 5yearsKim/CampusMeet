@@ -1,19 +1,20 @@
 import React, {useState, useContext} from 'react';
 import {useSharedValue} from 'react-native-reanimated';
-import {Dimensions, ScrollView, View, Image, TouchableOpacity, StyleSheet} from 'react-native';
+import {ScrollView, View, TouchableOpacity, StyleSheet} from 'react-native';
 import UploadPicture from './UploadPicture';
 import {RadioButton, TextInput, Button} from 'react-native-paper';
+import {MaterialCommunityIcons} from '@expo/vector-icons';
 import Text from 'src/blocks/Text';
 import AutoComplete from 'src/blocks/AutoComplete';
 import {makeUser} from 'src/utils/User';
-import {MyContext} from 'src/context';
+import {MyContext, ThemeContext} from 'src/context';
 import MyPicker from 'src/blocks/Picker';
 import campusList from 'assets/campusLogos';
 
-const {width, height} = Dimensions.get('window');
 
 function CreateProfile({navigation}) {
   const auth = useContext(MyContext);
+  const {theme} = useContext(ThemeContext);
   const userSub = auth.user.attributes.sub;
 
   const [imgList, setImgList] = useState([]);
@@ -116,18 +117,24 @@ function CreateProfile({navigation}) {
         <Text style={styles.genderSelectText}>성별을 선택해주세요.</Text>
         <View style={styles.genderWrapper}>
           <TouchableOpacity onPress={() => setGender('남자')}>
-            <Image
+            <View style={[styles.genderImage, gender=='남자'&& styles.genderClicked]}>
+              <MaterialCommunityIcons name="face" size={80} color={theme.men} />
+            </View>
+            {/* <Image
               source={require('assets/images/male.png')}
               style={[styles.genderImage, gender=='남자'&& styles.genderClicked]}
               resizeMode='stretch'
-            />
+            /> */}
           </TouchableOpacity>
           <TouchableOpacity onPress={() => setGender('여자')}>
-            <Image
+            <View style={[styles.genderImage, gender=='여자'&& styles.genderClicked]}>
+              <MaterialCommunityIcons name="face-woman" size={80} color={theme.women} />
+            </View>
+            {/* <Image
               source={require('assets/images/female.png')}
               style={[styles.genderImage, gender=='여자'&& styles.genderClicked]}
               resizeMode='stretch'
-            />
+            /> */}
           </TouchableOpacity>
         </View>
         {gender.length > 0 &&
@@ -176,13 +183,15 @@ function CreateProfile({navigation}) {
           onChangeText={(text) => setName(text)}
           style={styles.textInput}
         />
-        <AutoComplete
-          candList={campusCand}
-          value={campus}
-          onClickText={(text) => setCampus(text)}
-          onChangeText={(text) => setCampus(text)}
-          placeholder='campus'
-        />
+        <View style={{marginTop: 10, marginBottom: 5}}>
+          <AutoComplete
+            candList={campusCand}
+            value={campus}
+            onClickText={(text) => setCampus(text)}
+            onChangeText={(text) => setCampus(text)}
+            placeholder='캠퍼스'
+          />
+        </View>
         {graduateButton()}
         <View style={{flexDirection: 'row', alignItems: 'center'}}>
           <Text style={{fontWeight: 'bold', marginLeft: 20, margin: 10}}>단과대학 선택: </Text>
@@ -293,14 +302,14 @@ const styles = StyleSheet.create({
     justifyContent: 'space-evenly',
   },
   genderImage: {
-    width: width* 0.3,
-    height: height* 0.25,
+    padding: 20,
     opacity: 0.3,
   },
   genderClicked: {
     opacity: 1,
     borderWidth: 3,
-    borderRadius: 20,
+    borderRadius: 40,
+    borderColor: 'gray',
   },
   graduateWrapper: {
     flexDirection: 'row',
