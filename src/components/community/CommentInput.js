@@ -55,8 +55,7 @@ function CommentInput({board, post, refresh}) {
     // <View style={[styles.container, {height: inputHeight + 10, backgroundColor: nested.isNested?'green':'blue'}]}>
     <KeyboardAvoidingView
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-      keyboardVerticalOffset={150}
-      style={[styles.commentInput, {height: inputHeight + 20}]}
+      keyboardVerticalOffset={100}
     >
       <View style={[styles.container, {height: inputHeight + 10}]}>
         <View style={{flexDirection: 'row', alignItems: 'center'}}>
@@ -66,7 +65,7 @@ function CommentInput({board, post, refresh}) {
               onChangeText={(text) => setMessage(text)}
               ref={chatInput}
               value={message}
-              multiline={true}
+              multiline
               onContentSizeChange={(event) => {
                 setHeight(event.nativeEvent.contentSize.height);
               }}
@@ -104,14 +103,6 @@ const styles = StyleSheet.create({
   nickname: {
     fontSize: 13,
     marginRight: 10,
-  },
-  commentInput: {
-    // position: 'absolute',
-    // flex: 1,
-    // left: 0,
-    // right: 0,
-    // bottom: 0,
-    // height: 50,
   },
 });
 
