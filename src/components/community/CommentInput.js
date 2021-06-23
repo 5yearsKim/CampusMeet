@@ -56,7 +56,7 @@ function CommentInput({board, post, refresh}) {
     <KeyboardAvoidingView
       behavior={Platform.OS === "ios" ? "padding" : "height"}
       keyboardVerticalOffset={150}
-      style={[styles.commentInput, {height: inputHeight + 10}]}
+      style={[styles.commentInput, {height: inputHeight + 20}]}
     >
       <View style={[styles.container, {height: inputHeight + 10}]}>
         <View style={{flexDirection: 'row', alignItems: 'center'}}>
@@ -72,7 +72,7 @@ function CommentInput({board, post, refresh}) {
               }}
               onBlur={() => nested.setIsNested(false)}
               placeholder={placeholder}
-              style={{height: Math.max(inputHeight, 30)}}
+              style={{flex: 1, height: Math.max(inputHeight, 30)}}
             />
           </View>
           <View style={{marginRight: 15}}>

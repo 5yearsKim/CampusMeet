@@ -85,8 +85,8 @@ function InputBox({route}) {
           />
         </Modal>
       </Portal>
-      <View style={{flexDirection: 'row', paddingLeft: 10, paddingRight: 10}}>
-        <View style={styles.container}>
+      <View style={styles.container}>
+        <View style={styles.inputBox}>
           <TextInput
             style={styles.textInput}
             multiline
@@ -114,7 +114,14 @@ const colors = config.colors.inputBox;
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
+    alignItems: 'center',
+    paddingLeft: 10,
+    paddingRight: 10,
+  },
+  inputBox: {
+    flexDirection: 'row',
     backgroundColor: 'white',
+    margin: 10,
     padding: 10,
     borderRadius: 25,
     marginRight: 10,
