@@ -1,11 +1,9 @@
 import React from 'react';
 import {StyleSheet, Dimensions, TouchableOpacity, Text, View, KeyboardAvoidingView} from 'react-native';
 import {Button} from 'react-native-paper';
-import {LinearGradient} from 'expo-linear-gradient';
 import Login from 'src/components/auth/Login';
-import config from 'src/config';
+import AuthBackground from 'src/blocks/AuthBackground';
 
-const colors = config.colors;
 const {width, height} = Dimensions.get('window');
 
 function HomeScreen(props) {
@@ -14,11 +12,7 @@ function HomeScreen(props) {
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       style={styles.container}
     >
-      <LinearGradient
-        // colors={[colors.main.primary, colors.main.primary_]}
-        colors={[colors.main.primary, 'transparent']}
-        style={styles.background}
-      />
+      <AuthBackground/>
       <View style={styles.loginBox}>
         <Login {...props}/>
         <Button

@@ -1,30 +1,21 @@
 import React from 'react';
 import {View, Dimensions, KeyboardAvoidingView, StyleSheet} from 'react-native';
 import Register from 'src/components/auth/Register';
-import {LinearGradient} from 'expo-linear-gradient';
-import config from 'src/config';
+import AuthBackground from 'src/blocks/AuthBackground';
 
-
-const colors = config.colors;
 const {width, height} = Dimensions.get('window');
 
 function RegisterScreen(props) {
   return (
-    // <ScrollView contentContainerStyle={styles.container}>
     <KeyboardAvoidingView
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       style={styles.container}
     >
-      <LinearGradient
-        // colors={[colors.main.primary, colors.main.primary_]}
-        colors={[colors.main.primary, 'transparent']}
-        style={styles.background}
-      />
+      <AuthBackground/>
       <View style={styles.mainBox}>
         <Register {...props}/>
       </View>
     </KeyboardAvoidingView>
-    // </ScrollView>
   );
 }
 
@@ -41,13 +32,6 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     borderRadius: 30,
     justifyContent: 'center',
-  },
-  background: {
-    // position: 'absolute',
-    // left: 0,
-    // right: 0,
-    // top: 0,
-    // bottom: 0,
   },
 });
 

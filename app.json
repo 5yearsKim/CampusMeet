@@ -6,7 +6,7 @@
     "slug": "campusMeet",
     "version": "1.0.0",
     "assetBundlePatterns": [
-      "**/*"
+      "assets/images/*"
     ],
     "icon": "./assets/images/campusmeet_icon.png",
     "splash": {
