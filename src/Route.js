@@ -133,6 +133,7 @@ function Route() {
           headerTitleStyle: {
             fontWeight: 'bold',
           },
+          headerBackTitle: 'Back',
         }}
       >
         {/* <MainStack.Screen name='Home' component={HomeTab} /> */}

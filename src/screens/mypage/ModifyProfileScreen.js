@@ -1,12 +1,16 @@
 import React from 'react';
-import {ScrollView} from 'react-native';
+import {View, KeyboardAvoidingView} from 'react-native';
 import ModifyProfile from 'src/components/mypage/ModifyProfile';
 
 function ModifyProfileScreen(props) {
   return (
-    <ScrollView>
+    <KeyboardAvoidingView
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      style={{flex: 1, justifyContent: 'center'}}
+      keyboardVerticalOffset={200}
+    >
       <ModifyProfile {...props}/>
-    </ScrollView>
+    </KeyboardAvoidingView>
   );
 }
 

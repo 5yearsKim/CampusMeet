@@ -30,11 +30,7 @@ function Post({navigation, route}) {
   };
 
   return (
-    <KeyboardAvoidingView
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
-      keyboardVerticalOffset={150}
-      style={styles.container}
-    >
+    <View style={styles.container}>
       <ChatContext.Provider value={{isNested, setIsNested}}>
         <FlatList
           ref={commentList}
@@ -44,15 +40,13 @@ function Post({navigation, route}) {
           renderItem={({item, index}) => <Comment item={item} index={index} board={board} focusComment={focusComment}/>}
           keyExtractor={(item) => item.id}
         />
-        <View style={styles.commentInput}>
-          <CommentInput
-            board={board}
-            post={post}
-            refresh={refreshComment}
-          />
-        </View>
+        <CommentInput
+          board={board}
+          post={post}
+          refresh={refreshComment}
+        />
       </ChatContext.Provider>
-    </KeyboardAvoidingView>
+    </View>
   );
 }
 
@@ -61,15 +55,9 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   flatlistContainer: {
-    paddingBottom: 350, // textinput not to hide contents
+    // paddingBottom: 350, // textinput not to hide contents
   },
-  commentInput: {
-    // position: 'fixed',
-    flex: 1,
-    // left: 0,
-    // right: 0,
-    bottom: 0,
-  },
+
 });
 
 export default Post;

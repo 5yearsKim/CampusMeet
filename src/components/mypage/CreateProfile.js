@@ -143,24 +143,26 @@ function CreateProfile({navigation}) {
     const graduateButton = () => {
       return (
         <View style={styles.graduateWrapper}>
-          <View style={styles.graduateItem}>
-            <Text style={styles.graduateText}>학부</Text>
-            <RadioButton
-              value='학부'
-              status={graduate === '학부' ? 'checked' : 'unchecked' }
-              onPress={() => setGraduate('학부')}
-              color='pink'
-            />
-          </View>
-          <View style={styles.graduateItem}>
-            <Text style={styles.graduateText}>대학원</Text>
-            <RadioButton
-              value='대학원'
-              status={graduate === '대학원' ? 'checked' : 'unchecked' }
-              onPress={() => setGraduate('대학원')}
-              color='pink'
-            />
-          </View>
+          <TouchableOpacity onPress={() => setGraduate('학부')}>
+            <View style={styles.graduateItem}>
+              <Text style={styles.graduateText}>학부</Text>
+              <RadioButton
+                value='학부'
+                status={graduate === '학부' ? 'checked' : 'unchecked' }
+                color='pink'
+              />
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => setGraduate('대학원')}>
+            <View style={styles.graduateItem}>
+              <Text style={styles.graduateText}>대학원</Text>
+              <RadioButton
+                value='대학원'
+                status={graduate === '대학원' ? 'checked' : 'unchecked' }
+                color='pink'
+              />
+            </View>
+          </TouchableOpacity>
         </View>
       );
     };

@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useContext, useRef} from 'react';
-import {View, TextInput, Keyboard, TouchableOpacity, StyleSheet} from 'react-native';
+import {View, KeyboardAvoidingView, TextInput, Keyboard, TouchableOpacity, StyleSheet} from 'react-native';
 import {makeComment, makeNestedComment, getNickname} from 'src/utils/Community';
 import {Nickname} from 'src/blocks/Board';
 import {FontAwesome} from '@expo/vector-icons';
@@ -32,6 +32,9 @@ function CommentInput({board, post, refresh}) {
   }, [nested.isNested]);
 
   const onSend = async () => {
+    if (message == '') {
+      return ;
+    }
     if (nested.isNested) {
       const nestedCommentData = await makeNestedComment(userSub, nested.isNested, nickname, message);
       if (nestedCommentData) {
@@ -50,50 +53,65 @@ function CommentInput({board, post, refresh}) {
 
   return (
     // <View style={[styles.container, {height: inputHeight + 10, backgroundColor: nested.isNested?'green':'blue'}]}>
-    <View style={[styles.container, {height: inputHeight + 10}]}>
-      <View style={{flexDirection: 'row'}}>
-        <View style={{flex: 1, flexDirection: 'row', alignItems: 'center'}}>
-          <Nickname type={board.type} nickname={nickname} style={styles.nickname}/>
-          <TextInput
-            onChangeText={(text) => setMessage(text)}
-            ref={chatInput}
-            value={message}
-            multiline={true}
-            onContentSizeChange={(event) => {
-              setHeight(event.nativeEvent.contentSize.height);
-            }}
-            onBlur={() => nested.setIsNested(false)}
-            placeholder={placeholder}
-            style={{height: Math.max(inputHeight, 30)}}
-          />
-        </View>
-        <View style={{marginRight: 15}}>
-          <TouchableOpacity
-            onPress={onSend}
-          >
-            <FontAwesome
-              name='send-o'
-              size={26}
+    <KeyboardAvoidingView
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      keyboardVerticalOffset={150}
+      style={[styles.commentInput, {height: inputHeight + 10}]}
+    >
+      <View style={[styles.container, {height: inputHeight + 10}]}>
+        <View style={{flexDirection: 'row', alignItems: 'center'}}>
+          <View style={{flex: 1, flexDirection: 'row', alignItems: 'center'}}>
+            <Nickname type={board.type} nickname={nickname} style={styles.nickname}/>
+            <TextInput
+              onChangeText={(text) => setMessage(text)}
+              ref={chatInput}
+              value={message}
+              multiline={true}
+              onContentSizeChange={(event) => {
+                setHeight(event.nativeEvent.contentSize.height);
+              }}
+              onBlur={() => nested.setIsNested(false)}
+              placeholder={placeholder}
+              style={{height: Math.max(inputHeight, 30)}}
             />
-          </TouchableOpacity>
+          </View>
+          <View style={{marginRight: 15}}>
+            <TouchableOpacity
+              onPress={onSend}
+            >
+              <FontAwesome
+                name='send-o'
+                size={26}
+              />
+            </TouchableOpacity>
+          </View>
         </View>
       </View>
-    </View>
+    </KeyboardAvoidingView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
+    flex: 0, 
     margin: 6,
     padding: 5,
     borderWidth: 1,
     borderRadius: 15,
     // backgroundColor: 'white',
-    // justifyContent: 'flex-end',
+    justifyContent: 'flex-end',
   },
   nickname: {
     fontSize: 13,
     marginRight: 10,
+  },
+  commentInput: {
+    position: 'absolute',
+    flex: 1,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    // height: 50,
   },
 });
 

@@ -59,7 +59,7 @@ function ModifyProfile({navigation}) {
     }
   };
   return (
-    <View style={{padding: 20, flex: 1}}>
+    <View style={{padding: 20}}>
       <UploadPicture imgList={imgList} setImgList={setImgList} positions={positions}/>
       <TextInput
         label='이름'
