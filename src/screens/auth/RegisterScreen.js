@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Dimensions, KeyboardAvoidingView, ScrollView, StyleSheet} from 'react-native';
+import {View, Dimensions, KeyboardAvoidingView, StyleSheet} from 'react-native';
 import Register from 'src/components/auth/Register';
 import {LinearGradient} from 'expo-linear-gradient';
 import config from 'src/config';
@@ -12,7 +12,7 @@ function RegisterScreen(props) {
   return (
     // <ScrollView contentContainerStyle={styles.container}>
     <KeyboardAvoidingView
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       style={styles.container}
     >
       <LinearGradient

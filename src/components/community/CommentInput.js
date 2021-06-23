@@ -33,7 +33,7 @@ function CommentInput({board, post, refresh}) {
 
   const onSend = async () => {
     if (message == '') {
-      return ;
+      return;
     }
     if (nested.isNested) {
       const nestedCommentData = await makeNestedComment(userSub, nested.isNested, nickname, message);
@@ -54,7 +54,7 @@ function CommentInput({board, post, refresh}) {
   return (
     // <View style={[styles.container, {height: inputHeight + 10, backgroundColor: nested.isNested?'green':'blue'}]}>
     <KeyboardAvoidingView
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       keyboardVerticalOffset={150}
       style={[styles.commentInput, {height: inputHeight + 20}]}
     >
@@ -93,7 +93,7 @@ function CommentInput({board, post, refresh}) {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 0, 
+    flex: 0,
     margin: 6,
     padding: 5,
     borderWidth: 1,

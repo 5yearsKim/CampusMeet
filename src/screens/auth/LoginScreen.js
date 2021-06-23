@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React from 'react';
 import {StyleSheet, Dimensions, TouchableOpacity, Text, View, KeyboardAvoidingView} from 'react-native';
 import {Button} from 'react-native-paper';
 import {LinearGradient} from 'expo-linear-gradient';
@@ -11,7 +11,7 @@ const {width, height} = Dimensions.get('window');
 function HomeScreen(props) {
   return (
     <KeyboardAvoidingView
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       style={styles.container}
     >
       <LinearGradient

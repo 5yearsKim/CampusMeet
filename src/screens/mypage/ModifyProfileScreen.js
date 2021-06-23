@@ -5,7 +5,7 @@ import ModifyProfile from 'src/components/mypage/ModifyProfile';
 function ModifyProfileScreen(props) {
   return (
     <KeyboardAvoidingView
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       style={{flex: 1, justifyContent: 'center'}}
       keyboardVerticalOffset={200}
     >

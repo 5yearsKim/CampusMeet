@@ -22,7 +22,7 @@ function InputBox({route}) {
     try {
       const data = {lastMessageID: message.id};
       modifyChatRoom(chatRoomID, data);
-      sendPushNotification()
+      sendPushNotification();
     } catch (err) {
       console.warn(err);
     }
@@ -64,7 +64,7 @@ function InputBox({route}) {
   };
   return (
     <KeyboardAvoidingView
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       keyboardVerticalOffset={100}
       // style={{flex: 1}}
     >

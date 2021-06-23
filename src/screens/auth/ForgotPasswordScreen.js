@@ -10,7 +10,7 @@ const {width, height} = Dimensions.get('window');
 function ForgotPasswordScreen(props) {
   return (
     <KeyboardAvoidingView
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       style={styles.container}
     >
       <LinearGradient
