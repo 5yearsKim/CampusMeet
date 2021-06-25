@@ -12,7 +12,6 @@ import {
 } from '@react-navigation/native';
 import Route from 'src/Route';
 import {bringSentSignalToday} from 'src/utils/Signal';
-import {modifyUser} from 'src/utils/User';
 import {ThemeContext, MyContext, UserContext} from 'src/context';
 import config from 'src/config';
 

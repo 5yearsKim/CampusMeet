@@ -2,6 +2,7 @@ import React, {useContext, useState, useRef, useEffect} from 'react';
 import {View} from 'react-native';
 import * as Notifications from 'expo-notifications';
 import {registerForPushNotificationsAsync} from 'src/utils/PushNotification';
+import {modifyUser} from 'src/utils/User';
 import {MyContext} from 'src/context';
 
 Notifications.setNotificationHandler({
@@ -29,9 +30,10 @@ export default function PushNotification() {
     responseListener.current = Notifications.addNotificationResponseReceivedListener((response) => {
       const noti = response.notification.request.content;
       if (noti.data.type == 'message') {
+        console.log('message')
 
       } else if (noti.data.type == 'signal') {
-
+        console.log('signal')
       }
     });
 
