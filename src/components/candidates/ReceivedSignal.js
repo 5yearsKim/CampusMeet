@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useContext} from 'react';
-import {View, FlatList} from 'react-native';
+import {View, FlatList, StyleSheet} from 'react-native';
 import Text from 'src/blocks/Text';
 import ReceivedSignalItem from './ReceivedSignalItem';
 import {bringReceivedSignal} from 'src/utils/Signal';
@@ -27,8 +27,8 @@ function ReceivedSignal({navigation}) {
   };
   if (userList.length <= 0) {
     return (
-      <View>
-        <Text>No signal today</Text>
+      <View style={styles.container}>
+        <Text style={styles.noSignalText}>받은 시그널이 없습니다.</Text>
       </View>
     );
   }
@@ -42,5 +42,17 @@ function ReceivedSignal({navigation}) {
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    padding: 10,
+    alignItems: 'center',
+  },
+  noSignalText: {
+    fontWeight: 'bold',
+    color: 'gray',
+    fontSize: 15,
+  },
+});
 
 export default ReceivedSignal;

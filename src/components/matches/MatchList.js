@@ -1,5 +1,6 @@
 import React, {useState, useEffect, useContext} from 'react';
-import {View, FlatList} from 'react-native';
+import {View, FlatList, StyleSheet} from 'react-native';
+import Text from 'src/blocks/Text';
 import MatchListItem from './MatchListItem';
 import {bringMatch} from 'src/utils/Match';
 import {MyContext} from 'src/context';
@@ -7,13 +8,13 @@ import {MyContext} from 'src/context';
 function MatchList({navigation}) {
   const auth = useContext(MyContext);
   const userSub = auth.user.attributes.sub;
+  const [loading, setLoading] = useState(true);
   const [userList, setUserList] = useState([]);
 
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
       m_bringMatch();
     });
-    // Return the function to unsubscribe from the event so it gets removed on unmount
     return unsubscribe;
   }, [navigation]);
 
@@ -31,12 +32,27 @@ function MatchList({navigation}) {
         return 0;
       });
       setUserList(orderedMatch);
+      setLoading(false);
     } catch (err) {
       console.warn(err);
       setUserList([]);
     }
   };
 
+  if (loading) {
+    return (
+      <View style={styles.container}>
+        <Text style={styles.notiText}>Loading..</Text>
+      </View>
+    );
+  }
+  if (userList.length == 0) {
+    return (
+      <View style={styles.container}>
+        <Text style={styles.notiText}>쪽지가 없습니다.</Text>
+      </View>
+    );
+  }
   return (
     <View style={{flex: 1}}>
       <FlatList
@@ -47,5 +63,17 @@ function MatchList({navigation}) {
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    padding: 15,
+    alignItems: 'center',
+  },
+  notiText: {
+    fontSize: 15,
+    fontWeight: 'bold',
+    color: 'gray',
+  },
+});
 
 export default MatchList;

@@ -26,8 +26,8 @@ function SentSignal({navigation}) {
 
   if (userList.length <= 0) {
     return (
-      <View style={styles.noSignal}>
-        <Text>보낸 메세지가 없습니다.</Text>
+      <View style={styles.container}>
+        <Text style={styles.noSignalText}>보낸 시그널이 없습니다.</Text>
       </View>
     );
   }
@@ -43,9 +43,14 @@ function SentSignal({navigation}) {
 }
 
 const styles = StyleSheet.create({
-  noSignal: {
-    justifyContent: 'center',
+  container: {
+    padding: 10,
     alignItems: 'center',
+  },
+  noSignalText: {
+    fontWeight: 'bold',
+    color: 'gray',
+    fontSize: 15,
   },
 });
 

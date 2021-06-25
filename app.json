@@ -19,9 +19,9 @@
       "buildNumber": "1.0.0"
     },
     "android": {
-      "versionCode": 2,
+      "versionCode": 3,
       "package": "com.onion.campusMeet",
-      "permission": [],
+      "permissions": [],
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/campusmeet_adaptive_icon.png",
         "backgroundColor": "#FFF"

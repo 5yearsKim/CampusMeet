@@ -7,7 +7,8 @@ import {MaterialCommunityIcons} from '@expo/vector-icons';
 import Text from 'src/blocks/Text';
 import AutoComplete from 'src/blocks/AutoComplete';
 import {makeUser} from 'src/utils/User';
-import {MyContext, ThemeContext} from 'src/context';
+import {MyContext, ThemeContext, UserContext} from 'src/context';
+import {setupIndividual} from 'src/utils/User';
 import MyPicker from 'src/blocks/Picker';
 import campusList from 'assets/campusLogos';
 
@@ -15,6 +16,7 @@ import campusList from 'assets/campusLogos';
 function CreateProfile({navigation}) {
   const auth = useContext(MyContext);
   const {theme} = useContext(ThemeContext);
+  const {refreshCandidate, setRefreshCandidate} = useContext(UserContext);
   const userSub = auth.user.attributes.sub;
 
   const [imgList, setImgList] = useState([]);
@@ -101,6 +103,8 @@ function CreateProfile({navigation}) {
       }
       try {
         await makeUser(userSub, gender, name, campus, graduate, year, department, division, imgList, profileMessage, profileDescription);
+        await setupIndividual();
+        setRefreshCandidate(!refreshCandidate);
         navigation.goBack();
       } catch (err) {
         console.warn(err);

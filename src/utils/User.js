@@ -71,7 +71,20 @@ export async function bringCandidate() {
   const headers = {'Authorization': `Bearer ${token}`};
   const rsp = await server.get('/list_candidate', {headers: headers});
   return rsp.data;
-  // const rsp = await server.get('/list_candidate', {headers: headers});
-  // console.log(rsp);
 }
 
+export async function setupIndividual() {
+  const sess = await Auth.currentSession();
+  const token = sess.getAccessToken().getJwtToken();
+  const headers = {'Authorization': `Bearer ${token}`};
+  const rsp = await server.post('/setup_individual', {}, {headers: headers});
+  return rsp.data;
+}
+
+export async function checkCandidate() {
+  const sess = await Auth.currentSession();
+  const token = sess.getAccessToken().getJwtToken();
+  const headers = {'Authorization': `Bearer ${token}`};
+  const rsp = await server.post('/check_candidate', {}, {headers: headers});
+  return rsp.data;
+}

@@ -8,6 +8,7 @@ import CandidateItem from './CandidateItem';
 import Preference from './Preference';
 import {ThemeContext, UserContext} from 'src/context';
 import config from 'src/config';
+import {checkCandidate} from 'src/utils/User';
 
 const signalMax = config.manage.signalMax;
 
@@ -37,6 +38,7 @@ function CandidateHeader() {
 
 function Candidate({navigation}) {
   const {refreshCandidate} = useContext(UserContext);
+  const [loading, setLoading] = useState(true);
   const [userList, setUserList] = useState([]);
 
   useEffect(() => {
@@ -44,6 +46,7 @@ function Candidate({navigation}) {
       try {
         const userData = await bringCandidate();
         setUserList(userData);
+        setLoading(false);
       } catch (err) {
         console.warn(err);
         setUserList([]);
@@ -52,6 +55,17 @@ function Candidate({navigation}) {
     m_bringCandidate();
   }, [refreshCandidate]);
 
+  useEffect(() => {
+    checkCandidate();
+  }, []);
+
+  if (loading) {
+    return (
+      <View style={{alignItems: 'center', padding: 10}}>
+        <Text style={styles.notiText}>Loading..</Text>
+      </View>
+    );
+  }
 
   return (
     <View style={{flex: 1}}>
@@ -76,6 +90,11 @@ const styles = StyleSheet.create({
   heartText: {
     fontWeight: 'bold',
     fontSize: 16,
+  },
+  notiText: {
+    fontSize: 15,
+    fontWeight: 'bold',
+    color: 'gray',
   },
 });
 
