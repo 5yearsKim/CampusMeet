@@ -26,6 +26,7 @@ import CreatePostScreen from 'src/screens/community/CreatePostScreen';
 import BoardScreen from 'src/screens/community/BoardScreen';
 import PostScreen from 'src/screens/community/PostScreen';
 
+
 const MainStack = createStackNavigator();
 const BottomTab = createBottomTabNavigator();
 

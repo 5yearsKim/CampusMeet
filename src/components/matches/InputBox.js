@@ -49,7 +49,7 @@ function InputBox({route}) {
         } else if (type == 'text') {
           msg = content;
         };
-        sendPushNotification(uid, '새 쪽지', msg, 'message');
+        sendPushNotification(uid, '새 쪽지', msg, {type: 'message', chatRoomID: chatRoomID});
       });
     } catch (err) {
       console.warn(err);

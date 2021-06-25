@@ -16,14 +16,14 @@ export async function sendPushNotification(userID, title, body, data) {
     return;
   }
   const message = {
-    to: expoPushToken,
+    to: token,
     sound: 'default',
     title: title,
     body: body,
     data: data,
   };
-
-  await fetch('https://exp.host/--/api/v2/push/send', {
+  console.log(message);
+  const rsp = await fetch('https://exp.host/--/api/v2/push/send', {
     method: 'POST',
     headers: {
       'Accept': 'application/json',
@@ -32,6 +32,7 @@ export async function sendPushNotification(userID, title, body, data) {
     },
     body: JSON.stringify(message),
   });
+  console.log(rsp);
 }
 
 export async function registerForPushNotificationsAsync() {

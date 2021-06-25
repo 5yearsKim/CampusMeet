@@ -10,6 +10,8 @@ import {ThemeContext, UserContext} from 'src/context';
 import config from 'src/config';
 import {checkCandidate} from 'src/utils/User';
 
+import PushNotification from 'src/components/PushNotification';
+
 const signalMax = config.manage.signalMax;
 
 function CandidateHeader() {
@@ -59,22 +61,20 @@ function Candidate({navigation}) {
     checkCandidate();
   }, []);
 
-  if (loading) {
-    return (
-      <View style={{alignItems: 'center', padding: 10}}>
-        <Text style={styles.notiText}>Loading..</Text>
-      </View>
-    );
-  }
-
   return (
     <View style={{flex: 1}}>
-      <FlatList
-        data={userList}
-        renderItem={({item}) => <CandidateItem item={item} />}
-        keyExtractor={(item) => item.id}
-        ListHeaderComponent={() => <CandidateHeader/>}
-      />
+      <PushNotification/>
+      {loading ? 
+        <View style={{alignItems: 'center', padding: 10}}>
+          <Text style={styles.notiText}>Loading..</Text>
+        </View> : 
+        <FlatList
+          data={userList}
+          renderItem={({item}) => <CandidateItem item={item} />}
+          keyExtractor={(item) => item.id}
+          ListHeaderComponent={() => <CandidateHeader/>}
+        />
+      }
     </View>
   );
 }

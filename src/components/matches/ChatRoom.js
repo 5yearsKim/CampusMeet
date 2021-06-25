@@ -26,6 +26,7 @@ function ChatRoom({navigation, route}) {
     setMessageList(messageData);
     setNextToken(token);
   };
+
   useEffect(() => {
     m_bringMessages();
   }, []);
