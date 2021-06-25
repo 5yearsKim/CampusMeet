@@ -10,18 +10,19 @@ import {
   DefaultTheme as NavDefaultTheme,
   DarkTheme as NavDarkTheme,
 } from '@react-navigation/native';
-import config from 'src/config';
-import {bringSentSignalToday} from 'src/utils/Signal';
-import {ThemeContext, MyContext, UserContext} from 'src/context';
 import Route from 'src/Route';
+import {bringSentSignalToday} from 'src/utils/Signal';
+import {modifyUser} from 'src/utils/User';
+import {ThemeContext, MyContext, UserContext} from 'src/context';
 import * as Notifications from 'expo-notifications';
 import {registerForPushNotificationsAsync} from 'src/utils/PushNotification';
+import config from 'src/config';
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
     shouldShowAlert: true,
-    shouldPlaySound: false,
-    shouldSetBadge: false,
+    shouldPlaySound: true,
+    shouldSetBadge: true,
   }),
 });
 
@@ -47,22 +48,23 @@ export default function App() {
 
   const [notification, setNotification] = useState(false);
   const notificationListener = useRef();
-  // const responseListener = useRef();
+  const responseListener = useRef();
 
   useEffect(() => {
     // This listener is fired whenever a notification is received while the app is foregrounded
     notificationListener.current = Notifications.addNotificationReceivedListener((notification) => {
       setNotification(notification);
+      console.log('noti  ', notification);
     });
 
-    // // This listener is fired whenever a user taps on or interacts with a notification (works when app is foregrounded, backgrounded, or killed)
-    // responseListener.current = Notifications.addNotificationResponseReceivedListener((response) => {
-    //   console.log(response);
-    // });
+    // This listener is fired whenever a user taps on or interacts with a notification (works when app is foregrounded, backgrounded, or killed)
+    responseListener.current = Notifications.addNotificationResponseReceivedListener((response) => {
+      console.log('response', response);
+    });
 
     return () => {
       Notifications.removeNotificationSubscription(notificationListener.current);
-      // Notifications.removeNotificationSubscription(responseListener.current);
+      Notifications.removeNotificationSubscription(responseListener.current);
     };
   }, []);
 
@@ -72,7 +74,7 @@ export default function App() {
         return;
       }
       const token = await registerForPushNotificationsAsync();
-      // console.log(token);
+      console.log(token);
       if (token) {
         try {
           modifyUser(user.attributes.sub, {pushToken: token});

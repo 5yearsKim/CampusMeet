@@ -204,6 +204,36 @@ export const matchByFrom = /* GraphQL */ `
   }
 `;
 
+export const matchByChatRoom = /* GraphQL */ `
+  query MatchByChatRoom(
+    $chatRoomID: ID
+    $fromID: ModelIDKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelMatchFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    matchByChatRoom(
+      chatRoomID: $chatRoomID
+      fromID: $fromID
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        fromID
+        toID
+        chatRoomID
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+
 export const messagesByChatRoom = /* GraphQL */ `
   query MessagesByChatRoom(
     $chatRoomID: ID

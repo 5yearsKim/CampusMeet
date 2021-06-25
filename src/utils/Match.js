@@ -1,6 +1,6 @@
 import {API, graphqlOperation} from 'aws-amplify';
 import {createChatRoom, createMatch} from 'src/graphql/customMutations';
-import {matchByFrom} from 'src/graphql/customQueries';
+import {matchByFrom, matchByChatRoom} from 'src/graphql/customQueries';
 
 export async function bringMatch(fromID) {
   const matchData = await API.graphql(
@@ -11,6 +11,17 @@ export async function bringMatch(fromID) {
       ),
   );
   return matchData.data.matchByFrom.items;
+}
+
+export async function bringMatchByChatRoom(chatRoomID) {
+  const matchData = await API.graphql(
+      graphqlOperation(
+          matchByChatRoom, {
+            chatRoomID: chatRoomID,
+          },
+      ),
+  );
+  return matchData.data.matchByChatRoom.items;
 }
 
 export async function makeMatch(fromID, toID) {

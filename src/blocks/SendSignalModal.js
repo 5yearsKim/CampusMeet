@@ -18,7 +18,7 @@ export default function SendSignalModal({toID, popupVisible, setPopupVisible}) {
 
   const onSendSignal = async () => {
     await makeSignal(userSub, toID, message);
-    sendPushNotification(toID, 'New Signal', '누군가 나에게 시그널을 보냈어요!');
+    sendPushNotification(toID, 'New Signal', '누군가 나에게 시그널을 보냈어요!', {type: 'Signal'});
     setSignalCnt(signalCnt + 1);
     setRefreshCandidate(!refreshCandidate);
     setRefreshSentSignal(!refreshSentSignal);

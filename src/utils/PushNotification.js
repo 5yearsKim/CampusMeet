@@ -3,7 +3,7 @@ import * as Notifications from 'expo-notifications';
 import {bringUser} from './User';
 
 // Can use this function below, OR use Expo's Push Notification Tool-> https://expo.io/notifications
-export async function sendPushNotification(userID, title, body) {
+export async function sendPushNotification(userID, title, body, data) {
   let token;
   try {
     const user = await bringUser(userID);
@@ -20,7 +20,7 @@ export async function sendPushNotification(userID, title, body) {
     sound: 'default',
     title: title,
     body: body,
-    // data: {someData: 'goes here'},
+    data: data,
   };
 
   await fetch('https://exp.host/--/api/v2/push/send', {

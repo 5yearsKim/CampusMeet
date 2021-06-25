@@ -1,4 +1,4 @@
-import React, {useState, useContext} from 'react';
+import React, {useEffect, useState, useContext} from 'react';
 import {StyleSheet, View, TextInput, TouchableOpacity, KeyboardAvoidingView, Platform} from 'react-native';
 import {Portal, Modal} from 'react-native-paper';
 import * as ImagePicker from 'expo-image-picker';
@@ -7,22 +7,50 @@ import {Ionicons, MaterialCommunityIcons} from '@expo/vector-icons';
 import {GifSearch, poweredByGiphyLogoGrey} from 'react-native-gif-search';
 import {makeMessage, modifyChatRoom} from 'src/utils/Chat';
 import {MyContext} from 'src/context';
+import {bringMatchByChatRoom} from 'src/utils/Match';
 import {sendPushNotification} from 'src/utils/PushNotification';
 import config from 'src/config';
 
 function InputBox({route}) {
   const {chatRoomID} = route.params;
   const auth = useContext(MyContext);
+  const userSub = auth.user.attributes.sub;
   const [message, setMessage] = useState('');
+  const [chatUser, setChatUser] = useState([]);
   const [gifVisible, setGifVisible] = useState(false);
 
+  useEffect(() => {
+    const m_bringMatchByChatRoom = async () => {
+      try {
+        const matches = await bringMatchByChatRoom(chatRoomID);
+        setChatUser(matches.map((item) => item.fromID));
+      } catch (err) {
+        console.warn(err);
+        setChatUser([]);
+      }
+    };
+    m_bringMatchByChatRoom();
+  });
+
   const sendMessage = async (content, type) => {
-    const userSub = auth.user.attributes.sub;
     const message = await makeMessage(userSub, chatRoomID, content, type);
     try {
       const data = {lastMessageID: message.id};
       modifyChatRoom(chatRoomID, data);
-      sendPushNotification();
+      chatUser.forEach((uid) => {
+        if (uid == userSub) {
+          return;
+        }
+        let msg = '';
+        if (type == 'image') {
+          msg = '새 이미지';
+        } else if (type == 'gif') {
+          msg = 'gif';
+        } else if (type == 'text') {
+          msg = content;
+        };
+        sendPushNotification(uid, '새 쪽지', msg, 'message');
+      });
     } catch (err) {
       console.warn(err);
     }

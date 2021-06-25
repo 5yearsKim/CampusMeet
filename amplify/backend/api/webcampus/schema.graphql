@@ -40,7 +40,7 @@ type Signal @model
 
 type Match @model
 @key(name: "byFrom", fields: ["fromID", "createdAt"], queryField: "matchByFrom")
-@key(name: "byChatRoom", fields: ["chatRoomID", "fromID"]) {
+@key(name: "byChatRoom", fields: ["chatRoomID", "fromID"], queryField: "matchByChatRoom") {
   id: ID!
   fromID: ID!
   toID: ID!
