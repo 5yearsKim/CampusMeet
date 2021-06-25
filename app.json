@@ -4,7 +4,7 @@
   "expo": {
     "name": "campusMeet",
     "slug": "campusMeet",
-    "version": "1.0.0",
+    "version": "1.0",
     "assetBundlePatterns": [
       "assets/images/*"
     ],
@@ -15,8 +15,9 @@
       "backgroundColor": "#ffffff"
     },
     "android": {
-      "versionCode": 1.0,
+      "versionCode": 2,
       "package": "com.onion.campusMeet",
+      "permission": [],
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/campusmeet_adaptive_icon.png",
         "backgroundColor": "#FFF"
