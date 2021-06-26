@@ -226,6 +226,12 @@ export const matchByChatRoom = /* GraphQL */ `
         fromID
         toID
         chatRoomID
+        matcher {
+          id
+          gender
+          name
+          imageKeys
+        }
         createdAt
         updatedAt
       }

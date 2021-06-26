@@ -63,11 +63,11 @@ function Candidate({navigation}) {
 
   return (
     <View style={{flex: 1}}>
-      <PushNotification/>
-      {loading ? 
+      <PushNotification navigation={navigation}/>
+      {loading ?
         <View style={{alignItems: 'center', padding: 10}}>
           <Text style={styles.notiText}>Loading..</Text>
-        </View> : 
+        </View> :
         <FlatList
           data={userList}
           renderItem={({item}) => <CandidateItem item={item} />}

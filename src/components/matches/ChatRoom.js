@@ -6,6 +6,7 @@ import {isDateDifferent, isMinDifferent} from 'src/utils/Time';
 
 import {API, graphqlOperation} from 'aws-amplify';
 import {onCreateMessage} from 'src/graphql/subscriptions';
+import {notificationHandler} from 'src/utils/PushNotification';
 
 function ChatRoom({navigation, route}) {
   const {chatRoomID, name} = route.params;
@@ -28,8 +29,14 @@ function ChatRoom({navigation, route}) {
   };
 
   useEffect(() => {
+    notificationHandler(chatRoomID);
+    return () => notificationHandler();
+  }, []);
+
+  useEffect(() => {
     m_bringMessages();
   }, []);
+
 
   useEffect(() => {
     const subscription = API.graphql(

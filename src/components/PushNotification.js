@@ -1,44 +1,37 @@
 import React, {useContext, useState, useRef, useEffect} from 'react';
 import {View} from 'react-native';
 import * as Notifications from 'expo-notifications';
-import {registerForPushNotificationsAsync} from 'src/utils/PushNotification';
+import {registerForPushNotificationsAsync, notificationHandler} from 'src/utils/PushNotification';
 import {modifyUser} from 'src/utils/User';
 import {MyContext} from 'src/context';
 
-Notifications.setNotificationHandler({
-    handleNotification: async () => ({
-      shouldShowAlert: true,
-      shouldPlaySound: true,
-      shouldSetBadge: true,
-    }),
-  });
-
-export default function PushNotification() {
+export default function PushNotification({navigation}) {
   const auth = useContext(MyContext);
-  const [notification, setNotification] = useState(false);
-  const notificationListener = useRef();
+  // const notificationListener = useRef();
   const responseListener = useRef();
 
   useEffect(() => {
     // This listener is fired whenever a notification is received while the app is foregrounded
-    notificationListener.current = Notifications.addNotificationReceivedListener((notification) => {
-      setNotification(notification);
-      // console.log('noti  ', notification);
-    });
+    // notificationListener.current = Notifications.addNotificationReceivedListener((notification) => {
+    //   setNotification(notification);
+    // });
 
     // This listener is fired whenever a user taps on or interacts with a notification (works when app is foregrounded, backgrounded, or killed)
     responseListener.current = Notifications.addNotificationResponseReceivedListener((response) => {
       const noti = response.notification.request.content;
       if (noti.data.type == 'message') {
-        console.log('message')
-
+        console.log(noti);
+        navigation.push('ChatRoom', {
+          chatRoomID: noti.data.chatRoomID,
+          name: noti.data.name,
+        });
       } else if (noti.data.type == 'signal') {
-        console.log('signal')
+        navigation.navigate('Signal');
       }
     });
 
     return () => {
-      Notifications.removeNotificationSubscription(notificationListener.current);
+      // Notifications.removeNotificationSubscription(notificationListener.current);
       Notifications.removeNotificationSubscription(responseListener.current);
     };
   }, []);
@@ -58,7 +51,9 @@ export default function PushNotification() {
     tokenSetting();
   }, []);
 
-
+  useEffect(() => {
+    notificationHandler();
+  }, []);
 
   return (
     <View>

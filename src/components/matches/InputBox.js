@@ -23,22 +23,22 @@ function InputBox({route}) {
     const m_bringMatchByChatRoom = async () => {
       try {
         const matches = await bringMatchByChatRoom(chatRoomID);
-        setChatUser(matches.map((item) => item.fromID));
+        setChatUser(matches.map((item) => ({id: item.toID, name: item.matcher.name})));
       } catch (err) {
         console.warn(err);
         setChatUser([]);
       }
     };
     m_bringMatchByChatRoom();
-  });
+  }, []);
 
   const sendMessage = async (content, type) => {
     const message = await makeMessage(userSub, chatRoomID, content, type);
     try {
       const data = {lastMessageID: message.id};
       modifyChatRoom(chatRoomID, data);
-      chatUser.forEach((uid) => {
-        if (uid == userSub) {
+      chatUser.forEach((item) => {
+        if (item.id == userSub) {
           return;
         }
         let msg = '';
@@ -49,7 +49,7 @@ function InputBox({route}) {
         } else if (type == 'text') {
           msg = content;
         };
-        sendPushNotification(uid, '새 쪽지', msg, {type: 'message', chatRoomID: chatRoomID});
+        sendPushNotification(uid, '새 쪽지', msg, {type: 'message', chatRoomID: chatRoomID, name: item.name});
       });
     } catch (err) {
       console.warn(err);

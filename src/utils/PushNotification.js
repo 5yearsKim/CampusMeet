@@ -65,3 +65,22 @@ export async function registerForPushNotificationsAsync() {
 
   return token;
 }
+
+export const notificationHandler = (chatRoomID) => {
+  Notifications.setNotificationHandler({
+    handleNotification: async (noti) => {
+      if ( chatRoomID && noti.request.content?.data?.chatRoomID == chatRoomID) {
+        return ({
+          shouldShowAlert: false,
+          shouldPlaySound: false,
+          shouldSetBadge: true,
+        });
+      }
+      return ({
+        shouldShowAlert: true,
+        shouldPlaySound: true,
+        shouldSetBadge: true,
+      });
+    },
+  });
+}
