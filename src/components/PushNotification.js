@@ -1,4 +1,4 @@
-import React, {useContext, useState, useRef, useEffect} from 'react';
+import React, {useContext, useRef, useEffect} from 'react';
 import {View} from 'react-native';
 import * as Notifications from 'expo-notifications';
 import {registerForPushNotificationsAsync, notificationHandler} from 'src/utils/PushNotification';
@@ -20,7 +20,6 @@ export default function PushNotification({navigation}) {
     responseListener.current = Notifications.addNotificationResponseReceivedListener((response) => {
       const noti = response.notification.request.content;
       if (noti.data.type == 'message') {
-        console.log(noti);
         navigation.push('ChatRoom', {
           chatRoomID: noti.data.chatRoomID,
           name: noti.data.name,
