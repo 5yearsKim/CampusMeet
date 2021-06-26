@@ -8,7 +8,7 @@ export async function sendPushNotification(userID, title, body, data) {
   try {
     const user = await bringUser(userID);
     token = user.pushToken;
-    console.log(token);
+    // console.log(token);
   } catch (err) {
     console.warn(err);
   }
@@ -22,7 +22,6 @@ export async function sendPushNotification(userID, title, body, data) {
     body: body,
     data: data,
   };
-  console.log(message);
   const rsp = await fetch('https://exp.host/--/api/v2/push/send', {
     method: 'POST',
     headers: {
@@ -32,7 +31,6 @@ export async function sendPushNotification(userID, title, body, data) {
     },
     body: JSON.stringify(message),
   });
-  console.log(rsp);
 }
 
 export async function registerForPushNotificationsAsync() {

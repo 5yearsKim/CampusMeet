@@ -1,3 +1,7 @@
+const twoDigit = (number) => {
+  return ('0' + number).slice(-2);
+}
+
 export const date2local = (date) => {
   // return new Date(date.getTime() + date.getTimezoneOffset() * 60000)
   return new Date(date.getTime())
@@ -28,7 +32,7 @@ export const relativeTimePrettify = (dateString, mode='day') => {
     }
   }
   const month = date.getMonth();
-  const day = date.getDate();
+  const day = twoDigit(date.getDate());
   return `${month}/${day}`;
 };
 
@@ -37,9 +41,9 @@ export const absoluteTime = (dateString) => {
   const date = date2local(new Date(dateString));
   const year = date.getFullYear();
   const month = date.getMonth();
-  const day = date.getDate();
+  const day = twoDigit(date.getDate());
   const hour = date.getHours();
-  const minute = date.getMinutes();
+  const minute = twoDigit(date.getMinutes());
   return `${month}/${day} ${hour}:${minute}`;
 };
 
@@ -52,7 +56,7 @@ export function strTime2Min(strTime) {
     hour = hour - 12;
     overnoon = 'pm';
   }
-  const min = date.getMinutes();
+  const min = twoDigit(date.getMinutes());
   return `${hour}:${min} ${overnoon}`;
 }
 

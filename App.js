@@ -46,7 +46,7 @@ export default function App() {
         setUser(userData);
         setIsAuthenticated(true);
       } catch (err) {
-        console.log(err);
+        console.warn(err);
       }
       setAuthChecked(true);
     };

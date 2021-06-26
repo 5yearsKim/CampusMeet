@@ -66,8 +66,11 @@ function ChatRoom({navigation, route}) {
     if (index >= messageList.length -1) {
       return <Message item={item} showTime={true} showDate={true}/>;
     }
-    const isMinDiff = isMinDifferent(item.createdAt, messageList[index + 1].createdAt);
     const isDateDiff = isDateDifferent(item.createdAt, messageList[index + 1].createdAt);
+    if (index == 0) {
+      return <Message item={item} showTime={true} showDate={isDateDiff}/>;
+    }
+    const isMinDiff = isMinDifferent(item.createdAt, messageList[index - 1].createdAt);
     return <Message item={item} showTime={isMinDiff} showDate={isDateDiff} navigation={navigation}/>;
   };
   return (
