@@ -1,5 +1,5 @@
 import React, {useEffect, useState, useRef} from 'react';
-import {KeyboardAvoidingView, View, FlatList, StyleSheet} from 'react-native';
+import {FlatList, StyleSheet} from 'react-native';
 import {bringComment} from 'src/utils/Community';
 import CommentInput from './CommentInput';
 import Comment from './Comment';

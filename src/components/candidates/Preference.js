@@ -21,7 +21,6 @@ export default function Preference({filterOpen, setFilterOpen}) {
   const [genderLike, setGenderLike] = useState(0);
   const [campus, setCampus] = useState('');
   const [campusLike, setCampusLike] = useState([]);
-  const [department, setDepartment] = useState('');
   const [departmentLike, setDepartmentLike] = useState([]);
 
   const departmentOptions = config.campus.departmentOptions;
@@ -131,7 +130,6 @@ export default function Preference({filterOpen, setFilterOpen}) {
                       candidate={departmentOptions.map((item) => ({label: item, value: item}))}
                       placeholder='선택'
                       onSelectItem={(item) => {
-                        setDepartment(item.value);
                         if (!departmentLike.includes(item.value)) {
                           setDepartmentLike([...departmentLike, item.value]);
                         }
