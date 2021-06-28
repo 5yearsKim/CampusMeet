@@ -16,8 +16,6 @@ import {ThemeContext, MyContext, UserContext} from 'src/context';
 import config from 'src/config';
 
 
-
-
 export default function App() {
   const [authChecked, setAuthChecked] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -27,7 +25,6 @@ export default function App() {
   // console.log(user.signInUserSession.accessToken.jwtToken);
   const [refreshCandidate, setRefreshCandidate] = useState(false);
   const [refreshSentSignal, setRefreshSentSignal] = useState(false);
-  const [refreshMypage, setRefreshMypage] = useState(false);
 
   const [fontLoaded] = useFonts({
     nanumEB: require('assets/fonts/NanumSquareRoundEB.ttf'),
@@ -109,8 +106,6 @@ export default function App() {
       setRefreshCandidate: setRefreshCandidate,
       refreshSentSignal: refreshSentSignal,
       setRefreshSentSignal: setRefreshSentSignal,
-      refreshMypage: refreshMypage,
-      setRefreshMypage: setRefreshMypage,
     };
   };
   if (fontLoaded && authChecked) {

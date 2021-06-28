@@ -47,8 +47,6 @@ function MypageList({navigation}) {
     year: '',
     name: '',
   });
-  const {refreshMypage} = useContext(UserContext);
-
 
   useEffect(() => {
     const m_bringUser = async () => {
@@ -59,8 +57,11 @@ function MypageList({navigation}) {
         console.warn(err);
       }
     };
-    m_bringUser();
-  }, [refreshMypage]);
+    const unsubscribe = navigation.addListener('focus', () => {
+      m_bringUser();
+    });
+    return unsubscribe;
+  }, []);
 
   const onLogout = async () => {
     try {
