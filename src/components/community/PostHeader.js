@@ -1,5 +1,6 @@
 import React, {useEffect, useState, useContext} from 'react';
-import {View, FlatList, Alert, TouchableOpacity, Modal, StyleSheet} from 'react-native';
+import {View, FlatList, TouchableOpacity, Modal, StyleSheet} from 'react-native';
+import SimpleAlert from 'src/blocks/SimpleAlert';
 import Text from 'src/blocks/Text';
 import {Nickname} from 'src/blocks/Board';
 import {Button} from 'react-native-paper';
@@ -17,6 +18,7 @@ function PostHeader({post, board}) {
   const [isLike, setIsLike] = useState(false);
   const [likeCnt, setLikeCnt] = useState('');
   const [modalVisible, setModalVisible] = useState(false);
+  const [alertOpen, setAlertOpen] = useState(false);
   const [page, setPage] = useState(0);
   const likeList = post.likes.items.map((item) => item.userID);
   const userSub = auth.user.attributes.sub;
@@ -46,18 +48,9 @@ function PostHeader({post, board}) {
     );
   };
 
-  const alreadyLikeAlert = () => {
-    Alert.alert(
-        '알림',
-        '이미 좋아한 게시글입니다.',
-        [
-          {text: 'OK', onPress: () => console.log('OK Pressed')},
-        ],
-    );
-  };
   const onClickLike = async () => {
     if (isLike) {
-      alreadyLikeAlert();
+      setAlertOpen(true);
     } else {
       const likeData = await makeLikePost(userSub, post.id);
       if (likeData) {
@@ -90,6 +83,13 @@ function PostHeader({post, board}) {
           </Modal>
         </View>
       )}
+      <SimpleAlert
+        modalOpen={alertOpen}
+        setModalOpen={setAlertOpen}
+        title='알림'
+        content='이미 좋아한 게시글입니다.'
+        onOk={() => setAlertOpen(false)}
+      />
     </View>
   );
 }

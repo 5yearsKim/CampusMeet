@@ -1,6 +1,7 @@
 import React, {useContext, useState} from 'react';
-import {View, TouchableOpacity, Alert, StyleSheet} from 'react-native';
+import {View, TouchableOpacity} from 'react-native';
 import Text from './Text';
+import SimpleAlert from './SimpleAlert';
 import config from 'src/config';
 import {Portal, Dialog} from 'react-native-paper';
 import SendSignalModal from './SendSignalModal';
@@ -21,6 +22,7 @@ export function Nickname({type, nickname, userID, style}) {
   const {signalCnt} = useContext(UserContext);
   const [dialog, setDialog] = useState(false);
   const [popupVisible, setPopupVisible] = useState(false);
+  const [alertOpen, setAlertOpen] = useState(false);
 
   if (type == boardOptions[1]) {
     return (
@@ -28,16 +30,12 @@ export function Nickname({type, nickname, userID, style}) {
         <TouchableOpacity onPress={() => setDialog(true)}>
           <Text style={[style, gender=='남자'?{color: theme.men}:{color: theme.women}]}>{name}</Text>
         </TouchableOpacity>
-
         <Portal>
           <Dialog visible={dialog} onDismiss={() => setDialog(false)}>
             <Dialog.Content>
               <TouchableOpacity onPress={() => {
                 if (signalCnt >= config.manage.signalMax) {
-                  Alert.alert(
-                      'Signal 이 부족합니다.',
-                      'Signal은 매일 새로 충전됩니다.',
-                  );
+                  setAlertOpen(true);
                   setDialog(false);
                 } else {
                   setPopupVisible(true);
@@ -49,9 +47,14 @@ export function Nickname({type, nickname, userID, style}) {
             </Dialog.Content>
           </Dialog>
         </Portal>
-
+        <SimpleAlert
+          modalOpen={alertOpen}
+          setModalOpen={setAlertOpen}
+          title='Signal 이 부족합니다.'
+          content='Signal은 매일 새로 충전됩니다.'
+          onOk={() => setAlertOpen(false)}
+        />
         <SendSignalModal toID={userID} popupVisible={popupVisible} setPopupVisible={setPopupVisible}/>
-
       </View>
     );
   }

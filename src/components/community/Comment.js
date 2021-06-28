@@ -1,5 +1,6 @@
 import React, {useEffect, useState, useContext} from 'react';
-import {View, TouchableWithoutFeedback, TouchableOpacity, Alert, FlatList, StyleSheet} from 'react-native';
+import {View, TouchableWithoutFeedback, TouchableOpacity, FlatList, StyleSheet} from 'react-native';
+import SimpleAlert from 'src/blocks/SimpleAlert';
 import Text from 'src/blocks/Text';
 import {Portal, Dialog} from 'react-native-paper';
 import {Nickname} from 'src/blocks/Board';
@@ -18,6 +19,7 @@ function Comment({item, index, board, focusComment}) {
   const [isLike, setIsLike] = useState(false);
   const [likeCnt, setLikeCnt] = useState('');
   const [dialog, setDialog] = useState(false);
+  const [alertOpen, setAlertOpen] = useState(false);
   // console.log('board ', board) ;
 
   useEffect(() => {
@@ -25,19 +27,10 @@ function Comment({item, index, board, focusComment}) {
     setIsLike(likeList.includes(userSub));
   }, []);
 
-  const alreadyLikeAlert = () => {
-    Alert.alert(
-        '알림',
-        '이미 좋아한 댓글입니다.',
-        [
-          {text: 'OK', onPress: () => console.log('OK Pressed')},
-        ],
-    );
-  };
 
   const onClickLike = async () => {
     if (isLike) {
-      alreadyLikeAlert();
+      setAlertOpen(true);
     } else {
       const likeData = await makeLikeComment(userSub, item.id);
       if (likeData) {
@@ -86,6 +79,13 @@ function Comment({item, index, board, focusComment}) {
           </Dialog.Content>
         </Dialog>
       </Portal>
+      <SimpleAlert
+        modalOpen={alertOpen}
+        setModalOpen={setAlertOpen}
+        title='알림'
+        content='이미 좋아한 댓글입니다'
+        onOk={() => setAlertOpen(false)}
+      />
       <FlatList
         data={item.nestedComments.items}
         renderItem={({item}) => <NestedComment item={item} board={board}/>}

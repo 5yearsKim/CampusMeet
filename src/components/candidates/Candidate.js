@@ -22,7 +22,7 @@ function CandidateHeader() {
   return (
     <View style={styles.headerContainer} key='header'>
       <View style={{flexDirection: 'row', alignItems: 'center'}}>
-        <Text style={[styles.heartText, {color: theme.subText}]}>signal left: </Text>
+        <Text style={[styles.heartText, {color: theme.subText}]}>Signal: </Text>
         {[...Array(Math.max(0, signalMax - signalCnt))].map((_, index) => {
           return (
             <FontAwesome5 name="heartbeat" size={24} color="pink" key={index} style={{margin: 2}}/>
@@ -73,6 +73,7 @@ function Candidate({navigation}) {
           renderItem={({item}) => <CandidateItem item={item} />}
           keyExtractor={(item) => item.id}
           ListHeaderComponent={() => <CandidateHeader/>}
+          removeClippedSubviews={false}
         />
       }
     </View>

@@ -1,5 +1,6 @@
 import React, {useEffect, useState, useContext} from 'react';
-import {View, Alert, StyleSheet} from 'react-native';
+import {View, StyleSheet} from 'react-native';
+import SimpleAlert from 'src/blocks/SimpleAlert';
 import Text from 'src/blocks/Text';
 import {Nickname} from 'src/blocks/Board';
 import {AntDesign, MaterialIcons} from '@expo/vector-icons';
@@ -15,25 +16,16 @@ function NestedComment({item, board}) {
   const likeList = item.likes.items.map((item) => item.userID);
   const [isLike, setIsLike] = useState(false);
   const [likeCnt, setLikeCnt] = useState('');
+  const [alertOpen, setAlertOpen] = useState(false);
 
   useEffect(() => {
     setLikeCnt(likeList.length);
     setIsLike(likeList.includes(userSub));
   }, []);
 
-  const alreadyLikeAlert = () => {
-    Alert.alert(
-        '알림',
-        '이미 좋아한 댓글입니다.',
-        [
-          {text: 'OK', onPress: () => console.log('OK Pressed')},
-        ],
-    );
-  };
-
   const onClickLike = async () => {
     if (isLike) {
-      alreadyLikeAlert();
+      setAlertOpen(true);
     } else {
       const likeData = await makeLikeComment(userSub, item.id);
       if (likeData) {
@@ -56,6 +48,13 @@ function NestedComment({item, board}) {
           </AntDesign>
         </View>
       </View>
+      <SimpleAlert
+        modalOpen={alertOpen}
+        setModalOpen={setAlertOpen}
+        title='알림'
+        content='이미 좋아한 대댓글입니다.'
+        onOk={() => setAlertOpen(false)}
+      />
     </View>
   );
 }

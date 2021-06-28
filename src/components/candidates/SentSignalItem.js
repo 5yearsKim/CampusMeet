@@ -1,5 +1,6 @@
 import React, {useState, useContext} from 'react';
-import {Dimensions, View, Image, TouchableWithoutFeedback, TouchableOpacity, Modal, Alert, StyleSheet} from 'react-native';
+import {Dimensions, View, Image, TouchableWithoutFeedback, TouchableOpacity, Modal, StyleSheet} from 'react-native';
+import SimpleAlert from 'src/blocks/SimpleAlert';
 import Text from 'src/blocks/Text';
 import {Button} from 'react-native-paper';
 import CandidateDetail from './CandidateDetail';
@@ -22,26 +23,10 @@ function LeftContent({gender}) {
 function SentSignalItem({item}) {
   const receiver = item.receiver;
   const [popupVisible, setPopupVisible] = useState(false);
+  const [alertOpen, setAlertOpen] = useState(false);
+
   const {theme} = useContext(ThemeContext);
   const {refreshSentSignal, setRefreshSentSignal} = useContext(UserContext);
-
-  const alertRemoveSignal = () => {
-    Alert.alert(
-        'Signal 삭제',
-        'Signal이 삭제되고 상대는 더 이상 나를 볼 수 없습니다.',
-        [
-          {
-            text: 'Cancel',
-            onPress: () => {},
-            style: 'cancel',
-          },
-          {
-            text: 'OK',
-            onPress: () => onRemoveSignal(),
-          },
-        ],
-    );
-  };
 
   const onRemoveSignal = async () => {
     try {
@@ -67,7 +52,7 @@ function SentSignalItem({item}) {
           <Text style={styles.timeText}>{relativeTimePrettify(item.createdAt, 'week')}</Text>
           {item.alive?
             <Button
-              onPress={() => alertRemoveSignal()}
+              onPress={() => setAlertOpen(true)}
               labelStyle={styles.buttonText}
             >
               Signal 취소
@@ -92,6 +77,14 @@ function SentSignalItem({item}) {
           </View>
         </TouchableWithoutFeedback>
       </Modal>
+      <SimpleAlert
+        modalOpen={alertOpen}
+        setModalOpen={setAlertOpen}
+        title='시그널 삭제'
+        content='시그널이 삭제되고 상대는 더 이상 나를 확인할 수 없습니다.'
+        onCancel={() => setAlertOpen(false)}
+        onOk={() => onRemoveSignal()}
+      />
 
     </View>
   );

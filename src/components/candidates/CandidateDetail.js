@@ -1,6 +1,7 @@
 import React, {useState, useContext, useRef} from 'react';
-import {ScrollView, Animated, View, Image, Alert, TouchableWithoutFeedback, StyleSheet} from 'react-native';
+import {ScrollView, Animated, View, Image, TouchableWithoutFeedback, StyleSheet} from 'react-native';
 import Text from 'src/blocks/Text';
+import SimpleAlert from 'src/blocks/SimpleAlert';
 import SendSignalModal from 'src/blocks/SendSignalModal';
 import {Button} from 'react-native-paper';
 import config from 'src/config';
@@ -12,6 +13,7 @@ function CandidateDetail({item, useAction}) {
   const {theme} = useContext(ThemeContext);
   const {signalCnt} = useContext(UserContext);
   const [popupVisible, setPopupVisible] = useState(false);
+  const [alertOpen, setAlertOpen] = useState(false);
   const fadeAnim = useRef(new Animated.Value(0)).current;
   const onImageClicked = () => {
     fadeAnim.setValue(1);
@@ -57,10 +59,7 @@ function CandidateDetail({item, useAction}) {
             mode='text'
             onPress={() => {
               if (signalCnt >= config.manage.signalMax) {
-                Alert.alert(
-                    'Signal 이 부족합니다.',
-                    'Signal은 매일 새로 충전됩니다.',
-                );
+                setAlertOpen(true);
               } else {
                 setPopupVisible(true);
               }
@@ -70,7 +69,18 @@ function CandidateDetail({item, useAction}) {
           </Button>
         </View>
       }
-      <SendSignalModal toID={item.id} popupVisible={popupVisible} setPopupVisible={setPopupVisible}/>
+      <SimpleAlert
+        modalOpen={alertOpen}
+        setModalOpen={setAlertOpen}
+        title='Signal 이 부족합니다.'
+        content='Signal은 매일 새로 충전됩니다.'
+        onOk={() => setAlertOpen(false)}
+      />
+      <SendSignalModal
+        toID={item.id}
+        popupVisible={popupVisible}
+        setPopupVisible={setPopupVisible}
+      />
     </ScrollView>
 
   );

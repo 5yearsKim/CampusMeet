@@ -1,6 +1,7 @@
-import React, {useContext} from 'react';
-import {View, Image, TouchableOpacity, Alert, StyleSheet} from 'react-native';
+import React, {useContext, useState} from 'react';
+import {View, Image, TouchableOpacity, StyleSheet} from 'react-native';
 import Text from 'src/blocks/Text';
+import SimpleAlert from 'src/blocks/SimpleAlert';
 import {Button} from 'react-native-paper';
 import {KeyImage} from 'src/blocks/Image';
 import {MyContext, ThemeContext} from 'src/context';
@@ -30,6 +31,8 @@ function LeftContent({sender, navigation}) {
 
 
 function ReceivedSignalItem({item, navigation}) {
+  const [matchAlertOpen, setMatchAlertOpen] = useState(false);
+  const [rejectAlertOpen, setRejectAlertOpen] = useState(false);
   const auth = useContext(MyContext);
   const userSub = auth.user.attributes.sub;
   const {theme} = useContext(ThemeContext);
@@ -41,20 +44,6 @@ function ReceivedSignalItem({item, navigation}) {
   }
   // console.log(item);
 
-  const alertReject = () => {
-    Alert.alert(
-        '거절',
-        'Signal을 거절하면 1달동안 동일인에게 Signal을 받을 수 없습니다.',
-        [
-          {
-            text: 'Cancel',
-            onPress: () => {},
-            style: 'cancel',
-          },
-          {text: 'OK', onPress: () => onReject()},
-        ],
-    );
-  };
   const onReject = () => {
     try {
       rejectSignal(item.id);
@@ -64,20 +53,6 @@ function ReceivedSignalItem({item, navigation}) {
     }
   };
 
-  const alertMatch = () => {
-    Alert.alert(
-        'Match',
-        'Match가 되면 상대가 나를 확인할 수 있고 채팅방이 개설됩니다.',
-        [
-          {
-            text: 'Cancel',
-            onPress: () => {},
-            style: 'cancel',
-          },
-          {text: 'OK', onPress: () => onMatch()},
-        ],
-    );
-  };
   const onMatch = () => {
     try {
       makeMatch(userSub, sender.id);
@@ -106,20 +81,35 @@ function ReceivedSignalItem({item, navigation}) {
         <Text style={[styles.timeText, {color: theme.subText}]}>{relativeTimePrettify(item.createdAt, 'week')}</Text>
         <View style={{flexDirection: 'row'}}>
           <Button
-            onPress={() => alertReject()}
+            onPress={() => setRejectAlertOpen(true)}
             labelStyle={styles.buttonText}
           >
             거절
           </Button>
           <Button
-            onPress={() => alertMatch()}
+            onPress={() => setMatchAlertOpen(true)}
             labelStyle={styles.buttonText}
           >
             수락
           </Button>
         </View>
       </View>
-
+      <SimpleAlert
+        modalOpen={matchAlertOpen}
+        setModalOpen={setMatchAlertOpen}
+        title='Match!'
+        content='Match가 되면 상대가 나를 확인할 수 있고 서로 쪽지를 보낼 수 있습니다.'
+        onCancel={() => setMatchAlertOpen(false)}
+        onOk={() => onMatch()}
+      />
+      <SimpleAlert
+        modalOpen={rejectAlertOpen}
+        setModalOpen={setRejectAlertOpen}
+        title='거절'
+        content='Signal을 거절하면 1달동안 같은 사람에게 Signal을 받을 수 없습니다.'
+        onCancel={() => setRejectAlertOpen(false)}
+        onOk={() => onReject()}
+      />
     </View>
   );
 }

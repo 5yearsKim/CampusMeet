@@ -2,7 +2,6 @@ import React, {useState, useContext} from 'react';
 import {View, Dimensions, Modal, TouchableOpacity, TouchableWithoutFeedback, StyleSheet} from 'react-native';
 import {KeyImage} from 'src/blocks/Image';
 import Text from 'src/blocks/Text';
-import {Button} from 'react-native-paper';
 import CandidateDetail from './CandidateDetail';
 import {ThemeContext} from 'src/context';
 import {campusDict} from 'assets/campusLogos';
