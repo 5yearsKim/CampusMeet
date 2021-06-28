@@ -4,7 +4,7 @@ import Text from 'src/blocks/Text';
 import {KeyImage} from 'src/blocks/Image';
 import {logout} from 'src/utils/Auth';
 import {bringUser} from 'src/utils/User';
-import {MyContext, ThemeContext, UserContext} from 'src/context';
+import {MyContext, ThemeContext} from 'src/context';
 
 // import {makeMessage} from 'src/utils/Chat';
 
