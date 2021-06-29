@@ -50,7 +50,7 @@ function Post({navigation, route}) {
 
 const styles = StyleSheet.create({
   flatlistContainer: {
-    // paddingBottom: 350, // textinput not to hide contents
+    paddingBottom: 350, // textinput not to hide contents
   },
 
 });

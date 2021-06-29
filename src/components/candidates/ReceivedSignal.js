@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useContext} from 'react';
-import {View, FlatList, StyleSheet} from 'react-native';
+import {View, FlatList} from 'react-native';
 import Loading from 'src/blocks/Loading';
 import ReceivedSignalItem from './ReceivedSignalItem';
 import {MyContext} from 'src/context';
@@ -36,7 +36,7 @@ function ReceivedSignal({navigation}) {
   const onMatch = async (signalID, senderID) => {
     try {
       await makeMatch(userSub, senderID);
-      await removeSignal(item.id);
+      await removeSignal(signalID);
       setUserList(userList.filter((item) => item.id != signalID));
     } catch (err) {
       console.warn(err);
@@ -65,8 +65,5 @@ function ReceivedSignal({navigation}) {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-});
 
 export default ReceivedSignal;

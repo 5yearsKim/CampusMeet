@@ -46,9 +46,18 @@ function CreateProfile({navigation}) {
 
   useEffect(() => {
     navigation.addListener('beforeRemove', (e) => {
+      if (e.data.action.type == 'RESET') {
+        // console.log(e.data.action);
+        return;
+      }
+      // console.log(e.data.action.type);
       e.preventDefault();
       setAlertOpen(true);
     });
+  }, []);
+
+  useEffect(() => {
+    return () => setRefreshCandidate(!refreshCandidate);
   }, []);
 
   const checkFormat = () => {
@@ -88,8 +97,22 @@ function CreateProfile({navigation}) {
         setErrText('프로필 사진을 1개 이상 등록해주세요!');
         return false;
       }
+      if (profileMessage == '') {
+        setErrText('친구에게 한마디를 간단히 적어주세요.');
+        return false;
+      }
+      if (profileMessage == '') {
+        setErrText('자기소개를 적어주세요.');
+        return false;
+      }
     }
     return true;
+  };
+
+  const _prev = () => {
+    if (currentStep == 2 || currentStep == 3) {
+      setCurrentStep(currentStep - 1);
+    }
   };
 
   const _next = async () => {
@@ -114,8 +137,7 @@ function CreateProfile({navigation}) {
       try {
         await makeUser(userSub, gender, name, campus, graduate, year, department, division, imgList, profileMessage, profileDescription);
         await setupIndividual();
-        setRefreshCandidate(!refreshCandidate);
-        navigation.goBack();
+        navigation.reset({index: 0, routes: [{name: 'Home'}]});
       } catch (err) {
         console.warn(err);
       }
@@ -134,21 +156,11 @@ function CreateProfile({navigation}) {
             <View style={[styles.genderImage, gender=='남자'&& styles.genderClicked]}>
               <MaterialCommunityIcons name="face" size={80} color={theme.men} />
             </View>
-            {/* <Image
-              source={require('assets/images/male.png')}
-              style={[styles.genderImage, gender=='남자'&& styles.genderClicked]}
-              resizeMode='stretch'
-            /> */}
           </TouchableOpacity>
           <TouchableOpacity onPress={() => setGender('여자')}>
             <View style={[styles.genderImage, gender=='여자'&& styles.genderClicked]}>
               <MaterialCommunityIcons name="face-woman" size={80} color={theme.women} />
             </View>
-            {/* <Image
-              source={require('assets/images/female.png')}
-              style={[styles.genderImage, gender=='여자'&& styles.genderClicked]}
-              resizeMode='stretch'
-            /> */}
           </TouchableOpacity>
         </View>
         {gender.length > 0 &&
@@ -190,7 +202,7 @@ function CreateProfile({navigation}) {
       );
     };
     return (
-      <View>
+      <ScrollView>
         <TextInput
           mode='flat'
           label='이름'
@@ -239,7 +251,7 @@ function CreateProfile({navigation}) {
             style={styles.textInput}
           />
         </View>
-      </View>
+      </ScrollView>
     );
   };
   const step3 = () => {
@@ -267,14 +279,6 @@ function CreateProfile({navigation}) {
         {errText.length > 0 &&
           <Text style={styles.errText}>{errText}</Text>
         }
-        <Button
-          mode="contained"
-          onPress={_next}
-          style={{marginTop: 20}}
-          labelStyle={{color: 'white'}}
-        >
-          등록하기
-        </Button>
       </ScrollView>
     );
   };
@@ -285,22 +289,36 @@ function CreateProfile({navigation}) {
       {step2()}
       {step3()}
       {errText.length > 0 && currentStep <= 2 &&
-        <Text style={styles.errText}>{errText}</Text>
+        <View style={{alignItems: 'center'}}>
+          <Text style={styles.errText}>{errText}</Text>
+        </View>
       }
-      {currentStep <= 2 &&
-      <Button
-        mode="contained"
-        onPress={_next}
-        style={{marginTop: 20}}
-        labelStyle={{color: 'white'}}
-      >
-        다음
-      </Button>
-      }
+      <View style={{flexDirection: 'row', justifyContent: 'center'}}>
+        {currentStep > 1 &&
+        <Button
+          mode="outlined"
+          onPress={_prev}
+          style={styles.buttonStyle}
+        >
+          이전
+        </Button>
+        }
+        <Button
+          mode="contained"
+          onPress={_next}
+          style={styles.buttonStyle}
+          labelStyle={{color: 'white'}}
+        >
+          {currentStep <= 2 ?
+            '다음' :
+            '등록하기'
+          }
+        </Button>
+      </View>
       <SimpleAlert
         modalOpen={alertOpen}
         setModalOpen={setAlertOpen}
-        title='프로필이 등록 없이 나가기'
+        title='프로필 등록'
         content='프로필을 등록하지 않으면 캠퍼스밋을 이용할 수 없습니다.'
         onOk={() => {}}
       />
@@ -349,6 +367,10 @@ const styles = StyleSheet.create({
   },
   department: {
     backgroundColor: 'transparent',
+  },
+  buttonStyle: {
+    marginTop: 20,
+    width: 120,
   },
   textInput: {
     backgroundColor: 'transparent',

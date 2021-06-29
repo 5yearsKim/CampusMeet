@@ -3,7 +3,7 @@ import {View, Image, TouchableOpacity, Modal, StyleSheet} from 'react-native';
 import Text from 'src/blocks/Text';
 import {KeyImage} from 'src/blocks/Image';
 import {ImageViewer} from 'src/blocks/ImageViewer';
-import {AntDesign} from '@expo/vector-icons'; 
+import {AntDesign} from '@expo/vector-icons';
 import config from 'src/config';
 
 export function TextMessage({text, isMyMessage}) {

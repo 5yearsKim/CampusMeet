@@ -5,12 +5,15 @@ import {registerForPushNotificationsAsync, notificationHandler} from 'src/utils/
 import {modifyUser} from 'src/utils/User';
 import {MyContext} from 'src/context';
 
-export default function PushNotification({navigation}) {
+export default function PushNotification({navigation, user}) {
   const auth = useContext(MyContext);
   // const notificationListener = useRef();
   const responseListener = useRef();
 
   useEffect(() => {
+    if (!user) {
+      return;
+    }
     // This listener is fired whenever a notification is received while the app is foregrounded
     // notificationListener.current = Notifications.addNotificationReceivedListener((notification) => {
     //   setNotification(notification);
@@ -33,12 +36,15 @@ export default function PushNotification({navigation}) {
       // Notifications.removeNotificationSubscription(notificationListener.current);
       Notifications.removeNotificationSubscription(responseListener.current);
     };
-  }, []);
+  }, [user]);
 
   useEffect(() => {
     const tokenSetting = async () => {
+      if (!user) {
+        return;
+      }
       const token = await registerForPushNotificationsAsync();
-      // console.log(token);
+      console.log(token);
       if (token) {
         try {
           modifyUser(auth.user.attributes.sub, {pushToken: token});
@@ -51,8 +57,10 @@ export default function PushNotification({navigation}) {
   }, []);
 
   useEffect(() => {
-    notificationHandler();
-  }, []);
+    if (user) {
+      notificationHandler();
+    }
+  }, [user]);
 
   return (
     <View>

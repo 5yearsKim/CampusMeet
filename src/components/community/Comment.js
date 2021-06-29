@@ -48,7 +48,7 @@ function Comment({item, index, board, focusComment}) {
       >
         <View style={[
           styles.container,
-          nested.isNested == item.id && {backgroundColor: theme.nestedComment},
+          nested.isNested == item.id && {backgroundColor: 'rgba(240, 200, 50, 0.2)'},
           {borderColor: theme.subText},
         ]}>
           <Nickname type={board.type} nickname={item.nickname} userID={item.userID} style={styles.nickname} />
@@ -71,10 +71,10 @@ function Comment({item, index, board, focusComment}) {
               setDialog(false);
               focusComment(index);
             }}>
-              <Text style={{color: 'black'}}>대댓글 달기</Text>
+              <Text style={styles.menuText}>대댓글 달기</Text>
             </TouchableOpacity>
             <TouchableOpacity onPress={() => {}}>
-              <Text style={{color: 'black'}}>신고</Text>
+              <Text style={styles.menuText}>신고</Text>
             </TouchableOpacity>
           </Dialog.Content>
         </Dialog>
@@ -109,6 +109,11 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: 'bold',
   },
+  menuText: {
+    fontSize: 13,
+    fontWeight: 'bold',
+    margin: 10,
+  }
 });
 
 export default Comment;

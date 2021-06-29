@@ -9,14 +9,10 @@ export async function makeSignal(fromID, toID, message) {
     message: message,
     alive: true,
   };
-  try {
-    const signal = await API.graphql(
-        graphqlOperation(createSignal, {input: newSignal}),
-    );
-    return signal;
-  } catch (err) {
-    console.log(err);
-  }
+  const signal = await API.graphql(
+      graphqlOperation(createSignal, {input: newSignal}),
+  );
+  return signal;
 }
 
 export async function bringReceivedSignal(toID) {

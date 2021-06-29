@@ -20,26 +20,26 @@ export function Nickname({type, nickname, userID, style}) {
     );
   }
   const {signalCnt} = useContext(UserContext);
-  const [dialog, setDialog] = useState(false);
+  const [menuShow, setMenuShow] = useState(false);
   const [popupVisible, setPopupVisible] = useState(false);
   const [alertOpen, setAlertOpen] = useState(false);
 
   if (type == boardOptions[1]) {
     return (
       <View>
-        <TouchableOpacity onPress={() => setDialog(true)}>
+        <TouchableOpacity onPress={() => setMenuShow(true)}>
           <Text style={[style, gender=='남자'?{color: theme.men}:{color: theme.women}]}>{name}</Text>
         </TouchableOpacity>
         <Portal>
-          <Dialog visible={dialog} onDismiss={() => setDialog(false)}>
+          <Dialog visible={menuShow} onDismiss={() => setMenuShow(false)}>
             <Dialog.Content>
               <TouchableOpacity onPress={() => {
                 if (signalCnt >= config.manage.signalMax) {
                   setAlertOpen(true);
-                  setDialog(false);
+                  setMenuShow(false);
                 } else {
                   setPopupVisible(true);
-                  setDialog(false);
+                  setMenuShow(false);
                 }
               }}>
                 <Text style={{color: 'black'}}>시그널 보내기</Text>

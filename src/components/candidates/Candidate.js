@@ -7,9 +7,9 @@ import {FontAwesome5} from '@expo/vector-icons';
 import {bringCandidate} from 'src/utils/User';
 import CandidateItem from './CandidateItem';
 import Preference from './Preference';
-import {ThemeContext, UserContext} from 'src/context';
+import {MyContext, ThemeContext, UserContext} from 'src/context';
 import config from 'src/config';
-import {checkCandidate} from 'src/utils/User';
+import {bringUser, checkCandidate} from 'src/utils/User';
 
 import PushNotification from 'src/components/PushNotification';
 
@@ -40,7 +40,10 @@ function CandidateHeader() {
 }
 
 function Candidate({navigation}) {
+  const auth = useContext(MyContext);
+  const userSub = auth.user.attributes.sub;
   const {refreshCandidate} = useContext(UserContext);
+  const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [userList, setUserList] = useState([]);
 
@@ -62,9 +65,21 @@ function Candidate({navigation}) {
     checkCandidate();
   }, []);
 
+  useEffect(() => {
+    const m_bringUser = async () => {
+      try {
+        const userData = await bringUser(userSub);
+        setUser(userData);
+      } catch (err) {
+        console.warn(err);
+      }
+    };
+    m_bringUser();
+  }, []);
+
   return (
     <View style={{flex: 1}}>
-      <PushNotification navigation={navigation}/>
+      <PushNotification navigation={navigation} user={user}/>
       {loading ?
         <Loading/> :
         <FlatList

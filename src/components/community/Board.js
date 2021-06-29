@@ -39,6 +39,7 @@ function Board({navigation, route}) {
         renderItem={({item}) => <PostListItem item={item} board={board} navigation={navigation}/>}
         keyExtractor={(item) => item.id}
         onEndReached={() => onEndReached()}
+        removeClippedSubviews={false}
       />
       <View style={styles.iconContainer}>
         <TouchableOpacity onPress={() => navigation.navigate('CreatePost', {board: board})}>

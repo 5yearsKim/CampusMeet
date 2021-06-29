@@ -147,7 +147,7 @@ function Route() {
           }) }
         />
         <MainStack.Screen name='ChatRoom' component={ChatRoomScreen}/>
-        <MainStack.Screen name='CreateProfile' component={CreateProfileScreen} options={{title: '프로필작성'}}/>
+        <MainStack.Screen name='CreateProfile' component={CreateProfileScreen} options={{title: '프로필작성', headerLeft: () => null}}/>
         <MainStack.Screen name='ModifyProfile' component={ModifyProfileScreen} options={{title: '프로필수정'}}/>
         <MainStack.Screen name='ViewProfile' component={ViewProfileScreen} options={{title: '프로필보기'}}/>
         <MainStack.Screen name='Board' component={BoardScreen} options={{title: '게시판'}}/>

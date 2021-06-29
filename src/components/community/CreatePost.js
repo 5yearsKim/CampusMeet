@@ -44,7 +44,7 @@ function CreatePost({navigation, route}) {
         placeholder='제목'
         style={styles.titleInput}
       />
-      <SafeAreaView>
+      <View style={styles.contentBox}>
         <TextInput
           value={content}
           multiline={true}
@@ -53,8 +53,8 @@ function CreatePost({navigation, route}) {
           placeholder='내용을 입력해주세요.'
           style={[styles.contentInput, {color: theme.text}]}
         />
-      </SafeAreaView>
-      <Text style={{color: theme.subText}}>이쁜말 고운말</Text>
+      </View>
+      <Text style={{color: theme.subText}}>욕설 금지! 비방어 금지! 이쁜말만 써주세요</Text>
       {/* </ScrollView> */}
       <View style={{alignItems: 'center'}}>
         <Button
@@ -76,10 +76,14 @@ function CreatePost({navigation, route}) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 10,
+    padding: 13,
   },
   titleInput: {
     backgroundColor: 'transparent',
+  },
+  contentBox: {
+    minHeight: 100,
+    justifyContent: 'center',
   },
   contentInput: {
     minHeight: '10%',

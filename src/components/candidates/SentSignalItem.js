@@ -45,7 +45,7 @@ function SentSignalItem({item}) {
           <View>
             <Text style={[styles.titleText, {color: theme.text}]}>{receiver.campus} {receiver.graduate}</Text>
             <Text style={[styles.subtitleText, {color: theme.subText}]}>{receiver.division} {receiver.year}학번</Text>
-            <Text style={[styles.messageText, {color: theme.subText}]}>{item.message}</Text>
+            <Text style={styles.messageText}>{item.message}</Text>
           </View>
         </View>
         <View style={styles.bottomContainer}>
@@ -105,9 +105,10 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
   subtitleText: {
-    fontSize: 12,
-    color: 'gray',
+    fontSize: 14,
+    fontWeight: 'bold',
     marginTop: 5,
+    marginLeft: 70,
   },
   messageText: {
     marginTop: 10,
@@ -115,7 +116,7 @@ const styles = StyleSheet.create({
     fontSize: 13,
     fontWeight: 'bold',
     fontStyle: 'italic',
-    color: '#444444',
+    color: 'gray',
   },
   bottomContainer: {
     flexDirection: 'row',
@@ -138,7 +139,7 @@ const styles = StyleSheet.create({
   },
   cardContainer: {
     width: width*0.8,
-    height: height*0.6,
+    minHeight: height*0.4,
     borderRadius: 15,
     backgroundColor: 'white',
   },

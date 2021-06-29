@@ -35,6 +35,7 @@ function LeftContent({item}) {
 function CandidateItem({item}) {
   const [popupVisible, setPopupVisible] = useState(false);
   const {theme} = useContext(ThemeContext);
+  const clearModal = () => setPopupVisible(false);
   return (
     <View style={styles.container}>
       <TouchableOpacity onPress={() => setPopupVisible(true)}>
@@ -52,7 +53,7 @@ function CandidateItem({item}) {
           <View style={styles.modalContainer}>
             <TouchableWithoutFeedback onPress={() => {}}>
               <View style={[styles.cardContainer, {backgroundColor: theme.background}]}>
-                <CandidateDetail item={item} useAction={true}/>
+                <CandidateDetail item={item} useAction={true} clearModal={clearModal}/>
               </View>
             </TouchableWithoutFeedback>
           </View>

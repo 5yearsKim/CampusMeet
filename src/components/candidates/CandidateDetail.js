@@ -7,7 +7,7 @@ import {Button} from 'react-native-paper';
 import config from 'src/config';
 import {ThemeContext, UserContext} from 'src/context';
 
-function CandidateDetail({item, useAction}) {
+function CandidateDetail({item, useAction, clearModal}) {
   // const auth = useContext(MyContext);
   // const userSub = auth.user.attributes.sub;
   const {theme} = useContext(ThemeContext);
@@ -74,12 +74,13 @@ function CandidateDetail({item, useAction}) {
         setModalOpen={setAlertOpen}
         title='Signal 이 부족합니다.'
         content='Signal은 매일 새로 충전됩니다.'
-        onOk={() => {}}
+        onOk={() => clearModal()}
       />
       <SendSignalModal
         toID={item.id}
         popupVisible={popupVisible}
         setPopupVisible={setPopupVisible}
+        onConfirmSend={() => clearModal()}
       />
     </ScrollView>
 

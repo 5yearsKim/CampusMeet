@@ -1,4 +1,4 @@
-import React, {useState, useContext} from 'react';
+import React, {useEffect, useState, useContext} from 'react';
 import Text from './Text';
 import SimpleAlert from './SimpleAlert';
 import {Button, TextInput} from 'react-native-paper';
@@ -10,7 +10,7 @@ import {sendPushNotification} from 'src/utils/PushNotification';
 
 const {width, height} = Dimensions.get('window');
 
-export default function SendSignalModal({toID, popupVisible, setPopupVisible}) {
+export default function SendSignalModal({toID, popupVisible, setPopupVisible, onConfirmSend}) {
   const auth = useContext(MyContext);
   const userSub = auth.user.attributes.sub;
   const {theme} = useContext(ThemeContext);
@@ -19,12 +19,21 @@ export default function SendSignalModal({toID, popupVisible, setPopupVisible}) {
   const [popupError, setPopupError] = useState('');
   const [alertOpen, setAlertOpen] = useState(false);
 
+  useEffect(() => {
+    return () => {
+      setRefreshCandidate(!refreshCandidate);
+      setRefreshSentSignal(!refreshSentSignal);
+    };
+  }, []);
+
   const onSendSignal = async () => {
-    await makeSignal(userSub, toID, message);
-    sendPushNotification(toID, 'New Signal', '누군가 나에게 시그널을 보냈어요!', {type: 'Signal'});
-    setSignalCnt(signalCnt + 1);
-    setRefreshCandidate(!refreshCandidate);
-    setRefreshSentSignal(!refreshSentSignal);
+    try {
+      setSignalCnt(signalCnt + 1);
+      await makeSignal(userSub, toID, message);
+      sendPushNotification(toID, 'New Signal', '누군가 나에게 시그널을 보냈어요!', {type: 'Signal'});
+    } catch (err) {
+      console.warn(err);
+    }
   };
 
   return (
@@ -82,7 +91,11 @@ export default function SendSignalModal({toID, popupVisible, setPopupVisible}) {
         setModalOpen={setAlertOpen}
         title='시그널이 전송되었습니다'
         content='Signal 탭에서 확인하세요.'
-        onOk={() => {}}
+        onOk={() => {
+          if (onConfirmSend) {
+            onConfirmSend();
+          }
+        }}
       />
     </View>
   );

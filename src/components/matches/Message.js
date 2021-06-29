@@ -64,7 +64,6 @@ function Message({item, showTime, showDate, navigation}) {
     );
   };
   if (item.type == 'admin') {
-    console.log(item.content);
     return (
       <View>
         {showDate && renderDate()}
