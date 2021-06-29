@@ -179,6 +179,7 @@ export const getMatch = /* GraphQL */ `
         createdAt
         updatedAt
       }
+      deleted
       updatedAt
     }
   }
@@ -196,6 +197,7 @@ export const listMatchs = /* GraphQL */ `
         toID
         chatRoomID
         createdAt
+        deleted
         updatedAt
       }
       nextToken
@@ -598,6 +600,7 @@ export const matchByFrom = /* GraphQL */ `
         toID
         chatRoomID
         createdAt
+        deleted
         updatedAt
       }
       nextToken
@@ -627,6 +630,7 @@ export const matchByChatRoom = /* GraphQL */ `
         toID
         chatRoomID
         createdAt
+        deleted
         updatedAt
       }
       nextToken

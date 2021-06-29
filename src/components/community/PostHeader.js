@@ -88,7 +88,7 @@ function PostHeader({post, board}) {
         setModalOpen={setAlertOpen}
         title='알림'
         content='이미 좋아한 게시글입니다.'
-        onOk={() => setAlertOpen(false)}
+        onOk={() => {}}
       />
     </View>
   );

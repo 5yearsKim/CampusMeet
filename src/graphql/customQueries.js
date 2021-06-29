@@ -181,6 +181,7 @@ export const matchByFrom = /* GraphQL */ `
         fromID
         toID
         chatRoomID
+        deleted
         createdAt
         updatedAt
         matcher {
@@ -232,6 +233,7 @@ export const matchByChatRoom = /* GraphQL */ `
           name
           imageKeys
         }
+        deleted
         createdAt
         updatedAt
       }

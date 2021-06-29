@@ -1,9 +1,10 @@
 import React, {useState, useEffect, useContext} from 'react';
 import {View, FlatList, StyleSheet} from 'react-native';
-import Text from 'src/blocks/Text';
+import Loading from 'src/blocks/Loading';
 import ReceivedSignalItem from './ReceivedSignalItem';
-import {bringReceivedSignal} from 'src/utils/Signal';
 import {MyContext} from 'src/context';
+import {makeMatch} from 'src/utils/Match';
+import {bringReceivedSignal, removeSignal, rejectSignal} from 'src/utils/Signal';
 
 function ReceivedSignal({navigation}) {
   const [userList, setUserList] = useState([]);
@@ -22,21 +23,43 @@ function ReceivedSignal({navigation}) {
     };
     m_bringReceivedSignal();
   }, []);
-  const renderReceivedSignal = ({item}) => {
-    return <ReceivedSignalItem item={item} navigation={navigation}/>;
+
+  const onReject = async (signalID) => {
+    try {
+      await rejectSignal(signalID);
+      setUserList(userList.filter((item) => item.id != signalID));
+    } catch (err) {
+      console.warn(err);
+    }
   };
+
+  const onMatch = async (signalID, senderID) => {
+    try {
+      await makeMatch(userSub, senderID);
+      await removeSignal(item.id);
+      setUserList(userList.filter((item) => item.id != signalID));
+    } catch (err) {
+      console.warn(err);
+    }
+  };
+
   if (userList.length <= 0) {
     return (
-      <View style={styles.container}>
-        <Text style={styles.noSignalText}>받은 시그널이 없습니다.</Text>
-      </View>
+      <Loading content='받은 시그널이 없습니다.'/>
     );
   }
   return (
     <View style={{flex: 1}}>
       <FlatList
         data={userList}
-        renderItem={renderReceivedSignal}
+        renderItem={({item}) => (
+          <ReceivedSignalItem
+            item={item}
+            navigation={navigation}
+            onReject={onReject}
+            onMatch={onMatch}
+          />
+        )}
         keyExtractor={(item) => item.id}
       />
     </View>
@@ -44,15 +67,6 @@ function ReceivedSignal({navigation}) {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    padding: 10,
-    alignItems: 'center',
-  },
-  noSignalText: {
-    fontWeight: 'bold',
-    color: 'gray',
-    fontSize: 15,
-  },
 });
 
 export default ReceivedSignal;

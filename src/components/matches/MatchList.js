@@ -1,8 +1,8 @@
 import React, {useState, useEffect, useContext} from 'react';
-import {View, FlatList, StyleSheet} from 'react-native';
-import Text from 'src/blocks/Text';
+import {View, FlatList} from 'react-native';
+import Loading from 'src/blocks/Loading';
 import MatchListItem from './MatchListItem';
-import {bringMatch} from 'src/utils/Match';
+import {bringMatch, modifyMatch} from 'src/utils/Match';
 import {MyContext} from 'src/context';
 
 function MatchList({navigation}) {
@@ -39,41 +39,34 @@ function MatchList({navigation}) {
     }
   };
 
+  const deleteMatch = async (matchID) => {
+    try {
+      await modifyMatch(matchID, {deleted: true});
+      setUserList(userList.filter((item) => item.id != matchID));
+    } catch (err) {
+      console.warn(err);
+    }
+  };
+
   if (loading) {
     return (
-      <View style={styles.container}>
-        <Text style={styles.notiText}>Loading..</Text>
-      </View>
+      <Loading/>
     );
   }
   if (userList.length == 0) {
     return (
-      <View style={styles.container}>
-        <Text style={styles.notiText}>쪽지가 없습니다.</Text>
-      </View>
+      <Loading content='쪽지가 없습니다.'/>
     );
   }
   return (
     <View style={{flex: 1}}>
       <FlatList
         data={userList}
-        renderItem={({item}) => <MatchListItem item={item} navigation={navigation}/>}
+        renderItem={({item}) => <MatchListItem item={item} navigation={navigation} deleteMatch={deleteMatch}/>}
         keyExtractor={(item) => item.id}
       />
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    padding: 15,
-    alignItems: 'center',
-  },
-  notiText: {
-    fontSize: 15,
-    fontWeight: 'bold',
-    color: 'gray',
-  },
-});
 
 export default MatchList;

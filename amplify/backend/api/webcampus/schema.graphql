@@ -48,6 +48,7 @@ type Match @model
   createdAt: AWSDateTime!
   matcher: User @connection(fields: ["toID"])
   chatRoom: ChatRoom @connection(fields: ["chatRoomID"])
+  deleted: Boolean!
 }
 
 type ChatRoom @model {

@@ -53,7 +53,7 @@ function NestedComment({item, board}) {
         setModalOpen={setAlertOpen}
         title='알림'
         content='이미 좋아한 대댓글입니다.'
-        onOk={() => setAlertOpen(false)}
+        onOk={() => {}}
       />
     </View>
   );

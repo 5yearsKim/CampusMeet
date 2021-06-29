@@ -52,7 +52,7 @@ export function Nickname({type, nickname, userID, style}) {
           setModalOpen={setAlertOpen}
           title='Signal 이 부족합니다.'
           content='Signal은 매일 새로 충전됩니다.'
-          onOk={() => setAlertOpen(false)}
+          onOk={() => {}}
         />
         <SendSignalModal toID={userID} popupVisible={popupVisible} setPopupVisible={setPopupVisible}/>
       </View>

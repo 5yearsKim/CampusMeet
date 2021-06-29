@@ -82,7 +82,7 @@ function AnimatedPicture({imgKey, positions}) {
     <Animated.View>
       <PanGestureHandler onGestureEvent={onGestureEvent}>
         <Animated.View style={boxStyle}>
-          <KeyImage imgKey={imgKey} cached={false} style={{height: IMGHEIGHT - 6, width: IMGWIDTH - 6}}/>
+          <KeyImage imgKey={imgKey} cached={true} style={{height: IMGHEIGHT - 6, width: IMGWIDTH - 6}}/>
         </Animated.View>
       </PanGestureHandler>
     </Animated.View>

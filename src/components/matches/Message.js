@@ -3,7 +3,7 @@ import {View, Image, TouchableOpacity, StyleSheet} from 'react-native';
 import Text from 'src/blocks/Text';
 import {strTime2Min, strTime2Date} from 'src/utils/Time';
 import {KeyImage} from 'src/blocks/Image';
-import {TextMessage, GifMessage, ImageMessage} from './MessageCategory';
+import {TextMessage, GifMessage, ImageMessage, AdminMessage} from './MessageCategory';
 import {MyContext} from 'src/context';
 
 function LeftContent({user, showTime, navigation}) {
@@ -56,11 +56,25 @@ function Message({item, showTime, showDate, navigation}) {
       );
     }
   };
+  const renderDate = () => {
+    return (
+      <View style={{alignItems: 'center'}}>
+        <Text style={styles.date}>{strTime2Date(item.createdAt)}</Text>
+      </View>
+    );
+  };
+  if (item.type == 'admin') {
+    console.log(item.content);
+    return (
+      <View>
+        {showDate && renderDate()}
+        <AdminMessage content={item.content}/>
+      </View>
+    );
+  }
   return (
     <View>
-      <View style={{alignItems: 'center'}}>
-        {showDate && <Text style={styles.date}>{strTime2Date(item.createdAt)}</Text>}
-      </View>
+      {showDate && renderDate()}
       <View style={[
         styles.container, {
           flexDirection: isMyMessage?'row-reverse': 'row',
@@ -97,8 +111,9 @@ const styles = StyleSheet.create({
     padding: 5,
     paddingLeft: 5,
     paddingRight: 5,
+    marginBottom: 10,
     color: 'black',
-    backgroundColor: 'white',
+    backgroundColor: '#BFEEEE',
     borderRadius: 15,
     overflow: 'hidden',
   },

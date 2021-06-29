@@ -1,18 +1,3 @@
-export const createMatch = /* GraphQL */ `
-  mutation CreateMatch(
-    $input: CreateMatchInput!
-    $condition: ModelMatchConditionInput
-  ) {
-    createMatch(input: $input, condition: $condition) {
-      id
-      fromID
-      toID
-      chatRoomID
-      createdAt
-      updatedAt
-    }
-  }
-`;
 export const createPost = /* GraphQL */ `
   mutation CreatePost(
     $input: CreatePostInput!
@@ -109,24 +94,6 @@ export const updateSignal = /* GraphQL */ `
   }
 `;
 
-
-export const createMessage = /* GraphQL */ `
-  mutation CreateMessage(
-    $input: CreateMessageInput!
-    $condition: ModelMessageConditionInput
-  ) {
-    createMessage(input: $input, condition: $condition) {
-      id
-      type
-      createdAt
-      content
-      userID
-      chatRoomID
-      updatedAt
-    }
-  }
-`;
-
 export const createLikePost = /* GraphQL */ `
   mutation CreateLikePost(
     $input: CreateLikePostInput!
@@ -150,20 +117,6 @@ export const createLikeComment = /* GraphQL */ `
       id
       userID
       commentID
-      createdAt
-      updatedAt
-    }
-  }
-`;
-
-export const createChatRoom = /* GraphQL */ `
-  mutation CreateChatRoom(
-    $input: CreateChatRoomInput!
-    $condition: ModelChatRoomConditionInput
-  ) {
-    createChatRoom(input: $input, condition: $condition) {
-      id
-      lastMessageID
       createdAt
       updatedAt
     }

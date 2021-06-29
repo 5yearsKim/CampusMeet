@@ -8,6 +8,17 @@ const {width, height} = Dimensions.get('window');
 
 export default function SimpleAlert({modalOpen, setModalOpen, title, content, onCancel, onOk}) {
   const {theme} = useContext(ThemeContext);
+
+  const handleOk = () => {
+    setModalOpen(false);
+    onOk();
+  };
+
+  const handleCancel = () => {
+    setModalOpen(false);
+    onCancel();
+  };
+
   return (
     <Modal visible={modalOpen} onRequestClose={() => setModalOpen(false)} transparent={true}>
       <TouchableWithoutFeedback onPress={() => setModalOpen(false)}>
@@ -18,12 +29,12 @@ export default function SimpleAlert({modalOpen, setModalOpen, title, content, on
               <Text style={styles.contentText}>{content}</Text>
               <View style={styles.buttonWrapper}>
                 {onCancel &&
-                  <Button onPress={onCancel}>
+                  <Button onPress={handleCancel}>
                     Cancel
                   </Button>
                 }
                 {onOk &&
-                  <Button onPress={onOk}>
+                  <Button onPress={handleOk}>
                     OK
                   </Button>
                 }

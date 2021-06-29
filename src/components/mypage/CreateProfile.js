@@ -1,10 +1,11 @@
-import React, {useState, useContext} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import {useSharedValue} from 'react-native-reanimated';
 import {ScrollView, View, TouchableOpacity, StyleSheet} from 'react-native';
 import UploadPicture from './UploadPicture';
 import {RadioButton, TextInput, Button} from 'react-native-paper';
 import {MaterialCommunityIcons} from '@expo/vector-icons';
 import Text from 'src/blocks/Text';
+import SimpleAlert from 'src/blocks/SimpleAlert';
 import AutoComplete from 'src/blocks/AutoComplete';
 import {makeUser} from 'src/utils/User';
 import {MyContext, ThemeContext, UserContext} from 'src/context';
@@ -30,6 +31,7 @@ function CreateProfile({navigation}) {
 
   const [currentStep, setCurrentStep] = useState(1);
   const [errText, setErrText] = useState('');
+  const [alertOpen, setAlertOpen] = useState(false);
 
   const [gender, setGender] = useState('');
   const [name, setName] = useState('');
@@ -40,6 +42,14 @@ function CreateProfile({navigation}) {
   const [year, setYear] = useState('');
   const [profileMessage, setProfileMessage] = useState('');
   const [profileDescription, setProfileDescription] = useState('');
+
+
+  useEffect(() => {
+    navigation.addListener('beforeRemove', (e) => {
+      e.preventDefault();
+      setAlertOpen(true);
+    });
+  }, []);
 
   const checkFormat = () => {
     if (currentStep == 1) {
@@ -158,6 +168,7 @@ function CreateProfile({navigation}) {
             <View style={styles.graduateItem}>
               <Text style={styles.graduateText}>학부</Text>
               <RadioButton
+                onPress={() => setGraduate('학부')}
                 value='학부'
                 status={graduate === '학부' ? 'checked' : 'unchecked' }
                 color='pink'
@@ -168,6 +179,7 @@ function CreateProfile({navigation}) {
             <View style={styles.graduateItem}>
               <Text style={styles.graduateText}>대학원</Text>
               <RadioButton
+                onPress={() => setGraduate('대학원')}
                 value='대학원'
                 status={graduate === '대학원' ? 'checked' : 'unchecked' }
                 color='pink'
@@ -285,6 +297,13 @@ function CreateProfile({navigation}) {
         다음
       </Button>
       }
+      <SimpleAlert
+        modalOpen={alertOpen}
+        setModalOpen={setAlertOpen}
+        title='프로필이 등록 없이 나가기'
+        content='프로필을 등록하지 않으면 캠퍼스밋을 이용할 수 없습니다.'
+        onOk={() => {}}
+      />
     </View>
   );
 }

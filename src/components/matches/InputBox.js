@@ -5,7 +5,7 @@ import * as ImagePicker from 'expo-image-picker';
 import {Storage} from 'aws-amplify';
 import {Ionicons, MaterialCommunityIcons} from '@expo/vector-icons';
 import {GifSearch, poweredByGiphyLogoGrey} from 'react-native-gif-search';
-import {makeMessage, modifyChatRoom} from 'src/utils/Chat';
+import {makeMessage} from 'src/utils/Chat';
 import {MyContext} from 'src/context';
 import {bringMatchByChatRoom} from 'src/utils/Match';
 import {sendPushNotification} from 'src/utils/PushNotification';
@@ -33,10 +33,13 @@ function InputBox({route}) {
   }, []);
 
   const sendMessage = async (content, type) => {
-    const message = await makeMessage(userSub, chatRoomID, content, type);
     try {
-      const data = {lastMessageID: message.id};
-      modifyChatRoom(chatRoomID, data);
+      await makeMessage(userSub, chatRoomID, content, type);
+    } catch (err) {
+      console.warn(err);
+    };
+
+    try {
       chatUser.forEach((item) => {
         if (item.id == userSub) {
           return;

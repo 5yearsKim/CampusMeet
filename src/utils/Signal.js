@@ -24,6 +24,9 @@ export async function bringReceivedSignal(toID) {
       graphqlOperation(
           signalByTo, {
             toID: toID,
+            filter: {
+              alive: {eq: true},
+            },
           },
       ),
   );
@@ -72,6 +75,6 @@ export async function bringSentSignalToday(fromID) {
     },
   });
   const userList = userData.data.signalByFrom.items;
-  const midnight = new Date().setHours(0,0,0,0);
-  return userList.filter((item) => new Date(item.createdAt) > new Date(midnight))
+  const midnight = new Date().setHours(0, 0, 0, 0);
+  return userList.filter((item) => new Date(item.createdAt) > new Date(midnight));
 }

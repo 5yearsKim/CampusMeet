@@ -84,7 +84,7 @@ function Comment({item, index, board, focusComment}) {
         setModalOpen={setAlertOpen}
         title='알림'
         content='이미 좋아한 댓글입니다'
-        onOk={() => setAlertOpen(false)}
+        onOk={() => {}}
       />
       <FlatList
         data={item.nestedComments.items}

@@ -1,8 +1,10 @@
 import React, {useState, useContext, useEffect} from 'react';
 import {useSharedValue} from 'react-native-reanimated';
-import {View, StyleSheet} from 'react-native';
+import {View, TouchableOpacity, StyleSheet} from 'react-native';
+import Loading from 'src/blocks/Loading';
+import Text from 'src/blocks/Text';
 import UploadPicture from './UploadPicture';
-import {Button, TextInput} from 'react-native-paper';
+import {Button, TextInput, RadioButton} from 'react-native-paper';
 import {MyContext} from 'src/context';
 import {bringUser, modifyUser} from 'src/utils/User';
 
@@ -18,20 +20,25 @@ function ModifyProfile({navigation}) {
 
   const [name, setName] = useState('');
   const [year, setYear] = useState('');
+  const [graduate, setGraduate] = useState('학부');
   const [campus, setCampus] = useState('');
   const [division, setDivision] = useState('');
   const [profileMessage, setProfileMessage] = useState('');
   const [profileDescription, setProfileDescription] = useState('');
 
+  const [loading, setLoading] = useState(true);
+
   const m_bringUser = async () => {
     const userData = await bringUser(userSub);
     setImgList(userData.imageKeys);
     setName(userData.name);
+    setGraduate(userData.graduate);
     setYear(userData.year);
     setCampus(userData.campus);
     setDivision(userData.division);
     setProfileMessage(userData.profileMessage);
     setProfileDescription(userData.profileDescription);
+    setLoading(false);
   };
 
   useEffect(() => {
@@ -44,6 +51,7 @@ function ModifyProfile({navigation}) {
       imageKeys: newImgList,
       name: name,
       year: year,
+      graduate: graduate,
       campus: campus,
       division: division,
       profileMessage: profileMessage,
@@ -56,6 +64,40 @@ function ModifyProfile({navigation}) {
       console.warn(err);
     }
   };
+
+  const graduateButton = () => {
+    return (
+      <View style={styles.graduateWrapper}>
+        <TouchableOpacity onPress={() => setGraduate('학부')}>
+          <View style={styles.graduateItem}>
+            <Text style={styles.graduateText}>학부</Text>
+            <RadioButton
+              onPress={() => setGraduate('학부')}
+              value='학부'
+              status={graduate === '학부' ? 'checked' : 'unchecked' }
+              color='pink'
+            />
+          </View>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => setGraduate('대학원')}>
+          <View style={styles.graduateItem}>
+            <Text style={styles.graduateText}>대학원</Text>
+            <RadioButton
+              onPress={() => setGraduate('대학원')}
+              value='대학원'
+              status={graduate === '대학원' ? 'checked' : 'unchecked' }
+              color='pink'
+            />
+          </View>
+        </TouchableOpacity>
+      </View>
+    );
+  };
+  if (loading) {
+    return (
+      <Loading/>
+    );
+  }
   return (
     <View style={{padding: 20}}>
       <UploadPicture imgList={imgList} setImgList={setImgList} positions={positions}/>
@@ -65,6 +107,7 @@ function ModifyProfile({navigation}) {
         onChangeText={(text) => setName(text)}
         style={styles.textInput}
       />
+      {graduateButton()}
       <TextInput
         label='학번'
         value={String(year)}
@@ -112,6 +155,19 @@ function ModifyProfile({navigation}) {
 const styles = StyleSheet.create({
   textInput: {
     backgroundColor: 'transparent',
+  },
+  graduateWrapper: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-evenly',
+    height: 50,
+  },
+  graduateItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  graduateText: {
+    fontWeight: 'bold',
   },
 });
 

@@ -82,7 +82,7 @@ export default function SendSignalModal({toID, popupVisible, setPopupVisible}) {
         setModalOpen={setAlertOpen}
         title='시그널이 전송되었습니다'
         content='Signal 탭에서 확인하세요.'
-        onOk={() => setAlertOpen(false)}
+        onOk={() => {}}
       />
     </View>
   );

@@ -1,12 +1,19 @@
 import {API, graphqlOperation} from 'aws-amplify';
-import {createChatRoom, createMatch} from 'src/graphql/customMutations';
+import {createChatRoom, createMatch, updateMatch} from 'src/graphql/mutations';
 import {matchByFrom, matchByChatRoom} from 'src/graphql/customQueries';
+import {listMatchs} from 'src/graphql/queries';
+import {makeMessage} from './Chat';
 
 export async function bringMatch(fromID) {
   const matchData = await API.graphql(
       graphqlOperation(
           matchByFrom, {
             fromID: fromID,
+            filter: {
+              deleted: {
+                eq: false,
+              },
+            },
           },
       ),
   );
@@ -24,46 +31,83 @@ export async function bringMatchByChatRoom(chatRoomID) {
   return matchData.data.matchByChatRoom.items;
 }
 
+
 export async function makeMatch(fromID, toID) {
-  try {
-    //  1. Create a new Chat Room
-    const newChatRoomData = await API.graphql(
-        graphqlOperation(
-            createChatRoom, {
-              input: {
-                lastMessageID: 'start',
-              },
-            },
-        ),
-    );
-    if (!newChatRoomData.data) {
-      console.log('Failed to create a chat room');
-      return;
-    }
-
-    const newChatRoom = newChatRoomData.data.createChatRoom;
-
-    // 2. Add match to the Chat Room
-    const myMatch = await API.graphql(
-        graphqlOperation(createMatch, {
-          input: {
-            fromID: fromID,
-            toID: toID,
-            chatRoomID: newChatRoom.id,
-          },
-        }),
-    );
-    const yourMatch = await API.graphql(
-        graphqlOperation(createMatch, {
-          input: {
-            fromID: toID,
-            toID: fromID,
-            chatRoomID: newChatRoom.id,
-          },
-        }),
-    );
-    console.log(myMatch, yourMatch);
-  } catch (err) {
-    console.log(err);
+  const filter = {
+    and: [{fromID: {eq: fromID}}, {toID: {eq: toID}}],
+  };
+  const myMatch = await API.graphql({query: listMatchs, variables: {filter: filter}});
+  const items = myMatch.data.listMatchs.items;
+  if (items.length > 0) {
+    await wakeupMatch(items[0], fromID, toID);
+  } else {
+    await makeNewMatch(fromID, toID);
   }
+}
+
+export async function wakeupMatch(match, fromID, toID) {
+  makeMessage(fromID, match.chatRoomID, 'Match Again!', 'admin');
+  // if my match is deleted
+  if (match.deleted) {
+    modifyMatch(match.id, {deleted: false});
+  }
+  // if your match is deleted
+  const filter = {
+    and: [{fromID: {eq: toID}}, {toID: {eq: fromID}}],
+  };
+  const yourMatch = await API.graphql({query: listMatchs, variables: {filter: filter}});
+  const items = yourMatch.data.listMatchs.items;
+  if (items.length > 0 && items[0].deleted) {
+    modifyMatch(items[0].id, {deleted: false});
+  }
+}
+
+export async function makeNewMatch(fromID, toID) {
+  //  1. Create a new Chat Room
+  const newChatRoomData = await API.graphql(
+      graphqlOperation(
+          createChatRoom, {
+            input: {
+              lastMessageID: 'start',
+            },
+          },
+      ),
+  );
+  if (!newChatRoomData.data) {
+    console.warn('Failed to create a chat room');
+    return;
+  }
+
+  const newChatRoom = newChatRoomData.data.createChatRoom;
+  makeMessage(fromID, newChatRoom.id, 'New Match!', 'admin');
+
+  // 2. Add match to the Chat Room
+  const myMatch = await API.graphql(
+      graphqlOperation(createMatch, {
+        input: {
+          fromID: fromID,
+          toID: toID,
+          chatRoomID: newChatRoom.id,
+          deleted: false,
+        },
+      }),
+  );
+  const yourMatch = await API.graphql(
+      graphqlOperation(createMatch, {
+        input: {
+          fromID: toID,
+          toID: fromID,
+          chatRoomID: newChatRoom.id,
+          deleted: false,
+        },
+      }),
+  );
+  // console.log(myMatch, yourMatch);
 };
+
+export async function modifyMatch(matchID, matchData) {
+  matchData.id = matchID;
+  API.graphql(
+      graphqlOperation(updateMatch, {input: matchData}),
+  );
+}

@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {Dimensions, View, FlatList, TouchableOpacity, TouchableWithoutFeedback, Modal, StyleSheet} from 'react-native';
 import Text from './Text';
-import {MaterialIcons} from '@expo/vector-icons'; 
+import {MaterialIcons} from '@expo/vector-icons';
 
 const {width, height} = Dimensions.get('window');
 
@@ -22,7 +22,7 @@ function PickerItem({item, onSelectItem, setModalOpen}) {
 }
 
 export default function Picker({candidate, placeholder, onSelectItem}) {
-  const [modalOpen, setModalOpen] = useState(false)
+  const [modalOpen, setModalOpen] = useState(false);
 
   return (
     <View>
@@ -84,4 +84,4 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: 'gray',
   },
-})
+});

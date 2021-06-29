@@ -4,10 +4,9 @@ import Text from 'src/blocks/Text';
 import SimpleAlert from 'src/blocks/SimpleAlert';
 import {Button} from 'react-native-paper';
 import {KeyImage} from 'src/blocks/Image';
-import {MyContext, ThemeContext} from 'src/context';
-import {makeMatch} from 'src/utils/Match';
-import {removeSignal, rejectSignal} from 'src/utils/Signal';
+import {ThemeContext} from 'src/context';
 import {relativeTimePrettify} from 'src/utils/Time';
+
 
 function LeftContent({sender, navigation}) {
   const {theme} = useContext(ThemeContext);
@@ -30,38 +29,21 @@ function LeftContent({sender, navigation}) {
 }
 
 
-function ReceivedSignalItem({item, navigation}) {
+function ReceivedSignalItem({item, navigation, onReject, onMatch}) {
   const [matchAlertOpen, setMatchAlertOpen] = useState(false);
   const [rejectAlertOpen, setRejectAlertOpen] = useState(false);
-  const auth = useContext(MyContext);
-  const userSub = auth.user.attributes.sub;
   const {theme} = useContext(ThemeContext);
   const sender = item.sender;
+
+  const handleReject = () => onReject(item.id);
+  const handleMatch = () => onMatch(item.id, sender.id);
 
   // exception handle
   if (sender.imageKeys == null) {
     sender.imageKeys = [];
   }
-  // console.log(item);
 
-  const onReject = () => {
-    try {
-      rejectSignal(item.id);
-      item.alive = false;
-    } catch (err) {
-      console.warn(err);
-    }
-  };
-
-  const onMatch = () => {
-    try {
-      makeMatch(userSub, sender.id);
-      removeSignal(item.id);
-    } catch (err) {
-      console.warn(err);
-    }
-  };
-  if (sender == null || item.alive == false) {
+  if (sender == null) {
     return (
       <View>
       </View>
@@ -99,16 +81,16 @@ function ReceivedSignalItem({item, navigation}) {
         setModalOpen={setMatchAlertOpen}
         title='Match!'
         content='Match가 되면 상대가 나를 확인할 수 있고 서로 쪽지를 보낼 수 있습니다.'
-        onCancel={() => setMatchAlertOpen(false)}
-        onOk={() => onMatch()}
+        onCancel={() => {}}
+        onOk={() => handleMatch()}
       />
       <SimpleAlert
         modalOpen={rejectAlertOpen}
         setModalOpen={setRejectAlertOpen}
         title='거절'
         content='Signal을 거절하면 1달동안 같은 사람에게 Signal을 받을 수 없습니다.'
-        onCancel={() => setRejectAlertOpen(false)}
-        onOk={() => onReject()}
+        onCancel={() => {}}
+        onOk={() => handleReject()}
       />
     </View>
   );

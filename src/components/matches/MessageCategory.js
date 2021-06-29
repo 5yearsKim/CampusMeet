@@ -3,6 +3,7 @@ import {View, Image, TouchableOpacity, Modal, StyleSheet} from 'react-native';
 import Text from 'src/blocks/Text';
 import {KeyImage} from 'src/blocks/Image';
 import {ImageViewer} from 'src/blocks/ImageViewer';
+import {AntDesign} from '@expo/vector-icons'; 
 import config from 'src/config';
 
 export function TextMessage({text, isMyMessage}) {
@@ -47,13 +48,24 @@ export function ImageMessage({imageKey, isMyMessage}) {
   );
 }
 
+export function AdminMessage({content}) {
+  return (
+    <View style={styles.alertBox}>
+      <View style={styles.alertWrapper}>
+        <AntDesign name='sound' size={28} color='yellow'/>
+        <Text style={styles.alertText}>{content}</Text>
+      </View>
+    </View>
+  );
+}
+
 const colors = config.colors.chat;
 const styles = StyleSheet.create({
   messageBox: {
     borderRadius: 10,
     padding: 9,
     fontSize: 14,
-    overflow: 'hidden'
+    overflow: 'hidden',
   },
   myBox: {
     backgroundColor: colors.myMessageBox,
@@ -74,5 +86,20 @@ const styles = StyleSheet.create({
   },
   gifContainer: {
     margin: 10,
+  },
+  alertBox: {
+    backgroundColor: 'white',
+    marginBottom: 5,
+  },
+  alertWrapper: {
+    flex: 0,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  alertText: {
+    fontSize: 15,
+    fontWeight: 'bold',
+    marginLeft: 5,
   },
 });

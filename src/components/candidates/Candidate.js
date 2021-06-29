@@ -1,5 +1,6 @@
 import React, {useState, useEffect, useContext} from 'react';
 import {View, FlatList, StyleSheet} from 'react-native';
+import Loading from 'src/blocks/Loading';
 import Text from 'src/blocks/Text';
 import {Button} from 'react-native-paper';
 import {FontAwesome5} from '@expo/vector-icons';
@@ -22,7 +23,7 @@ function CandidateHeader() {
   return (
     <View style={styles.headerContainer} key='header'>
       <View style={{flexDirection: 'row', alignItems: 'center'}}>
-        <Text style={[styles.heartText, {color: theme.subText}]}>Signal: </Text>
+        <Text style={[styles.heartText, {color: theme.subText}]}>Signals: </Text>
         {[...Array(Math.max(0, signalMax - signalCnt))].map((_, index) => {
           return (
             <FontAwesome5 name="heartbeat" size={24} color="pink" key={index} style={{margin: 2}}/>
@@ -65,9 +66,7 @@ function Candidate({navigation}) {
     <View style={{flex: 1}}>
       <PushNotification navigation={navigation}/>
       {loading ?
-        <View style={{alignItems: 'center', padding: 10}}>
-          <Text style={styles.notiText}>Loading..</Text>
-        </View> :
+        <Loading/> :
         <FlatList
           data={userList}
           renderItem={({item}) => <CandidateItem item={item} />}
@@ -91,11 +90,6 @@ const styles = StyleSheet.create({
   heartText: {
     fontWeight: 'bold',
     fontSize: 16,
-  },
-  notiText: {
-    fontSize: 15,
-    fontWeight: 'bold',
-    color: 'gray',
   },
 });
 

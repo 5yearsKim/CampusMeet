@@ -8,12 +8,12 @@ function MypageScreen(props) {
   return (
     <View>
       <MypageList {...props}/>
-      {/* <Button
+      <Button
         mode='outlined'
         onPress={() => props.navigation.navigate('CreateProfile')}
       >
         Create Profile
-      </Button> */}
+      </Button>
     </View>
   );
 };

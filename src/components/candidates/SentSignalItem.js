@@ -82,7 +82,7 @@ function SentSignalItem({item}) {
         setModalOpen={setAlertOpen}
         title='시그널 삭제'
         content='시그널이 삭제되고 상대는 더 이상 나를 확인할 수 없습니다.'
-        onCancel={() => setAlertOpen(false)}
+        onCancel={() => {}}
         onOk={() => onRemoveSignal()}
       />
 

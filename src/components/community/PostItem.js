@@ -35,15 +35,15 @@ function BelowContent({type, item}) {
       <View style={styles.iconList}>
         {imgCount > 0 &&
           <React.Fragment>
-            <FontAwesome style={styles.icon} name='picture-o' size={16} color='green'>
+            <FontAwesome style={styles.icon} name='picture-o' size={16} color='#80E080'>
               {imgCount}
             </FontAwesome>
           </React.Fragment>
         }
-        <FontAwesome style={styles.icon} name='thumbs-o-up' size={16} color='blue'>
+        <FontAwesome style={styles.icon} name='thumbs-o-up' size={16} color='#4169EE'>
           {item.likes.items.length}
         </FontAwesome>
-        <FontAwesome style={styles.icon} name='comments-o' size={16} color='red'>
+        <FontAwesome style={styles.icon} name='comments-o' size={16} color='#FF6347'>
           {commentCount}
         </FontAwesome>
       </View>
