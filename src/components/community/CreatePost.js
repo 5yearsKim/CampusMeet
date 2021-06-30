@@ -1,15 +1,16 @@
 import React, {useState, useContext} from 'react';
 import {TextInput as PaperTextInput} from 'react-native-paper';
-import {View, SafeAreaView, TextInput, StyleSheet} from 'react-native';
+import {View, TextInput, StyleSheet} from 'react-native';
 import Text from 'src/blocks/Text';
 import {Button} from 'react-native-paper';
 import {PostImagesCreate, PostImagesView} from './PostImages';
 import {getNickname, makePost} from 'src/utils/Community';
-import {MyContext, ThemeContext} from 'src/context';
+import {MyContext, ThemeContext, UserContext} from 'src/context';
 
 function CreatePost({navigation, route}) {
   const auth = useContext(MyContext);
   const {theme} = useContext(ThemeContext);
+  const {refreshBoard, setRefreshBoard} = useContext(UserContext);
 
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
@@ -22,6 +23,7 @@ function CreatePost({navigation, route}) {
     const nickname = await getNickname(userSub, board.type);
     const postData = await makePost(userSub, board.id, nickname, title, content, imgList);
     if (postData) {
+      setRefreshBoard(!refreshBoard);
       navigation.goBack();
     }
   };

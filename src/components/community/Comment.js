@@ -113,7 +113,7 @@ const styles = StyleSheet.create({
     fontSize: 13,
     fontWeight: 'bold',
     margin: 10,
-  }
+  },
 });
 
 export default Comment;

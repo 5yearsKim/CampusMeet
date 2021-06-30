@@ -45,10 +45,6 @@ export default function Preference({filterOpen, setFilterOpen}) {
     m_bringPreference();
   }, []);
 
-  const onClose = () => {
-    setFilterOpen(false);
-  };
-
   const onSave = () => {
     if (exist) {
       try {
@@ -153,7 +149,7 @@ export default function Preference({filterOpen, setFilterOpen}) {
                   <Button
                     mode="outlined"
                     style={{width: 100, margin: 5}}
-                    onPress={onClose}
+                    onPress={() => setFilterOpen(false)}
                   >
                     취소
                   </Button>
@@ -162,7 +158,7 @@ export default function Preference({filterOpen, setFilterOpen}) {
                     style={{width: 100, margin: 5}}
                     onPress={() => {
                       onSave();
-                      onClose();
+                      setFilterOpen(false);
                     }}
                     labelStyle={{color: 'white', fontWeight: 'bold'}}
                   >

@@ -9,13 +9,17 @@ function SentSignal({navigation}) {
   const auth = useContext(MyContext);
   const userSub = auth.user.attributes.sub;
   const [userList, setUserList] = useState([]);
-  const {refreshSentSignal} = useContext(UserContext);
+  const {refreshSentSignal, setRefreshSentSignal} = useContext(UserContext);
+
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const m_bringSentSignal = async () => {
       try {
+        setLoading(true);
         const userData = await bringSentSignal(userSub);
         setUserList(userData);
+        setLoading(false);
       } catch (err) {
         console.warn(err);
         setUserList([]);
@@ -37,6 +41,8 @@ function SentSignal({navigation}) {
         data={userList}
         renderItem={({item}) => <SentSignalItem item={item}/>}
         keyExtractor={(item) => item.id}
+        refreshing={loading}
+        onRefresh={() => setRefreshSentSignal(!refreshSentSignal)}
       />
     </View>
   );

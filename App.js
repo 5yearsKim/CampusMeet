@@ -1,4 +1,4 @@
-import React, {useEffect, useState, useRef} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useFonts} from 'expo-font';
 import AppLoading from 'expo-app-loading';
 import {StatusBar} from 'expo-status-bar';
@@ -25,6 +25,9 @@ export default function App() {
   // console.log(user.signInUserSession.accessToken.jwtToken);
   const [refreshCandidate, setRefreshCandidate] = useState(false);
   const [refreshSentSignal, setRefreshSentSignal] = useState(false);
+  const [refreshReceivedSignal, setRefreshReceivedSignal] = useState(false);
+  const [refreshMatch, setRefreshMatch] = useState(false);
+  const [refreshBoard, setRefreshBoard] = useState(false);
 
   const [fontLoaded] = useFonts({
     nanumEB: require('assets/fonts/NanumSquareRoundEB.ttf'),
@@ -106,6 +109,12 @@ export default function App() {
       setRefreshCandidate: setRefreshCandidate,
       refreshSentSignal: refreshSentSignal,
       setRefreshSentSignal: setRefreshSentSignal,
+      refreshReceivedSignal: refreshReceivedSignal,
+      setRefreshReceivedSignal: setRefreshReceivedSignal,
+      refreshMatch: refreshMatch,
+      setRefreshMatch: setRefreshMatch,
+      refreshBoard: refreshBoard,
+      setRefreshBoard: setRefreshBoard,
     };
   };
   if (fontLoaded && authChecked) {

@@ -1,43 +1,42 @@
 import React, {useState, useEffect, useContext} from 'react';
 import {View, FlatList} from 'react-native';
-import Loading from 'src/blocks/Loading';
+import NotiText from 'src/blocks/NotiText';
 import MatchListItem from './MatchListItem';
 import {bringMatch, modifyMatch} from 'src/utils/Match';
-import {MyContext} from 'src/context';
+import {MyContext, UserContext} from 'src/context';
 
 function MatchList({navigation}) {
   const auth = useContext(MyContext);
   const userSub = auth.user.attributes.sub;
+  const {refreshMatch, setRefreshMatch} = useContext(UserContext);
   const [loading, setLoading] = useState(true);
   const [userList, setUserList] = useState([]);
 
   useEffect(() => {
-    const unsubscribe = navigation.addListener('focus', () => {
-      m_bringMatch();
-    });
-    return unsubscribe;
-  }, [navigation]);
+    const m_bringMatch = async () => {
+      try {
+        setLoading(true);
+        const userData = await bringMatch(userSub);
+        const orderedMatch = userData.sort((a, b) => {
+          const getMessageTime = (message) => new Date(message.chatRoom.lastMessage.createdAt).getTime();
+          if (getMessageTime(a) < getMessageTime(b)) {
+            return 1;
+          }
+          if (getMessageTime(a) > getMessageTime(b)) {
+            return -1;
+          }
+          return 0;
+        });
+        setUserList(orderedMatch);
+        setLoading(false);
+      } catch (err) {
+        console.warn(err);
+        setUserList([]);
+      }
+    };
+    m_bringMatch();
+  }, [refreshMatch]);
 
-  const m_bringMatch = async () => {
-    try {
-      const userData = await bringMatch(userSub);
-      const orderedMatch = userData.sort((a, b) => {
-        const getMessageTime = (message) => new Date(message.chatRoom.lastMessage.createdAt).getTime();
-        if (getMessageTime(a) < getMessageTime(b)) {
-          return 1;
-        }
-        if (getMessageTime(a) > getMessageTime(b)) {
-          return -1;
-        }
-        return 0;
-      });
-      setUserList(orderedMatch);
-      setLoading(false);
-    } catch (err) {
-      console.warn(err);
-      setUserList([]);
-    }
-  };
 
   const deleteMatch = async (matchID) => {
     try {
@@ -48,14 +47,9 @@ function MatchList({navigation}) {
     }
   };
 
-  if (loading) {
-    return (
-      <Loading/>
-    );
-  }
   if (userList.length == 0) {
     return (
-      <Loading content='쪽지가 없습니다.'/>
+      <NotiText content='쪽지가 없습니다.'/>
     );
   }
   return (
@@ -64,6 +58,8 @@ function MatchList({navigation}) {
         data={userList}
         renderItem={({item}) => <MatchListItem item={item} navigation={navigation} deleteMatch={deleteMatch}/>}
         keyExtractor={(item) => item.id}
+        refreshing={loading}
+        onRefresh={() => setRefreshMatch(!refreshMatch)}
       />
     </View>
   );

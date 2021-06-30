@@ -25,7 +25,8 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/campusmeet_adaptive_icon.png",
         "backgroundColor": "#FFF"
-      }
+      },
+      "googleServicesFile": "./google-services.json"
     }
   }
 }

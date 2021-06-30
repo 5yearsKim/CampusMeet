@@ -1,31 +1,35 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import {View, FlatList, TouchableOpacity, StyleSheet} from 'react-native';
 import {FontAwesome5} from '@expo/vector-icons';
 import {bringPost} from 'src/utils/Community';
 import PostListItem from './PostItem';
+import {UserContext} from 'src/context';
 
 function Board({navigation, route}) {
   const {board} = route.params;
   const [postList, setPostList] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [nextToken, setNextToken] = useState('');
+  const {refreshBoard, setRefreshBoard} = useContext(UserContext);
 
   useEffect(() => {
     const m_bringPost = async () => {
+      setLoading(true);
       const [postData, tokenData] = await bringPost(board.id, '', 20);
       setPostList(postData);
       setNextToken(tokenData);
+      setLoading(false);
     };
-    const unsubscribe = navigation.addListener('focus', () => {
-      m_bringPost();
-    });
-    return unsubscribe;
-  }, [navigation]);
+    m_bringPost();
+  }, [refreshBoard]);
 
   const onEndReached = () => {
     const m_bringPost = async () => {
+      setLoading(true);
       const [postData, tokenData] = await bringPost(board.id, nextToken, 20);
       setPostList([...postList, ...postData]);
       setNextToken(tokenData);
+      setLoading(false);
     };
     if (nextToken) {
       m_bringPost();
@@ -39,6 +43,8 @@ function Board({navigation, route}) {
         renderItem={({item}) => <PostListItem item={item} board={board} navigation={navigation}/>}
         keyExtractor={(item) => item.id}
         onEndReached={() => onEndReached()}
+        refreshing={loading}
+        onRefresh={() => setRefreshBoard(!refreshBoard)}
         removeClippedSubviews={false}
       />
       <View style={styles.iconContainer}>

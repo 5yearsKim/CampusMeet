@@ -2,7 +2,7 @@ import React from 'react';
 import {View, StyleSheet} from 'react-native';
 import Text from './Text';
 
-export default function Loading({content}) {
+export default function NotiText({content}) {
   if (!content) {
     content = 'Loading..';
   }

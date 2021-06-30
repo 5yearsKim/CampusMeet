@@ -1,6 +1,5 @@
 import React, {useState, useEffect, useContext} from 'react';
 import {View, FlatList, StyleSheet} from 'react-native';
-import Loading from 'src/blocks/Loading';
 import Text from 'src/blocks/Text';
 import {Button} from 'react-native-paper';
 import {FontAwesome5} from '@expo/vector-icons';
@@ -34,7 +33,6 @@ function CandidateHeader() {
         FILTER
       </Button>
       <Preference filterOpen={filterOpen} setFilterOpen={setFilterOpen}/>
-
     </View>
   );
 }
@@ -42,7 +40,7 @@ function CandidateHeader() {
 function Candidate({navigation}) {
   const auth = useContext(MyContext);
   const userSub = auth.user.attributes.sub;
-  const {refreshCandidate} = useContext(UserContext);
+  const {refreshCandidate, setRefreshCandidate} = useContext(UserContext);
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [userList, setUserList] = useState([]);
@@ -50,6 +48,7 @@ function Candidate({navigation}) {
   useEffect(() => {
     const m_bringCandidate = async () => {
       try {
+        setLoading(true);
         const userData = await bringCandidate();
         setUserList(userData);
         setLoading(false);
@@ -80,16 +79,15 @@ function Candidate({navigation}) {
   return (
     <View style={{flex: 1}}>
       <PushNotification navigation={navigation} user={user}/>
-      {loading ?
-        <Loading/> :
-        <FlatList
-          data={userList}
-          renderItem={({item}) => <CandidateItem item={item} />}
-          keyExtractor={(item) => item.id}
-          ListHeaderComponent={() => <CandidateHeader/>}
-          removeClippedSubviews={false}
-        />
-      }
+      <FlatList
+        data={userList}
+        renderItem={({item}) => <CandidateItem item={item} />}
+        keyExtractor={(item) => item.id}
+        ListHeaderComponent={() => <CandidateHeader/>}
+        onRefresh={() => setRefreshCandidate()}
+        refreshing={loading}
+        removeClippedSubviews={false}
+      />
     </View>
   );
 }

@@ -1,7 +1,7 @@
 import React, {useState, useContext, useEffect} from 'react';
 import {useSharedValue} from 'react-native-reanimated';
 import {View, TouchableOpacity, StyleSheet} from 'react-native';
-import Loading from 'src/blocks/Loading';
+import NotiText from 'src/blocks/NotiText';
 import Text from 'src/blocks/Text';
 import UploadPicture from './UploadPicture';
 import {Button, TextInput, RadioButton} from 'react-native-paper';
@@ -95,7 +95,7 @@ function ModifyProfile({navigation}) {
   };
   if (loading) {
     return (
-      <Loading/>
+      <NotiText content='Loading..'/>
     );
   }
   return (
