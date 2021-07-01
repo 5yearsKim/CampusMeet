@@ -45,10 +45,11 @@ export async function bringPreference(userSub) {
   return rsp.data.getPreference;
 };
 
-export async function makePreference(userID, likeGender, likeCampus, likeDepartment) {
+export async function makePreference(userID, likeGender, likeGraduate, likeCampus, likeDepartment) {
   const newPreference = {
     id: userID,
     likeGender: likeGender,
+    likeGraduate: likeGraduate,
     likeCampus: likeCampus,
     likeDepartment: likeDepartment,
   };

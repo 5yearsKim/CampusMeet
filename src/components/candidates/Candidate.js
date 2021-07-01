@@ -18,7 +18,6 @@ function CandidateHeader() {
   const {theme} = useContext(ThemeContext);
   const {signalCnt} = useContext(UserContext);
   const [filterOpen, setFilterOpen] = useState(false);
-
   return (
     <View style={styles.headerContainer} key='header'>
       <View style={{flexDirection: 'row', alignItems: 'center'}}>
@@ -29,10 +28,10 @@ function CandidateHeader() {
           );
         })}
       </View>
+      <Preference filterOpen={filterOpen} setFilterOpen={setFilterOpen}/>
       <Button icon='filter' mode='text' onPress={() => setFilterOpen(true)}>
         FILTER
       </Button>
-      <Preference filterOpen={filterOpen} setFilterOpen={setFilterOpen}/>
     </View>
   );
 }
@@ -82,7 +81,7 @@ function Candidate({navigation}) {
         data={userList}
         renderItem={({item}) => <CandidateItem item={item} />}
         keyExtractor={(item) => item.id}
-        ListHeaderComponent={() => <CandidateHeader/>}
+        ListHeaderComponent={<CandidateHeader/>}
         onRefresh={() => {
           setLoading(true);
           setRefreshCandidate(!refreshCandidate);

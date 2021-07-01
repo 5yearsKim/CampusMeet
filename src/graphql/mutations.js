@@ -81,6 +81,7 @@ export const createPreference = /* GraphQL */ `
     createPreference(input: $input, condition: $condition) {
       id
       likeGender
+      likeGraduate
       likeCampus
       likeDepartment
       createdAt
@@ -96,6 +97,7 @@ export const updatePreference = /* GraphQL */ `
     updatePreference(input: $input, condition: $condition) {
       id
       likeGender
+      likeGraduate
       likeCampus
       likeDepartment
       createdAt
@@ -111,6 +113,7 @@ export const deletePreference = /* GraphQL */ `
     deletePreference(input: $input, condition: $condition) {
       id
       likeGender
+      likeGraduate
       likeCampus
       likeDepartment
       createdAt
@@ -128,6 +131,7 @@ export const createSignal = /* GraphQL */ `
       fromID
       toID
       alive
+      checked
       message
       createdAt
       receiver {
@@ -178,6 +182,7 @@ export const updateSignal = /* GraphQL */ `
       fromID
       toID
       alive
+      checked
       message
       createdAt
       receiver {
@@ -228,6 +233,7 @@ export const deleteSignal = /* GraphQL */ `
       fromID
       toID
       alive
+      checked
       message
       createdAt
       receiver {
@@ -400,6 +406,7 @@ export const createChatRoom = /* GraphQL */ `
         content
         userID
         chatRoomID
+        checked
         updatedAt
       }
       matches {
@@ -428,6 +435,7 @@ export const updateChatRoom = /* GraphQL */ `
         content
         userID
         chatRoomID
+        checked
         updatedAt
       }
       matches {
@@ -456,6 +464,7 @@ export const deleteChatRoom = /* GraphQL */ `
         content
         userID
         chatRoomID
+        checked
         updatedAt
       }
       matches {
@@ -481,6 +490,7 @@ export const createMessage = /* GraphQL */ `
       content
       userID
       chatRoomID
+      checked
       user {
         id
         gender
@@ -520,6 +530,7 @@ export const updateMessage = /* GraphQL */ `
       content
       userID
       chatRoomID
+      checked
       user {
         id
         gender
@@ -559,6 +570,7 @@ export const deleteMessage = /* GraphQL */ `
       content
       userID
       chatRoomID
+      checked
       user {
         id
         gender

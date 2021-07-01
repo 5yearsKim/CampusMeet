@@ -20,7 +20,8 @@ type User @model {
 
 type Preference @model {
   id: ID!
-  likeGender: Float 
+  likeGender: Float
+  likeGraduate: Boolean
   likeCampus: [String]
   likeDepartment: [String]
 }
@@ -32,6 +33,7 @@ type Signal @model
   fromID: ID!
   toID: ID!
   alive: Boolean!
+  checked: Boolean!
   message: String
   createdAt: AWSDateTime!
   receiver: User @connection(fields: ["toID"])
@@ -68,6 +70,7 @@ type Message
   content: String!
   userID: ID!
   chatRoomID: ID!
+  checked: Boolean!
   user: User @connection(fields: ["userID"])
   chatRoom: ChatRoom @connection(fields: ["chatRoomID"])
 }

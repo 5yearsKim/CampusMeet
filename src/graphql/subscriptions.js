@@ -10,6 +10,7 @@ export const onCreateMessage = /* GraphQL */ `
       content
       userID
       chatRoomID
+      checked
       user {
         id
         gender
@@ -105,6 +106,7 @@ export const onCreatePreference = /* GraphQL */ `
     onCreatePreference {
       id
       likeGender
+      likeGraduate
       likeCampus
       likeDepartment
       createdAt
@@ -117,6 +119,7 @@ export const onUpdatePreference = /* GraphQL */ `
     onUpdatePreference {
       id
       likeGender
+      likeGraduate
       likeCampus
       likeDepartment
       createdAt
@@ -129,6 +132,7 @@ export const onDeletePreference = /* GraphQL */ `
     onDeletePreference {
       id
       likeGender
+      likeGraduate
       likeCampus
       likeDepartment
       createdAt
@@ -143,6 +147,7 @@ export const onCreateSignal = /* GraphQL */ `
       fromID
       toID
       alive
+      checked
       message
       createdAt
       receiver {
@@ -190,6 +195,7 @@ export const onUpdateSignal = /* GraphQL */ `
       fromID
       toID
       alive
+      checked
       message
       createdAt
       receiver {
@@ -237,6 +243,7 @@ export const onDeleteSignal = /* GraphQL */ `
       fromID
       toID
       alive
+      checked
       message
       createdAt
       receiver {
@@ -397,6 +404,7 @@ export const onCreateChatRoom = /* GraphQL */ `
         content
         userID
         chatRoomID
+        checked
         updatedAt
       }
       matches {
@@ -422,6 +430,7 @@ export const onUpdateChatRoom = /* GraphQL */ `
         content
         userID
         chatRoomID
+        checked
         updatedAt
       }
       matches {
@@ -447,6 +456,7 @@ export const onDeleteChatRoom = /* GraphQL */ `
         content
         userID
         chatRoomID
+        checked
         updatedAt
       }
       matches {

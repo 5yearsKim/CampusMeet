@@ -19,19 +19,14 @@
       "buildNumber": "1.0.0"
     },
     "android": {
-      "versionCode": 10,
+      "versionCode": 12,
       "package": "com.onion.campusMeet",
       "permissions": [],
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/campusmeet_adaptive_icon.png",
         "backgroundColor": "#FFF"
       },
-      "googleServicesFile": "./google-services.json",
-      "config": {
-        "googleSignIn": {
-          "apiKey": "AIzaSyAeC0yFlh5SKD5kQ3sLrAe_FcDrxKJWUVY"
-      }
+      "googleServicesFile": "./google-services.json"
     }
-  }
   }
 }

@@ -6,7 +6,7 @@ import AuthBackground from 'src/blocks/AuthBackground';
 
 const {width, height} = Dimensions.get('window');
 
-function HomeScreen(props) {
+export default function LoginScreen(props) {
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
@@ -61,5 +61,3 @@ const styles = StyleSheet.create({
     bottom: 0,
   },
 });
-
-export default HomeScreen;

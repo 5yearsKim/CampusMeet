@@ -55,6 +55,7 @@ export const getPreference = /* GraphQL */ `
     getPreference(id: $id) {
       id
       likeGender
+      likeGraduate
       likeCampus
       likeDepartment
       createdAt
@@ -72,6 +73,7 @@ export const listPreferences = /* GraphQL */ `
       items {
         id
         likeGender
+        likeGraduate
         likeCampus
         likeDepartment
         createdAt
@@ -88,6 +90,7 @@ export const getSignal = /* GraphQL */ `
       fromID
       toID
       alive
+      checked
       message
       createdAt
       receiver {
@@ -140,6 +143,7 @@ export const listSignals = /* GraphQL */ `
         fromID
         toID
         alive
+        checked
         message
         createdAt
         updatedAt
@@ -216,6 +220,7 @@ export const getChatRoom = /* GraphQL */ `
         content
         userID
         chatRoomID
+        checked
         updatedAt
       }
       matches {
@@ -255,6 +260,7 @@ export const getMessage = /* GraphQL */ `
       content
       userID
       chatRoomID
+      checked
       user {
         id
         gender
@@ -296,6 +302,7 @@ export const listMessages = /* GraphQL */ `
         content
         userID
         chatRoomID
+        checked
         updatedAt
       }
       nextToken
@@ -539,6 +546,7 @@ export const signalByFrom = /* GraphQL */ `
         fromID
         toID
         alive
+        checked
         message
         createdAt
         updatedAt
@@ -569,6 +577,7 @@ export const signalByTo = /* GraphQL */ `
         fromID
         toID
         alive
+        checked
         message
         createdAt
         updatedAt
@@ -661,6 +670,7 @@ export const messagesByChatRoom = /* GraphQL */ `
         content
         userID
         chatRoomID
+        checked
         updatedAt
       }
       nextToken
