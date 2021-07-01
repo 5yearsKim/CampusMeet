@@ -59,7 +59,10 @@ function MatchList({navigation}) {
         renderItem={({item}) => <MatchListItem item={item} navigation={navigation} deleteMatch={deleteMatch}/>}
         keyExtractor={(item) => item.id}
         refreshing={loading}
-        onRefresh={() => setRefreshMatch(!refreshMatch)}
+        onRefresh={() => {
+          setLoading(true);
+          setRefreshMatch(!refreshMatch);
+        }}
       />
     </View>
   );

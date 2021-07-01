@@ -1,5 +1,5 @@
-import React, {useContext, useRef, useEffect} from 'react';
-import {View} from 'react-native';
+import React, {useContext, useRef, useState, useEffect} from 'react';
+import {View, Text} from 'react-native';
 import * as Notifications from 'expo-notifications';
 import {registerForPushNotificationsAsync, notificationHandler} from 'src/utils/PushNotification';
 import {modifyUser} from 'src/utils/User';
@@ -9,6 +9,8 @@ export default function PushNotification({navigation, user}) {
   const auth = useContext(MyContext);
   // const notificationListener = useRef();
   const responseListener = useRef();
+
+  const [token, setToken] = useState();
 
   useEffect(() => {
     if (!user) {
@@ -44,7 +46,7 @@ export default function PushNotification({navigation, user}) {
         return;
       }
       const token = await registerForPushNotificationsAsync();
-      console.log(token);
+      setToken(token);
       if (token) {
         try {
           modifyUser(auth.user.attributes.sub, {pushToken: token});
@@ -54,7 +56,7 @@ export default function PushNotification({navigation, user}) {
       }
     };
     tokenSetting();
-  }, []);
+  }, [user]);
 
   useEffect(() => {
     if (user) {
@@ -64,6 +66,9 @@ export default function PushNotification({navigation, user}) {
 
   return (
     <View>
+      <Text>
+        {String(token)}
+      </Text>
     </View>
   );
 }

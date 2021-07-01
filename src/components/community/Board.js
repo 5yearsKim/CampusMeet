@@ -14,7 +14,6 @@ function Board({navigation, route}) {
 
   useEffect(() => {
     const m_bringPost = async () => {
-      setLoading(true);
       const [postData, tokenData] = await bringPost(board.id, '', 20);
       setPostList(postData);
       setNextToken(tokenData);
@@ -44,7 +43,10 @@ function Board({navigation, route}) {
         keyExtractor={(item) => item.id}
         onEndReached={() => onEndReached()}
         refreshing={loading}
-        onRefresh={() => setRefreshBoard(!refreshBoard)}
+        onRefresh={() => {
+          setLoading(true);
+          setRefreshBoard(!refreshBoard);
+        }}
         removeClippedSubviews={false}
       />
       <View style={styles.iconContainer}>

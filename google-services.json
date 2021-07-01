@@ -1,33 +1,33 @@
 {
   "project_info": {
-    "project_number": "609396217918",
-    "project_id": "campusmeet-android",
-    "storage_bucket": "campusmeet-android.appspot.com"
+    "project_number": "690101585039",
+    "project_id": "campusmeet-android-5343d",
+    "storage_bucket": "campusmeet-android-5343d.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:609396217918:android:dcdde25a111ecab2cd196f",
+        "mobilesdk_app_id": "1:690101585039:android:d83ea3a4b60df845849cfa",
         "android_client_info": {
-          "package_name": "com.campusmeet2"
+          "package_name": "com.onion.campusMeet"
         }
       },
       "oauth_client": [
         {
-          "client_id": "609396217918-l0tbrbjtt88778j94vo53e9iubn07pga.apps.googleusercontent.com",
+          "client_id": "690101585039-dvsm9is764cdl7do6fmjc4qu97vbeo5b.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDxIGYbDXWB8Ff1YqyInzVF159CmxU57w8"
+          "current_key": "AIzaSyAeC0yFlh5SKD5kQ3sLrAe_FcDrxKJWUVY"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "609396217918-l0tbrbjtt88778j94vo53e9iubn07pga.apps.googleusercontent.com",
+              "client_id": "690101585039-dvsm9is764cdl7do6fmjc4qu97vbeo5b.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

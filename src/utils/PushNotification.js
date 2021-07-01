@@ -50,6 +50,7 @@ export async function registerForPushNotificationsAsync() {
     // console.log(token);
   } else {
     // alert('Must use physical device for Push Notifications');
+    return null;
   }
 
   if (Platform.OS === 'android') {

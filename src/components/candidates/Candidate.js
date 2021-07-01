@@ -48,7 +48,6 @@ function Candidate({navigation}) {
   useEffect(() => {
     const m_bringCandidate = async () => {
       try {
-        setLoading(true);
         const userData = await bringCandidate();
         setUserList(userData);
         setLoading(false);
@@ -84,7 +83,10 @@ function Candidate({navigation}) {
         renderItem={({item}) => <CandidateItem item={item} />}
         keyExtractor={(item) => item.id}
         ListHeaderComponent={() => <CandidateHeader/>}
-        onRefresh={() => setRefreshCandidate()}
+        onRefresh={() => {
+          setLoading(true);
+          setRefreshCandidate(!refreshCandidate);
+        }}
         refreshing={loading}
         removeClippedSubviews={false}
       />

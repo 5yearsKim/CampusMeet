@@ -17,7 +17,6 @@ function ReceivedSignal({navigation}) {
   useEffect(() => {
     const m_bringReceivedSignal = async () => {
       try {
-        setLoading(true);
         const userData = await bringReceivedSignal(userSub);
         setUserList(userData);
         setLoading(false);
@@ -68,7 +67,10 @@ function ReceivedSignal({navigation}) {
         )}
         keyExtractor={(item) => item.id}
         refreshing={loading}
-        onRefresh={() => setRefreshReceivedSignal(!refreshReceivedSignal)}
+        onRefresh={() => {
+          setLoading(true);
+          setRefreshReceivedSignal(!refreshReceivedSignal);
+        }}
       />
     </View>
   );
