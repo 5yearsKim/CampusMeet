@@ -8,6 +8,7 @@ export const onCreateMessage = /* GraphQL */ `
       userID
       chatRoomID
       updatedAt
+      checked
       user {
         id
         gender

@@ -2,10 +2,11 @@ import React, {useState, useContext} from 'react';
 import {View, Image, TouchableOpacity, StyleSheet} from 'react-native';
 import {Portal, Dialog} from 'react-native-paper';
 import Text from 'src/blocks/Text';
+import Badge from 'src/blocks/Badge';
 import SimpleAlert from 'src/blocks/SimpleAlert';
 import {relativeTimePrettify} from 'src/utils/Time';
 import {KeyImage} from 'src/blocks/Image';
-import {ThemeContext} from 'src/context';
+import {MyContext, ThemeContext} from 'src/context';
 
 function LeftContent({navigation, matcher}) {
   return (
@@ -28,12 +29,17 @@ function LeftContent({navigation, matcher}) {
 
 
 function MatchListItem({item, navigation, deleteMatch}) {
+  const auth = useContext(MyContext);
+  const userSub = auth.user.attributes.sub;
   const {theme} = useContext(ThemeContext);
   const [menuShow, setMenuShow] = useState(false);
   const [deleteAlert, setDeleteAlert] = useState(false);
   const matcher = item.matcher;
   const chatRoom = item.chatRoom;
   // console.log(item);
+
+  const lastMsg = item.chatRoom.lastMessage;
+  const isNew = (lastMsg.userID != userSub) && lastMsg.type != 'admin' && !lastMsg.checked;
   const onClickItem = () => {
     navigation.push('ChatRoom', {
       chatRoomID: item.chatRoomID,
@@ -71,7 +77,10 @@ function MatchListItem({item, navigation, deleteMatch}) {
               <Text style={[styles.nameText, {color: theme.text}]}>{matcher.name}</Text>
               <View style={{flexDirection: 'row', flex: 1, justifyContent: 'space-between'}}>
                 {lastMessage()}
-                <Text style={[styles.timeText, {color: theme.subText}]}>{relativeTimePrettify(chatRoom.lastMessage.createdAt, 'week')}</Text>
+                <View style={{flexDirection: 'row'}}>
+                  {isNew && <Badge/>}
+                  <Text style={[styles.timeText, {color: theme.subText}]}>{relativeTimePrettify(chatRoom.lastMessage.createdAt, 'week')}</Text>
+                </View>
               </View>
             </View>
           </View>
@@ -131,7 +140,8 @@ const styles = StyleSheet.create({
   },
   timeText: {
     fontSize: 12,
-    marginRight: 5,
+    marginRight: 8,
+    marginLeft: 8,
   },
   menuText: {
     color: 'black',

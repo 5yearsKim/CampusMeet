@@ -1,6 +1,7 @@
 import React, {useState, useEffect, useContext} from 'react';
 import {View, FlatList, StyleSheet} from 'react-native';
 import Text from 'src/blocks/Text';
+import NotiText from 'src/blocks/NotiText';
 import {bringSentSignal} from 'src/utils/Signal';
 import SentSignalItem from './SentSignalItem';
 import {MyContext, UserContext} from 'src/context';
@@ -27,18 +28,12 @@ function SentSignal({navigation}) {
     m_bringSentSignal();
   }, [refreshSentSignal]);
 
-  if (userList.length <= 0) {
-    return (
-      <View style={styles.container}>
-        <Text style={styles.noSignalText}>보낸 시그널이 없습니다.</Text>
-      </View>
-    );
-  }
   return (
     <View style={{flex: 1}}>
       <FlatList
         data={userList}
         renderItem={({item}) => <SentSignalItem item={item}/>}
+        ListEmptyComponent={<NotiText content='보낸 시그널이 없습니다.'/>}
         keyExtractor={(item) => item.id}
         refreshing={loading}
         onRefresh={() => {
@@ -51,10 +46,6 @@ function SentSignal({navigation}) {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    padding: 10,
-    alignItems: 'center',
-  },
   noSignalText: {
     fontWeight: 'bold',
     color: 'gray',

@@ -2,7 +2,7 @@ import {API, graphqlOperation} from 'aws-amplify';
 import {messagesByChatRoom} from 'src/graphql/customQueries';
 import {createMessage} from 'src/graphql/mutations';
 import {onCreateMessage} from 'src/graphql/customSubscriptions';
-import {updateChatRoom} from 'src/graphql/mutations';
+import {updateChatRoom, updateMessage} from 'src/graphql/mutations';
 
 export async function bringMessages(chatRoomID, nextToken, limit=20) {
   const inputData = {
@@ -36,6 +36,7 @@ export async function makeMessage(userID, chatRoomID, content, type) {
     chatRoomID: chatRoomID,
     content: content,
     type: type,
+    checked: false,
   };
   const rsp = await API.graphql(
       graphqlOperation(createMessage, {input: newMessage}),
@@ -45,6 +46,18 @@ export async function makeMessage(userID, chatRoomID, content, type) {
   await modifyChatRoom(chatRoomID, data);
   return message;
 };
+
+export function modifyMessage(messageID, messageData) {
+  messageData.id = messageID;
+  API.graphql(
+      graphqlOperation(updateMessage, {input: messageData}),
+  );
+}
+
+export function checkMessage(messageID) {
+  const data = {checked: true};
+  modifyMessage(messageID, data);
+}
 
 export async function modifyChatRoom(chatRoomID, chatData) {
   chatData.id = chatRoomID;

@@ -68,6 +68,7 @@ export const signalByFrom = /* GraphQL */ `
         fromID
         toID
         alive
+        checked
         message
         createdAt
         updatedAt
@@ -109,6 +110,7 @@ export const signalByFromToday = /* GraphQL */ `
         fromID
         toID
         alive
+        checked
         createdAt
         updatedAt
       }
@@ -139,6 +141,7 @@ export const signalByTo = /* GraphQL */ `
         fromID
         toID
         alive
+        checked
         message
         createdAt
         updatedAt
@@ -182,6 +185,7 @@ export const matchByFrom = /* GraphQL */ `
         toID
         chatRoomID
         deleted
+        checked
         createdAt
         updatedAt
         matcher {
@@ -194,8 +198,10 @@ export const matchByFrom = /* GraphQL */ `
           id
           lastMessageID
           lastMessage {
+            userID
             createdAt
             content
+            checked
             type
           }
         }
@@ -234,6 +240,7 @@ export const matchByChatRoom = /* GraphQL */ `
           imageKeys
         }
         deleted
+        checked
         createdAt
         updatedAt
       }
@@ -267,6 +274,7 @@ export const messagesByChatRoom = /* GraphQL */ `
         userID
         chatRoomID
         updatedAt
+        checked
         user {
           id
           gender

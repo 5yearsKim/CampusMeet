@@ -5,6 +5,11 @@ import {strTime2Min, strTime2Date} from 'src/utils/Time';
 import {KeyImage} from 'src/blocks/Image';
 import {TextMessage, GifMessage, ImageMessage, AdminMessage} from './MessageCategory';
 import {MyContext} from 'src/context';
+import {AntDesign} from '@expo/vector-icons';
+import config from 'src/config';
+
+
+const colors = config.colors.chat;
 
 function LeftContent({user, showTime, navigation}) {
   if (!user) {
@@ -33,7 +38,7 @@ function LeftContent({user, showTime, navigation}) {
   );
 }
 
-function Message({item, showTime, showDate, navigation}) {
+function Message({item, showTime, showDate, myCkp, yourCkp, navigation}) {
   const auth = useContext(MyContext);
   const isMyMessage = (item.userID == auth.user.attributes.sub);
   if (item == 'undefined') {
@@ -82,6 +87,11 @@ function Message({item, showTime, showDate, navigation}) {
         {!isMyMessage && <LeftContent user={item.user} showTime={showTime} navigation={navigation}/>}
         {messageContent(item.type, item.content)}
         {showTime && <Text style={styles.time}>{strTime2Min(item.createdAt)}</Text>}
+        <View style={{}}>
+          {/* {myCkp == item.id && <AntDesign name="check" size={15} color={colors.yourMessageBox}/>} */}
+          {myCkp == item.id && <AntDesign name="check" size={15} color='#DDDD00'/>}
+          {yourCkp == item.id && <AntDesign name="check" size={15} color={colors.myMessageBox}/>}
+        </View>
       </View>
     </View>
   );

@@ -316,6 +316,7 @@ export const onCreateMatch = /* GraphQL */ `
         updatedAt
       }
       deleted
+      checked
       updatedAt
     }
   }
@@ -352,6 +353,7 @@ export const onUpdateMatch = /* GraphQL */ `
         updatedAt
       }
       deleted
+      checked
       updatedAt
     }
   }
@@ -388,6 +390,7 @@ export const onDeleteMatch = /* GraphQL */ `
         updatedAt
       }
       deleted
+      checked
       updatedAt
     }
   }

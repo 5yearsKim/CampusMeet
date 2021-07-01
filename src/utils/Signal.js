@@ -8,6 +8,7 @@ export async function makeSignal(fromID, toID, message) {
     toID: toID,
     message: message,
     alive: true,
+    checked: false,
   };
   const signal = await API.graphql(
       graphqlOperation(createSignal, {input: newSignal}),

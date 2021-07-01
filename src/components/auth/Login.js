@@ -42,6 +42,9 @@ function Login(props) {
       if (err.code == 'NotAuthorizedException') {
         setErrText('ID 또는 비밀번호가 일치하지 않습니다.');
       };
+      if (err.code == 'UserNotConfirmedException') {
+        setErrText('인증되지 않은 유저입니다.');
+      }
       console.warn(err);
     }
   };

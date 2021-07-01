@@ -89,6 +89,7 @@ export async function makeNewMatch(fromID, toID) {
           toID: toID,
           chatRoomID: newChatRoom.id,
           deleted: false,
+          checked: false,
         },
       }),
   );
@@ -99,6 +100,7 @@ export async function makeNewMatch(fromID, toID) {
           toID: fromID,
           chatRoomID: newChatRoom.id,
           deleted: false,
+          checked: false,
         },
       }),
   );

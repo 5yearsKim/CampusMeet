@@ -1,17 +1,23 @@
-import React, {useState, useEffect, Fragment} from 'react';
+import React, {useState, useEffect, useContext, Fragment} from 'react';
 import {FlatList} from 'react-native';
 import Message from './Message';
-import {bringMessages} from 'src/utils/Chat';
+import {bringMessages, checkMessage} from 'src/utils/Chat';
 import {isDateDifferent, isMinDifferent} from 'src/utils/Time';
 
 import {API, graphqlOperation} from 'aws-amplify';
+import {MyContext} from 'src/context';
 import {onCreateMessage} from 'src/graphql/subscriptions';
 import {notificationHandler} from 'src/utils/PushNotification';
 
 function ChatRoom({navigation, route}) {
+  const auth = useContext(MyContext);
+  const userSub = auth.user.attributes.sub;
   const {chatRoomID, name} = route.params;
   const [messageList, setMessageList] = useState([]);
   const [nextToken, setNextToken] = useState('');
+
+  const [myCkp, setMyCkp] = useState([]);
+  const [yourCkp, setYourCkp] = useState([]);
 
   const onEndReached = async () => {
     if (nextToken == null) {
@@ -20,6 +26,29 @@ function ChatRoom({navigation, route}) {
     const [messageData, token] = await bringMessages(chatRoomID, nextToken);
     setMessageList([...messageList, ...messageData]);
     setNextToken(token);
+  };
+
+  const findCkp = () => {
+    let mine;
+    let yours;
+    for (let i = 0; i < messageList.length; i++) {
+      const msg = messageList[i];
+      if (msg.type == 'admin') {
+
+      } else if (!mine && msg.checked && msg.userID == userSub) { // my message
+        mine = msg.id;
+      } else if (!yours && !msg.checked && msg.userID != userSub) { // your message, unchecked
+        yours = msg.id;
+        checkMessage(msg.id);
+      } else if (!yours && msg.checked && msg.userID != userSub) { // your message, checked
+        yours = msg.id;
+      }
+      if (mine && yours) {
+        break;
+      }
+    }
+    setMyCkp(mine);
+    setYourCkp(yours);
   };
 
   const m_bringMessages = async () => {
@@ -36,6 +65,10 @@ function ChatRoom({navigation, route}) {
   useEffect(() => {
     m_bringMessages();
   }, []);
+
+  useEffect(() => {
+    findCkp();
+  }, [messageList]);
 
 
   useEffect(() => {
@@ -64,14 +97,14 @@ function ChatRoom({navigation, route}) {
 
   const renderMessage = ({item, index}) => {
     if (index >= messageList.length -1) {
-      return <Message item={item} showTime={true} showDate={true}/>;
+      return <Message item={item} showTime={true} showDate={true} myCkp={myCkp} yourCkp={yourCkp}/>;
     }
     const isDateDiff = isDateDifferent(item.createdAt, messageList[index + 1].createdAt);
     if (index == 0) {
-      return <Message item={item} showTime={true} showDate={isDateDiff}/>;
+      return <Message item={item} showTime={true} showDate={isDateDiff} myCkp={myCkp} yourCkp={yourCkp}/>;
     }
     const isMinDiff = isMinDifferent(item.createdAt, messageList[index - 1].createdAt);
-    return <Message item={item} showTime={isMinDiff} showDate={isDateDiff} navigation={navigation}/>;
+    return <Message item={item} showTime={isMinDiff} showDate={isDateDiff} myCkp={myCkp} yourCkp={yourCkp} navigation={navigation}/>;
   };
   return (
     <Fragment>

@@ -96,7 +96,7 @@ export default function Preference({filterOpen, setFilterOpen}) {
                     <Text style={[styles.genderText, {color: theme.men}]}>남자 선호</Text>
                   </View>
                   <Text style={styles.sectionText}>선호 대학</Text>
-                  <View style={{flexDirection: 'row', alignItems: 'center', alignSelf: 'flex-end', marginRight: 10}}>
+                  <View style={{flexDirection: 'row', alignItems: 'center', alignSelf: 'flex-end', marginRight: 20}}>
                     <Checkbox
                       status={graduateLike ? 'checked' : 'unchecked'}
                       onPress={() => setGraduateLike(!graduateLike)}

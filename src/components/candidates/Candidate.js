@@ -1,6 +1,7 @@
 import React, {useState, useEffect, useContext} from 'react';
 import {View, FlatList, StyleSheet} from 'react-native';
 import Text from 'src/blocks/Text';
+import NotiText from 'src/blocks/NotiText';
 import {Button} from 'react-native-paper';
 import {FontAwesome5} from '@expo/vector-icons';
 import {bringCandidate} from 'src/utils/User';
@@ -86,6 +87,7 @@ function Candidate({navigation}) {
           setLoading(true);
           setRefreshCandidate(!refreshCandidate);
         }}
+        ListEmptyComponent={<NotiText content='추천 카드가 없습니다.'/>}
         refreshing={loading}
         removeClippedSubviews={false}
       />

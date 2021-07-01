@@ -47,17 +47,13 @@ function MatchList({navigation}) {
     }
   };
 
-  if (userList.length == 0) {
-    return (
-      <NotiText content='쪽지가 없습니다.'/>
-    );
-  }
   return (
     <View style={{flex: 1}}>
       <FlatList
         data={userList}
         renderItem={({item}) => <MatchListItem item={item} navigation={navigation} deleteMatch={deleteMatch}/>}
         keyExtractor={(item) => item.id}
+        ListEmptyComponent={<NotiText content='쪽지가 없습니다.'/>}
         refreshing={loading}
         onRefresh={() => {
           setLoading(true);
