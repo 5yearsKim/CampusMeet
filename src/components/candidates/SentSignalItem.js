@@ -129,7 +129,7 @@ const styles = StyleSheet.create({
     marginLeft: 20,
   },
   buttonText: {
-    fontWeight: 'bold',
+    // fontWeight: 'bold',
   },
   modalContainer: {
     flex: 1,

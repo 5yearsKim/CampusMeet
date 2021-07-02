@@ -53,7 +53,7 @@ function MatchList({navigation}) {
         data={userList}
         renderItem={({item}) => <MatchListItem item={item} navigation={navigation} deleteMatch={deleteMatch}/>}
         keyExtractor={(item) => item.id}
-        ListEmptyComponent={<NotiText content='쪽지가 없습니다.'/>}
+        ListEmptyComponent={!loading && <NotiText content='쪽지가 없습니다.'/>}
         refreshing={loading}
         onRefresh={() => {
           setLoading(true);

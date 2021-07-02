@@ -1,10 +1,12 @@
 import React, {useState} from 'react';
-import {View, Image, TouchableOpacity, Modal, StyleSheet} from 'react-native';
+import {Dimensions, View, Image, TouchableOpacity, Modal, StyleSheet} from 'react-native';
 import Text from 'src/blocks/Text';
 import {KeyImage} from 'src/blocks/Image';
 import {ImageViewer} from 'src/blocks/ImageViewer';
 import {AntDesign} from '@expo/vector-icons';
 import config from 'src/config';
+
+const {width, height} = Dimensions.get('window');
 
 export function TextMessage({text, isMyMessage}) {
   return (
@@ -66,6 +68,7 @@ const styles = StyleSheet.create({
     padding: 9,
     fontSize: 14,
     overflow: 'hidden',
+    maxWidth: width * 0.6,
   },
   myBox: {
     backgroundColor: colors.myMessageBox,

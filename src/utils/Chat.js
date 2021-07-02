@@ -47,16 +47,16 @@ export async function makeMessage(userID, chatRoomID, content, type) {
   return message;
 };
 
-export function modifyMessage(messageID, messageData) {
+export async function modifyMessage(messageID, messageData) {
   messageData.id = messageID;
-  API.graphql(
+  await API.graphql(
       graphqlOperation(updateMessage, {input: messageData}),
   );
 }
 
-export function checkMessage(messageID) {
+export async function checkMessage(messageID) {
   const data = {checked: true};
-  modifyMessage(messageID, data);
+  await modifyMessage(messageID, data);
 }
 
 export async function modifyChatRoom(chatRoomID, chatData) {

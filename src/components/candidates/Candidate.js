@@ -87,7 +87,7 @@ function Candidate({navigation}) {
           setLoading(true);
           setRefreshCandidate(!refreshCandidate);
         }}
-        ListEmptyComponent={<NotiText content='추천 카드가 없습니다.'/>}
+        ListEmptyComponent={!loading && <NotiText content='추천 카드가 없습니다.'/>}
         refreshing={loading}
         removeClippedSubviews={false}
       />

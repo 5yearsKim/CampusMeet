@@ -1,7 +1,6 @@
 import React, {useState, useEffect, useContext} from 'react';
 import {View, FlatList} from 'react-native';
 import NotiText from 'src/blocks/NotiText';
-import {MaterialIcons} from '@expo/vector-icons';
 import ReceivedSignalItem from './ReceivedSignalItem';
 import {MyContext, UserContext} from 'src/context';
 import {makeMatch} from 'src/utils/Match';
@@ -62,7 +61,7 @@ function ReceivedSignal({navigation}) {
           />
         )}
         keyExtractor={(item) => item.id}
-        ListEmptyComponent={<NotiText content='받은 시그널이 없습니다.'/>}
+        ListEmptyComponent={!loading && <NotiText content='받은 시그널이 없습니다.'/>}
         refreshing={loading}
         onRefresh={() => {
           setLoading(true);

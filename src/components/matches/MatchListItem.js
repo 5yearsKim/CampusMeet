@@ -1,12 +1,16 @@
 import React, {useState, useContext} from 'react';
-import {View, Image, TouchableOpacity, StyleSheet} from 'react-native';
+import {Dimensions, View, Image, TouchableOpacity, StyleSheet} from 'react-native';
 import {Portal, Dialog} from 'react-native-paper';
 import Text from 'src/blocks/Text';
 import Badge from 'src/blocks/Badge';
 import SimpleAlert from 'src/blocks/SimpleAlert';
 import {relativeTimePrettify} from 'src/utils/Time';
+import {modifyMatch} from 'src/utils/Match';
+import {checkMessage} from 'src/utils/Chat';
 import {KeyImage} from 'src/blocks/Image';
-import {MyContext, ThemeContext} from 'src/context';
+import {MyContext, ThemeContext, UserContext} from 'src/context';
+
+const {width, height} = Dimensions.get('window');
 
 function LeftContent({navigation, matcher}) {
   return (
@@ -36,11 +40,38 @@ function MatchListItem({item, navigation, deleteMatch}) {
   const [deleteAlert, setDeleteAlert] = useState(false);
   const matcher = item.matcher;
   const chatRoom = item.chatRoom;
+  const {refreshMatch, setRefreshMatch} = useContext(UserContext);
   // console.log(item);
 
   const lastMsg = item.chatRoom.lastMessage;
+
+  const isChecked = item.checked;
   const isNew = (lastMsg.userID != userSub) && lastMsg.type != 'admin' && !lastMsg.checked;
-  const onClickItem = () => {
+
+  const onClickItem = async () => {
+    if (!isChecked && isNew) {
+      try {
+        await modifyMatch(item.id, {checked: true});
+        await checkMessage(lastMsg.id);
+        setRefreshMatch(!refreshMatch);
+      } catch (err) {
+        console.warn(err);
+      }
+    } else if (!isChecked) {
+      try {
+        await modifyMatch(item.id, {checked: true});
+        setRefreshMatch(!refreshMatch);
+      } catch (err) {
+        console.warn(err);
+      }
+    } else if (isNew) {
+      try {
+        await checkMessage(lastMsg.id);
+        setRefreshMatch(!refreshMatch);
+      } catch (err) {
+        console.warn(err);
+      }
+    }
     navigation.push('ChatRoom', {
       chatRoomID: item.chatRoomID,
       name: matcher.name,
@@ -61,12 +92,19 @@ function MatchListItem({item, navigation, deleteMatch}) {
     } else {
       content = message.content;
     }
-    return <Text style={[styles.messageText, {color: theme.subText}]}>{content}</Text>;
+    return <Text ellipsizeMode='tail' numberOfLines={3} style={[styles.messageText, {color: theme.subText}]}>{content}</Text>;
   };
 
   if (matcher == null ) {
     return <Text> null </Text>;
   }
+  const renderBadge = () => {
+    if (!isChecked) {
+      return <Badge content='New!' containerStyle={{backgroundColor: '#eedd00'}}/>;
+    } else if (isNew) {
+      return <Badge/>;
+    }
+  };
   return (
     <View>
       <TouchableOpacity onPress={() => onClickItem()} onLongPress={() => setMenuShow(true)}>
@@ -78,7 +116,7 @@ function MatchListItem({item, navigation, deleteMatch}) {
               <View style={{flexDirection: 'row', flex: 1, justifyContent: 'space-between'}}>
                 {lastMessage()}
                 <View style={{flexDirection: 'row'}}>
-                  {isNew && <Badge/>}
+                  {renderBadge()}
                   <Text style={[styles.timeText, {color: theme.subText}]}>{relativeTimePrettify(chatRoom.lastMessage.createdAt, 'week')}</Text>
                 </View>
               </View>
@@ -137,6 +175,7 @@ const styles = StyleSheet.create({
   messageText: {
     fontSize: 13,
     marginLeft: 5,
+    maxWidth: width - 200,
   },
   timeText: {
     fontSize: 12,

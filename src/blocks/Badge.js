@@ -2,12 +2,12 @@ import React from 'react';
 import {View, StyleSheet} from 'react-native';
 import Text from './Text';
 
-export default function Badge({content}) {
+export default function Badge({content, containerStyle, labelStyle}) {
   return (
     <View>
-      <View style={styles.container}>
+      <View style={[styles.container, containerStyle]}>
         {!!content &&
-          <Text style={styles.badgeText}>{content}</Text>
+          <Text style={[styles.badgeText, labelStyle]}>{content}</Text>
         }
       </View>
     </View>

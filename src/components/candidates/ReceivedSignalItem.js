@@ -1,11 +1,13 @@
 import React, {useContext, useState} from 'react';
-import {View, Image, TouchableOpacity, StyleSheet} from 'react-native';
+import {View, Image, TouchableOpacity, TouchableWithoutFeedback, StyleSheet} from 'react-native';
 import Text from 'src/blocks/Text';
+import Badge from 'src/blocks/Badge';
 import SimpleAlert from 'src/blocks/SimpleAlert';
 import {Button} from 'react-native-paper';
 import {KeyImage} from 'src/blocks/Image';
-import {ThemeContext} from 'src/context';
+import {ThemeContext, UserContext} from 'src/context';
 import {relativeTimePrettify} from 'src/utils/Time';
+import {checkSignal} from 'src/utils/Signal';
 
 
 function LeftContent({sender, navigation}) {
@@ -33,10 +35,24 @@ function ReceivedSignalItem({item, navigation, onReject, onMatch}) {
   const [matchAlertOpen, setMatchAlertOpen] = useState(false);
   const [rejectAlertOpen, setRejectAlertOpen] = useState(false);
   const {theme} = useContext(ThemeContext);
+  const {refreshReceivedSignal, setRefreshReceivedSignal} = useContext(UserContext);
   const sender = item.sender;
+
+  // console.log(item);
 
   const handleReject = () => onReject(item.id);
   const handleMatch = () => onMatch(item.id, sender.id);
+
+  const onClick = async () => {
+    if (!item.checked) {
+      try {
+        await checkSignal(item.id);
+        setRefreshReceivedSignal(!refreshReceivedSignal);
+      } catch (err) {
+        console.warn(err);
+      }
+    }
+  };
 
   // exception handle
   if (sender.imageKeys == null) {
@@ -50,49 +66,55 @@ function ReceivedSignalItem({item, navigation, onReject, onMatch}) {
     );
   }
   return (
-    <View style={styles.container}>
-      <View style={{flexDirection: 'row'}}>
-        <LeftContent sender={sender} navigation={navigation}/>
-        <View>
-          <Text style={[styles.titleText, {color: theme.text}]}>{sender.campus} {sender.graduate}</Text>
-          <Text style={[styles.subtitleText, {color: theme.subText}]}>{sender.division} {sender.year}학번</Text>
-          <Text style={[styles.messageText, {color: theme.subText}]}>{item.message}</Text>
+    <TouchableWithoutFeedback onPress={() => onClick()}>
+      <View style={styles.container}>
+        <View style={{flexDirection: 'row', alignItems: 'center'}}>
+          <LeftContent sender={sender} navigation={navigation}/>
+          <View>
+            <View style={{flexDirection: 'row', alighItems: 'center'}}>
+              <Text style={[styles.titleText, {color: theme.text}]}>{sender.campus} {sender.graduate}</Text>
+              {!item.checked && <Badge containerStyle={{margin: 5}}/>}
+            </View>
+            <Text style={[styles.subtitleText, {color: theme.subText}]}>{sender.division} {sender.year}학번</Text>
+            <Text style={[styles.messageText]}>{item.message}</Text>
+          </View>
         </View>
-      </View>
-      <View style={styles.bottomContainer}>
-        <Text style={[styles.timeText, {color: theme.subText}]}>{relativeTimePrettify(item.createdAt, 'week')}</Text>
-        <View style={{flexDirection: 'row'}}>
-          <Button
-            onPress={() => setRejectAlertOpen(true)}
-            labelStyle={styles.buttonText}
-          >
+        <View style={styles.bottomContainer}>
+          <Text style={[styles.timeText, {color: theme.subText}]}>{relativeTimePrettify(item.createdAt, 'week')}</Text>
+          <View style={{flexDirection: 'row'}}>
+            <Button
+              onPress={() => setRejectAlertOpen(true)}
+              labelStyle={styles.buttonText}
+            >
             거절
-          </Button>
-          <Button
-            onPress={() => setMatchAlertOpen(true)}
-            labelStyle={styles.buttonText}
-          >
+            </Button>
+            <Button
+              onPress={() => setMatchAlertOpen(true)}
+              labelStyle={styles.buttonText}
+            >
             수락
-          </Button>
+            </Button>
+          </View>
         </View>
+
+        <SimpleAlert
+          modalOpen={matchAlertOpen}
+          setModalOpen={setMatchAlertOpen}
+          title='Match!'
+          content='Match가 되면 상대가 나를 확인할 수 있고 서로 쪽지를 보낼 수 있습니다.'
+          onCancel={() => {}}
+          onOk={() => handleMatch()}
+        />
+        <SimpleAlert
+          modalOpen={rejectAlertOpen}
+          setModalOpen={setRejectAlertOpen}
+          title='거절'
+          content='Signal을 거절하면 1달동안 같은 사람에게 Signal을 받을 수 없습니다.'
+          onCancel={() => {}}
+          onOk={() => handleReject()}
+        />
       </View>
-      <SimpleAlert
-        modalOpen={matchAlertOpen}
-        setModalOpen={setMatchAlertOpen}
-        title='Match!'
-        content='Match가 되면 상대가 나를 확인할 수 있고 서로 쪽지를 보낼 수 있습니다.'
-        onCancel={() => {}}
-        onOk={() => handleMatch()}
-      />
-      <SimpleAlert
-        modalOpen={rejectAlertOpen}
-        setModalOpen={setRejectAlertOpen}
-        title='거절'
-        content='Signal을 거절하면 1달동안 같은 사람에게 Signal을 받을 수 없습니다.'
-        onCancel={() => {}}
-        onOk={() => handleReject()}
-      />
-    </View>
+    </TouchableWithoutFeedback>
   );
 }
 
@@ -111,9 +133,10 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
   subtitleText: {
-    fontSize: 12,
-    color: 'gray',
+    fontSize: 14,
+    fontWeight: 'bold',
     marginTop: 5,
+    marginLeft: 70,
   },
   messageText: {
     marginTop: 10,
@@ -121,7 +144,7 @@ const styles = StyleSheet.create({
     fontSize: 13,
     fontWeight: 'bold',
     fontStyle: 'italic',
-    color: '#444444',
+    color: 'gray',
   },
   bottomContainer: {
     flexDirection: 'row',

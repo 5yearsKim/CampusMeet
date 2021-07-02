@@ -8,7 +8,6 @@ import {MyContext} from 'src/context';
 import {AntDesign} from '@expo/vector-icons';
 import config from 'src/config';
 
-
 const colors = config.colors.chat;
 
 function LeftContent({user, showTime, navigation}) {

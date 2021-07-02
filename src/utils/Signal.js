@@ -52,17 +52,20 @@ export const removeSignal = async (signalID) => {
   return rsp;
 };
 
-export const rejectSignal = async (signalID) => {
-  const targetSignal = {
-    id: signalID,
-    alive: false,
-  };
-  const rsp = await API.graphql(
-      graphqlOperation(updateSignal, {input: targetSignal}),
+export const modifySignal = async (signalID, signalData) => {
+  signalData.id = signalID;
+  await API.graphql(
+      graphqlOperation(updateSignal, {input: signalData}),
   );
-  return rsp;
 };
 
+export const rejectSignal = async (signalID) => {
+  await modifySignal(signalID, {alive: false});
+};
+
+export const checkSignal = async (signalID) => {
+  await modifySignal(signalID, {checked: true});
+};
 
 export async function bringSentSignalToday(fromID) {
   const userData = await API.graphql({

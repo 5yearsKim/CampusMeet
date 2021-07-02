@@ -109,7 +109,7 @@ export async function makeNewMatch(fromID, toID) {
 
 export async function modifyMatch(matchID, matchData) {
   matchData.id = matchID;
-  API.graphql(
+  await API.graphql(
       graphqlOperation(updateMatch, {input: matchData}),
   );
 }

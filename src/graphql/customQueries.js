@@ -198,6 +198,7 @@ export const matchByFrom = /* GraphQL */ `
           id
           lastMessageID
           lastMessage {
+            id
             userID
             createdAt
             content
