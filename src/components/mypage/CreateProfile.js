@@ -45,7 +45,7 @@ function CreateProfile({navigation}) {
 
 
   useEffect(() => {
-    navigation.addListener('beforeRemove', (e) => {
+    const unsubscribe = navigation.addListener('beforeRemove', (e) => {
       if (e.data.action.type == 'RESET') {
         // console.log(e.data.action);
         return;
@@ -54,6 +54,7 @@ function CreateProfile({navigation}) {
       e.preventDefault();
       setAlertOpen(true);
     });
+    return unsubscribe;
   }, []);
 
   useEffect(() => {

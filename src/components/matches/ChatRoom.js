@@ -5,12 +5,13 @@ import {bringMessages, checkMessage} from 'src/utils/Chat';
 import {isDateDifferent, isMinDifferent} from 'src/utils/Time';
 
 import {API, graphqlOperation} from 'aws-amplify';
-import {MyContext} from 'src/context';
+import {MyContext, UserContext} from 'src/context';
 import {onCreateMessage} from 'src/graphql/subscriptions';
 import {notificationHandler} from 'src/utils/PushNotification';
 
 function ChatRoom({navigation, route}) {
   const auth = useContext(MyContext);
+  const {refreshMatch, setRefreshMatch} = useContext(UserContext);
   const userSub = auth.user.attributes.sub;
   const {chatRoomID, name} = route.params;
   const [messageList, setMessageList] = useState([]);
@@ -18,6 +19,14 @@ function ChatRoom({navigation, route}) {
 
   const [myCkp, setMyCkp] = useState([]);
   const [yourCkp, setYourCkp] = useState([]);
+
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('beforeRemove', (e) => {
+      setRefreshMatch(!refreshMatch);
+    });
+    return unsubscribe;
+  }, []);
+
 
   const onEndReached = async () => {
     if (nextToken == null) {

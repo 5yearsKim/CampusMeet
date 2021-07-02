@@ -6,7 +6,6 @@ import Badge from 'src/blocks/Badge';
 import SimpleAlert from 'src/blocks/SimpleAlert';
 import {relativeTimePrettify} from 'src/utils/Time';
 import {modifyMatch} from 'src/utils/Match';
-import {checkMessage} from 'src/utils/Chat';
 import {KeyImage} from 'src/blocks/Image';
 import {MyContext, ThemeContext, UserContext} from 'src/context';
 
@@ -49,24 +48,9 @@ function MatchListItem({item, navigation, deleteMatch}) {
   const isNew = (lastMsg.userID != userSub) && lastMsg.type != 'admin' && !lastMsg.checked;
 
   const onClickItem = async () => {
-    if (!isChecked && isNew) {
+    if (!isChecked) {
       try {
         await modifyMatch(item.id, {checked: true});
-        await checkMessage(lastMsg.id);
-        setRefreshMatch(!refreshMatch);
-      } catch (err) {
-        console.warn(err);
-      }
-    } else if (!isChecked) {
-      try {
-        await modifyMatch(item.id, {checked: true});
-        setRefreshMatch(!refreshMatch);
-      } catch (err) {
-        console.warn(err);
-      }
-    } else if (isNew) {
-      try {
-        await checkMessage(lastMsg.id);
         setRefreshMatch(!refreshMatch);
       } catch (err) {
         console.warn(err);
