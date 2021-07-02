@@ -47,9 +47,9 @@ export async function registerForPushNotificationsAsync() {
       return;
     }
     token = (await Notifications.getExpoPushTokenAsync()).data;
-    if (!token) {
-      token = await Notifications.getExpoPushTokenAsync();
-    }
+    // if (!token) {
+    //   token = await Notifications.getExpoPushTokenAsync();
+    // }
     // console.log(token);
   } else {
     // alert('Must use physical device for Push Notifications');
@@ -68,7 +68,7 @@ export async function registerForPushNotificationsAsync() {
   return token;
 }
 
-export const notificationHandler = (chatRoomID) => {
+export const notificationHandler = (chatRoomID, off=false) => {
   Notifications.setNotificationHandler({
     handleNotification: async (noti) => {
       if ( chatRoomID && noti.request.content?.data?.chatRoomID == chatRoomID) {
@@ -76,6 +76,13 @@ export const notificationHandler = (chatRoomID) => {
           shouldShowAlert: false,
           shouldPlaySound: false,
           shouldSetBadge: true,
+        });
+      }
+      if (off) {
+        return ({
+          shouldShowAlert: false,
+          shouldPlaySound: false,
+          shouldSetBadge: false,
         });
       }
       return ({

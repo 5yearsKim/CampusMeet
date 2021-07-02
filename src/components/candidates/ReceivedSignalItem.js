@@ -17,7 +17,7 @@ function LeftContent({sender, navigation}) {
       {sender.imageKeys.length > 0 ?
         <KeyImage
           imgKey={sender.imageKeys[0]}
-          cached={false}
+          cached={true}
           resizemode='contain'
           style={[styles.avatar, {borderColor: sender.gender=='남자'?theme.men:theme.women}]}
         /> :

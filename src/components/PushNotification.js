@@ -66,9 +66,9 @@ export default function PushNotification({navigation, user}) {
 
   return (
     <View>
-      <Text>
+      {/* <Text>
         {String(token)}
-      </Text>
+      </Text> */}
     </View>
   );
 }

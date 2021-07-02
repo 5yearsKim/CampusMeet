@@ -17,7 +17,8 @@ function LeftContent({item}) {
     return (
       <View style={{justifyContent: 'center', marginLeft: 20}}>
         <View style={[styles.logo, customStyle, {justifyContent: 'center', backgroundColor: 'white', alignItems: 'center'}]}>
-          <Text style={styles.avatarText}>{item.campus.slice(0, 3)}</Text>
+          <Text ellipsizeMode='tail' numberOfLines={2} style={styles.avatarText}>{item.campus}</Text>
+          {/* <Text ellipsizeMode='tail' numberOfLines={2} style={styles.avatarText}>Harverd University</Text> */}
         </View>
       </View>
     );
@@ -81,7 +82,7 @@ const styles = StyleSheet.create({
     padding: 15,
   },
   avatarText: {
-    fontSize: 20,
+    fontSize: 16,
     fontWeight: 'bold',
   },
   titleText: {

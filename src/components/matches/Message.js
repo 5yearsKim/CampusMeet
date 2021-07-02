@@ -22,7 +22,7 @@ function LeftContent({user, showTime, navigation}) {
         {user.imageKeys.length > 0 ?
           <KeyImage
             imgKey={user.imageKeys[0]}
-            cached={false}
+            cached={true}
             resizemode='contain'
             style={styles.avatar}
           /> :

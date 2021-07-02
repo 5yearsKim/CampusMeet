@@ -79,7 +79,6 @@ function ChatRoom({navigation, route}) {
     findCkp();
   }, [messageList]);
 
-
   useEffect(() => {
     const subscription = API.graphql(
         graphqlOperation(onCreateMessage, {
@@ -87,7 +86,7 @@ function ChatRoom({navigation, route}) {
         }),
     ).subscribe({
       next: ({value}) => {
-        const message = value.data.onCreateMessage;
+        // const message = value.data.onCreateMessage;
         // console.log(message);
         m_bringMessages();
       },
@@ -108,12 +107,14 @@ function ChatRoom({navigation, route}) {
     if (index >= messageList.length -1) {
       return <Message item={item} showTime={true} showDate={true} myCkp={myCkp} yourCkp={yourCkp}/>;
     }
-    const isDateDiff = isDateDifferent(item.createdAt, messageList[index + 1].createdAt);
+    const showDate = isDateDifferent(item.createdAt, messageList[index + 1].createdAt);
     if (index == 0) {
-      return <Message item={item} showTime={true} showDate={isDateDiff} myCkp={myCkp} yourCkp={yourCkp}/>;
+      return <Message item={item} showTime={true} showDate={showDate} myCkp={myCkp} yourCkp={yourCkp}/>;
     }
-    const isMinDiff = isMinDifferent(item.createdAt, messageList[index - 1].createdAt);
-    return <Message item={item} showTime={isMinDiff} showDate={isDateDiff} myCkp={myCkp} yourCkp={yourCkp} navigation={navigation}/>;
+
+    const showTime = isMinDifferent(item.createdAt, messageList[index - 1].createdAt) || (item.userID != messageList[index - 1].userID);
+
+    return <Message item={item} showTime={showTime} showDate={showDate} myCkp={myCkp} yourCkp={yourCkp} navigation={navigation}/>;
   };
   return (
     <Fragment>

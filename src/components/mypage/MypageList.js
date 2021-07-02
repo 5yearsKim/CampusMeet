@@ -5,6 +5,7 @@ import {KeyImage} from 'src/blocks/Image';
 import {logout} from 'src/utils/Auth';
 import {bringUser} from 'src/utils/User';
 import {MyContext, ThemeContext} from 'src/context';
+import {notificationHandler} from 'src/utils/PushNotification';
 
 // import {makeMessage} from 'src/utils/Chat';
 
@@ -66,6 +67,7 @@ function MypageList({navigation}) {
   const onLogout = async () => {
     try {
       await logout(auth);
+      notificationHandler(null, true);
     } catch (err) {
       console.warn(err);
     }
