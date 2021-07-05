@@ -28,6 +28,7 @@ export default function App() {
   const [refreshReceivedSignal, setRefreshReceivedSignal] = useState(false);
   const [refreshMatch, setRefreshMatch] = useState(false);
   const [refreshBoard, setRefreshBoard] = useState(false);
+  const [refreshMypage, setRefreshMypage] = useState(false);
 
   const [fontLoaded] = useFonts({
     nanumEB: require('assets/fonts/NanumSquareRoundEB.ttf'),
@@ -115,6 +116,8 @@ export default function App() {
       setRefreshMatch: setRefreshMatch,
       refreshBoard: refreshBoard,
       setRefreshBoard: setRefreshBoard,
+      refreshMypage: refreshMypage,
+      setRefreshMypage: setRefreshMypage,
     };
   };
   if (fontLoaded && authChecked) {

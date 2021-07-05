@@ -43,7 +43,7 @@ function NestedComment({item, board}) {
         <Text>{item.content}</Text>
         <View style={styles.belowBox}>
           <Text>{visTime}</Text>
-          <AntDesign color='green' onPress={onClickLike} name='like2' >
+          <AntDesign color='green' size={15} onPress={onClickLike} name='like2' >
             {likeCnt}
           </AntDesign>
         </View>
@@ -71,6 +71,7 @@ const styles = StyleSheet.create({
   belowBox: {
     flexDirection: 'row',
     justifyContent: 'space-between',
+    paddingRight: 10,
   },
   nickname: {
     fontSize: 14,

@@ -381,10 +381,39 @@ export const postByBoard = /* GraphQL */ `
         likes {
           items {
             userID
+            type
           }
         }
       }
       nextToken
+    }
+  }
+`;
+
+export const getPost = /* GraphQL */ `
+  query GetPost($id: ID!) {
+    getPost(id: $id) {
+      id
+      userID
+      boardID
+      nickname
+      title
+      content
+      imageKeys
+      deleted
+      comments {
+        items {
+          id
+        }
+      }
+      likes {
+        items {
+          userID
+          type
+        }
+      }
+      createdAt
+      updatedAt
     }
   }
 `;
@@ -416,6 +445,7 @@ export const commentByPost = /* GraphQL */ `
         likes {
           items {
             userID
+            type
           }
         }
         createdAt
@@ -431,6 +461,7 @@ export const commentByPost = /* GraphQL */ `
             likes {
               items {
                 userID
+                type
               }
             }
             createdAt

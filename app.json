@@ -19,7 +19,7 @@
       "buildNumber": "1.0.0"
     },
     "android": {
-      "versionCode": 14,
+      "versionCode": 15,
       "package": "com.onion.campusMeet",
       "permissions": [],
       "adaptiveIcon": {

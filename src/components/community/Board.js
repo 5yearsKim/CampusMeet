@@ -1,7 +1,7 @@
 import React, {useState, useEffect, useContext} from 'react';
 import {View, FlatList, TouchableOpacity, StyleSheet} from 'react-native';
 import {FontAwesome5} from '@expo/vector-icons';
-import {bringPost} from 'src/utils/Community';
+import {bringPostByBoard} from 'src/utils/Community';
 import PostListItem from './PostItem';
 import {UserContext} from 'src/context';
 
@@ -13,25 +13,25 @@ function Board({navigation, route}) {
   const {refreshBoard, setRefreshBoard} = useContext(UserContext);
 
   useEffect(() => {
-    const m_bringPost = async () => {
-      const [postData, tokenData] = await bringPost(board.id, '', 20);
+    const m_bringPostByBoard = async () => {
+      const [postData, tokenData] = await bringPostByBoard(board.id, '', 20);
       setPostList(postData);
       setNextToken(tokenData);
       setLoading(false);
     };
-    m_bringPost();
+    m_bringPostByBoard();
   }, [refreshBoard]);
 
   const onEndReached = () => {
-    const m_bringPost = async () => {
+    const m_bringPostByBoard = async () => {
       setLoading(true);
-      const [postData, tokenData] = await bringPost(board.id, nextToken, 20);
+      const [postData, tokenData] = await bringPostByBoard(board.id, nextToken, 20);
       setPostList([...postList, ...postData]);
       setNextToken(tokenData);
       setLoading(false);
     };
     if (nextToken) {
-      m_bringPost();
+      m_bringPostByBoard();
     }
   };
 

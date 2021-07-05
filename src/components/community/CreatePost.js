@@ -5,7 +5,9 @@ import Text from 'src/blocks/Text';
 import {Button} from 'react-native-paper';
 import {PostImagesCreate, PostImagesView} from './PostImages';
 import {getNickname, makePost} from 'src/utils/Community';
+import {imageListToS3} from 'src/utils/UploadPicture';
 import {MyContext, ThemeContext, UserContext} from 'src/context';
+
 
 function CreatePost({navigation, route}) {
   const auth = useContext(MyContext);
@@ -21,7 +23,8 @@ function CreatePost({navigation, route}) {
   const onSubmit = async () => {
     const userSub = auth.user.attributes.sub;
     const nickname = await getNickname(userSub, board.type);
-    const postData = await makePost(userSub, board.id, nickname, title, content, imgList);
+    const newImgList = await imageListToS3(imgList, `board/${board.id}`);
+    const postData = await makePost(userSub, board.id, nickname, title, content, newImgList);
     if (postData) {
       setRefreshBoard(!refreshBoard);
       navigation.goBack();

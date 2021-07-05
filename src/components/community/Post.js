@@ -1,6 +1,7 @@
-import React, {useEffect, useState, useRef} from 'react';
+import React, {useEffect, useState, useContext, useRef} from 'react';
 import {FlatList, StyleSheet} from 'react-native';
-import {bringComment} from 'src/utils/Community';
+import {UserContext} from 'src/context';
+import {bringComment, bringPost} from 'src/utils/Community';
 import CommentInput from './CommentInput';
 import Comment from './Comment';
 import PostHeader from './PostHeader';
@@ -9,9 +10,14 @@ import {ChatContext} from 'src/context';
 function Post({navigation, route}) {
   const {board, post} = route.params;
   const [isNested, setIsNested] = useState(false); // false when not turned on, commentID when turned on
-  const [refresh, setRefresh] = useState(false);
+  const [refreshComment, setRefreshComment] = useState(false);
   const [comment, setComment] = useState('');
   const commentList = useRef(null);
+  const {refreshBoard, setRefreshBoard} = useContext(UserContext);
+
+  useEffect(() => {
+    return () => setRefreshBoard(!refreshBoard);
+  }, []);
 
   useEffect(() => {
     const m_bringComment = async () => {
@@ -19,11 +25,7 @@ function Post({navigation, route}) {
       setComment(commentData);
     };
     m_bringComment();
-  }, [refresh]);
-
-  const refreshComment = () => {
-    setRefresh(!refresh);
-  };
+  }, [refreshComment]);
 
   const focusComment = (idx) => {
     commentList.current.scrollToIndex({index: idx, viewPosition: 0.3});
@@ -35,14 +37,14 @@ function Post({navigation, route}) {
         ref={commentList}
         data={comment}
         contentContainerStyle={styles.flatlistContainer}
-        ListHeaderComponent={() => <PostHeader post={post} board={board} />}
+        ListHeaderComponent={() => <PostHeader post={post} board={board}/>}
         renderItem={({item, index}) => <Comment item={item} index={index} board={board} focusComment={focusComment}/>}
         keyExtractor={(item) => item.id}
       />
       <CommentInput
         board={board}
         post={post}
-        refresh={refreshComment}
+        refresh={() => setRefreshComment(!refreshComment)}
       />
     </ChatContext.Provider>
   );

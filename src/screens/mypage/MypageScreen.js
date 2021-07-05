@@ -1,13 +1,13 @@
 import React from 'react';
 import {View} from 'react-native';
 import {Button} from 'react-native-paper';
-import MypageList from 'src/components/mypage/MypageList';
+import Mypage from 'src/components/mypage/Mypage';
 
 
 function MypageScreen(props) {
   return (
     <View>
-      <MypageList {...props}/>
+      <Mypage {...props}/>
       {/* <Button
         mode='outlined'
         onPress={() => props.navigation.navigate('CreateProfile')}

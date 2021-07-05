@@ -1,5 +1,5 @@
 import React, {useEffect, useState, useContext} from 'react';
-import {StyleSheet, View, TextInput, TouchableOpacity, KeyboardAvoidingView, Platform} from 'react-native';
+import {StyleSheet, ActivityIndicator, View, TextInput, TouchableOpacity, KeyboardAvoidingView, Platform} from 'react-native';
 import {Portal, Modal} from 'react-native-paper';
 import * as ImagePicker from 'expo-image-picker';
 import {Storage} from 'aws-amplify';
@@ -18,6 +18,7 @@ function InputBox({route}) {
   const [message, setMessage] = useState('');
   const [chatUser, setChatUser] = useState([]);
   const [gifVisible, setGifVisible] = useState(false);
+  const [sending, setSending] = useState(false);
 
   useEffect(() => {
     const m_bringMatchByChatRoom = async () => {
@@ -63,20 +64,23 @@ function InputBox({route}) {
     try {
       const result = await ImagePicker.launchImageLibraryAsync({
         mediaTypes: ImagePicker.MediaTypeOptions.All,
-        allowsEditing: true,
-        aspect: [4, 3],
+        // allowsEditing: true,
+        // aspect: [4, 3],
         quality: 1,
       });
       if (!result.cancelled) {
+        setSending(true);
         const rsp = await fetch(result.uri);
         const blob = await rsp.blob();
         const path = `chat/${chatRoomID}/`;
         const key = result.uri.split('/').pop();
         const awsrsp = await Storage.put(path + key, blob);
         sendMessage(awsrsp.key, 'image');
+        setSending(false);
       }
     } catch (err) {
       console.warn('error:', err);
+      setSending(false);
     }
   };
 
@@ -130,9 +134,11 @@ function InputBox({route}) {
         </View>
         <TouchableOpacity onPress={onClickSendIcon}>
           <View style={styles.buttonContainer}>
-            {!message?
-              <Ionicons name='camera' size={28} color='white'/>:
-              <Ionicons name='send-sharp' size={28} color='white'/>
+            {message ?
+              <Ionicons name='send-sharp' size={28} color='white'/> :
+              sending ?
+                <ActivityIndicator color='white' size='large'/> :
+                <Ionicons name='camera' size={28} color='white'/>
             }
           </View>
         </TouchableOpacity>

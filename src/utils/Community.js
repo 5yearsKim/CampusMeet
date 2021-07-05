@@ -1,6 +1,6 @@
 import {API, graphqlOperation} from 'aws-amplify';
-import {createBoard, createPost, createComment, createNestedComment, createLikePost, createLikeComment} from 'src/graphql/customMutations';
-import {getUser, listBoards, boardByType, postByBoard, commentByPost} from 'src/graphql/customQueries';
+import {createBoard, createPost, createComment, createNestedComment, createLikePost, createLikeComment} from 'src/graphql/mutations';
+import {getUser, listBoards, boardByType, postByBoard, getPost, commentByPost} from 'src/graphql/customQueries';
 import {campusDict} from 'assets/campusLogos';
 import config from 'src/config';
 
@@ -89,23 +89,21 @@ export const makeLikePost = async (userID, postID) => {
   const inputLike = {
     userID: userID,
     postID: postID,
+    type: 'good',
   };
-  try {
-    const likeData = await API.graphql(
-        graphqlOperation(
-            createLikePost, {input: inputLike},
-        ),
-    );
-    return likeData;
-  } catch (err) {
-    console.warn(err);
-  }
+  const likeData = await API.graphql(
+      graphqlOperation(
+          createLikePost, {input: inputLike},
+      ),
+  );
+  return likeData;
 };
 
 export const makeLikeComment = async (userID, commentID) => {
   const inputLike = {
     userID: userID,
     commentID: commentID,
+    type: 'good',
   };
   try {
     const likeData = await API.graphql(
@@ -146,7 +144,16 @@ export const bringBoardByType = async (type) => {
   }
 };
 
-export const bringPost = async (boardID, nextToken, limit=20) => {
+export const bringPost = async (postID) => {
+  const postData = await API.graphql(
+      graphqlOperation(
+          getPost, {id: postID},
+      ),
+  );
+  return postData.data.getPost;
+};
+
+export const bringPostByBoard = async (boardID, nextToken, limit=20) => {
   const inputData = {
     boardID: boardID,
     limit: limit,

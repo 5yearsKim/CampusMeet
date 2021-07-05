@@ -1,7 +1,6 @@
 import React, {useContext} from 'react';
 import {View, Image, TouchableOpacity, StyleSheet} from 'react-native';
-import * as ImagePicker from 'expo-image-picker';
-import {Storage} from 'aws-amplify';
+import {launchImageLibraryAsync, MediaTypeOptions} from 'expo-image-picker';
 import {AntDesign} from '@expo/vector-icons';
 import {PanGestureHandler} from 'react-native-gesture-handler';
 import Animated, {
@@ -11,9 +10,10 @@ import Animated, {
   useAnimatedReaction,
   withTiming,
 } from 'react-native-reanimated';
-import {getPosition, getOrder, IMGWIDTH, IMGHEIGHT} from 'src/utils/UploadPicture';
+import {getPosition, getOrder, IMGWIDTH, IMGHEIGHT, checkLocalImage} from 'src/utils/UploadPicture';
 import {KeyImage} from 'src/blocks/Image';
 import {MyContext} from 'src/context';
+import {Storage} from 'aws-amplify';
 
 function AnimatedPicture({imgKey, positions}) {
   if (Object.keys(positions.value).length == 0) {
@@ -78,11 +78,15 @@ function AnimatedPicture({imgKey, positions}) {
       zIndex: 0,
       transform: [{translateX: translateX.value}, {translateY: translateY.value}],
     }));
+  const imageStyle = {height: IMGHEIGHT - 6, width: IMGWIDTH - 6, resizeMode: 'contain'};
   return (
     <Animated.View>
       <PanGestureHandler onGestureEvent={onGestureEvent}>
         <Animated.View style={boxStyle}>
-          <KeyImage imgKey={imgKey} cached={true} style={{height: IMGHEIGHT - 6, width: IMGWIDTH - 6}}/>
+          {checkLocalImage(imgKey) ?
+            <Image source={{uri: imgKey}} style={imageStyle}/> :
+            <KeyImage imgKey={imgKey} cached={true} style={imageStyle}/>
+          }
         </Animated.View>
       </PanGestureHandler>
     </Animated.View>
@@ -110,20 +114,21 @@ function UploadPicture({imgList, setImgList, positions}) {
       return;
     }
     try {
-      const result = await ImagePicker.launchImageLibraryAsync({
-        mediaTypes: ImagePicker.MediaTypeOptions.All,
+      const result = await launchImageLibraryAsync({
+        mediaTypes: MediaTypeOptions.All,
         allowsEditing: true,
         aspect: [4, 3],
         quality: 1,
       });
       if (!result.cancelled) {
         try {
-          const rsp = await fetch(result.uri);
-          const blob = await rsp.blob();
-          const path = `profile/${auth.user.attributes.sub}/`;
-          const key = result.uri.split('/').pop();
-          const awsrsp = await Storage.put(path + key, blob);
-          setImgList([...imgList, awsrsp.key]);
+          // const rsp = await fetch(result.uri);
+          // const blob = await rsp.blob();
+          // const path = `profile/${auth.user.attributes.sub}/`;
+          // const key = result.uri.split('/').pop();
+          // const awsrsp = await Storage.put(path + key, blob);
+          // setImgList([...imgList, awsrsp.key]);
+          setImgList([result.uri, ...imgList]);
         } catch (err) {
           console.warn(err);
         }

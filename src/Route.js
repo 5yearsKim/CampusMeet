@@ -21,6 +21,8 @@ import ChatRoomScreen from 'src/screens/matches/ChatRoomScreen';
 import CreateProfileScreen from 'src/screens/mypage/CreateProfileScreen';
 import ModifyProfileScreen from 'src/screens/mypage/ModifyProfileScreen';
 import ViewProfileScreen from 'src/screens/mypage/ViewProfileScreen';
+import DeactivateScreen from 'src/screens/mypage/DeactivateScreen';
+
 import CreateBoardScreen from 'src/screens/community/CreateBoardScreen';
 import CreatePostScreen from 'src/screens/community/CreatePostScreen';
 import BoardScreen from 'src/screens/community/BoardScreen';
@@ -40,6 +42,9 @@ function HomeTab({navigation}) {
         const userData = await bringUser(userSub);
         if (userData == null) {
           navigation.navigate('CreateProfile');
+        }
+        if (userData.status == 'inactive') {
+          navigation.navigate('Deactivate');
         }
       } catch (err) {
         console.warn(err);
@@ -154,6 +159,7 @@ function Route() {
         <MainStack.Screen name='Post' component={PostScreen} options={{title: ''}}/>
         <MainStack.Screen name='CreateBoard' component={CreateBoardScreen} options={{title: '게시판만들기'}}/>
         <MainStack.Screen name='CreatePost' component={CreatePostScreen} options={{title: '글쓰기'}}/>
+        <MainStack.Screen name='Deactivate' component={DeactivateScreen} options={{title: '휴면계정', headerLeft: () => null}}/>
       </MainStack.Navigator>
     );
   } else {

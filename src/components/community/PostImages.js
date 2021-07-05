@@ -1,26 +1,21 @@
 import React from 'react';
-import {View, FlatList, TouchableOpacity, StyleSheet} from 'react-native';
+import {View, FlatList, Image, TouchableOpacity, StyleSheet} from 'react-native';
 import {KeyImage} from 'src/blocks/Image';
 import {FontAwesome} from '@expo/vector-icons';
 import * as ImagePicker from 'expo-image-picker';
-import {Storage} from 'aws-amplify';
+import {checkLocalImage} from 'src/utils/UploadPicture';
 
 export function PostImagesCreate({boardID, imgList, setImgList}) {
   const uploadPostImage = async (boardID) => {
     try {
       const result = await ImagePicker.launchImageLibraryAsync({
         mediaTypes: ImagePicker.MediaTypeOptions.All,
-        allowsEditing: true,
-        aspect: [4, 3],
+        // allowsEditing: true,
+        // aspect: [4, 3],
         quality: 1,
       });
       if (!result.cancelled) {
-        const rsp = await fetch(result.uri);
-        const blob = await rsp.blob();
-        const path = `board/${boardID}/`;
-        const key = result.uri.split('/').pop();
-        const awsrsp = await Storage.put(path + key, blob);
-        setImgList([...imgList, awsrsp.key]);
+        setImgList([...imgList, result.uri]);
       }
     } catch (err) {
       console.warn('error:', err);
@@ -37,9 +32,15 @@ export function PostImagesCreate({boardID, imgList, setImgList}) {
 
 export function PostImagesView({imgList}) {
   const renderImage = ({item}) => {
-    return (
-      <KeyImage imgKey={item} cached={false} style={styles.postImage}/>
-    );
+    if (checkLocalImage(item)) {
+      return (
+        <Image source={{uri: item}} style={styles.postImage}/>
+      );
+    } else {
+      return (
+        <KeyImage imgKey={item} cached={false} style={styles.postImage}/>
+      );
+    }
   };
   return (
     <View>

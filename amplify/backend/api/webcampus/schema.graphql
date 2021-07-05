@@ -82,6 +82,7 @@ type LikePost
   id: ID!
   userID: ID!
   postID: ID!
+  type: String
   createdAt: AWSDateTime!
 }
 
@@ -91,6 +92,7 @@ type LikeComment
   id: ID!
   userID: ID!
   commentID: ID!
+  type: String
   createdAt: AWSDateTime!
 }
 

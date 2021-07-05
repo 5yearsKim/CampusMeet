@@ -21,12 +21,8 @@ function ChatRoom({navigation, route}) {
   const [yourCkp, setYourCkp] = useState([]);
 
   useEffect(() => {
-    const unsubscribe = navigation.addListener('beforeRemove', (e) => {
-      setRefreshMatch(!refreshMatch);
-    });
-    return unsubscribe;
+    return () => setRefreshMatch(!refreshMatch);
   }, []);
-
 
   const onEndReached = async () => {
     if (nextToken == null) {

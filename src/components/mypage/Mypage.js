@@ -2,10 +2,9 @@ import React, {useContext, useEffect, useState} from 'react';
 import {View, Image, TouchableOpacity, StyleSheet} from 'react-native';
 import Text from 'src/blocks/Text';
 import {KeyImage} from 'src/blocks/Image';
-import {logout} from 'src/utils/Auth';
 import {bringUser} from 'src/utils/User';
-import {MyContext, ThemeContext} from 'src/context';
-import {notificationHandler} from 'src/utils/PushNotification';
+import {MyContext, ThemeContext, UserContext} from 'src/context';
+import {MyModifyProfile, MyLogout, MyDeactivate} from './MypageItem';
 
 // import {makeMessage} from 'src/utils/Chat';
 
@@ -36,10 +35,11 @@ function TopIntro({user, navigation}) {
   );
 }
 
-function MypageList({navigation}) {
+export default function Mypage({navigation}) {
   const auth = useContext(MyContext);
   const userSub = auth.user.attributes.sub;
   const {theme} = useContext(ThemeContext);
+  const {refreshMypage} = useContext(UserContext);
   const [user, setUser] = useState({
     id: '',
     campus: '',
@@ -58,34 +58,22 @@ function MypageList({navigation}) {
         console.warn(err);
       }
     };
-    const unsubscribe = navigation.addListener('focus', () => {
-      m_bringUser();
-    });
-    return unsubscribe;
-  }, []);
+    m_bringUser();
+  }, [refreshMypage]);
 
-  const onLogout = async () => {
-    try {
-      await logout(auth);
-      notificationHandler(null, true);
-    } catch (err) {
-      console.warn(err);
-    }
-  };
+  // console.log(user);
+
   return (
     <View style={styles.container}>
       <TopIntro navigation={navigation} user={user}/>
       <View style={styles.sectionBox}>
         <Text style={[styles.sectionText, {color: theme.text}]}>프로필</Text>
-        <TouchableOpacity onPress={() => navigation.navigate('ModifyProfile')}>
-          <Text style={[styles.itemText, {color: theme.text}]}>프로필 수정</Text>
-        </TouchableOpacity>
+        <MyModifyProfile navigation={navigation}/>
       </View>
       <View style={styles.sectionBox}>
-        <Text style={[styles.sectionText, {color: theme.text}]}>기타</Text>
-        <TouchableOpacity onPress={() => onLogout()}>
-          <Text style={[styles.itemText, {color: theme.text}]}>로그아웃</Text>
-        </TouchableOpacity>
+        <Text style={[styles.sectionText, {color: theme.text}]}>계정</Text>
+        <MyLogout/>
+        <MyDeactivate isActive={user.status=='active'}/>
       </View>
     </View>
   );
@@ -97,7 +85,7 @@ const styles = StyleSheet.create({
     height: 80,
     width: 80,
     borderRadius: 50,
-    borderWidth: 4,
+    borderWidth: 3,
   },
   nameText: {
     fontSize: 16,
@@ -122,12 +110,7 @@ const styles = StyleSheet.create({
   sectionText: {
     fontWeight: 'bold',
     fontSize: 16,
+    margin: 5,
   },
-  itemText: {
-    marginTop: 2,
-    fontSize: 15,
-  },
+
 });
-
-export default MypageList;
-

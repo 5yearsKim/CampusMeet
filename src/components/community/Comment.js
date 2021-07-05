@@ -57,7 +57,7 @@ function Comment({item, index, board, focusComment}) {
           </View>
           <View style={styles.belowBox}>
             <Text style={{color: theme.subText}}>{visTime}</Text>
-            <AntDesign color='green' onPress={onClickLike} name='like2' >
+            <AntDesign color='green' size={16} onPress={onClickLike} name='like2' >
               {likeCnt}
             </AntDesign>
           </View>
@@ -99,6 +99,7 @@ const styles = StyleSheet.create({
   container: {
     padding: 5,
     paddingLeft: 15,
+    paddingRight: 15,
     borderTopWidth: 1,
   },
   belowBox: {

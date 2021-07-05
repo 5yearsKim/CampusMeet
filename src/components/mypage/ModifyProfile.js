@@ -5,18 +5,22 @@ import NotiText from 'src/blocks/NotiText';
 import Text from 'src/blocks/Text';
 import UploadPicture from './UploadPicture';
 import {Button, TextInput, RadioButton} from 'react-native-paper';
-import {MyContext} from 'src/context';
+import {MyContext, UserContext} from 'src/context';
 import {bringUser, modifyUser} from 'src/utils/User';
+import {imageListToS3} from 'src/utils/UploadPicture';
 
 function ModifyProfile({navigation}) {
   const auth = useContext(MyContext);
   const userSub = auth.user.attributes.sub;
+  const {refreshMypage, setRefreshMypage} = useContext(UserContext);
 
   const [imgList, setImgList] = useState([]);
   const imgIndex = imgList.map((img, idx) => ({[img]: idx}));
   const initpos = Object.assign({}, ...imgIndex);
   const positions = useSharedValue(initpos);
   positions.value = initpos;
+  // console.log(imgList);
+  // console.log(positions.value);
 
   const [name, setName] = useState('');
   const [year, setYear] = useState('');
@@ -27,6 +31,7 @@ function ModifyProfile({navigation}) {
   const [profileDescription, setProfileDescription] = useState('');
 
   const [loading, setLoading] = useState(true);
+  const [submitting, setSubmitting] = useState(false);
 
   const m_bringUser = async () => {
     const userData = await bringUser(userSub);
@@ -42,22 +47,29 @@ function ModifyProfile({navigation}) {
   };
 
   useEffect(() => {
+    return () => setRefreshMypage(!refreshMypage);
+  }, []);
+
+  useEffect(() => {
     m_bringUser();
   }, []);
 
+
   const onSubmit = async () => {
-    const newImgList = Object.keys(positions.value).sort((a, b) => positions.value[a] - positions.value[b]);
-    const newUser = {
-      imageKeys: newImgList,
-      name: name,
-      year: year,
-      graduate: graduate,
-      campus: campus,
-      division: division,
-      profileMessage: profileMessage,
-      profileDescription: profileDescription,
-    };
+    setSubmitting(true);
+    const orderedImgList = Object.keys(positions.value).sort((a, b) => positions.value[a] - positions.value[b]);
     try {
+      const newImgList = await imageListToS3(orderedImgList, `profile/${userSub}`);
+      const newUser = {
+        imageKeys: newImgList,
+        name: name,
+        year: year,
+        graduate: graduate,
+        campus: campus,
+        division: division,
+        profileMessage: profileMessage,
+        profileDescription: profileDescription,
+      };
       await modifyUser(userSub, newUser);
       navigation.navigate('Mypage');
     } catch (err) {
@@ -144,9 +156,13 @@ function ModifyProfile({navigation}) {
         mode="contained"
         onPress={onSubmit}
         style={{marginTop: 20}}
+        disabled={submitting}
         labelStyle={{color: 'white'}}
       >
-        제출하기
+        {submitting ?
+          '제출중..' :
+          '제출하기'
+        }
       </Button>
     </View>
   );

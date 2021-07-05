@@ -610,6 +610,7 @@ export const createLikePost = /* GraphQL */ `
       id
       userID
       postID
+      type
       createdAt
       updatedAt
     }
@@ -624,6 +625,7 @@ export const updateLikePost = /* GraphQL */ `
       id
       userID
       postID
+      type
       createdAt
       updatedAt
     }
@@ -638,6 +640,7 @@ export const deleteLikePost = /* GraphQL */ `
       id
       userID
       postID
+      type
       createdAt
       updatedAt
     }
@@ -652,6 +655,7 @@ export const createLikeComment = /* GraphQL */ `
       id
       userID
       commentID
+      type
       createdAt
       updatedAt
     }
@@ -666,6 +670,7 @@ export const updateLikeComment = /* GraphQL */ `
       id
       userID
       commentID
+      type
       createdAt
       updatedAt
     }
@@ -680,6 +685,7 @@ export const deleteLikeComment = /* GraphQL */ `
       id
       userID
       commentID
+      type
       createdAt
       updatedAt
     }

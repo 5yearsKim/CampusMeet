@@ -12,6 +12,7 @@ import {MyContext, ThemeContext, UserContext} from 'src/context';
 import {setupIndividual} from 'src/utils/User';
 import MyPicker from 'src/blocks/Picker';
 import campusList from 'assets/campusLogos';
+import {imageListToS3} from 'src/utils/UploadPicture';
 
 
 function CreateProfile({navigation}) {
@@ -136,7 +137,9 @@ function CreateProfile({navigation}) {
         return;
       }
       try {
-        await makeUser(userSub, gender, name, campus, graduate, year, department, division, imgList, profileMessage, profileDescription);
+        const orderedImgList = Object.keys(positions.value).sort((a, b) => positions.value[a] - positions.value[b]);
+        const newImgList = imageListToS3(orderedImgList);
+        await makeUser(userSub, gender, name, campus, graduate, year, department, division, newImgList, profileMessage, profileDescription);
         await setupIndividual();
         navigation.reset({index: 0, routes: [{name: 'Home'}]});
       } catch (err) {

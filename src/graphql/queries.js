@@ -317,6 +317,7 @@ export const getLikePost = /* GraphQL */ `
       id
       userID
       postID
+      type
       createdAt
       updatedAt
     }
@@ -333,6 +334,7 @@ export const listLikePosts = /* GraphQL */ `
         id
         userID
         postID
+        type
         createdAt
         updatedAt
       }
@@ -346,6 +348,7 @@ export const getLikeComment = /* GraphQL */ `
       id
       userID
       commentID
+      type
       createdAt
       updatedAt
     }
@@ -362,6 +365,7 @@ export const listLikeComments = /* GraphQL */ `
         id
         userID
         commentID
+        type
         createdAt
         updatedAt
       }
@@ -702,6 +706,7 @@ export const likeByPost = /* GraphQL */ `
         id
         userID
         postID
+        type
         createdAt
         updatedAt
       }
@@ -730,6 +735,7 @@ export const likeByComment = /* GraphQL */ `
         id
         userID
         commentID
+        type
         createdAt
         updatedAt
       }

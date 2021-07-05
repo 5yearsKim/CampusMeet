@@ -1,4 +1,4 @@
-import React, {useEffect, useState, useContext} from 'react';
+import React, {useState, useContext} from 'react';
 import {View, FlatList, TouchableOpacity, Modal, StyleSheet} from 'react-native';
 import SimpleAlert from 'src/blocks/SimpleAlert';
 import Text from 'src/blocks/Text';
@@ -14,22 +14,15 @@ import {MyContext, ThemeContext} from 'src/context';
 
 function PostHeader({post, board}) {
   const auth = useContext(MyContext);
+  const userSub = auth.user.attributes.sub;
   const {theme} = useContext(ThemeContext);
-  const [isLike, setIsLike] = useState(false);
-  const [likeCnt, setLikeCnt] = useState('');
   const [modalVisible, setModalVisible] = useState(false);
   const [alertOpen, setAlertOpen] = useState(false);
   const [page, setPage] = useState(0);
-  const likeList = post.likes.items.map((item) => item.userID);
-  const userSub = auth.user.attributes.sub;
   const visTime = absoluteTime(post.createdAt);
-
-  useEffect(() => {
-    setLikeCnt(post.likes.items.length);
-    if (likeList.includes(userSub)) {
-      setIsLike(true);
-    }
-  }, []);
+  const likeList = post.likes.items.map((item) => item.userID);
+  const [isLike, setIsLike] = useState(likeList.includes(userSub));
+  const [likeCnt, setLikeCnt] = useState(post.likes.items.length);
 
   const modalSwitch = () => {
     setModalVisible(!modalVisible);
@@ -52,10 +45,12 @@ function PostHeader({post, board}) {
     if (isLike) {
       setAlertOpen(true);
     } else {
-      const likeData = await makeLikePost(userSub, post.id);
-      if (likeData) {
+      try {
+        await makeLikePost(userSub, post.id);
         setIsLike(true);
         setLikeCnt(likeCnt + 1);
+      } catch (err) {
+        console.warn(err);
       }
     }
   };
