@@ -85,7 +85,7 @@ export function MyDeactivate({navigation}) {
 
 export function MyPushNoti() {
   const {theme} = useContext(ThemeContext);
-  const {pushNoti, setPushNoti} = useState(MyContext);
+  const {pushNoti, setPushNoti} = useContext(MyContext);
   const [menuOpen, setMenuOpen] = useState(false);
   const [isNoti, setIsNoti] = useState(pushNoti);
 

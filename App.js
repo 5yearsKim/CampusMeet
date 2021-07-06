@@ -21,6 +21,7 @@ export default function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [pushNoti, setPushNoti] = useState(true);
   const [user, setUser] = useState([]);
+  const [name, setName] = useState('');
   const [scheme, setScheme] = useState('light');
 
   const [newCand, setNewCand] = useState(false);
@@ -111,9 +112,10 @@ export default function App() {
       user: user,
       setUser: setUser,
       setIsAuthenticated: setIsAuthenticated,
+      name: name,
+      setName: setName,
       pushNoti: pushNoti,
       setPushNoti: setPushNoti,
-
     };
   };
 

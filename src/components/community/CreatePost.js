@@ -17,18 +17,18 @@ function CreatePost({navigation, route}) {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [imgList, setImgList] = useState([]);
+  const [submitting, setSubmitting] = useState(false);
 
   const {board} = route.params;
 
   const onSubmit = async () => {
+    setSubmitting(true);
     const userSub = auth.user.attributes.sub;
     const nickname = await getNickname(userSub, board.type);
     const newImgList = await imageListToS3(imgList, `board/${board.id}`);
-    const postData = await makePost(userSub, board.id, nickname, title, content, newImgList);
-    if (postData) {
-      setRefreshBoard(!refreshBoard);
-      navigation.goBack();
-    }
+    await makePost(userSub, board.id, nickname, title, content, newImgList);
+    setRefreshBoard(!refreshBoard);
+    navigation.goBack();
   };
   const checkDisabled= () => {
     if (title == '') {
@@ -68,9 +68,12 @@ function CreatePost({navigation, route}) {
           dark={true}
           compact={true}
           style={styles.submitButton}
-          disabled={checkDisabled()}
+          disabled={checkDisabled() || submitting}
         >
-          submit
+          {submitting ?
+            'Loading..' :
+            'submit'
+          }
         </Button>
       </View>
       <PostImagesView imgList={imgList}/>

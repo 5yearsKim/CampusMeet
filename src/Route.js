@@ -33,14 +33,15 @@ const MainStack = createStackNavigator();
 const BottomTab = createBottomTabNavigator();
 
 function HomeTab({navigation}) {
-  const auth = useContext(MyContext);
-  const userSub = auth.user.attributes.sub;
+  const {user, setName} = useContext(MyContext);
+  const userSub = user.attributes.sub;
   const {signalBadge, matchBadge} = useContext(BadgeContext);
 
   useEffect(() => {
     const m_bringUser = async () => {
       try {
         const userData = await bringUser(userSub);
+        setName(userData.name);
         if (userData == null) {
           navigation.navigate('CreateProfile');
         }

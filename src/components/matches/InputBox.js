@@ -13,8 +13,8 @@ import config from 'src/config';
 
 function InputBox({route}) {
   const {chatRoomID} = route.params;
-  const auth = useContext(MyContext);
-  const userSub = auth.user.attributes.sub;
+  const {user, name}= useContext(MyContext);
+  const userSub = user.attributes.sub;
   const [message, setMessage] = useState('');
   const [chatUser, setChatUser] = useState([]);
   const [gifVisible, setGifVisible] = useState(false);
@@ -53,7 +53,7 @@ function InputBox({route}) {
         } else if (type == 'text') {
           msg = content;
         };
-        sendPushNotification(item.id, '새 쪽지', msg, {type: 'message', chatRoomID: chatRoomID, name: item.name});
+        sendPushNotification(item.id, name, msg, {type: 'message', chatRoomID: chatRoomID, name: name});
       });
     } catch (err) {
       console.warn(err);

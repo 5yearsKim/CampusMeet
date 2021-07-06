@@ -71,6 +71,7 @@ function ModifyProfile({navigation}) {
         profileDescription: profileDescription,
       };
       await modifyUser(userSub, newUser);
+      auth.setName(name);
       navigation.navigate('Mypage');
     } catch (err) {
       console.warn(err);
