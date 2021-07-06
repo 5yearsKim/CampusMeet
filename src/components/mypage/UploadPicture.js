@@ -78,7 +78,7 @@ function AnimatedPicture({imgKey, positions}) {
       zIndex: 0,
       transform: [{translateX: translateX.value}, {translateY: translateY.value}],
     }));
-  const imageStyle = {height: IMGHEIGHT - 6, width: IMGWIDTH - 6, resizeMode: 'contain'};
+  const imageStyle = {height: IMGHEIGHT - 6, width: IMGWIDTH - 6};
   return (
     <Animated.View>
       <PanGestureHandler onGestureEvent={onGestureEvent}>
