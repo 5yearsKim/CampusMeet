@@ -7,12 +7,12 @@ import {isDateDifferent, isMinDifferent} from 'src/utils/Time';
 import {API, graphqlOperation} from 'aws-amplify';
 import {MyContext, UserContext} from 'src/context';
 import {onCreateMessage} from 'src/graphql/subscriptions';
-import {notificationHandler} from 'src/utils/PushNotification';
+import {notificationHandlerForChatRoom} from 'src/utils/PushNotification';
 
 function ChatRoom({navigation, route}) {
-  const auth = useContext(MyContext);
+  const {user, pushNoti} = useContext(MyContext);
   const {refreshMatch, setRefreshMatch} = useContext(UserContext);
-  const userSub = auth.user.attributes.sub;
+  const userSub = user.attributes.sub;
   const {chatRoomID, name} = route.params;
   const [messageList, setMessageList] = useState([]);
   const [nextToken, setNextToken] = useState('');
@@ -63,8 +63,11 @@ function ChatRoom({navigation, route}) {
   };
 
   useEffect(() => {
-    notificationHandler(chatRoomID);
-    return () => notificationHandler();
+    if (!pushNoti) {
+      return;
+    }
+    notificationHandlerForChatRoom(chatRoomID);
+    return () => notificationHandlerForChatRoom();
   }, []);
 
   useEffect(() => {

@@ -1,16 +1,58 @@
 import React, {useContext, useRef, useState, useEffect} from 'react';
 import {View, Text} from 'react-native';
 import * as Notifications from 'expo-notifications';
-import {registerForPushNotificationsAsync, notificationHandler} from 'src/utils/PushNotification';
+import {registerForPushNotificationsAsync, handleNotification} from 'src/utils/PushNotification';
+import {MyContext, BadgeContext} from 'src/context';
 import {modifyUser} from 'src/utils/User';
-import {MyContext} from 'src/context';
+import {bringMatch} from 'src/utils/Match';
+import {bringReceivedSignal} from 'src/utils/Signal';
 
-export default function PushNotification({navigation, user}) {
+export default function StartSetting({navigation, user}) {
   const auth = useContext(MyContext);
+  const userSub = auth.user.attributes.sub;
+  const {setMatchBadge, setSignalBadge} = useContext(BadgeContext);
+  const {pushNoti} = useContext(MyContext);
   // const notificationListener = useRef();
   const responseListener = useRef();
 
   const [token, setToken] = useState();
+
+  // match badge Setting
+  useEffect(() => {
+    const settingMatchBadge = async () => {
+      try {
+        const userList = await bringMatch(userSub);
+        let newMatch = false;
+        const newList = userList.filter((item) => {
+          if (!item.checked) {
+            newMatch = true;
+          }
+          const lastMsg = item.chatRoom.lastMessage;
+          const isNew = (lastMsg.userID != userSub) && lastMsg.type != 'admin' && !lastMsg.checked;
+          return isNew;
+        });
+        setMatchBadge(newMatch ? 'new' : newList.length);
+      } catch (err) {
+        console.warn(err);
+      }
+    };
+    settingMatchBadge();
+  }, []);
+
+  // signal badge Setting
+  useEffect(() => {
+    const settingSignalBadge = async () => {
+      try {
+        const userList = await bringReceivedSignal(userSub);
+        const newList = userList.filter((item) => !item.checked);
+        setSignalBadge(newList.length);
+      } catch (err) {
+        console.warn(err);
+      }
+    };
+    settingSignalBadge();
+  }, []);
+
 
   useEffect(() => {
     if (!user) {
@@ -59,8 +101,11 @@ export default function PushNotification({navigation, user}) {
   }, [user]);
 
   useEffect(() => {
-    if (user) {
-      notificationHandler();
+    if (user && pushNoti) {
+      handleNotification(true);
+    }
+    if (!pushNoti) {
+      handleNotification(false);
     }
   }, [user]);
 

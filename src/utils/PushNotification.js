@@ -68,7 +68,7 @@ export async function registerForPushNotificationsAsync() {
   return token;
 }
 
-export const notificationHandler = (chatRoomID, off=false) => {
+export const notificationHandlerForChatRoom = (chatRoomID) => {
   Notifications.setNotificationHandler({
     handleNotification: async (noti) => {
       if ( chatRoomID && noti.request.content?.data?.chatRoomID == chatRoomID) {
@@ -78,18 +78,31 @@ export const notificationHandler = (chatRoomID, off=false) => {
           shouldSetBadge: true,
         });
       }
-      if (off) {
+      return ({
+        shouldShowAlert: true,
+        shouldPlaySound: true,
+        shouldSetBadge: true,
+      });
+    },
+  });
+};
+
+export const handleNotification = (controller) => {
+  Notifications.setNotificationHandler({
+    handleNotification: async () => {
+      if (controller) {
+        return ({
+          shouldShowAlert: true,
+          shouldPlaySound: true,
+          shouldSetBadge: true,
+        });
+      } else {
         return ({
           shouldShowAlert: false,
           shouldPlaySound: false,
           shouldSetBadge: false,
         });
       }
-      return ({
-        shouldShowAlert: true,
-        shouldPlaySound: true,
-        shouldSetBadge: true,
-      });
     },
   });
 };

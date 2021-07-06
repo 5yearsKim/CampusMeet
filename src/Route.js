@@ -3,7 +3,7 @@ import {getFocusedRouteNameFromRoute} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {MaterialCommunityIcons, FontAwesome, AntDesign, Feather} from '@expo/vector-icons';
-import {MyContext, ThemeContext} from 'src/context';
+import {MyContext, ThemeContext, BadgeContext} from 'src/context';
 import {bringUser} from 'src/utils/User';
 import config from 'src/config';
 // Before login
@@ -35,6 +35,7 @@ const BottomTab = createBottomTabNavigator();
 function HomeTab({navigation}) {
   const auth = useContext(MyContext);
   const userSub = auth.user.attributes.sub;
+  const {signalBadge, matchBadge} = useContext(BadgeContext);
 
   useEffect(() => {
     const m_bringUser = async () => {
@@ -73,6 +74,7 @@ function HomeTab({navigation}) {
           tabBarIcon: ({focused, color, size}) => {
             return <FontAwesome name='heartbeat' size={size} color={color}/>;
           },
+          tabBarBadge: signalBadge ? signalBadge : undefined,
         }}
       />
       <BottomTab.Screen
@@ -83,6 +85,7 @@ function HomeTab({navigation}) {
           tabBarIcon: ({focused, color, size}) => {
             return <AntDesign name='message1' size={size} color={color}/>;
           },
+          tabBarBadge: matchBadge ? matchBadge : undefined,
         }}
       />
       <BottomTab.Screen

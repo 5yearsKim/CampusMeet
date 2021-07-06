@@ -4,7 +4,7 @@ import Text from 'src/blocks/Text';
 import {KeyImage} from 'src/blocks/Image';
 import {bringUser} from 'src/utils/User';
 import {MyContext, ThemeContext, UserContext} from 'src/context';
-import {MyModifyProfile, MyLogout, MyDeactivate} from './MypageItem';
+import {MyModifyProfile, MyLogout, MyDeactivate, MyPushNoti} from './MypageItem';
 
 // import {makeMessage} from 'src/utils/Chat';
 
@@ -71,9 +71,13 @@ export default function Mypage({navigation}) {
         <MyModifyProfile navigation={navigation}/>
       </View>
       <View style={styles.sectionBox}>
+        <Text style={[styles.sectionText, {color: theme.text}]}>앱 설정</Text>
+        <MyPushNoti/>
+      </View>
+      <View style={styles.sectionBox}>
         <Text style={[styles.sectionText, {color: theme.text}]}>계정</Text>
         <MyLogout/>
-        <MyDeactivate isActive={user.status=='active'}/>
+        <MyDeactivate navigation={navigation}/>
       </View>
     </View>
   );

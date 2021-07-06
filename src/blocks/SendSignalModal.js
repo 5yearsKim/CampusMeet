@@ -14,7 +14,7 @@ export default function SendSignalModal({toID, popupVisible, setPopupVisible, on
   const auth = useContext(MyContext);
   const userSub = auth.user.attributes.sub;
   const {theme} = useContext(ThemeContext);
-  const {signalCnt, setSignalCnt, refreshCandidate, setRefreshCandidate, refreshSentSignal, setRefreshSentSignal} = useContext(UserContext);
+  const {signalCnt, setSignalCnt, refreshCandidate, setRefreshCandidate, refreshSentSignal, setRefreshSentSignal, setNewCand} = useContext(UserContext);
   const [message, setMessage] = useState('');
   const [popupError, setPopupError] = useState('');
   const [alertOpen, setAlertOpen] = useState(false);
@@ -28,6 +28,7 @@ export default function SendSignalModal({toID, popupVisible, setPopupVisible, on
 
   const onSendSignal = async () => {
     try {
+      setNewCand(true);
       setSignalCnt(signalCnt + 1);
       await makeSignal(userSub, toID, message);
       sendPushNotification(toID, 'New Signal', '누군가 나에게 시그널을 보냈어요!', {type: 'Signal'});

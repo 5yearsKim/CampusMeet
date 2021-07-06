@@ -1,11 +1,11 @@
 const twoDigit = (number) => {
   return ('0' + number).slice(-2);
-}
+};
 
 export const date2local = (date) => {
   // return new Date(date.getTime() + date.getTimezoneOffset() * 60000)
-  return new Date(date.getTime())
-}
+  return new Date(date.getTime());
+};
 
 export const relativeTimePrettify = (dateString, mode='day') => {
   const date = date2local(new Date(dateString));

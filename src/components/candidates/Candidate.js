@@ -9,9 +9,10 @@ import CandidateItem from './CandidateItem';
 import Preference from './Preference';
 import {MyContext, ThemeContext, UserContext} from 'src/context';
 import config from 'src/config';
-import {bringUser, checkCandidate} from 'src/utils/User';
+import {bringUser, checkCandidate, setupIndividual} from 'src/utils/User';
+import {bringSentSignalToday} from 'src/utils/Signal';
 
-import PushNotification from 'src/components/PushNotification';
+import StartSetting from 'src/components/StartSetting';
 
 const signalMax = config.manage.signalMax;
 
@@ -37,6 +38,29 @@ function CandidateHeader() {
   );
 }
 
+function CandidateFooter({loading, setLoading}) {
+  const {refreshCandidate, setRefreshCandidate, newCand, setNewCand} = useContext(UserContext);
+  if (loading || !newCand) {
+    return null;
+  }
+  const newCandidate = async () => {
+    await setupIndividual();
+    setNewCand(false);
+    setLoading(true);
+    setRefreshCandidate(!refreshCandidate);
+    checkCandidate();
+  };
+  return (
+    <View>
+      <Button
+        onPress={() => newCandidate()}
+      >
+        새로추천받기
+      </Button>
+    </View>
+  );
+}
+
 function Candidate({navigation}) {
   const auth = useContext(MyContext);
   const userSub = auth.user.attributes.sub;
@@ -45,11 +69,14 @@ function Candidate({navigation}) {
   const [loading, setLoading] = useState(true);
   const [userList, setUserList] = useState([]);
 
+
   useEffect(() => {
     const m_bringCandidate = async () => {
       try {
+        let sentSignalList = await bringSentSignalToday(userSub);
+        sentSignalList = sentSignalList.map((item) => item.toID);
         const userData = await bringCandidate();
-        setUserList(userData);
+        setUserList(userData.filter((item) => !sentSignalList.includes(item.id)));
         setLoading(false);
       } catch (err) {
         console.warn(err);
@@ -77,12 +104,13 @@ function Candidate({navigation}) {
 
   return (
     <View style={{flex: 1}}>
-      <PushNotification navigation={navigation} user={user}/>
+      <StartSetting navigation={navigation} user={user}/>
       <FlatList
         data={userList}
         renderItem={({item}) => <CandidateItem item={item} />}
         keyExtractor={(item) => item.id}
         ListHeaderComponent={<CandidateHeader/>}
+        ListFooterComponent={<CandidateFooter loading={loading} setLoading={setLoading}/>}
         onRefresh={() => {
           setLoading(true);
           setRefreshCandidate(!refreshCandidate);

@@ -63,6 +63,7 @@ export default function Preference({filterOpen, setFilterOpen}) {
     } else {
       try {
         makePreference(userSub, genderLike, graduateLike, campusLike, departmentLike);
+        setExist(true);
       } catch (err) {
         console.warn(err);
       }

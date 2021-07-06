@@ -3,12 +3,13 @@ import {View, FlatList} from 'react-native';
 import NotiText from 'src/blocks/NotiText';
 import MatchListItem from './MatchListItem';
 import {bringMatch, modifyMatch} from 'src/utils/Match';
-import {MyContext, UserContext} from 'src/context';
+import {MyContext, UserContext, BadgeContext} from 'src/context';
 
 function MatchList({navigation}) {
   const auth = useContext(MyContext);
   const userSub = auth.user.attributes.sub;
   const {refreshMatch, setRefreshMatch} = useContext(UserContext);
+  const {setMatchBadge} = useContext(BadgeContext);
   const [loading, setLoading] = useState(true);
   const [userList, setUserList] = useState([]);
 
@@ -36,6 +37,19 @@ function MatchList({navigation}) {
     };
     m_bringMatch();
   }, [refreshMatch]);
+
+  useEffect(() => {
+    let newMatch = false;
+    const newList = userList.filter((item) => {
+      if (!item.checked) {
+        newMatch = true;
+      }
+      const lastMsg = item.chatRoom.lastMessage;
+      const isNew = (lastMsg.userID != userSub) && lastMsg.type != 'admin' && !lastMsg.checked;
+      return isNew;
+    });
+    setMatchBadge(newMatch ? 'new' : newList.length);
+  }, [userList]);
 
 
   const deleteMatch = async (matchID) => {

@@ -4,6 +4,7 @@ import config from 'src/config';
 export const MyContext = React.createContext({
   isAuthenticated: false,
   user: {},
+  pushNoti: true,
 });
 
 export const ChatContext = React.createContext({
@@ -21,4 +22,9 @@ export const UserContext = React.createContext({
   setReshSentSignal: undefined,
   refreshCandidate: false,
   setRefreshCandidate: undefined,
+});
+
+export const BadgeContext = React.createContext({
+  signalBadge: 0,
+  MatchBadge: 0,
 });

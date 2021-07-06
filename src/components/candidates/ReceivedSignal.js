@@ -2,7 +2,7 @@ import React, {useState, useEffect, useContext} from 'react';
 import {View, FlatList} from 'react-native';
 import NotiText from 'src/blocks/NotiText';
 import ReceivedSignalItem from './ReceivedSignalItem';
-import {MyContext, UserContext} from 'src/context';
+import {MyContext, UserContext, BadgeContext} from 'src/context';
 import {makeMatch} from 'src/utils/Match';
 import {bringReceivedSignal, removeSignal, rejectSignal} from 'src/utils/Signal';
 
@@ -13,6 +13,7 @@ function ReceivedSignal({navigation}) {
   const auth = useContext(MyContext);
   const userSub = auth.user.attributes.sub;
   const {refreshReceivedSignal, setRefreshReceivedSignal, refreshMatch, setRefreshMatch} = useContext(UserContext);
+  const {setSignalBadge} = useContext(BadgeContext);
 
   useEffect(() => {
     const m_bringReceivedSignal = async () => {
@@ -27,6 +28,11 @@ function ReceivedSignal({navigation}) {
     };
     m_bringReceivedSignal();
   }, [refreshReceivedSignal]);
+
+  useEffect(() => {
+    const newList = userList.filter((item) => !item.checked);
+    setSignalBadge(newList.length);
+  }, [userList]);
 
   const onReject = async (signalID) => {
     try {

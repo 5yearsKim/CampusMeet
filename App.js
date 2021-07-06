@@ -12,15 +12,18 @@ import {
 } from '@react-navigation/native';
 import Route from 'src/Route';
 import {bringSentSignalToday} from 'src/utils/Signal';
-import {ThemeContext, MyContext, UserContext} from 'src/context';
+import {ThemeContext, MyContext, UserContext, BadgeContext} from 'src/context';
 import config from 'src/config';
 
 
 export default function App() {
   const [authChecked, setAuthChecked] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [pushNoti, setPushNoti] = useState(true);
   const [user, setUser] = useState([]);
   const [scheme, setScheme] = useState('light');
+
+  const [newCand, setNewCand] = useState(false);
   const [signalCnt, setSignalCnt] = useState(0);
   // console.log(user.signInUserSession.accessToken.jwtToken);
   const [refreshCandidate, setRefreshCandidate] = useState(false);
@@ -29,6 +32,9 @@ export default function App() {
   const [refreshMatch, setRefreshMatch] = useState(false);
   const [refreshBoard, setRefreshBoard] = useState(false);
   const [refreshMypage, setRefreshMypage] = useState(false);
+  // badge props
+  const [signalBadge, setSignalBadge] = useState(0);
+  const [matchBadge, setMatchBadge] = useState(0);
 
   const [fontLoaded] = useFonts({
     nanumEB: require('assets/fonts/NanumSquareRoundEB.ttf'),
@@ -69,6 +75,20 @@ export default function App() {
     getScheme();
   }, []);
 
+  // pushNoti status load
+  useEffect(() => {
+    const bringPushInfo = async () => {
+      const jsonValue = await AsyncStorage.getItem('pushNoti');
+      const pushData = jsonValue != null ? JSON.parse(jsonValue) : null;
+      if (pushData == true) {
+        setPushNoti(true);
+      } else {
+        setPushNoti(false);
+      }
+    };
+    bringPushInfo();
+  }, []);
+
   // user state load
   useEffect(() => {
     const m_bringSentSignalToday = async () => {
@@ -91,6 +111,9 @@ export default function App() {
       user: user,
       setUser: setUser,
       setIsAuthenticated: setIsAuthenticated,
+      pushNoti: pushNoti,
+      setPushNoti: setPushNoti,
+
     };
   };
 
@@ -103,6 +126,8 @@ export default function App() {
   };
   const userProps = () => {
     return {
+      newCand: newCand,
+      setNewCand: setNewCand,
       signalCnt: signalCnt,
       setSignalCnt: setSignalCnt,
 
@@ -120,17 +145,29 @@ export default function App() {
       setRefreshMypage: setRefreshMypage,
     };
   };
+
+  const badgeProps = () => {
+    return {
+      signalBadge: signalBadge,
+      setSignalBadge: setSignalBadge,
+      matchBadge: matchBadge,
+      setMatchBadge: setMatchBadge,
+    };
+  };
+
   if (fontLoaded && authChecked) {
     return (
       <MyContext.Provider value={authProps()}>
         <ThemeContext.Provider value={themeProps()}>
           <UserContext.Provider value={userProps()}>
-            <PaperProvider theme={isAuthenticated ? paperTheme[scheme] : paperTheme['light']}>
-              <NavigationContainer theme={navigationTheme[scheme]}>
-                <StatusBar style='auto'/>
-                <Route/>
-              </NavigationContainer>
-            </PaperProvider>
+            <BadgeContext.Provider value={badgeProps()}>
+              <PaperProvider theme={isAuthenticated ? paperTheme[scheme] : paperTheme['light']}>
+                <NavigationContainer theme={navigationTheme[scheme]}>
+                  <StatusBar style='auto'/>
+                  <Route/>
+                </NavigationContainer>
+              </PaperProvider>
+            </BadgeContext.Provider>
           </UserContext.Provider>
         </ThemeContext.Provider>
       </MyContext.Provider>
