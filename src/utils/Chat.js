@@ -29,7 +29,7 @@ export async function bringMessages(chatRoomID, nextToken, limit=20) {
   }
 };
 
-// message type in [text, gif, image, admin]
+// message type in [text, gif, image, admin, check]
 export async function makeMessage(userID, chatRoomID, content, type) {
   const newMessage = {
     userID: userID,

@@ -1,7 +1,7 @@
 import React, {useState, useEffect, useContext, Fragment} from 'react';
 import {FlatList} from 'react-native';
 import Message from './Message';
-import {bringMessages, checkMessage} from 'src/utils/Chat';
+import {bringMessages, checkMessage, makeMessage} from 'src/utils/Chat';
 import {isDateDifferent, isMinDifferent} from 'src/utils/Time';
 
 import {API, graphqlOperation} from 'aws-amplify';
@@ -58,7 +58,7 @@ function ChatRoom({navigation, route}) {
 
   const m_bringMessages = async () => {
     const [messageData, token] = await bringMessages(chatRoomID);
-    setMessageList(messageData);
+    setMessageList(messageData.filter((item) => item.type != 'check'));
     setNextToken(token);
   };
 
@@ -84,8 +84,15 @@ function ChatRoom({navigation, route}) {
           chatRoomID: chatRoomID,
         }),
     ).subscribe({
-      next: ({value}) => {
-        // const message = value.data.onCreateMessage;
+      next: async ({value}) => {
+        const message = value.data.onCreateMessage;
+        if (message.userID != userSub) {
+          if (message.type == 'check') {
+            await checkMessage(message.content);
+          } else if (['text', 'gif', 'image'].includes(message.type)) {
+            makeMessage(userSub, chatRoomID, message.id, 'check')
+          }
+        }
         // console.log(message);
         m_bringMessages();
       },
