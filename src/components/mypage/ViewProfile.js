@@ -53,7 +53,7 @@ function ViewProfile({navigation, route}) {
       <View style={{alignItems: 'center'}}>
         <ProfilePicture imageKeys={user.imageKeys}/>
         <Text style={[styles.nameText, {color: theme.text}]}>{user.name}</Text>
-        <Text style={[styles.campusText, {color: theme.subText}]}>{user.campus} {user.division} {user.year} 학번</Text>
+        <Text style={[styles.campusText, {color: theme.subText}]}>{user.campus} {user.division} {user.graduate} {user.year}학번</Text>
       </View>
       <View style={{padding: 10}}>
         <View style={styles.itemWrapper}>

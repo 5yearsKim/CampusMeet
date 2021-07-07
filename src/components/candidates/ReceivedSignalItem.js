@@ -72,10 +72,10 @@ function ReceivedSignalItem({item, navigation, onReject, onMatch}) {
           <LeftContent sender={sender} navigation={navigation}/>
           <View>
             <View style={{flexDirection: 'row', alighItems: 'center'}}>
-              <Text style={[styles.titleText, {color: theme.text}]}>{sender.campus} {sender.graduate}</Text>
+              <Text style={[styles.titleText, {color: theme.text}]}>{sender.campus} {sender.division}</Text>
               {!item.checked && <Badge containerStyle={{margin: 5}}/>}
             </View>
-            <Text style={[styles.subtitleText, {color: theme.subText}]}>{sender.division} {sender.year}학번</Text>
+            <Text style={[styles.subtitleText, {color: theme.subText}]}>{sender.graduate} {sender.year}학번</Text>
             <Text style={[styles.messageText]}>{item.message}</Text>
           </View>
         </View>
@@ -127,22 +127,25 @@ const styles = StyleSheet.create({
     borderWidth: 3,
   },
   container: {
+    borderBottomColor: '#dddddd',
+    borderBottomWidth: 1,
+    paddingBottom: 5,
   },
   titleText: {
     fontWeight: 'bold',
     fontSize: 18,
   },
   subtitleText: {
-    fontSize: 14,
-    fontWeight: 'bold',
+    fontSize: 13,
+    // fontWeight: 'bold',
     marginTop: 5,
-    marginLeft: 70,
+    // marginLeft: 70,
   },
   messageText: {
     marginTop: 10,
-    marginLeft: 5,
     fontSize: 13,
     fontWeight: 'bold',
+    marginLeft: 5,
     fontStyle: 'italic',
     color: 'gray',
   },

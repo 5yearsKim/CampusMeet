@@ -143,6 +143,8 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     justifyContent: 'space-between',
+    borderBottomWidth: 1,
+    borderBottomColor: '#dddddd',
   },
   contentContainer: {
     flexDirection: 'row',

@@ -107,7 +107,7 @@ const styles = StyleSheet.create({
   sectionBox: {
     borderRadius: 10,
     borderWidth: 1,
-    borderColor: 'gray',
+    borderColor: '#bbbbbb',
     padding: 5,
     marginBottom: 15,
   },

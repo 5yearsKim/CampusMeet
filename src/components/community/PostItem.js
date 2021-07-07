@@ -63,7 +63,7 @@ function PostItem({item, board, navigation}) {
     return <View></View>;
   }
   return (
-    <View style={[styles.container, {borderColor: theme.subText}]}>
+    <View style={styles.container}>
       <TouchableOpacity
         onPress={() => onClickItem()}
       >
@@ -85,6 +85,7 @@ const styles = StyleSheet.create({
     height: 75,
     padding: 5,
     borderBottomWidth: 1,
+    borderColor: '#bbbbbb',
   },
   icon: {
     margin: 2,

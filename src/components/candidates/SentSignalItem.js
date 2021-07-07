@@ -43,8 +43,8 @@ function SentSignalItem({item}) {
         <View style={{flexDirection: 'row', alignItems: 'center'}}>
           <LeftContent gender={receiver.gender}/>
           <View>
-            <Text style={[styles.titleText, {color: theme.text}]}>{receiver.campus} {receiver.graduate}</Text>
-            <Text style={[styles.subtitleText, {color: theme.subText}]}>{receiver.division} {receiver.year}학번</Text>
+            <Text style={[styles.titleText, {color: theme.text}]}>{receiver.campus} {receiver.division}</Text>
+            <Text style={[styles.subtitleText, {color: theme.subText}]}>{receiver.graduate} {receiver.year}학번</Text>
             <Text style={styles.messageText}>{item.message}</Text>
           </View>
         </View>
@@ -92,6 +92,9 @@ function SentSignalItem({item}) {
 
 const styles = StyleSheet.create({
   container: {
+    borderBottomColor: '#dddddd',
+    borderBottomWidth: 1,
+    paddingBottom: 5,
   },
   avatar: {
     margin: 15,
@@ -105,10 +108,10 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
   subtitleText: {
-    fontSize: 14,
-    fontWeight: 'bold',
+    fontSize: 13,
+    // fontWeight: 'bold',
     marginTop: 5,
-    marginLeft: 70,
+    // marginLeft: 70,
   },
   messageText: {
     marginTop: 10,

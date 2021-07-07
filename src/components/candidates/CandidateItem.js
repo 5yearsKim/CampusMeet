@@ -43,8 +43,8 @@ function CandidateItem({item}) {
         <View style={{flexDirection: 'row'}}>
           <LeftContent item={item} />
           <View style={{marginLeft: 10, paddingTop: 10}}>
-            <Text style={[styles.titleText, {color: theme.text}]}>{item.campus} {item.graduate}</Text>
-            <Text style={[styles.subtitleText, {color: theme.subText}]}>{item.division} {item.year}학번</Text>
+            <Text style={[styles.titleText, {color: theme.text}]}>{item.campus} {item.division}</Text>
+            <Text style={[styles.subtitleText, {color: theme.subText}]}>{item.graduate} {item.year}학번</Text>
             <Text style={[styles.messageText]}>{item.profileMessage}</Text>
           </View>
         </View>
@@ -67,7 +67,10 @@ function CandidateItem({item}) {
 const styles = StyleSheet.create({
   container: {
     margin: 5,
-    marginBottom: 20,
+    marginBottom: 10,
+    borderBottomColor: '#dddddd',
+    borderBottomWidth: 1,
+    paddingBottom: 15,
   },
   logo: {
     height: 70,
@@ -90,10 +93,11 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
   subtitleText: {
-    fontSize: 14,
-    fontWeight: 'bold',
+    fontSize: 13,
+    // fontWeight: 'bold',
     marginTop: 5,
-    marginLeft: 70,
+    marginBottom: 5,
+    // marginLeft: 70,
   },
   messageText: {
     fontSize: 13,
