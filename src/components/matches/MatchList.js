@@ -73,6 +73,7 @@ function MatchList({navigation}) {
           setLoading(true);
           setRefreshMatch(!refreshMatch);
         }}
+        // removeClippedSubviews={false}
       />
     </View>
   );

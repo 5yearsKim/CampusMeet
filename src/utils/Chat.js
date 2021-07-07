@@ -4,11 +4,12 @@ import {createMessage} from 'src/graphql/mutations';
 import {onCreateMessage} from 'src/graphql/customSubscriptions';
 import {updateChatRoom, updateMessage} from 'src/graphql/mutations';
 
-export async function bringMessages(chatRoomID, nextToken, limit=30) {
+export async function bringMessages(chatRoomID, nextToken, limit=20) {
   const inputData = {
     chatRoomID: chatRoomID,
     limit: limit,
     sortDirection: 'DESC',
+    filter: {type: {ne: 'check'}},
   };
   if (nextToken) {
     inputData.nextToken = nextToken;

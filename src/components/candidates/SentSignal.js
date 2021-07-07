@@ -39,6 +39,7 @@ function SentSignal({navigation}) {
           setLoading(true);
           setRefreshSentSignal(!refreshSentSignal);
         }}
+        removeClippedSubviews={false}
       />
     </View>
   );

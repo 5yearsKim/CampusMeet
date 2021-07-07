@@ -90,7 +90,7 @@ function ChatRoom({navigation, route}) {
           if (message.type == 'check') {
             await checkMessage(message.content);
           } else if (['text', 'gif', 'image'].includes(message.type)) {
-            makeMessage(userSub, chatRoomID, message.id, 'check')
+            makeMessage(userSub, chatRoomID, message.id, 'check');
           }
         }
         // console.log(message);
@@ -111,11 +111,11 @@ function ChatRoom({navigation, route}) {
 
   const renderMessage = ({item, index}) => {
     if (index >= messageList.length -1) {
-      return <Message item={item} showTime={true} showDate={true} myCkp={myCkp} yourCkp={yourCkp}/>;
+      return <Message item={item} showTime={true} showDate={true} myCkp={myCkp} yourCkp={yourCkp} navigation={navigation}/>;
     }
     const showDate = isDateDifferent(item.createdAt, messageList[index + 1].createdAt);
     if (index == 0) {
-      return <Message item={item} showTime={true} showDate={showDate} myCkp={myCkp} yourCkp={yourCkp}/>;
+      return <Message item={item} showTime={true} showDate={showDate} myCkp={myCkp} yourCkp={yourCkp} navigation={navigation}/>;
     }
 
     const showTime = isMinDifferent(item.createdAt, messageList[index - 1].createdAt) || (item.userID != messageList[index - 1].userID);
@@ -132,6 +132,7 @@ function ChatRoom({navigation, route}) {
         keyExtractor={(item) => item.id}
         inverted
         onEndReached={() => onEndReached()}
+        removeClippedSubviews={false}
       />
     </Fragment>
   );

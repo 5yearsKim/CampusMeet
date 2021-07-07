@@ -73,6 +73,7 @@ function ReceivedSignal({navigation}) {
           setLoading(true);
           setRefreshReceivedSignal(!refreshReceivedSignal);
         }}
+        removeClippedSubviews={false}
       />
     </View>
   );
