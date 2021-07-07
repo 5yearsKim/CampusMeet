@@ -57,13 +57,14 @@ function AutoComplete({candList, value, onClickText, onChangeText, placeholder, 
 
 const styles = StyleSheet.create({
   candidateContainer: {
-    height: 25,
+    // height: 25,
     justifyContent:'center',
     alignItems: 'center',
     backgroundColor:'white',
+    padding: 7,
   },
   candidateText: {
-    fontSize: 15,
+    fontSize: 16,
   },
 })
 

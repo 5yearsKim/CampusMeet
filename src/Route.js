@@ -41,13 +41,15 @@ function HomeTab({navigation}) {
     const m_bringUser = async () => {
       try {
         const userData = await bringUser(userSub);
-        setName(userData.name);
         if (userData == null) {
           navigation.navigate('CreateProfile');
-        }
+          return;
+        } 
         if (userData.status == 'inactive') {
           navigation.navigate('Deactivate');
+          return
         }
+        setName(userData.name);
       } catch (err) {
         console.warn(err);
       }

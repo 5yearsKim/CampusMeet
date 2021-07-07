@@ -4,6 +4,7 @@ import {makeComment, makeNestedComment, getNickname} from 'src/utils/Community';
 import {Nickname} from 'src/blocks/Board';
 import {FontAwesome} from '@expo/vector-icons';
 import {MyContext, ChatContext} from 'src/context';
+import {useKeyboard} from 'src/blocks/Keyboard';
 
 function CommentInput({board, post, refresh}) {
   const auth = useContext(MyContext);
@@ -15,6 +16,7 @@ function CommentInput({board, post, refresh}) {
   const chatInput = useRef(null);
   const inputHeight = Math.max(Math.min(65, height), 30);
   const placeholder = nested.isNested?'대댓글을 입력해주세요':'댓글을 입력해주세요';
+  const {iosPadding} = useKeyboard();
 
   useEffect(() => {
     const m_getNickname = async () => {
@@ -55,7 +57,7 @@ function CommentInput({board, post, refresh}) {
     // <View style={[styles.container, {height: inputHeight + 10, backgroundColor: nested.isNested?'green':'blue'}]}>
     <KeyboardAvoidingView
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-      keyboardVerticalOffset={100}
+      keyboardVerticalOffset={iosPadding}
     >
       <View style={[styles.container, {height: inputHeight + 10}]}>
         <View style={{flexDirection: 'row', alignItems: 'center'}}>

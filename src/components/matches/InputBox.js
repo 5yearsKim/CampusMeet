@@ -20,6 +20,7 @@ function InputBox({route}) {
   const [chatUser, setChatUser] = useState([]);
   const [gifVisible, setGifVisible] = useState(false);
   const [sending, setSending] = useState(false);
+  const {iosPadding} = useKeyboard();
 
   useEffect(() => {
     const m_bringMatchByChatRoom = async () => {
@@ -101,8 +102,7 @@ function InputBox({route}) {
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-      keyboardVerticalOffset={60}
-      // style={{flex: 1}}
+      keyboardVerticalOffset={iosPadding}
     >
       <Portal>
         <Modal visible={gifVisible} onDismiss={() => setGifVisible(false)} contentContainerStyle={styles.gifContainer}>

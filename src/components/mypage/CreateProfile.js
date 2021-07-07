@@ -1,6 +1,6 @@
 import React, {useState, useEffect, useContext} from 'react';
 import {useSharedValue} from 'react-native-reanimated';
-import {ScrollView, View, TouchableOpacity, StyleSheet} from 'react-native';
+import {ScrollView, View, SafeAreaView, TouchableOpacity, StyleSheet} from 'react-native';
 import UploadPicture from './UploadPicture';
 import {RadioButton, TextInput, Button} from 'react-native-paper';
 import {MaterialCommunityIcons} from '@expo/vector-icons';
@@ -44,6 +44,7 @@ function CreateProfile({navigation}) {
   const [profileMessage, setProfileMessage] = useState('');
   const [profileDescription, setProfileDescription] = useState('');
 
+  const [submitting, setSubmitting] = useState(false);
 
   useEffect(() => {
     const unsubscribe = navigation.addListener('beforeRemove', (e) => {
@@ -137,13 +138,15 @@ function CreateProfile({navigation}) {
         return;
       }
       try {
+        setSubmitting(true);
         const orderedImgList = Object.keys(positions.value).sort((a, b) => positions.value[a] - positions.value[b]);
-        const newImgList = imageListToS3(orderedImgList);
+        const newImgList = await imageListToS3(orderedImgList, `profile/${userSub}`);
         await makeUser(userSub, gender, name, campus, graduate, year, department, division, newImgList, profileMessage, profileDescription);
         await setupIndividual();
         navigation.reset({index: 0, routes: [{name: 'Home'}]});
       } catch (err) {
         console.warn(err);
+        setSubmitting(false);
       }
     }
   };
@@ -288,7 +291,7 @@ function CreateProfile({navigation}) {
   };
 
   return (
-    <View style={{padding: 20, flex: 1}}>
+    <SafeAreaView style={{padding: 20, flex: 1}}>
       {step1()}
       {step2()}
       {step3()}
@@ -297,7 +300,7 @@ function CreateProfile({navigation}) {
           <Text style={styles.errText}>{errText}</Text>
         </View>
       }
-      <View style={{flexDirection: 'row', justifyContent: 'center'}}>
+      <View style={{flexDirection: 'row', justifyContent: 'center', marginBottom: 5}}>
         {currentStep > 1 &&
         <Button
           mode="outlined"
@@ -312,10 +315,13 @@ function CreateProfile({navigation}) {
           onPress={_next}
           style={styles.buttonStyle}
           labelStyle={{color: 'white'}}
+          disabled={submitting}
         >
           {currentStep <= 2 ?
             '다음' :
-            '등록하기'
+            submitting ?
+              '등록중..' :
+              '등록하기'
           }
         </Button>
       </View>
@@ -326,7 +332,7 @@ function CreateProfile({navigation}) {
         content='프로필을 등록하지 않으면 캠퍼스밋을 이용할 수 없습니다.'
         onOk={() => {}}
       />
-    </View>
+    </SafeAreaView>
   );
 }
 

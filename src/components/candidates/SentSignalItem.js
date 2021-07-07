@@ -58,7 +58,7 @@ function SentSignalItem({item}) {
               Signal 취소
             </Button>:
             <Button
-              onPress={() => alertRemoveSignal()}
+              onPress={() => setAlertOpen(true)}
               labelStyle={[styles.buttonText, {color: 'red'}]}
             >
               거절됨
@@ -80,7 +80,7 @@ function SentSignalItem({item}) {
       <SimpleAlert
         modalOpen={alertOpen}
         setModalOpen={setAlertOpen}
-        title='시그널 삭제'
+        title={item.alive ? '시그널 삭제' : '거절된 시그널 삭제'}
         content='시그널이 삭제되고 상대는 더 이상 나를 확인할 수 없습니다.'
         onCancel={() => {}}
         onOk={() => onRemoveSignal()}

@@ -27,7 +27,7 @@ export const getOrder = (tx, ty, max) => {
 };
 
 export const checkLocalImage = (uri) => {
-  return uri.startsWith('file://');
+  return uri.startsWith('file:/');
 };
 
 export const imageToS3 = async (uri, s3path) => {
