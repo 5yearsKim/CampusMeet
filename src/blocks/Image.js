@@ -42,13 +42,11 @@ export function KeyImage({imgKey, style, cached, resizeMode}) {
     } else {
       getUncachedImage();
     }
-  }, [imgKey]);
+  }, []);
   if (uri) {
     return (
       <Image
-        source={{
-          uri: uri,
-        }}
+        source={{uri: uri}}
         style={style}
         fadeDuration={0}
         resizeMode={resizeMode}

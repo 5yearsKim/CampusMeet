@@ -4,7 +4,7 @@ import {createMessage} from 'src/graphql/mutations';
 import {onCreateMessage} from 'src/graphql/customSubscriptions';
 import {updateChatRoom, updateMessage} from 'src/graphql/mutations';
 
-export async function bringMessages(chatRoomID, nextToken, limit=20) {
+export async function bringMessages(chatRoomID, nextToken, limit=30) {
   const inputData = {
     chatRoomID: chatRoomID,
     limit: limit,
@@ -41,10 +41,12 @@ export async function makeMessage(userID, chatRoomID, content, type) {
   const rsp = await API.graphql(
       graphqlOperation(createMessage, {input: newMessage}),
   );
-  const message = rsp.data.createMessage;
-  const data = {lastMessageID: message.id};
-  await modifyChatRoom(chatRoomID, data);
-  return message;
+  if (type != 'check') {
+    const message = rsp.data.createMessage;
+    const data = {lastMessageID: message.id};
+    await modifyChatRoom(chatRoomID, data);
+    return message;
+  }
 };
 
 export async function modifyMessage(messageID, messageData) {

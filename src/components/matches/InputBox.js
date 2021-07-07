@@ -5,8 +5,9 @@ import * as ImagePicker from 'expo-image-picker';
 import {Storage} from 'aws-amplify';
 import {Ionicons, MaterialCommunityIcons} from '@expo/vector-icons';
 import {GifSearch, poweredByGiphyLogoGrey} from 'react-native-gif-search';
-import {makeMessage} from 'src/utils/Chat';
+import {useKeyboard} from 'src/blocks/Keyboard';
 import {MyContext} from 'src/context';
+import {makeMessage} from 'src/utils/Chat';
 import {bringMatchByChatRoom} from 'src/utils/Match';
 import {sendPushNotification} from 'src/utils/PushNotification';
 import config from 'src/config';
@@ -100,7 +101,7 @@ function InputBox({route}) {
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-      keyboardVerticalOffset={100}
+      keyboardVerticalOffset={60}
       // style={{flex: 1}}
     >
       <Portal>
