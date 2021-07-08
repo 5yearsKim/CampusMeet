@@ -16,7 +16,7 @@
     },
     "ios": {
       "bundleIdentifier": "com.onion.campusMeet",
-      "buildNumber": "1.0.0"
+      "buildNumber": "1.0.1"
     },
     "android": {
       "versionCode": 19,
