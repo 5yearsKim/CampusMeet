@@ -98,7 +98,7 @@ export default function Preference({filterOpen, setFilterOpen}) {
                   </View>
                   <Text style={styles.sectionText}>선호 대학</Text>
                   <View style={{flexDirection: 'row', alignItems: 'center', alignSelf: 'flex-end', marginRight: 20}}>
-                    <Checkbox
+                    <Checkbox.Android
                       status={graduateLike ? 'checked' : 'unchecked'}
                       onPress={() => setGraduateLike(!graduateLike)}
                       color='pink'

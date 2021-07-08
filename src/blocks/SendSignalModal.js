@@ -2,7 +2,7 @@ import React, {useEffect, useState, useContext} from 'react';
 import Text from './Text';
 import SimpleAlert from './SimpleAlert';
 import {Button, TextInput} from 'react-native-paper';
-import {View, Dimensions, TouchableWithoutFeedback, Modal, StyleSheet} from 'react-native';
+import {View, KeyboardAvoidingView, Dimensions, TouchableWithoutFeedback, Modal, StyleSheet} from 'react-native';
 import {MyContext, ThemeContext, UserContext} from 'src/context';
 import {makeSignal} from 'src/utils/Signal';
 import {sendPushNotification} from 'src/utils/PushNotification';
@@ -43,7 +43,10 @@ export default function SendSignalModal({toID, popupVisible, setPopupVisible, on
         <TouchableWithoutFeedback onPress={() => setPopupVisible(false)}>
           <View style={styles.modalContainer}>
             <TouchableWithoutFeedback onPress={() => {}}>
-              <View style={[styles.popupContainer, {backgroundColor: theme.background}]}>
+              <KeyboardAvoidingView
+                behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+                style={[styles.popupContainer, {backgroundColor: theme.background}]}
+              >
                 <Text style={styles.popupTitleText}>한 줄로 메세지를 전해보세요!</Text>
                 <TextInput
                   mode='flat'
@@ -82,7 +85,7 @@ export default function SendSignalModal({toID, popupVisible, setPopupVisible, on
                     전송
                   </Button>
                 </View>
-              </View>
+              </KeyboardAvoidingView>
             </TouchableWithoutFeedback>
           </View>
         </TouchableWithoutFeedback>

@@ -1,12 +1,15 @@
 import {Dimensions} from 'react-native';
 import {Storage} from 'aws-amplify';
 
-const {width, height} = Dimensions.get('window');
+let {width, height} = Dimensions.get('window');
+
 
 const COL = 3;
 
+export const CONTAINERPADDING = 20;
+width = width - CONTAINERPADDING * 2;
 export const PADDING = 10;
-export const IMGWIDTH = Math.floor((width - 40 - PADDING)/COL - PADDING );
+export const IMGWIDTH = Math.floor((width - PADDING)/COL - PADDING );
 export const IMGHEIGHT = IMGWIDTH;
 
 export const getPosition = (position) => {

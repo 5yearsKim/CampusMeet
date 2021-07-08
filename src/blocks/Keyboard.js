@@ -5,8 +5,10 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 export const useKeyboard = () => {
   const [keyboardHeight, setKeyboardHeight] = useState(0);
   const [iosPadding, setIosPadding] = useState(0);
+  const [keyboardOpen, setKeyboardOpen] = useState(false);
 
   async function onKeyboardDidShow(e) {
+    setKeyboardOpen(true);
     if (!keyboardHeight) {
       setKeyboardHeight(e.endCoordinates.height);
       const jsonValue = JSON.stringify(e.endCoordinates.height);
@@ -14,9 +16,9 @@ export const useKeyboard = () => {
     } 
   }
 
-//   function onKeyboardDidHide() {
-//     setKeyboardHeight(0);
-//   }
+  function onKeyboardDidHide() {
+    setKeyboardOpen(false);
+  }
   useEffect(() => {
     const setKeyboardInfo = async () => {
       try {
@@ -41,10 +43,10 @@ export const useKeyboard = () => {
 
   useEffect(() => {
     Keyboard.addListener('keyboardDidShow', onKeyboardDidShow);
-    // Keyboard.addListener('keyboardDidHide', onKeyboardDidHide);
+    Keyboard.addListener('keyboardDidHide', onKeyboardDidHide);
     return () => {
       Keyboard.removeListener('keyboardDidShow', onKeyboardDidShow);
-    //   Keyboard.removeListener('keyboardDidHide', onKeyboardDidHide);
+      Keyboard.removeListener('keyboardDidHide', onKeyboardDidHide);
     };
   }, []);
 

@@ -13,7 +13,7 @@ import Animated, {
 import {getPosition, getOrder, IMGWIDTH, IMGHEIGHT, checkLocalImage} from 'src/utils/UploadPicture';
 import {KeyImage} from 'src/blocks/Image';
 import {MyContext} from 'src/context';
-import {Storage} from 'aws-amplify';
+// import {Storage} from 'aws-amplify';
 
 function AnimatedPicture({imgKey, positions}) {
   if (Object.keys(positions.value).length == 0) {

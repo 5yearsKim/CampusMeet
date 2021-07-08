@@ -1,18 +1,20 @@
 import React from 'react';
-import {useKeyboard} from 'src/blocks/Keyboard';
 import {SafeAreaView, KeyboardAvoidingView} from 'react-native';
+import {useKeyboard} from 'src/blocks/Keyboard';
 import CreateProfile from 'src/components/mypage/CreateProfile';
 
 function CreateProfileScreen(props) {
   const {iosPadding} = useKeyboard();
   return (
-    <KeyboardAvoidingView
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-      style={{flex: 1, justifyContent: 'center'}}
-      keyboardVerticalOffset={iosPadding}
-    >
-      <CreateProfile {...props}/>
-    </KeyboardAvoidingView>
+    <SafeAreaView style={{flex: 1}}>
+      <KeyboardAvoidingView 
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        style={{flex: 1, padding: 20}}
+        keyboardVerticalOffset={iosPadding}
+      >
+        <CreateProfile {...props}/>
+      </KeyboardAvoidingView>
+    </SafeAreaView>
   );
 }
 

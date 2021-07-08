@@ -1,6 +1,6 @@
 import React, {useState, useContext} from 'react';
 import {TextInput as PaperTextInput} from 'react-native-paper';
-import {View, TextInput, StyleSheet} from 'react-native';
+import {View, ScrollView, TextInput, StyleSheet} from 'react-native';
 import Text from 'src/blocks/Text';
 import {Button} from 'react-native-paper';
 import {PostImagesCreate, PostImagesView} from './PostImages';
@@ -40,43 +40,45 @@ function CreatePost({navigation, route}) {
   };
 
   return (
-    <View style={styles.container}>
-      <PaperTextInput
-        // label='제목'
-        type='flat'
-        value={title}
-        onChangeText={(text) => setTitle(text)}
-        placeholder='제목'
-        style={styles.titleInput}
-      />
-      <View style={styles.contentBox}>
-        <TextInput
-          value={content}
-          multiline={true}
-          placeholderTextColor={theme.subText}
-          onChangeText={(text) => setContent(text)}
-          placeholder='내용을 입력해주세요.'
-          style={[styles.contentInput, {color: theme.text}]}
+    <View style={{flex: 1}}>
+      <ScrollView style={styles.container}>
+        <PaperTextInput
+          // label='제목'
+          type='flat'
+          value={title}
+          onChangeText={(text) => setTitle(text)}
+          placeholder='제목'
+          style={styles.titleInput}
         />
-      </View>
-      <Text style={{color: theme.subText}}>욕설 금지! 비방어 금지! 이쁜말만 써주세요</Text>
-      {/* </ScrollView> */}
-      <View style={{alignItems: 'center'}}>
-        <Button
-          mode='contained'
-          onPress={() => onSubmit()}
-          dark={true}
-          compact={true}
-          style={styles.submitButton}
-          disabled={checkDisabled() || submitting}
-        >
-          {submitting ?
-            'Loading..' :
-            'submit'
-          }
-        </Button>
-      </View>
-      <PostImagesView imgList={imgList}/>
+        <View style={styles.contentBox}>
+          <TextInput
+            value={content}
+            multiline={true}
+            placeholderTextColor={theme.subText}
+            onChangeText={(text) => setContent(text)}
+            placeholder='내용을 입력해주세요.'
+            style={[styles.contentInput, {color: theme.text}]}
+          />
+        </View>
+        <Text style={{color: theme.subText}}>욕설 금지! 비방어 금지! 이쁜말만 써주세요</Text>
+        {/* </ScrollView> */}
+        <View style={{alignItems: 'center'}}>
+          <Button
+            mode='contained'
+            onPress={() => onSubmit()}
+            dark={true}
+            compact={true}
+            style={styles.submitButton}
+            disabled={checkDisabled() || submitting}
+          >
+            {submitting ?
+              'Loading..' :
+              'submit'
+            }
+          </Button>
+        </View>
+        <PostImagesView imgList={imgList}/>
+      </ScrollView>
       <PostImagesCreate boardID={board.id} imgList={imgList} setImgList={setImgList}/>
     </View>
   );

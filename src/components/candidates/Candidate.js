@@ -16,20 +16,34 @@ import StartSetting from 'src/components/StartSetting';
 
 const signalMax = config.manage.signalMax;
 
-function CandidateHeader() {
+function CandidateHeader({loading}) {
+  if (loading) {
+    return null;
+  }
   const {theme} = useContext(ThemeContext);
   const {signalCnt} = useContext(UserContext);
   const [filterOpen, setFilterOpen] = useState(false);
+  const todaySignal = () => {
+    if (signalCnt >= signalMax) {
+      return (
+        <Text style={[styles.heartText, {color: theme.subText}]}>시그널은 내일 충전됩니다.</Text>
+      );
+    } else {
+      return (
+        <View style={{flexDirection: 'row', alignItems: 'center'}}>
+          <Text style={[styles.heartText, {color: theme.subText}]}>오늘의 시그널: </Text>
+          {[...Array(Math.max(0, signalMax - signalCnt))].map((_, index) => {
+            return (
+              <FontAwesome5 name="heartbeat" size={24} color="pink" key={index} style={{margin: 2}}/>
+            );
+          })}
+        </View>
+      );
+    }
+  };
   return (
     <View style={styles.headerContainer} key='header'>
-      <View style={{flexDirection: 'row', alignItems: 'center'}}>
-        <Text style={[styles.heartText, {color: theme.subText}]}>Signals: </Text>
-        {[...Array(Math.max(0, signalMax - signalCnt))].map((_, index) => {
-          return (
-            <FontAwesome5 name="heartbeat" size={24} color="pink" key={index} style={{margin: 2}}/>
-          );
-        })}
-      </View>
+      {todaySignal()}
       <Preference filterOpen={filterOpen} setFilterOpen={setFilterOpen}/>
       <Button icon='filter' mode='text' onPress={() => setFilterOpen(true)}>
         FILTER
@@ -109,7 +123,7 @@ function Candidate({navigation}) {
         data={userList}
         renderItem={({item}) => <CandidateItem item={item} />}
         keyExtractor={(item) => item.id}
-        ListHeaderComponent={<CandidateHeader/>}
+        ListHeaderComponent={<CandidateHeader loading={loading}/>}
         ListFooterComponent={<CandidateFooter loading={loading} setLoading={setLoading}/>}
         onRefresh={() => {
           setLoading(true);

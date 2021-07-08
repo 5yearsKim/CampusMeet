@@ -291,7 +291,7 @@ function CreateProfile({navigation}) {
   };
 
   return (
-    <SafeAreaView style={{padding: 20, flex: 1}}>
+    <View style={{flex: 1}}>
       {step1()}
       {step2()}
       {step3()}
@@ -332,7 +332,7 @@ function CreateProfile({navigation}) {
         content='프로필을 등록하지 않으면 캠퍼스밋을 이용할 수 없습니다.'
         onOk={() => {}}
       />
-    </SafeAreaView>
+    </View>
   );
 }
 

@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {key2uri} from 'src/utils/Storage';
-import {View, Image, Text} from 'react-native';
+import {View, Image, Text, Platform} from 'react-native';
 import {FileSystem} from 'react-native-unimodules';
 
 export function KeyImage({imgKey, style, cached, resizeMode}) {
@@ -17,7 +17,6 @@ export function KeyImage({imgKey, style, cached, resizeMode}) {
       const path = `${FileSystem.cacheDirectory}${newKey}`;
       const image = await FileSystem.getInfoAsync(path);
       if (image.exists) {
-        // console.log('read image from cache');
         setUri(image.uri);
       } else {
         try {
@@ -48,10 +47,13 @@ export function KeyImage({imgKey, style, cached, resizeMode}) {
       <Image
         source={{uri: uri}}
         style={style}
-        fadeDuration={0}
+        fadeDuration={200}
         resizeMode={resizeMode}
       />
     );
+  } 
+  if (Platform.OS == 'ios') {
+    return null;
   }
   return (
     <Image
