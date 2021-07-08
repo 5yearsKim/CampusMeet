@@ -107,6 +107,7 @@ function Register() {
         defaultValue={username}
         onChangeText={(text) => setUsername(text)}
         left={<TextInput.Icon name='account'/>}
+        autoCapitalize='none'
         style={styles.textInput}
       />
       <TextInput
@@ -117,6 +118,7 @@ function Register() {
         defaultValue={password}
         onChangeText={(text) => setPassword(text)}
         left={<TextInput.Icon name='lock'/>}
+        autoCapitalize='none'
         style={styles.textInput}
       />
       <TextInput
@@ -127,6 +129,7 @@ function Register() {
         defaultValue={passwordConfirm}
         onChangeText={(text) => setPasswordConfirm(text)}
         left={<TextInput.Icon name='lock-check'/>}
+        autoCapitalize='none'
         style={styles.textInput}
       />
       <TextInput
@@ -137,6 +140,7 @@ function Register() {
         defaultValue={email}
         onChangeText={(text) => setEmail(text)}
         left={<TextInput.Icon name='email'/>}
+        autoCapitalize='none'
         style={styles.textInput}
       />
       {emailSent &&

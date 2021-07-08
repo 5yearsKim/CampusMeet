@@ -59,6 +59,7 @@ function Login(props) {
         onChangeText={(text) => setUsername(text)}
         style={{backgroundColor: 'white'}}
         left={<TextInput.Icon name='account'/>}
+        autoCapitalize='none'
       />
       <TextInput
         mode='flat'
@@ -69,6 +70,7 @@ function Login(props) {
         onChangeText={(text) => setPassword(text)}
         style={{backgroundColor: 'white'}}
         left={<TextInput.Icon name='lock'/>}
+        autoCapitalize='none'
       />
       {errText.length > 0 &&
         <Text style={styles.errText}>{errText}</Text>
