@@ -4,7 +4,7 @@ import {createMessage} from 'src/graphql/mutations';
 import {onCreateMessage} from 'src/graphql/customSubscriptions';
 import {updateChatRoom, updateMessage} from 'src/graphql/mutations';
 
-export async function bringMessages(chatRoomID, nextToken, limit=20) {
+export async function bringMessages(chatRoomID, nextToken, limit=30) {
   const inputData = {
     chatRoomID: chatRoomID,
     limit: limit,

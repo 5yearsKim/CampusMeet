@@ -23,6 +23,7 @@ export default function App() {
   const [user, setUser] = useState([]);
   const [name, setName] = useState('');
   const [scheme, setScheme] = useState('light');
+  const [font, setFont] = useState();
 
   const [newCand, setNewCand] = useState(false);
   const [signalCnt, setSignalCnt] = useState(0);
@@ -38,11 +39,12 @@ export default function App() {
   const [matchBadge, setMatchBadge] = useState(0);
 
   const [fontLoaded] = useFonts({
-    nanumEB: require('assets/fonts/NanumSquareRoundEB.ttf'),
-    nanumB: require('assets/fonts/NanumSquareRoundB.ttf'),
-    nanumR: require('assets/fonts/NanumSquareRoundR.ttf'),
-    nanumL: require('assets/fonts/NanumSquareRoundL.ttf'),
-    gamja: require('assets/fonts/GamjaFlower-Regular.ttf'),
+    // nanumEB: require('assets/fonts/NanumSquareRoundEB.ttf'),
+    nanumB: require('assets/fonts/NanumGothic-Bold.ttf'),
+    nanumR: require('assets/fonts/NanumGothic-Regular.ttf'),
+    cuteR: require('assets/fonts/GamjaFlower-Regular.ttf'),
+    cuteB: require('assets/fonts/SingleDay-Regular.ttf'),
+    // nanumL: require('assets/fonts/NanumSquareRoundL.ttf'),
   });
 
   // auth init
@@ -90,6 +92,17 @@ export default function App() {
     bringPushInfo();
   }, []);
 
+  // app font setting load
+  useEffect(() => {
+    const bringFont = async () => {
+      const jsonValue = await AsyncStorage.getItem('font');
+      const fontData = jsonValue != null ? JSON.parse(jsonValue) : null;
+      if (fontData) {
+        setFont(fontData);
+      }
+    };
+    bringFont()
+  }, []);
   // user state load
   useEffect(() => {
     const m_bringSentSignalToday = async () => {
@@ -123,6 +136,8 @@ export default function App() {
     return {
       scheme: scheme,
       setScheme: setScheme,
+      font: font, 
+      setFont, setFont,
       theme: config.themes[scheme],
     };
   };

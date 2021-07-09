@@ -114,6 +114,7 @@ export default function Preference({filterOpen, setFilterOpen}) {
                         setCampusLike([...campusLike, text]);
                       }
                     }}
+                    maxCand={15}
                     onChangeText={(text) => setCampus(text)}
                     placeholder='campus'
                     style={{width: 250}}

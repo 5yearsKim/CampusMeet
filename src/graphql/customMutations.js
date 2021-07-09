@@ -8,7 +8,7 @@ export const createSignal = /* GraphQL */ `
       id
       fromID
       toID
-      alive
+      state
       message
       createdAt
       updatedAt
@@ -25,7 +25,7 @@ export const updateSignal = /* GraphQL */ `
       id
       fromID
       toID
-      alive
+      state
       message
       createdAt
       updatedAt

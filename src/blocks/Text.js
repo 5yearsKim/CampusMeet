@@ -1,29 +1,40 @@
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
+import {ThemeContext} from 'src/context';
 import {View, Keyboard} from 'react-native';
 import {Text as PaperText} from 'react-native-paper';
 import {IconButton, TextInput} from 'react-native-paper';
 
 export default function Text(props) {
-  let style = props.style;
-  if (style == undefined) {
-    style = {};
-  } else if (Array.isArray(style)) {
-    style = Object.assign({}, ...props.style);
-  }
-  let font = 'nanumR';
-  if (style.font == 'gamja') {
-    font = 'gamja';
-  } else {
-    if (style.fontWeight == 'bold') {
-      font = 'nanumB';
-    } else if (style.fontWeight == 'light') {
-      font = 'nanumL';
-    } else {
-      font = 'nanumR';
+  const fontType = useContext(ThemeContext).font;
+  var style = props.style ? props.style : {};
+  let tmpstyle = {};
+  
+  const list2style = (list) => {
+    for (let i = 0; i < list.length; i++) {
+      let st = list[i];
+      if (Array.isArray(st)) {
+        list2style(st);
+      } else {
+        Object.assign(tmpstyle, st)
+      }
     }
   }
+  if (Array.isArray(style)) {
+    list2style(style);
+    style = tmpstyle;
+  }
+  
+  let type = props.font ? props.font : (fontType ? fontType : 'nanum');
+  let font = 'nanumR';
+  if (type == 'nanum') {
+    font = style.fontWeight == 'bold' ? 'nanumB' : 'nanumR';
+  } else if (type == 'cute') {
+    font = style.fontWeight == 'bold' ? 'cuteB' : 'cuteR';
+  }
+  // style['fontFamily'] = font
+  // style.fontWeight = undefined
   return (
-    <PaperText {...props} style={[props.style, {fontFamily: font, fontWeight: undefined}]} >{props.children}</PaperText>
+    <PaperText {...props} style={[style, {fontFamily: font, fontWeight: undefined}]} >{props.children}</PaperText>
   );
 }
 

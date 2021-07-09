@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {Text, View, TouchableOpacity, ScrollView, StyleSheet} from 'react-native';
 import {Searchbar} from 'react-native-paper';
 
-function AutoComplete({candList, value, onClickText, onChangeText, placeholder, style}) {
+function AutoComplete({candList, value, onClickText, onChangeText, placeholder, maxCand, style}) {
   const [clicked, setClicked] = useState(false);
   const queryFilter = (x) => {
     if (x.includes(value)) {
@@ -15,6 +15,9 @@ function AutoComplete({candList, value, onClickText, onChangeText, placeholder, 
   let filteredCand = [];
   if (candList) {
     filteredCand = candList.filter(queryFilter);
+    if (maxCand && !isNaN(maxCand)) {
+      filteredCand = filteredCand.slice(0, maxCand);
+    }
   }
   const showCandList = () => {
     if (value && !clicked) {

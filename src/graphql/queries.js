@@ -89,7 +89,7 @@ export const getSignal = /* GraphQL */ `
       id
       fromID
       toID
-      alive
+      state
       checked
       message
       createdAt
@@ -142,7 +142,7 @@ export const listSignals = /* GraphQL */ `
         id
         fromID
         toID
-        alive
+        state
         checked
         message
         createdAt
@@ -551,7 +551,7 @@ export const signalByFrom = /* GraphQL */ `
         id
         fromID
         toID
-        alive
+        state
         checked
         message
         createdAt
@@ -582,7 +582,7 @@ export const signalByTo = /* GraphQL */ `
         id
         fromID
         toID
-        alive
+        state
         checked
         message
         createdAt

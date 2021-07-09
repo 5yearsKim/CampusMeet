@@ -32,7 +32,7 @@ type Signal @model
   id: ID!
   fromID: ID!
   toID: ID!
-  alive: Boolean!
+  state: String 
   checked: Boolean!
   message: String
   createdAt: AWSDateTime!

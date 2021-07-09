@@ -130,7 +130,7 @@ export const createSignal = /* GraphQL */ `
       id
       fromID
       toID
-      alive
+      state
       checked
       message
       createdAt
@@ -181,7 +181,7 @@ export const updateSignal = /* GraphQL */ `
       id
       fromID
       toID
-      alive
+      state
       checked
       message
       createdAt
@@ -232,7 +232,7 @@ export const deleteSignal = /* GraphQL */ `
       id
       fromID
       toID
-      alive
+      state
       checked
       message
       createdAt

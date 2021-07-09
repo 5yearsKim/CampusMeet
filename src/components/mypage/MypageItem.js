@@ -83,6 +83,60 @@ export function MyDeactivate({navigation}) {
   );
 }
 
+export function MyFont() {
+  const {theme, font, setFont} = useContext(ThemeContext);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [myFont, setMyFont] = useState(font);
+  const onOk = async () => {
+    const jsonValue = JSON.stringify(myFont);
+    try {
+      await AsyncStorage.setItem('font', jsonValue);
+      setFont(myFont);
+      setMenuOpen(false);
+    } catch (err) {
+      console.warn(err);
+    }
+  };
+  return (
+    <View>
+      <TouchableOpacity onPress={() => setMenuOpen(true)}>
+        <Text style={[styles.itemText, {color: theme.text}]}>폰트 설정</Text>
+      </TouchableOpacity>
+      <Portal>
+        <Dialog visible={menuOpen} onDismiss={() => setMenuOpen(false)}>
+          <Dialog.Content>
+            <View style={{flexDirection: 'row', alignItems: 'center'}}>
+              <RadioButton
+                value='off'
+                status={myFont == 'nanum' ? 'checked' : 'unchecked'}
+                onPress={() => setMyFont('nanum')}
+                color={config.colors.main.primary}
+              />
+              <Text style={styles.menuText} font='nanum'>일반</Text>
+            </View>
+            <View style={{flexDirection: 'row', alignItems: 'center'}}>
+              <RadioButton
+                value='on'
+                status={myFont == 'cute' ? 'checked' : 'unchecked'}
+                onPress={() => setMyFont('cute')}
+                color={config.colors.main.primary}
+              />
+              <Text style={styles.menuText} font='cute'>기요미</Text>
+            </View>
+          </Dialog.Content>
+          <Dialog.Actions>
+            <Button
+              onPress={() => onOk()}
+            >
+              OK
+            </Button>
+          </Dialog.Actions>
+        </Dialog>
+      </Portal>
+    </View>
+  );
+}
+
 export function MyPushNoti() {
   const {theme} = useContext(ThemeContext);
   const {pushNoti, setPushNoti} = useContext(MyContext);

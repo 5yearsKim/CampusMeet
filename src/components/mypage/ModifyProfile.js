@@ -30,6 +30,7 @@ function ModifyProfile({navigation}) {
   const [profileMessage, setProfileMessage] = useState('');
   const [profileDescription, setProfileDescription] = useState('');
 
+  const [errText, setErrText] = useState('');
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
 
@@ -54,8 +55,43 @@ function ModifyProfile({navigation}) {
     m_bringUser();
   }, []);
 
+  const checkFormat = () => {
+    if (name == '') {
+      setErrText('이름을 적어주세요');
+      return false;
+    }
+    if (isNaN(year)) {
+      setErrText('학번을 바르게 기입해주세요');
+      return false;
+    }
+    if (campus == '') {
+      setErrText('캠퍼스를 바르게 입력해주세요');
+      return false;
+    }
+    if (division == '') {
+      setErrText('학과를 바르게 입력해주세요');
+      return false;
+    }
+    if (imgList == '') {
+      setErrText('프로필 사진을 1개 이상 등록해주세요!');
+      return false;
+    }
+    if (profileMessage == '') {
+      setErrText('친구에게 한마디를 간단히 적어주세요.');
+      return false;
+    }
+    if (profileDescription == '') {
+      setErrText('자기소개를 적어주세요.');
+      return false;
+    }
+    return true;
+  };
 
   const onSubmit = async () => {
+    if (!checkFormat()) {
+      return;
+    }
+    setErrText('');
     setSubmitting(true);
     const orderedImgList = Object.keys(positions.value).sort((a, b) => positions.value[a] - positions.value[b]);
     try {
@@ -165,6 +201,9 @@ function ModifyProfile({navigation}) {
           '제출하기'
         }
       </Button>
+      {!errText == '' &&
+        <Text style={styles.errText}>{errText}</Text>
+      }
     </View>
   );
 }
@@ -186,6 +225,10 @@ const styles = StyleSheet.create({
   graduateText: {
     fontWeight: 'bold',
   },
+  errText: {
+    color: 'red',
+    margin: 5,
+  }
 });
 
 export default ModifyProfile;

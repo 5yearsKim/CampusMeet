@@ -2,12 +2,14 @@ import {API, graphqlOperation} from 'aws-amplify';
 import {createSignal, updateSignal, deleteSignal} from 'src/graphql/customMutations';
 import {signalByFrom, signalByFromToday, signalByTo} from 'src/graphql/customQueries';
 
+//signal state in ['alive', 'rejected', 'deleted']
+
 export async function makeSignal(fromID, toID, message) {
   const newSignal = {
     fromID: fromID,
     toID: toID,
     message: message,
-    alive: true,
+    state: 'alive',
     checked: false,
   };
   const signal = await API.graphql(
@@ -22,7 +24,7 @@ export async function bringReceivedSignal(toID) {
           signalByTo, {
             toID: toID,
             filter: {
-              alive: {eq: true},
+              state: {eq: 'alive'},
             },
           },
       ),
@@ -36,6 +38,9 @@ export async function bringSentSignal(fromID) {
           signalByFrom, {
             fromID: fromID,
             sortDirection: 'DESC',
+            filter: {
+              state: {ne: 'deleted'},
+            }
           },
       ),
   );
@@ -43,13 +48,14 @@ export async function bringSentSignal(fromID) {
 }
 
 export const removeSignal = async (signalID) => {
-  const targetSignal = {
-    id: signalID,
-  };
-  const rsp = await API.graphql(
-      graphqlOperation(deleteSignal, {input: targetSignal}),
-  );
-  return rsp;
+  // const targetSignal = {
+  //   id: signalID,
+  // };
+  // const rsp = await API.graphql(
+  //     graphqlOperation(deleteSignal, {input: targetSignal}),
+  // );
+  // return rsp;
+  await modifySignal(signalID, {state: 'deleted'});
 };
 
 export const modifySignal = async (signalID, signalData) => {
@@ -60,7 +66,7 @@ export const modifySignal = async (signalID, signalData) => {
 };
 
 export const rejectSignal = async (signalID) => {
-  await modifySignal(signalID, {alive: false});
+  await modifySignal(signalID, {state: 'rejected'});
 };
 
 export const checkSignal = async (signalID) => {

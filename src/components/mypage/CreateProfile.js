@@ -65,7 +65,7 @@ function CreateProfile({navigation}) {
 
   const checkFormat = () => {
     if (currentStep == 1) {
-      if (gender.length == 0) {
+      if (gender == '') {
         setErrText('성별을 선택해주세요');
         return false;
       }
@@ -74,24 +74,24 @@ function CreateProfile({navigation}) {
       setName(name.trim());
       setCampus(campus.trim());
       setDivision(division.trim());
-      if (name.length == 0) {
+      if (name == '') {
         setErrText('이름을 입력해주세요');
         return false;
       }
-      if (campus.length == 0) {
+      if (campus == '') {
         setErrText('캠퍼스를 입력해주세요');
         return false;
       }
-      if (department.length == 0) {
+      if (department == '') {
         setErrText('단과대를 선택해주세요');
         return false;
       }
-      if (division.length == 0) {
+      if (division == '') {
         setErrText('학과를 입력해주세요');
         return false;
       }
-      if (year.length == 0) {
-        setErrText('학번을 입력해주세요');
+      if (isNaN(year)) { 
+        setErrText('학번을 바르게 기입해주세요');
         return false;
       }
     }
@@ -334,7 +334,7 @@ function CreateProfile({navigation}) {
       />
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   genderSelectText: {

@@ -146,7 +146,7 @@ export const onCreateSignal = /* GraphQL */ `
       id
       fromID
       toID
-      alive
+      state
       checked
       message
       createdAt
@@ -194,7 +194,7 @@ export const onUpdateSignal = /* GraphQL */ `
       id
       fromID
       toID
-      alive
+      state
       checked
       message
       createdAt
@@ -242,7 +242,7 @@ export const onDeleteSignal = /* GraphQL */ `
       id
       fromID
       toID
-      alive
+      state
       checked
       message
       createdAt

@@ -50,7 +50,7 @@ function SentSignalItem({item}) {
         </View>
         <View style={styles.bottomContainer}>
           <Text style={styles.timeText}>{relativeTimePrettify(item.createdAt, 'week')}</Text>
-          {item.alive?
+          {item.state == 'alive'?
             <Button
               onPress={() => setAlertOpen(true)}
               labelStyle={styles.buttonText}

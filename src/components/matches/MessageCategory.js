@@ -41,7 +41,7 @@ export function ImageMessage({imageKey, isMyMessage}) {
   return (
     <View style={styles.imageContainer}>
       <TouchableOpacity onPress={() => setModalVisible(true)}>
-        <KeyImage imgKey={imageKey} style={styles.image}/>
+        <KeyImage imgKey={imageKey} cached={true} style={styles.image}/>
       </TouchableOpacity>
       <Modal visible={modalVisible}>
         <ImageViewer imageKeys={[imageKey]} modalSwitch={modalSwitch}/>

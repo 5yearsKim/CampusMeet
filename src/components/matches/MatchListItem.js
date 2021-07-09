@@ -1,5 +1,5 @@
 import React, {useState, useContext} from 'react';
-import {Dimensions, View, Image, TouchableOpacity, StyleSheet} from 'react-native';
+import {Dimensions,  View, Image, TouchableOpacity, StyleSheet} from 'react-native';
 import {Portal, Dialog} from 'react-native-paper';
 import Text from 'src/blocks/Text';
 import Badge from 'src/blocks/Badge';
