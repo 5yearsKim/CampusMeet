@@ -41,10 +41,12 @@ export default function SendSignalModal({toID, popupVisible, setPopupVisible, on
     <View>
       <Modal visible={popupVisible} onRequestClose={() => setPopupVisible(false)} transparent={true}>
         <TouchableWithoutFeedback onPress={() => setPopupVisible(false)}>
-          <View style={styles.modalContainer}>
+          <KeyboardAvoidingView
+            behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+            style={styles.modalContainer}
+          >
             <TouchableWithoutFeedback onPress={() => {}}>
-              <KeyboardAvoidingView
-                behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+              <View
                 style={[styles.popupContainer, {backgroundColor: theme.background}]}
               >
                 <Text style={styles.popupTitleText}>한 줄로 메세지를 전해보세요!</Text>
@@ -54,8 +56,9 @@ export default function SendSignalModal({toID, popupVisible, setPopupVisible, on
                   placeholder='메세지가 상대에게 전달됩니다.'
                   value={message}
                   onChangeText={(text) => setMessage(text)}
+                  maxLength={300}
                   multiline={true}
-                  style = {{backgroundColor: 'transparent'}}
+                  style = {{backgroundColor: 'transparent', maxHeight: 120}}
                 />
                 {popupError.length > 0 &&
                   <Text style={styles.errorText}>{popupError}</Text>
@@ -85,9 +88,9 @@ export default function SendSignalModal({toID, popupVisible, setPopupVisible, on
                     전송
                   </Button>
                 </View>
-              </KeyboardAvoidingView>
+              </View>
             </TouchableWithoutFeedback>
-          </View>
+          </KeyboardAvoidingView>
         </TouchableWithoutFeedback>
       </Modal>
       <SimpleAlert
