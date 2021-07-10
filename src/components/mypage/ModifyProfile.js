@@ -56,7 +56,7 @@ function ModifyProfile({navigation}) {
   }, []);
 
   const checkFormat = () => {
-    if (name == '') {
+    if (name.trim() == '') {
       setErrText('이름을 적어주세요');
       return false;
     }
@@ -64,11 +64,11 @@ function ModifyProfile({navigation}) {
       setErrText('학번을 바르게 기입해주세요');
       return false;
     }
-    if (campus == '') {
+    if (campus.trim() == '') {
       setErrText('캠퍼스를 바르게 입력해주세요');
       return false;
     }
-    if (division == '') {
+    if (division.trim() == '') {
       setErrText('학과를 바르게 입력해주세요');
       return false;
     }
@@ -76,11 +76,11 @@ function ModifyProfile({navigation}) {
       setErrText('프로필 사진을 1개 이상 등록해주세요!');
       return false;
     }
-    if (profileMessage == '') {
+    if (profileMessage.trim() == '') {
       setErrText('친구에게 한마디를 간단히 적어주세요.');
       return false;
     }
-    if (profileDescription == '') {
+    if (profileDescription.trim() == '') {
       setErrText('자기소개를 적어주세요.');
       return false;
     }

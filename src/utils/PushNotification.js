@@ -33,6 +33,14 @@ export async function sendPushNotification(userID, title, body, data) {
   });
 }
 
+export const sendSignalNotification = (toID) => {
+  sendPushNotification(toID, 'New Signal', '누군가 나에게 시그널을 보냈어요!', {type: 'signal'});
+}
+
+export const sendMatchNotification = (senderID) => {
+  sendPushNotification(senderID, 'New Match', '새로운 매치가 있어요!', {type: 'match'})
+}
+
 export async function registerForPushNotificationsAsync() {
   let token;
   if (Constants.isDevice) {

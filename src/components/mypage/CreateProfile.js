@@ -71,22 +71,19 @@ function CreateProfile({navigation}) {
       }
     }
     if (currentStep == 2) {
-      setName(name.trim());
-      setCampus(campus.trim());
-      setDivision(division.trim());
-      if (name == '') {
+      if (name.trim() == '') {
         setErrText('이름을 입력해주세요');
         return false;
       }
-      if (campus == '') {
+      if (campus.trim() == '') {
         setErrText('캠퍼스를 입력해주세요');
         return false;
       }
-      if (department == '') {
+      if (department.trim() == '') {
         setErrText('단과대를 선택해주세요');
         return false;
       }
-      if (division == '') {
+      if (division.trim() == '') {
         setErrText('학과를 입력해주세요');
         return false;
       }
@@ -100,11 +97,11 @@ function CreateProfile({navigation}) {
         setErrText('프로필 사진을 1개 이상 등록해주세요!');
         return false;
       }
-      if (profileMessage == '') {
+      if (profileMessage.trim() == '') {
         setErrText('친구에게 한마디를 간단히 적어주세요.');
         return false;
       }
-      if (profileMessage == '') {
+      if (profileDescription.trim() == '') {
         setErrText('자기소개를 적어주세요.');
         return false;
       }

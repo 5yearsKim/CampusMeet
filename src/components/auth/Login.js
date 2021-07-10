@@ -80,8 +80,9 @@ function Login(props) {
           mode='contained'
           compact={true}
           onPress={onSubmit}
+          labelStyle={styles.buttonText}
         >
-          <Text style={styles.buttonText}>로그인</Text>
+          로그인
         </Button>
       </View>
     </View>

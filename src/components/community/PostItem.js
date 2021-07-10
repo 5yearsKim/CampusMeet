@@ -14,7 +14,7 @@ function ImgPreview({imageKeys}) {
   }
   return (
     <View style={{height: 60, justifyContent: 'center', alignItem: 'center'}}>
-      <KeyImage style={styles.image} imgKey={imageKeys[0]} cached={false}/>
+      <KeyImage style={styles.image} imgKey={imageKeys[0]} cached={true}/>
     </View>
   );
 }

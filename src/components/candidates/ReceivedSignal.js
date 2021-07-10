@@ -5,6 +5,7 @@ import ReceivedSignalItem from './ReceivedSignalItem';
 import {MyContext, UserContext, BadgeContext} from 'src/context';
 import {makeMatch} from 'src/utils/Match';
 import {bringReceivedSignal, removeSignal, rejectSignal} from 'src/utils/Signal';
+import {sendMatchNotification} from 'src/utils/PushNotification';
 
 function ReceivedSignal({navigation}) {
   const [userList, setUserList] = useState([]);
@@ -47,6 +48,7 @@ function ReceivedSignal({navigation}) {
     try {
       await makeMatch(userSub, senderID);
       await removeSignal(signalID);
+      sendMatchNotification(senderID);
       setUserList(userList.filter((item) => item.id != signalID));
       setRefreshMatch(!refreshMatch);
     } catch (err) {

@@ -14,7 +14,7 @@ function TopIntro({user, navigation}) {
   }
   const {theme} = useContext(ThemeContext);
   return (
-    <View style={{alignItems: 'center'}}>
+    <View style={{alignItems: 'center', minHeight: 100}}>
       <TouchableOpacity onPress={() => navigation.navigate('ViewProfile', {userID: user.id})}>
         {user.imageKeys.length > 0 ?
           <KeyImage

@@ -36,6 +36,13 @@ function InputBox({route}) {
   }, []);
 
   const sendMessage = async (content, type) => {
+    if (type == 'text') {
+      const trimmed = message.trim();
+      setMessage(trimmed);
+      if (trimmed == '') {
+        return ;
+      }
+    }
     try {
       await makeMessage(userSub, chatRoomID, content, type);
     } catch (err) {

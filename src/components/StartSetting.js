@@ -73,6 +73,8 @@ export default function StartSetting({navigation, user}) {
         });
       } else if (noti.data.type == 'signal') {
         navigation.navigate('Signal');
+      } else if (noti.data.type == 'match') {
+        navigation.navigate('Match');
       }
     });
 

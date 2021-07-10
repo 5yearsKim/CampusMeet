@@ -34,7 +34,9 @@ function CommentInput({board, post, refresh}) {
   }, [nested.isNested]);
 
   const onSend = async () => {
-    if (message == '') {
+    const trimmed = message.trim()
+    setMessage(trimmed);
+    if (trimmed == '') {
       return;
     }
     if (nested.isNested) {

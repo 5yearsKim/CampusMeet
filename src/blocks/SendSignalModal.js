@@ -5,7 +5,7 @@ import {Button, TextInput} from 'react-native-paper';
 import {View, KeyboardAvoidingView, Dimensions, TouchableWithoutFeedback, Modal, StyleSheet} from 'react-native';
 import {MyContext, ThemeContext, UserContext} from 'src/context';
 import {makeSignal} from 'src/utils/Signal';
-import {sendPushNotification} from 'src/utils/PushNotification';
+import {sendSignalNotification} from 'src/utils/PushNotification';
 
 
 const {width, height} = Dimensions.get('window');
@@ -31,7 +31,7 @@ export default function SendSignalModal({toID, popupVisible, setPopupVisible, on
       setNewCand(true);
       setSignalCnt(signalCnt + 1);
       await makeSignal(userSub, toID, message);
-      sendPushNotification(toID, 'New Signal', '누군가 나에게 시그널을 보냈어요!', {type: 'Signal'});
+      sendSignalNotification(toID);
     } catch (err) {
       console.warn(err);
     }
@@ -74,14 +74,14 @@ export default function SendSignalModal({toID, popupVisible, setPopupVisible, on
                   <Button
                     mode='text'
                     onPress={() => {
-                      if (message.trim().length == 0) {
+                      if (message.trim() == '') {
                         setPopupError('메세지를 입력해주세요.');
                       } else {
                         onSendSignal();
-                        setMessage('');
                         setPopupVisible(false);
                         setAlertOpen(true);
                       }
+                      setMessage('');
                     }}
                     labelStyle={styles.popupButtonText}
                   >

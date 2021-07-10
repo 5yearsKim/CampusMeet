@@ -38,7 +38,7 @@ export function PostImagesView({imgList}) {
       );
     } else {
       return (
-        <KeyImage imgKey={item} cached={false} style={styles.postImage}/>
+        <KeyImage imgKey={item} cached={true} style={styles.postImage}/>
       );
     }
   };

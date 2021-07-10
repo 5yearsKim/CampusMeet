@@ -56,11 +56,10 @@ function CreatePost({navigation, route}) {
             multiline={true}
             placeholderTextColor={theme.subText}
             onChangeText={(text) => setContent(text)}
-            placeholder='내용을 입력해주세요.'
-            style={[styles.contentInput, {color: theme.text}]}
+            placeholder='내용을 입력해주세요.'  
+            style={[styles.contentInput]}
           />
         </View>
-        <Text style={{color: theme.subText}}>욕설 금지! 비방어 금지! 이쁜말만 써주세요</Text>
         {/* </ScrollView> */}
         <View style={{alignItems: 'center'}}>
           <Button
@@ -78,6 +77,12 @@ function CreatePost({navigation, route}) {
           </Button>
         </View>
         <PostImagesView imgList={imgList}/>
+        <View style={styles.notiBox}>
+        <Text style={[styles.notiTitle, {color: theme.subText}]}>캠퍼스밋 커뮤니티 수칙</Text>
+        <Text style={[styles.notiItem, {color: theme.subText}]}>1. 욕설과 비방은 금지! 이쁜말만 써주세요.</Text>
+        <Text style={[styles.notiItem, {color: theme.subText}]}>2. 홍보 및 판매 목적의 글은 삼가주세요. </Text>
+        <Text style={[styles.notiItem, {color: theme.subText}]}>3. 그 밖에 타인에게 불쾌감을 주는 글은 운영자에게 삭제될 수 있어요.</Text>
+        </View>
       </ScrollView>
       <PostImagesCreate boardID={board.id} imgList={imgList} setImgList={setImgList}/>
     </View>
@@ -104,6 +109,20 @@ const styles = StyleSheet.create({
     width: 250,
     marginTop: 10,
   },
+  notiBox: {
+    margin: 20,
+    padding: 20,
+    borderRadius: 20,
+    backgroundColor: '#eeeedd',
+  },
+  notiTitle: {
+    fontSize: 15,
+    fontWeight: 'bold',
+    marginBottom: 5,
+  },
+  notiItem: {
+    marginBottom: 3,
+  }
 });
 
 export default CreatePost;
