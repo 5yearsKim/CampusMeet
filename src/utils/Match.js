@@ -25,6 +25,11 @@ export async function bringMatchByChatRoom(chatRoomID) {
       graphqlOperation(
           matchByChatRoom, {
             chatRoomID: chatRoomID,
+            filter: {
+              deleted: {
+                eq: false,
+              },
+            },
           },
       ),
   );

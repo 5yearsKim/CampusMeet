@@ -155,6 +155,7 @@ function ModifyProfile({navigation}) {
         value={name}
         onChangeText={(text) => setName(text)}
         style={styles.textInput}
+        maxLength={30}
       />
       {graduateButton()}
       <TextInput
@@ -163,6 +164,7 @@ function ModifyProfile({navigation}) {
         keyboardType='numeric'
         onChangeText={(text) => setYear(text)}
         style={styles.textInput}
+        maxLength={4}
       />
       <TextInput
         label='캠퍼스'
@@ -175,12 +177,14 @@ function ModifyProfile({navigation}) {
         value={division}
         onChangeText={(text) => setDivision(text)}
         style={styles.textInput}
+        maxLength={20}
       />
       <TextInput
         label='친구에게 한마디'
         value={profileMessage}
         onChangeText={(text) => setProfileMessage(text)}
         style={styles.textInput}
+        maxLength={300}
       />
       <TextInput
         label='자기 소개'
@@ -188,6 +192,7 @@ function ModifyProfile({navigation}) {
         onChangeText={(text) => setProfileDescription(text)}
         style={styles.textInput}
         multiline={true}
+        maxLength={3000}
       />
       <Button
         mode="contained"

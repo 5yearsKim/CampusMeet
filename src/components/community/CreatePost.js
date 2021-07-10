@@ -31,9 +31,9 @@ function CreatePost({navigation, route}) {
     navigation.goBack();
   };
   const checkDisabled= () => {
-    if (title == '') {
+    if (title.trim() == '') {
       return true;
-    } else if (content == '') {
+    } else if (content.trim() == '') {
       return true;
     }
     return false;
@@ -49,6 +49,7 @@ function CreatePost({navigation, route}) {
           onChangeText={(text) => setTitle(text)}
           placeholder='제목'
           style={styles.titleInput}
+          maxLength={100}
         />
         <View style={styles.contentBox}>
           <TextInput
@@ -56,8 +57,10 @@ function CreatePost({navigation, route}) {
             multiline={true}
             placeholderTextColor={theme.subText}
             onChangeText={(text) => setContent(text)}
-            placeholder='내용을 입력해주세요.'  
+            placeholder='내용을 입력해주세요.'
+            placeholderTextColor='#bbbbbb'
             style={[styles.contentInput]}
+            maxLength={2000}
           />
         </View>
         {/* </ScrollView> */}

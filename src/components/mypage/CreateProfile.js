@@ -214,6 +214,7 @@ function CreateProfile({navigation}) {
           value={name}
           onChangeText={(text) => setName(text)}
           style={styles.textInput}
+          maxLength={30}
         />
         <View style={{marginTop: 10, marginBottom: 5}}>
           <AutoComplete
@@ -242,6 +243,7 @@ function CreateProfile({navigation}) {
             defaultValue={division}
             onChangeText={(text) => setDivision(text)}
             style={styles.textInput}
+            maxLength={20}
           />
         </View>
         <View>
@@ -253,6 +255,7 @@ function CreateProfile({navigation}) {
             defaultValue={year}
             onChangeText={(text) => setYear(String(text))}
             style={styles.textInput}
+            maxLength={4}
           />
         </View>
       </ScrollView>
@@ -272,6 +275,7 @@ function CreateProfile({navigation}) {
           value={profileMessage}
           onChangeText={(text) => setProfileMessage(text)}
           style={styles.textInput}
+          maxLength={300}
         />
         <TextInput
           label='자기 소개'
@@ -279,6 +283,7 @@ function CreateProfile({navigation}) {
           onChangeText={(text) => setProfileDescription(text)}
           style={[styles.textInput, {height: 80}]}
           multiline={true}
+          maxLength={3000}
         />
         {errText.length > 0 &&
           <Text style={styles.errText}>{errText}</Text>

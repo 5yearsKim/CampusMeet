@@ -62,8 +62,13 @@ function PostHeader({post, board}) {
         <Text style={[styles.timeText, {color: theme.subText}]}>{visTime}</Text>
       </View>
       <Text style={[styles.contentText, {color: theme.subText}]}>{post.content}</Text>
-      <Button icon={() => <AntDesign name='like2'/>} mode='outlined' onPress={onClickLike} style={styles.like}>
-        {likeCnt}
+      <Button
+        icon={() => <AntDesign name='like2' size={15}/>}
+        mode='outlined'
+        onPress={onClickLike}
+        style={styles.like}
+      >
+        {String(likeCnt)}
       </Button>
       {post.imageKeys.length > 0 && (
         <View>
@@ -95,7 +100,7 @@ const styles = StyleSheet.create({
   },
   like: {
     width: 50,
-    height: 30,
+    minHeight: 30,
     justifyContent: 'center',
     marginBottom: 10,
   },

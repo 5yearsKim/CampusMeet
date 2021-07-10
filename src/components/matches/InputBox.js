@@ -1,4 +1,4 @@
-import React, {useEffect, useState, useContext} from 'react';
+import React, {useState, useContext} from 'react';
 import {StyleSheet, ActivityIndicator, View, TextInput, TouchableOpacity, KeyboardAvoidingView, Platform} from 'react-native';
 import {Portal, Modal} from 'react-native-paper';
 import * as ImagePicker from 'expo-image-picker';
@@ -8,41 +8,19 @@ import {GifSearch, poweredByGiphyLogoGrey} from 'react-native-gif-search';
 import {useKeyboard} from 'src/blocks/Keyboard';
 import {MyContext} from 'src/context';
 import {makeMessage} from 'src/utils/Chat';
-import {bringMatchByChatRoom} from 'src/utils/Match';
 import {sendPushNotification} from 'src/utils/PushNotification';
 import config from 'src/config';
 
-function InputBox({route}) {
+function InputBox({route, chatUser}) {
   const {chatRoomID} = route.params;
   const {user, name}= useContext(MyContext);
   const userSub = user.attributes.sub;
   const [message, setMessage] = useState('');
-  const [chatUser, setChatUser] = useState([]);
   const [gifVisible, setGifVisible] = useState(false);
   const [sending, setSending] = useState(false);
   const {iosPadding} = useKeyboard();
 
-  useEffect(() => {
-    const m_bringMatchByChatRoom = async () => {
-      try {
-        const matches = await bringMatchByChatRoom(chatRoomID);
-        setChatUser(matches.map((item) => ({id: item.toID, name: item.matcher.name})));
-      } catch (err) {
-        console.warn(err);
-        setChatUser([]);
-      }
-    };
-    m_bringMatchByChatRoom();
-  }, []);
-
   const sendMessage = async (content, type) => {
-    if (type == 'text') {
-      const trimmed = message.trim();
-      setMessage(trimmed);
-      if (trimmed == '') {
-        return ;
-      }
-    }
     try {
       await makeMessage(userSub, chatRoomID, content, type);
     } catch (err) {
@@ -100,7 +78,11 @@ function InputBox({route}) {
 
   const onClickSendIcon = () => {
     if (message) {
-      sendMessage(message, 'text');
+      if (message.trim() == '') {
+        setMessage('');
+        return ;
+      }
+      sendMessage(message.trim(), 'text');
       setMessage('');
     } else {
       onSendImage();

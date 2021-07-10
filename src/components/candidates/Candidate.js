@@ -1,7 +1,8 @@
 import React, {useState, useEffect, useContext} from 'react';
-import {View, FlatList, StyleSheet} from 'react-native';
+import {View, FlatList, TouchableOpacity, StyleSheet} from 'react-native';
 import Text from 'src/blocks/Text';
 import NotiText from 'src/blocks/NotiText';
+import SimpleAlert from 'src/blocks/SimpleAlert';
 import {Button} from 'react-native-paper';
 import {FontAwesome5} from '@expo/vector-icons';
 import {bringCandidate} from 'src/utils/User';
@@ -23,6 +24,7 @@ function CandidateHeader({loading}) {
   const {theme} = useContext(ThemeContext);
   const {signalCnt} = useContext(UserContext);
   const [filterOpen, setFilterOpen] = useState(false);
+  const [alertOpen, setAlertOpen] = useState(false);
   const todaySignal = () => {
     if (signalCnt >= signalMax) {
       return (
@@ -31,12 +33,21 @@ function CandidateHeader({loading}) {
     } else {
       return (
         <View style={{flexDirection: 'row', alignItems: 'center'}}>
-          <Text style={[styles.heartText, {color: theme.subText}]}>오늘의 시그널: </Text>
+          <TouchableOpacity onPress={() => setAlertOpen(true)}>
+            <Text style={[styles.heartText, {color: theme.subText}]}>오늘의 시그널: </Text>
+          </TouchableOpacity>
           {[...Array(Math.max(0, signalMax - signalCnt))].map((_, index) => {
             return (
               <FontAwesome5 name="heartbeat" size={24} color="pink" key={index} style={{margin: 2}}/>
             );
           })}
+          <SimpleAlert
+            modalOpen={alertOpen}
+            setModalOpen={setAlertOpen}
+            title='오늘의 시그널'
+            content='친해지고 싶은 친구에게 시그널을 보내보아요. 시그널은 매일 3개씩 충전돼요.'
+            onOk={() => {}}
+          />
         </View>
       );
     }

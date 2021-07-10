@@ -47,11 +47,21 @@ export function MyDeactivate({navigation}) {
   const [alertOpen, setAlertOpen] = useState(false);
   const [confirmOpen, setConfirmOpen] = useState(false);
 
+  const onLogout = async () => {
+    try {
+      await logout(auth);
+      handleNotification(false);
+    } catch (err) {
+      console.warn(err);
+    }
+  };
+
   const deactivate = async () => {
     try {
       await modifyUser(userSub, {status: 'inactive'});
-      setRefreshMypage(!refreshMypage);
-      setConfirmOpen(true);
+      // setConfirmOpen(true);
+      // setRefreshMypage(!refreshMypage);
+      await onLogout();
     } catch (err) {
       console.warn(err);
     }
@@ -86,7 +96,7 @@ export function MyDeactivate({navigation}) {
 export function MyFont() {
   const {theme, font, setFont} = useContext(ThemeContext);
   const [menuOpen, setMenuOpen] = useState(false);
-  const [myFont, setMyFont] = useState(font);
+  const [myFont, setMyFont] = useState(font ? font : 'nanum');
   const onOk = async () => {
     const jsonValue = JSON.stringify(myFont);
     try {
@@ -121,7 +131,7 @@ export function MyFont() {
                 onPress={() => setMyFont('cute')}
                 color={config.colors.main.primary}
               />
-              <Text style={styles.menuText} font='cute'>기요미</Text>
+              <Text style={styles.menuText} font='cute'>귀여운</Text>
             </View>
           </Dialog.Content>
           <Dialog.Actions>
