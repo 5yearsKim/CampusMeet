@@ -26,7 +26,7 @@
     }
   },
   "storage": {
-    "campusMeet": {
+    "campusResource": {
       "service": "S3",
       "providerPlugin": "awscloudformation"
     }

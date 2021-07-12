@@ -1,4 +1,4 @@
-const mode = 'prod';
+const mode = 'dev';
 const isLocal = false;
 export const backURL = isLocal ? 'http://127.0.0.1:8000' :
   mode == 'dev' ? 'https://9pgkfe0rs0.execute-api.ap-northeast-2.amazonaws.com/api' :

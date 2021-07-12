@@ -128,7 +128,7 @@ function UploadPicture({imgList, setImgList, positions}) {
           // const key = result.uri.split('/').pop();
           // const awsrsp = await Storage.put(path + key, blob);
           // setImgList([...imgList, awsrsp.key]);
-          setImgList([...imgList, result.uri]);
+          setImgList([result.uri, ...imgList]);
         } catch (err) {
           console.warn(err);
         }
