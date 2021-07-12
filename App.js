@@ -101,7 +101,7 @@ export default function App() {
         setFont(fontData);
       }
     };
-    bringFont()
+    bringFont();
   }, []);
   // user state load
   useEffect(() => {
@@ -136,7 +136,7 @@ export default function App() {
     return {
       scheme: scheme,
       setScheme: setScheme,
-      font: font, 
+      font: font,
       setFont, setFont,
       theme: config.themes[scheme],
     };

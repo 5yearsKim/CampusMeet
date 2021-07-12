@@ -87,7 +87,7 @@ function CreateProfile({navigation}) {
         setErrText('학과를 입력해주세요');
         return false;
       }
-      if (isNaN(year)) { 
+      if (isNaN(year)) {
         setErrText('학번을 바르게 기입해주세요');
         return false;
       }
@@ -138,6 +138,7 @@ function CreateProfile({navigation}) {
         setSubmitting(true);
         const orderedImgList = Object.keys(positions.value).sort((a, b) => positions.value[a] - positions.value[b]);
         const newImgList = await imageListToS3(orderedImgList, `profile/${userSub}`);
+        // const newImgList = [];
         await makeUser(userSub, gender, name, campus, graduate, year, department, division, newImgList, profileMessage, profileDescription);
         await setupIndividual();
         navigation.reset({index: 0, routes: [{name: 'Home'}]});

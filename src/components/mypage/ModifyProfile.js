@@ -8,8 +8,16 @@ import {Button, TextInput, RadioButton} from 'react-native-paper';
 import {MyContext, UserContext} from 'src/context';
 import {bringUser, modifyUser} from 'src/utils/User';
 import {imageListToS3} from 'src/utils/UploadPicture';
+import {Storage} from 'aws-amplify';
 
 function ModifyProfile({navigation}) {
+  // useEffect(() => {
+  //   console.log(Storage);
+  //   const temp = async () => {
+  //     await Storage.put('test.txt', 'hello', {level: 'public'});
+  //   };
+  //   temp();
+  // }, []);
   const auth = useContext(MyContext);
   const userSub = auth.user.attributes.sub;
   const {refreshMypage, setRefreshMypage} = useContext(UserContext);
