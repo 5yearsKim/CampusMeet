@@ -15,8 +15,6 @@ export default function StartSetting({navigation, user}) {
   // const notificationListener = useRef();
   const responseListener = useRef();
 
-  const [token, setToken] = useState();
-
   // match badge Setting
   useEffect(() => {
     const settingMatchBadge = async () => {
@@ -89,14 +87,14 @@ export default function StartSetting({navigation, user}) {
       if (!user) {
         return;
       }
-      const token = await registerForPushNotificationsAsync();
-      setToken(token);
-      if (token) {
-        try {
-          modifyUser(auth.user.attributes.sub, {pushToken: token});
-        } catch (err) {
-          console.warn(err);
-        }
+      let token = await registerForPushNotificationsAsync();
+      if (!token) {
+        token = null;
+      }
+      try {
+        modifyUser(auth.user.attributes.sub, {pushToken: token});
+      } catch (err) {
+        console.warn(err);
       }
     };
     tokenSetting();

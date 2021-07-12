@@ -6,6 +6,7 @@ import SendSignalModal from 'src/blocks/SendSignalModal';
 import {Button} from 'react-native-paper';
 import config from 'src/config';
 import {ThemeContext, UserContext} from 'src/context';
+import {relativeTimePrettify} from 'src/utils/Time';
 
 function CandidateDetail({item, useAction, clearModal}) {
   // const auth = useContext(MyContext);
@@ -50,6 +51,10 @@ function CandidateDetail({item, useAction, clearModal}) {
           <View style={styles.itemWrapper}>
             <Text style={styles.categoryText}>소개</Text>
             <Text style={styles.detailText}>{item.profileDescription}</Text>
+          </View>
+          <View style={styles.itemWrapper}>
+            <Text style={styles.categoryText}>마지막 접속일</Text>
+            <Text style={styles.detailText}>{relativeTimePrettify(item.updatedAt)}</Text>
           </View>
         </View>
       </View>
