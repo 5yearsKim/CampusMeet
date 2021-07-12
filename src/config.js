@@ -1,5 +1,8 @@
+const mode = 'prod';
 const isLocal = false;
-export const backURL = isLocal ? 'http://127.0.0.1:8000' : 'https://9pgkfe0rs0.execute-api.ap-northeast-2.amazonaws.com/api';
+export const backURL = isLocal ? 'http://127.0.0.1:8000' :
+  mode == 'dev' ? 'https://9pgkfe0rs0.execute-api.ap-northeast-2.amazonaws.com/api' :
+  'https://4cs4ndyfd2.execute-api.ap-northeast-2.amazonaws.com/api';
 
 export default config = {
   campus: {
