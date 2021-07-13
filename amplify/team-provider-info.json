@@ -1,19 +1,19 @@
 {
-  "dev": {
+  "prod": {
     "awscloudformation": {
-      "AuthRoleName": "amplify-webcampus-dev-153812-authRole",
-      "UnauthRoleArn": "arn:aws:iam::303045752476:role/amplify-webcampus-dev-153812-unauthRole",
-      "AuthRoleArn": "arn:aws:iam::303045752476:role/amplify-webcampus-dev-153812-authRole",
+      "AuthRoleName": "amplify-campusmeet-prod-143922-authRole",
+      "UnauthRoleArn": "arn:aws:iam::303045752476:role/amplify-campusmeet-prod-143922-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::303045752476:role/amplify-campusmeet-prod-143922-authRole",
       "Region": "ap-northeast-2",
-      "DeploymentBucketName": "amplify-webcampus-dev-153812-deployment",
-      "UnauthRoleName": "amplify-webcampus-dev-153812-unauthRole",
-      "StackName": "amplify-webcampus-dev-153812",
-      "StackId": "arn:aws:cloudformation:ap-northeast-2:303045752476:stack/amplify-webcampus-dev-153812/35bd5e80-7346-11eb-9295-06023b59cc4c",
-      "AmplifyAppId": "d3threcsxauzip"
+      "DeploymentBucketName": "amplify-campusmeet-prod-143922-deployment",
+      "UnauthRoleName": "amplify-campusmeet-prod-143922-unauthRole",
+      "StackName": "amplify-campusmeet-prod-143922",
+      "StackId": "arn:aws:cloudformation:ap-northeast-2:303045752476:stack/amplify-campusmeet-prod-143922/af672d30-e39c-11eb-910d-0a988422b0d0",
+      "AmplifyAppId": "d9yw0y7w68xi2"
     },
     "categories": {
       "auth": {
-        "webcampus0f42a810": {
+        "campusmeetf778f6fc": {
           "userPoolId": "ap-northeast-2_RVWkkCfhn",
           "userPoolName": "campusUser",
           "webClientId": "5gncum46eo4v1umnqvfqla646u",

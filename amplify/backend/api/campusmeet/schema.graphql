@@ -150,5 +150,3 @@ type NestedComment
   likes: [LikeComment] @connection(keyName: "byComment", fields: ["id"])
   createdAt: AWSDateTime!
 }
-
-

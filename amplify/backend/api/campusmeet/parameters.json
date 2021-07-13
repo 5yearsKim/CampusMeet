@@ -1,10 +1,10 @@
 {
-  "AppSyncApiName": "webcampus",
+  "AppSyncApiName": "campusmeet",
   "DynamoDBBillingMode": "PAY_PER_REQUEST",
   "DynamoDBEnableServerSideEncryption": false,
   "AuthCognitoUserPoolId": {
     "Fn::GetAtt": [
-      "authwebcampus0b8e7c53",
+      "authcampusmeetf778f6fc",
       "Outputs.UserPoolId"
     ]
   }
