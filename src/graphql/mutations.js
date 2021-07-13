@@ -305,6 +305,22 @@ export const createMatch = /* GraphQL */ `
       chatRoom {
         id
         lastMessageID
+        lastMessage {
+          id
+          type
+          createdAt
+          content
+          userID
+          chatRoomID
+          checked
+          updatedAt
+        }
+        matches {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
         createdAt
         updatedAt
       }
@@ -345,6 +361,22 @@ export const updateMatch = /* GraphQL */ `
       chatRoom {
         id
         lastMessageID
+        lastMessage {
+          id
+          type
+          createdAt
+          content
+          userID
+          chatRoomID
+          checked
+          updatedAt
+        }
+        matches {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
         createdAt
         updatedAt
       }
@@ -385,6 +417,22 @@ export const deleteMatch = /* GraphQL */ `
       chatRoom {
         id
         lastMessageID
+        lastMessage {
+          id
+          type
+          createdAt
+          content
+          userID
+          chatRoomID
+          checked
+          updatedAt
+        }
+        matches {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
         createdAt
         updatedAt
       }
@@ -410,12 +458,55 @@ export const createChatRoom = /* GraphQL */ `
         userID
         chatRoomID
         checked
+        user {
+          id
+          gender
+          name
+          campus
+          graduate
+          year
+          department
+          division
+          imageKeys
+          profileMessage
+          profileDescription
+          status
+          pushToken
+          createdAt
+          updatedAt
+        }
+        chatRoom {
+          id
+          lastMessageID
+          createdAt
+          updatedAt
+        }
         updatedAt
       }
       matches {
+        items {
+          id
+          fromID
+          toID
+          chatRoomID
+          createdAt
+          deleted
+          checked
+          updatedAt
+        }
         nextToken
       }
       messages {
+        items {
+          id
+          type
+          createdAt
+          content
+          userID
+          chatRoomID
+          checked
+          updatedAt
+        }
         nextToken
       }
       createdAt
@@ -439,12 +530,55 @@ export const updateChatRoom = /* GraphQL */ `
         userID
         chatRoomID
         checked
+        user {
+          id
+          gender
+          name
+          campus
+          graduate
+          year
+          department
+          division
+          imageKeys
+          profileMessage
+          profileDescription
+          status
+          pushToken
+          createdAt
+          updatedAt
+        }
+        chatRoom {
+          id
+          lastMessageID
+          createdAt
+          updatedAt
+        }
         updatedAt
       }
       matches {
+        items {
+          id
+          fromID
+          toID
+          chatRoomID
+          createdAt
+          deleted
+          checked
+          updatedAt
+        }
         nextToken
       }
       messages {
+        items {
+          id
+          type
+          createdAt
+          content
+          userID
+          chatRoomID
+          checked
+          updatedAt
+        }
         nextToken
       }
       createdAt
@@ -468,12 +602,55 @@ export const deleteChatRoom = /* GraphQL */ `
         userID
         chatRoomID
         checked
+        user {
+          id
+          gender
+          name
+          campus
+          graduate
+          year
+          department
+          division
+          imageKeys
+          profileMessage
+          profileDescription
+          status
+          pushToken
+          createdAt
+          updatedAt
+        }
+        chatRoom {
+          id
+          lastMessageID
+          createdAt
+          updatedAt
+        }
         updatedAt
       }
       matches {
+        items {
+          id
+          fromID
+          toID
+          chatRoomID
+          createdAt
+          deleted
+          checked
+          updatedAt
+        }
         nextToken
       }
       messages {
+        items {
+          id
+          type
+          createdAt
+          content
+          userID
+          chatRoomID
+          checked
+          updatedAt
+        }
         nextToken
       }
       createdAt
@@ -514,6 +691,22 @@ export const createMessage = /* GraphQL */ `
       chatRoom {
         id
         lastMessageID
+        lastMessage {
+          id
+          type
+          createdAt
+          content
+          userID
+          chatRoomID
+          checked
+          updatedAt
+        }
+        matches {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
         createdAt
         updatedAt
       }
@@ -554,6 +747,22 @@ export const updateMessage = /* GraphQL */ `
       chatRoom {
         id
         lastMessageID
+        lastMessage {
+          id
+          type
+          createdAt
+          content
+          userID
+          chatRoomID
+          checked
+          updatedAt
+        }
+        matches {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
         createdAt
         updatedAt
       }
@@ -594,6 +803,22 @@ export const deleteMessage = /* GraphQL */ `
       chatRoom {
         id
         lastMessageID
+        lastMessage {
+          id
+          type
+          createdAt
+          content
+          userID
+          chatRoomID
+          checked
+          updatedAt
+        }
+        matches {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
         createdAt
         updatedAt
       }
@@ -754,9 +979,27 @@ export const createPost = /* GraphQL */ `
       imageKeys
       deleted
       comments {
+        items {
+          id
+          userID
+          postID
+          nickname
+          content
+          deleted
+          createdAt
+          updatedAt
+        }
         nextToken
       }
       likes {
+        items {
+          id
+          userID
+          postID
+          type
+          createdAt
+          updatedAt
+        }
         nextToken
       }
       createdAt
@@ -779,9 +1022,27 @@ export const updatePost = /* GraphQL */ `
       imageKeys
       deleted
       comments {
+        items {
+          id
+          userID
+          postID
+          nickname
+          content
+          deleted
+          createdAt
+          updatedAt
+        }
         nextToken
       }
       likes {
+        items {
+          id
+          userID
+          postID
+          type
+          createdAt
+          updatedAt
+        }
         nextToken
       }
       createdAt
@@ -804,9 +1065,27 @@ export const deletePost = /* GraphQL */ `
       imageKeys
       deleted
       comments {
+        items {
+          id
+          userID
+          postID
+          nickname
+          content
+          deleted
+          createdAt
+          updatedAt
+        }
         nextToken
       }
       likes {
+        items {
+          id
+          userID
+          postID
+          type
+          createdAt
+          updatedAt
+        }
         nextToken
       }
       createdAt
@@ -827,9 +1106,27 @@ export const createComment = /* GraphQL */ `
       content
       deleted
       nestedComments {
+        items {
+          id
+          userID
+          commentID
+          nickname
+          content
+          deleted
+          createdAt
+          updatedAt
+        }
         nextToken
       }
       likes {
+        items {
+          id
+          userID
+          commentID
+          type
+          createdAt
+          updatedAt
+        }
         nextToken
       }
       createdAt
@@ -850,9 +1147,27 @@ export const updateComment = /* GraphQL */ `
       content
       deleted
       nestedComments {
+        items {
+          id
+          userID
+          commentID
+          nickname
+          content
+          deleted
+          createdAt
+          updatedAt
+        }
         nextToken
       }
       likes {
+        items {
+          id
+          userID
+          commentID
+          type
+          createdAt
+          updatedAt
+        }
         nextToken
       }
       createdAt
@@ -873,9 +1188,27 @@ export const deleteComment = /* GraphQL */ `
       content
       deleted
       nestedComments {
+        items {
+          id
+          userID
+          commentID
+          nickname
+          content
+          deleted
+          createdAt
+          updatedAt
+        }
         nextToken
       }
       likes {
+        items {
+          id
+          userID
+          commentID
+          type
+          createdAt
+          updatedAt
+        }
         nextToken
       }
       createdAt
@@ -896,6 +1229,14 @@ export const createNestedComment = /* GraphQL */ `
       content
       deleted
       likes {
+        items {
+          id
+          userID
+          commentID
+          type
+          createdAt
+          updatedAt
+        }
         nextToken
       }
       createdAt
@@ -916,6 +1257,14 @@ export const updateNestedComment = /* GraphQL */ `
       content
       deleted
       likes {
+        items {
+          id
+          userID
+          commentID
+          type
+          createdAt
+          updatedAt
+        }
         nextToken
       }
       createdAt
@@ -936,6 +1285,14 @@ export const deleteNestedComment = /* GraphQL */ `
       content
       deleted
       likes {
+        items {
+          id
+          userID
+          commentID
+          type
+          createdAt
+          updatedAt
+        }
         nextToken
       }
       createdAt

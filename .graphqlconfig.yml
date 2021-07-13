@@ -1,6 +1,6 @@
 projects:
   webcampus:
-    schemaPath: amplify/backend/api/webcampus/build/schema.graphql
+    schemaPath: amplify/backend/api/campusmeet/build/schema.graphql
     includes:
       - src/graphql/**/*.js
     excludes:

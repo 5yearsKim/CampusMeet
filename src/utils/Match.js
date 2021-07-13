@@ -1,7 +1,7 @@
 import {API, graphqlOperation} from 'aws-amplify';
 import {createChatRoom, createMatch, updateMatch} from 'src/graphql/mutations';
 import {matchByFrom, matchByChatRoom} from 'src/graphql/customQueries';
-import {listMatchs} from 'src/graphql/queries';
+// import {listMatchs} from 'src/graphql/queries';
 import {makeMessage} from './Chat';
 
 export async function bringMatch(fromID) {
@@ -38,16 +38,21 @@ export async function bringMatchByChatRoom(chatRoomID) {
 
 
 export async function makeMatch(fromID, toID) {
-  const filter = {
-    and: [{fromID: {eq: fromID}}, {toID: {eq: toID}}],
-  };
-  const myMatch = await API.graphql({query: listMatchs, variables: {filter: filter}});
-  const items = myMatch.data.listMatchs.items;
+  const myMatch = await API.graphql(
+      graphqlOperation(
+          matchByFrom, {
+            fromID: fromID,
+            filter: {toID: {eq: toID}},
+          },
+      ),
+  );
+  const items = myMatch.data.matchByFrom.items;
   if (items.length > 0) {
     await wakeupMatch(items[0], fromID, toID);
   } else {
     await makeNewMatch(fromID, toID);
   }
+  // await makeNewMatch(fromID, toID);
 }
 
 export async function wakeupMatch(match, fromID, toID) {
@@ -57,11 +62,15 @@ export async function wakeupMatch(match, fromID, toID) {
     modifyMatch(match.id, {deleted: false});
   }
   // if your match is deleted
-  const filter = {
-    and: [{fromID: {eq: toID}}, {toID: {eq: fromID}}],
-  };
-  const yourMatch = await API.graphql({query: listMatchs, variables: {filter: filter}});
-  const items = yourMatch.data.listMatchs.items;
+  const yourMatch = await API.graphql(
+      graphqlOperation(
+          matchByFrom, {
+            fromID: toID,
+            filter: {toID: {eq: fromID}},
+          },
+      ),
+  );
+  const items = yourMatch.data.matchByFrom.items;
   if (items.length > 0 && items[0].deleted) {
     modifyMatch(items[0].id, {deleted: false});
   }
