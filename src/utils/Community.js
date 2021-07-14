@@ -1,5 +1,6 @@
 import {API, graphqlOperation} from 'aws-amplify';
-import {createBoard, createPost, createComment, createNestedComment, createLikePost, createLikeComment} from 'src/graphql/mutations';
+import {createBoard, createPost, createComment, createNestedComment, createLikePost, createLikeComment,
+  updatePost, updateComment, updateNestedComment} from 'src/graphql/mutations';
 import {getUser, listBoards, boardByType, postByBoard, getPost, commentByPost} from 'src/graphql/customQueries';
 import {campusDict} from 'assets/campusLogos';
 import config from 'src/config';
@@ -158,6 +159,7 @@ export const bringPostByBoard = async (boardID, nextToken, limit=20) => {
     boardID: boardID,
     limit: limit,
     sortDirection: 'DESC',
+    filter: {deleted: {ne: true}},
   };
   if (nextToken) {
     inputData.nextToken = nextToken;
@@ -174,17 +176,46 @@ export const bringPostByBoard = async (boardID, nextToken, limit=20) => {
   }
 };
 
+export const modifyPost = async (postID, postData) => {
+  postData.id = postID;
+  await API.graphql(
+      graphqlOperation(
+          updatePost, {input: postData},
+      ),
+  );
+};
+
+export const deletePost = async (postID) => {
+  await modifyPost(postID, {deleted: true});
+};
+
 export const bringComment = async (postID) => {
   try {
     const commentData = await API.graphql(
         graphqlOperation(
-            commentByPost, {postID: postID},
+            commentByPost, {
+              postID: postID,
+              filter: {deleted: {ne: true}},
+            },
         ),
     );
     return commentData.data.commentByPost.items;
   } catch (err) {
     console.warn(err);
   }
+};
+
+export const modifyComment = async (commentID, commentData) => {
+  commentData.id = commentID;
+  await API.graphql(
+      graphqlOperation(
+          updateComment, {input: commentData},
+      ),
+  );
+};
+
+export const deleteComment = async (commentID) => {
+  await modifyComment(commentID, {deleted: true});
 };
 
 

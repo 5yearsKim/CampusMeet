@@ -5,12 +5,12 @@ import Text from 'src/blocks/Text';
 import {Portal, Dialog} from 'react-native-paper';
 import {Nickname} from 'src/blocks/Board';
 import {AntDesign} from '@expo/vector-icons';
-import {makeLikeComment} from 'src/utils/Community';
+import {makeLikeComment, deleteComment} from 'src/utils/Community';
 import {relativeTimePrettify} from 'src/utils/Time';
 import NestedComment from './NestedComment';
 import {MyContext, ChatContext, ThemeContext} from 'src/context';
 
-function Comment({item, index, board, focusComment}) {
+function Comment({item, index, board, focusComment, refresh}) {
   const auth = useContext(MyContext);
   const userSub = auth.user.attributes.sub;
   const {theme} = useContext(ThemeContext);
@@ -19,7 +19,8 @@ function Comment({item, index, board, focusComment}) {
   const [isLike, setIsLike] = useState(false);
   const [likeCnt, setLikeCnt] = useState('');
   const [dialog, setDialog] = useState(false);
-  const [alertOpen, setAlertOpen] = useState(false);
+  const [alreadyLikeOpen, setAlreadyLikeOpen] = useState(false);
+  const [deleteOpen, setDeleteOpen] = useState(false);
   // console.log('board ', board) ;
 
   useEffect(() => {
@@ -30,7 +31,7 @@ function Comment({item, index, board, focusComment}) {
 
   const onClickLike = async () => {
     if (isLike) {
-      setAlertOpen(true);
+      setAlreadyLikeOpen(true);
     } else {
       const likeData = await makeLikeComment(userSub, item.id);
       if (likeData) {
@@ -38,6 +39,39 @@ function Comment({item, index, board, focusComment}) {
         setLikeCnt(likeCnt + 1);
       }
     }
+  };
+
+  const onDeleteComment = async () => {
+    try {
+      await deleteComment(item.id);
+      refresh();
+    } catch (err) {
+      console.warn(err);
+    }
+  };
+
+  const renderDelete = () => {
+    if (userSub != item.userID) {
+      return null;
+    }
+    if (item.nestedComments.items.length > 0) {
+      return null;
+    }
+    return (
+      <View>
+        <TouchableOpacity onPress={() => setDeleteOpen(true)}>
+          <Text style={styles.deleteText}>삭제</Text>
+        </TouchableOpacity>
+        <SimpleAlert
+          modalOpen={deleteOpen}
+          setModalOpen={setDeleteOpen}
+          title='댓글을 삭제하시겠습니까?'
+          content='댓글이 게시글로부터 삭제됩니다.'
+          onCancel={() => {}}
+          onOk={() => onDeleteComment()}
+        />
+      </View>
+    );
   };
 
   const visTime = relativeTimePrettify(item.createdAt);
@@ -51,7 +85,10 @@ function Comment({item, index, board, focusComment}) {
           nested.isNested == item.id && {backgroundColor: 'rgba(240, 200, 50, 0.2)'},
           {borderColor: theme.subText},
         ]}>
-          <Nickname type={board.type} nickname={item.nickname} userID={item.userID} style={styles.nickname} />
+          <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+            <Nickname type={board.type} nickname={item.nickname} userID={item.userID} style={styles.nickname} />
+            {renderDelete()}
+          </View>
           <View>
             <Text style={{color: theme.subText}}>{item.content}</Text>
           </View>
@@ -80,8 +117,8 @@ function Comment({item, index, board, focusComment}) {
         </Dialog>
       </Portal>
       <SimpleAlert
-        modalOpen={alertOpen}
-        setModalOpen={setAlertOpen}
+        modalOpen={alreadyLikeOpen}
+        setModalOpen={setAlreadyLikeOpen}
         title='알림'
         content='이미 좋아한 댓글입니다'
         onOk={() => {}}
@@ -114,6 +151,9 @@ const styles = StyleSheet.create({
     fontSize: 13,
     fontWeight: 'bold',
     margin: 10,
+  },
+  deleteText: {
+    color: '#aaaaaa',
   },
 });
 

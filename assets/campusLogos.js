@@ -45,9 +45,9 @@ const campusList = [
     logo: 'campusLogos/ㅅ/신라대학교.jpg',
   },
   {
-    name: '서울디지털대학교',
-    short: '서울',
-    logo: 'campusLogos/ㅅ/서울디지털대학교.gif',
+    name: '서강대학교',
+    short: '서강',
+    logo: 'campusLogos/ㅅ/서강대학교.jpg',
   },
   {
     name: '서울한영대학교',
@@ -245,14 +245,14 @@ const campusList = [
     logo: 'campusLogos/ㅅ/상명대학교.jpg',
   },
   {
-    name: '서강대학교',
-    short: '서강',
-    logo: 'campusLogos/ㅅ/서강대학교.gif',
-  },
-  {
     name: '서라벌대학교',
     short: '서라',
     logo: 'campusLogos/ㅅ/서라벌대학교.jpg',
+  },
+  {
+    name: '서울디지털대학교',
+    short: '서울',
+    logo: 'campusLogos/ㅅ/서울디지털대학교.jpg',
   },
   {
     name: '성결대학교',
@@ -310,19 +310,9 @@ const campusList = [
     logo: 'campusLogos/ㅅ/순복음총회신학교.jpg',
   },
   {
-    name: '광주대학교',
-    short: '광주',
-    logo: 'campusLogos/ㄱ/[크기변환]광주대학교.jpg',
-  },
-  {
     name: '광신대학교',
     short: '광신',
     logo: 'campusLogos/ㄱ/광신대학교.jpg',
-  },
-  {
-    name: '고신대학교',
-    short: '고신',
-    logo: 'campusLogos/ㄱ/[크기변환]고신대학교.png',
   },
   {
     name: '광주가톨릭대학교',
@@ -370,16 +360,6 @@ const campusList = [
     logo: 'campusLogos/ㄱ/계명문화대학교.jpg',
   },
   {
-    name: '기독간호대학교',
-    short: '기독',
-    logo: 'campusLogos/ㄱ/[크기변환]기독간호대학교.jpg',
-  },
-  {
-    name: '금오공과대학교',
-    short: '금오',
-    logo: 'campusLogos/ㄱ/[크기변환]금오공과대학교.jpg',
-  },
-  {
     name: '경남과학기술대학교',
     short: '경남',
     logo: 'campusLogos/ㄱ/경남과학기술대학교.jpg',
@@ -405,14 +385,14 @@ const campusList = [
     logo: 'campusLogos/ㄱ/계명대학교.jpg',
   },
   {
-    name: '꽃동네대학교',
-    short: '꽃동',
-    logo: 'campusLogos/ㄱ/[크기변환]꽃동네대학교.png',
-  },
-  {
     name: '경민대학교',
     short: '경민',
     logo: 'campusLogos/ㄱ/경민대학교.jpg',
+  },
+  {
+    name: '고신대학교',
+    short: '고신',
+    logo: 'campusLogos/ㄱ/고신대학교.png',
   },
   {
     name: '강원관광대학교',
@@ -435,6 +415,11 @@ const campusList = [
     logo: 'campusLogos/ㄱ/[크기변환]광양보건대학교.jpg',
   },
   {
+    name: '건국대학교(글로벌)',
+    short: '건국',
+    logo: 'campusLogos/ㄱ/건국대학교(글로벌).jpg',
+  },
+  {
     name: '강원대학교',
     short: '강원',
     logo: 'campusLogos/ㄱ/강원대학교.png',
@@ -453,11 +438,6 @@ const campusList = [
     name: '경북전문대학교',
     short: '경북',
     logo: 'campusLogos/ㄱ/경북전문대학교.png',
-  },
-  {
-    name: '김포대학교',
-    short: '김포',
-    logo: 'campusLogos/ㄱ/[크기변환]김포대학교.jpg',
   },
   {
     name: '광주보건대학교',
@@ -485,29 +465,29 @@ const campusList = [
     logo: 'campusLogos/ㄱ/[크기변환]경인교육대학교.jpg',
   },
   {
-    name: '경주대학교',
-    short: '경주',
-    logo: 'campusLogos/ㄱ/[크기변환]경주대학교.jpg',
-  },
-  {
     name: '금강대학교',
     short: '금강',
     logo: 'campusLogos/ㄱ/금강대학교.png',
   },
   {
-    name: '공주대학교',
-    short: '공주',
-    logo: 'campusLogos/ㄱ/[크기변환]공주대학교.jpg',
+    name: '경주대학교',
+    short: '경주',
+    logo: 'campusLogos/ㄱ/경주대학교.jpg',
+  },
+  {
+    name: '김포대학교',
+    short: '김포',
+    logo: 'campusLogos/ㄱ/김포대학교.jpg',
+  },
+  {
+    name: '광주대학교',
+    short: '광주',
+    logo: 'campusLogos/ㄱ/광주대학교.jpg',
   },
   {
     name: '경희사이버대학교',
     short: '경희',
     logo: 'campusLogos/ㄱ/경희사이버대학교.jpg',
-  },
-  {
-    name: '군장대학교',
-    short: '군장',
-    logo: 'campusLogos/ㄱ/[크기변환]군장대학교.png',
   },
   {
     name: '가톨릭상지대학교',
@@ -518,6 +498,11 @@ const campusList = [
     name: '광주과학기술원',
     short: '광주',
     logo: 'campusLogos/ㄱ/광주과학기술원.jpg',
+  },
+  {
+    name: '기독간호대학교',
+    short: '기독',
+    logo: 'campusLogos/ㄱ/기독간호대학교.jpg',
   },
   {
     name: '김천대학교',
@@ -555,9 +540,9 @@ const campusList = [
     logo: 'campusLogos/ㄱ/경북도립대학교.jpg',
   },
   {
-    name: '김해대학교',
-    short: '김해',
-    logo: 'campusLogos/ㄱ/김해대학교.gif',
+    name: '고려대학교(세종)',
+    short: '고려',
+    logo: 'campusLogos/ㄱ/고려대학교(세종).jpg',
   },
   {
     name: '경일대학교',
@@ -570,9 +555,9 @@ const campusList = [
     logo: 'campusLogos/ㄱ/광주여자대학교.png',
   },
   {
-    name: '국제대학교',
-    short: '국제',
-    logo: 'campusLogos/ㄱ/[크기변환]국제대학교.jpg',
+    name: '군장대학교',
+    short: '군장',
+    logo: 'campusLogos/ㄱ/군장대학교.png',
   },
   {
     name: '건국대학교',
@@ -595,6 +580,11 @@ const campusList = [
     logo: 'campusLogos/ㄱ/강동대학교.jpg',
   },
   {
+    name: '국제대학교',
+    short: '국제',
+    logo: 'campusLogos/ㄱ/국제대학교.jpg',
+  },
+  {
     name: '광운대학교',
     short: '광운',
     logo: 'campusLogos/ㄱ/광운대학교.png',
@@ -602,7 +592,17 @@ const campusList = [
   {
     name: '군산대학교',
     short: '군산',
-    logo: 'campusLogos/ㄱ/[크기변환]군산대학교.jpg',
+    logo: 'campusLogos/ㄱ/군산대학교.jpg',
+  },
+  {
+    name: '공주대학교',
+    short: '공주',
+    logo: 'campusLogos/ㄱ/공주대학교.jpg',
+  },
+  {
+    name: '금오공과대학교',
+    short: '금오',
+    logo: 'campusLogos/ㄱ/금오공과대학교.jpg',
   },
   {
     name: '경복대학교',
@@ -615,14 +615,14 @@ const campusList = [
     logo: 'campusLogos/ㄱ/강릉원주대학교.png',
   },
   {
+    name: '김해대학교',
+    short: '김해',
+    logo: 'campusLogos/ㄱ/김해대학교.jpg',
+  },
+  {
     name: '가야대학교',
     short: '가야',
     logo: 'campusLogos/ㄱ/가야대학교.jpg',
-  },
-  {
-    name: '경상대학교',
-    short: '경상',
-    logo: 'campusLogos/ㄱ/경상대학교.gif',
   },
   {
     name: '광주교육대학교',
@@ -665,9 +665,19 @@ const campusList = [
     logo: 'campusLogos/ㄱ/경남정보대학교.jpg',
   },
   {
+    name: '꽃동네대학교',
+    short: '꽃동',
+    logo: 'campusLogos/ㄱ/꽃동네대학교.png',
+  },
+  {
     name: '가톨릭대학교',
     short: '가톨',
     logo: 'campusLogos/ㄱ/가톨릭대학교.jpg',
+  },
+  {
+    name: '경상대학교',
+    short: '경상',
+    logo: 'campusLogos/ㄱ/경상대학교.jpg',
   },
   {
     name: '고구려대학교',
@@ -855,6 +865,11 @@ const campusList = [
     logo: 'campusLogos/ㅇ/영진전문대학교.jpg',
   },
   {
+    name: '연세대학교(미래)',
+    short: '연세',
+    logo: 'campusLogos/ㅇ/연세대학교(미래).png',
+  },
+  {
     name: '우송대학교',
     short: '우송',
     logo: 'campusLogos/ㅇ/우송대학교.png',
@@ -1010,6 +1025,11 @@ const campusList = [
     logo: 'campusLogos/ㅇ/연세대학교.png',
   },
   {
+    name: '울산대학교',
+    short: '울산',
+    logo: 'campusLogos/ㅇ/울산대학교.jpg',
+  },
+  {
     name: '웅지세무대학교',
     short: '웅지',
     logo: 'campusLogos/ㅇ/웅지세무대학교.png',
@@ -1048,11 +1068,6 @@ const campusList = [
     name: '인하공업전문대학',
     short: '인하',
     logo: 'campusLogos/ㅇ/인하공업전문대학.jpg',
-  },
-  {
-    name: '울산대학교',
-    short: '울산',
-    logo: 'campusLogos/ㅇ/울산대학교.gif',
   },
   {
     name: '유한대학교',
@@ -1225,11 +1240,6 @@ const campusList = [
     logo: 'campusLogos/ㄴㄷ/[크기변환]대전보건대학교.jpg',
   },
   {
-    name: '동양대학교',
-    short: '동양',
-    logo: 'campusLogos/ㄴㄷ/동양대학교.gif',
-  },
-  {
     name: '동아방송예술대학교',
     short: '동아',
     logo: 'campusLogos/ㄴㄷ/동아방송예술대학교.jpg',
@@ -1298,11 +1308,6 @@ const campusList = [
     name: '대구보건대학교',
     short: '대구',
     logo: 'campusLogos/ㄴㄷ/대구보건대학교.jpg',
-  },
-  {
-    name: '덕성여자대학교',
-    short: '덕성',
-    logo: 'campusLogos/ㄴㄷ/덕성여자대학교.gif',
   },
   {
     name: '두원공과대학교',
@@ -1375,6 +1380,11 @@ const campusList = [
     logo: 'campusLogos/ㄴㄷ/대구예술대학교.png',
   },
   {
+    name: '동국대학교(경주)',
+    short: '동국',
+    logo: 'campusLogos/ㄴㄷ/동국대학교(경주).png',
+  },
+  {
     name: '대구공업대학교',
     short: '대구',
     logo: 'campusLogos/ㄴㄷ/대구공업대학교.jpg',
@@ -1403,6 +1413,11 @@ const campusList = [
     name: '동덕여자대학교',
     short: '동덕',
     logo: 'campusLogos/ㄴㄷ/동덕여자대학교.png',
+  },
+  {
+    name: '동양대학교',
+    short: '동양',
+    logo: 'campusLogos/ㄴㄷ/동양대학교.jpg',
   },
   {
     name: '남부대학교',
@@ -1440,6 +1455,11 @@ const campusList = [
     logo: 'campusLogos/ㄴㄷ/[크기변환]동주대학교.jpg',
   },
   {
+    name: '덕성여자대학교',
+    short: '덕성',
+    logo: 'campusLogos/ㄴㄷ/덕성여자대학교.jpg',
+  },
+  {
     name: '나사렛대학교',
     short: '나사',
     logo: 'campusLogos/ㄴㄷ/나사렛대학교.jpg',
@@ -1473,6 +1493,11 @@ const campusList = [
     name: '부산외국어대학교',
     short: '부산',
     logo: 'campusLogos/ㄹㅂ/부산외국어대학교.jpg',
+  },
+  {
+    name: '부경대학교',
+    short: '부경',
+    logo: 'campusLogos/ㄹㅂ/부경대학교.jpg',
   },
   {
     name: '배재대학교',
@@ -1518,11 +1543,6 @@ const campusList = [
     name: '문경대학교',
     short: '문경',
     logo: 'campusLogos/ㄹㅂ/문경대학교.jpg',
-  },
-  {
-    name: '부경대학교',
-    short: '부경',
-    logo: 'campusLogos/ㄹㅂ/부경대학교.gif',
   },
   {
     name: '부산장신대학교',
@@ -1610,6 +1630,11 @@ const campusList = [
     logo: 'campusLogos/ㅎ/한국교통대학교.jpg',
   },
   {
+    name: '한양대학교 (에리카)',
+    short: '한양',
+    logo: 'campusLogos/ㅎ/한양대학교 (에리카).jpg',
+  },
+  {
     name: '한국복지대학교',
     short: '한국',
     logo: 'campusLogos/ㅎ/한국복지대학교.jpg',
@@ -1618,11 +1643,6 @@ const campusList = [
     name: '한려대학교',
     short: '한려',
     logo: 'campusLogos/ㅎ/한려대학교.jpg',
-  },
-  {
-    name: '한경대학교',
-    short: '한경',
-    logo: 'campusLogos/ㅎ/한경대학교.gif',
   },
   {
     name: '한국성서대학교',
@@ -1675,6 +1695,11 @@ const campusList = [
     logo: 'campusLogos/ㅎ/한국열린사이버대학교.png',
   },
   {
+    name: '호남대학교',
+    short: '호남',
+    logo: 'campusLogos/ㅎ/호남대학교.jpg',
+  },
+  {
     name: '한양사이버대학교',
     short: '한양',
     logo: 'campusLogos/ㅎ/한양사이버대학교.png',
@@ -1708,6 +1733,11 @@ const campusList = [
     name: '한국과학기술원',
     short: '한국',
     logo: 'campusLogos/ㅎ/한국과학기술원.png',
+  },
+  {
+    name: '한경대학교',
+    short: '한경',
+    logo: 'campusLogos/ㅎ/한경대학교.jpg',
   },
   {
     name: '한일장신대학교',
@@ -1745,11 +1775,6 @@ const campusList = [
     logo: 'campusLogos/ㅎ/한국방송통신대학교.jpg',
   },
   {
-    name: '한남대학교',
-    short: '한남',
-    logo: 'campusLogos/ㅎ/한남대학교.gif',
-  },
-  {
     name: '한양여자대학교',
     short: '한양',
     logo: 'campusLogos/ㅎ/한양여자대학교.png',
@@ -1765,6 +1790,11 @@ const campusList = [
     logo: 'campusLogos/ㅎ/한세대학교.png',
   },
   {
+    name: '한국항공대학교',
+    short: '한국',
+    logo: 'campusLogos/ㅎ/한국항공대학교.jpg',
+  },
+  {
     name: '한국체육대학교',
     short: '한국',
     logo: 'campusLogos/ㅎ/한국체육대학교.png',
@@ -1773,11 +1803,6 @@ const campusList = [
     name: '한국전통문화대학교',
     short: '한국',
     logo: 'campusLogos/ㅎ/한국전통문화대학교.jpg',
-  },
-  {
-    name: '한국항공대학교',
-    short: '한국',
-    logo: 'campusLogos/ㅎ/한국항공대학교.gif',
   },
   {
     name: '한서대학교',
@@ -1805,9 +1830,14 @@ const campusList = [
     logo: 'campusLogos/ㅎ/호남신학대학교.jpg',
   },
   {
+    name: '한남대학교',
+    short: '한남',
+    logo: 'campusLogos/ㅎ/한남대학교.jpg',
+  },
+  {
     name: '한국외국어대학교',
     short: '한국',
-    logo: 'campusLogos/ㅎ/한국외국어대학교.gif',
+    logo: 'campusLogos/ㅎ/한국외국어대학교.jpg',
   },
   {
     name: '호서대학교',
@@ -1818,11 +1848,6 @@ const campusList = [
     name: '한국관광대학교',
     short: '한국',
     logo: 'campusLogos/ㅎ/한국관광대학교.jpg',
-  },
-  {
-    name: '호남대학교',
-    short: '호남',
-    logo: 'campusLogos/ㅎ/호남대학교.gif',
   },
   {
     name: '혜전대학교',

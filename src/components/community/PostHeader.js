@@ -4,7 +4,7 @@ import SimpleAlert from 'src/blocks/SimpleAlert';
 import Text from 'src/blocks/Text';
 import {Nickname} from 'src/blocks/Board';
 import {Button} from 'react-native-paper';
-import {makeLikePost} from 'src/utils/Community';
+import {makeLikePost, deletePost} from 'src/utils/Community';
 import {absoluteTime} from 'src/utils/Time';
 import {AntDesign} from '@expo/vector-icons';
 import {KeyImage} from 'src/blocks/Image';
@@ -12,12 +12,13 @@ import {ImageViewer} from 'src/blocks/ImageViewer';
 import {MyContext, ThemeContext} from 'src/context';
 
 
-function PostHeader({post, board}) {
+function PostHeader({post, board, navigation}) {
   const auth = useContext(MyContext);
   const userSub = auth.user.attributes.sub;
   const {theme} = useContext(ThemeContext);
   const [modalVisible, setModalVisible] = useState(false);
-  const [alertOpen, setAlertOpen] = useState(false);
+  const [alreadyLikeOpen, setAlreadyLikeOpen] = useState(false);
+  const [deleteOpen, setDeleteOpen] = useState(false);
   const [page, setPage] = useState(0);
   const visTime = absoluteTime(post.createdAt);
   const likeList = post.likes.items.map((item) => item.userID);
@@ -43,7 +44,7 @@ function PostHeader({post, board}) {
 
   const onClickLike = async () => {
     if (isLike) {
-      setAlertOpen(true);
+      setAlreadyLikeOpen(true);
     } else {
       try {
         await makeLikePost(userSub, post.id);
@@ -54,9 +55,39 @@ function PostHeader({post, board}) {
       }
     }
   };
+  const onDeletePost = async () => {
+    try {
+      await deletePost(post.id);
+      navigation.goBack();
+    } catch (err) {
+      console.warn(err);
+    }
+  };
+
+  const renderDelete = () => {
+    if (userSub != post.userID) {
+      return null;
+    }
+    return (
+      <View style={{flexDirection: 'row', justifyContent: 'flex-end'}}>
+        <TouchableOpacity onPress={() => setDeleteOpen(true)}>
+          <Text style={styles.deleteText}>게시글 삭제</Text>
+        </TouchableOpacity>
+        <SimpleAlert
+          modalOpen={deleteOpen}
+          setModalOpen={setDeleteOpen}
+          title='게시글을 삭제하시겠습니까?'
+          content='게시글을 삭제하면 게시판에 노출되지 않습니다.'
+          onCancel={() => {}}
+          onOk={() => onDeletePost()}
+        />
+      </View>
+    );
+  };
   return (
     <View style={styles.container}>
       <Text style={[styles.titleText, {color: theme.text}]}>{post.title}</Text>
+      {renderDelete()}
       <View style={{flexDirection: 'row', justifyContent: 'space-between', marginTop: 10}}>
         <Nickname type={board.type} nickname={post.nickname} userID={userSub} style={styles.nicknameText}/>
         <Text style={[styles.timeText, {color: theme.subText}]}>{visTime}</Text>
@@ -84,8 +115,8 @@ function PostHeader({post, board}) {
         </View>
       )}
       <SimpleAlert
-        modalOpen={alertOpen}
-        setModalOpen={setAlertOpen}
+        modalOpen={alreadyLikeOpen}
+        setModalOpen={setAlreadyLikeOpen}
         title='알림'
         content='이미 좋아한 게시글입니다.'
         onOk={() => {}}
@@ -127,6 +158,9 @@ const styles = StyleSheet.create({
     marginTop: 20,
     marginBottom: 10,
     fontSize: 14,
+  },
+  deleteText: {
+    color: '#aaaaaa',
   },
 });
 export default PostHeader;

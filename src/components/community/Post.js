@@ -31,20 +31,22 @@ function Post({navigation, route}) {
     commentList.current.scrollToIndex({index: idx, viewPosition: 0.3});
   };
 
+  const refresh = () => setRefreshComment(!refreshComment);
+
   return (
     <ChatContext.Provider value={{isNested, setIsNested}}>
       <FlatList
         ref={commentList}
         data={comment}
         contentContainerStyle={styles.flatlistContainer}
-        ListHeaderComponent={() => <PostHeader post={post} board={board}/>}
-        renderItem={({item, index}) => <Comment item={item} index={index} board={board} focusComment={focusComment}/>}
+        ListHeaderComponent={() => <PostHeader post={post} board={board} navigation={navigation}/>}
+        renderItem={({item, index}) => <Comment item={item} index={index} board={board} focusComment={focusComment} refresh={refresh}/>}
         keyExtractor={(item) => item.id}
       />
       <CommentInput
         board={board}
         post={post}
-        refresh={() => setRefreshComment(!refreshComment)}
+        refresh={refresh}
       />
     </ChatContext.Provider>
   );
