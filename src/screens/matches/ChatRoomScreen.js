@@ -26,7 +26,6 @@ function ChatRoomScreen(props) {
   }, []);
 
   useEffect(() => {
-    console.log(chatUser);
     if (chatUser.length == 1) {
       setDisableInput(true);
       setAlertOpen(true);
