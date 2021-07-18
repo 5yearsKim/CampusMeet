@@ -100,7 +100,7 @@ function AddPicture({index, addPicture}) {
       <TouchableOpacity onPress={() => addPicture()}>
         <Image
           source={require('assets/images/add_picture.png')}
-          style={{width: IMGWIDTH - 6, height: IMGHEIGHT - 6, borderWidth: 3, borderColor: 'black'}}
+          style={{width: IMGWIDTH - 6, height: IMGHEIGHT - 6, borderWidth: 3, borderColor: 'black', opacity: 0.2}}
         />
       </TouchableOpacity>
     </View>
@@ -128,7 +128,8 @@ function UploadPicture({imgList, setImgList, positions}) {
           // const key = result.uri.split('/').pop();
           // const awsrsp = await Storage.put(path + key, blob);
           // setImgList([...imgList, awsrsp.key]);
-          setImgList([result.uri, ...imgList]);
+          setImgList([...imgList, result.uri]);
+          // setImgList([result.uri, ...imgList]);
         } catch (err) {
           console.warn(err);
         }
