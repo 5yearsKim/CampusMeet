@@ -17,14 +17,14 @@ function ForgotPassword({navigation}) {
   const checkFormat1 = () => {
     if (username.length < 4) {
       setErrText('id가 너무 짧습니다.');
-      return false
+      return false;
     }
     return true;
   };
 
   const onSubmit1 = async () => {
     if (checkFormat1() == false) {
-      return ;
+      return;
     }
     try {
       const rsp = await forgotPassword(username);
@@ -38,11 +38,11 @@ function ForgotPassword({navigation}) {
 
   const checkFormat2 = () => {
     if (password.length < 8) {
-      setErrText('비밀번호가 너무 짧습니다.')
+      setErrText('비밀번호가 너무 짧습니다.');
       return false;
     }
     if (password.search(/[a-zA-Z]/) < 0) {
-      setErrText('비밀번호는 최소 1개의 알파벳을 포함해야 합니다.')
+      setErrText('비밀번호는 최소 1개의 알파벳을 포함해야 합니다.');
       return false;
     }
     if (password.search(/\d/) < 0) {
@@ -54,11 +54,11 @@ function ForgotPassword({navigation}) {
       return false;
     }
     if (emailVerification.length < 1) {
-      setErrText('메일 인증 코드를 입력해주세요.')
+      setErrText('메일 인증 코드를 입력해주세요.');
       return false;
     }
     return true;
-  }
+  };
 
 
   const onSubmit2 = async () => {
@@ -80,7 +80,7 @@ function ForgotPassword({navigation}) {
       console.log(err);
     }
   };
-  
+
   return (
     <View style={styles.container}>
       {step == 1 &&
@@ -116,7 +116,7 @@ function ForgotPassword({navigation}) {
             secureTextEntry={true}
             defaultValue={password}
             onChangeText={(text) => setPassword(text)}
-            style={{backgroundColor: 'white' }}
+            style={{backgroundColor: 'white'}}
             left={<TextInput.Icon name='lock'/>}
           />
           <TextInput
@@ -126,7 +126,7 @@ function ForgotPassword({navigation}) {
             secureTextEntry={true}
             defaultValue={passwordConfirm}
             onChangeText={(text) => setPasswordConfirm(text)}
-            style={{backgroundColor: 'white' }}
+            style={{backgroundColor: 'white'}}
             left={<TextInput.Icon name='lock-check'/>}
           />
           <View style={{marginTop: 20}}>
@@ -151,7 +151,7 @@ function ForgotPassword({navigation}) {
           </View>
         </React.Fragment>
       }
-      {step == 3 && 
+      {step == 3 &&
         <React.Fragment>
           <Text style={styles.successText}>비밀번호가 새로 설정되었습니다. 다시 로그인 해 주세요.</Text>
           <View style={styles.buttonContainer}>
@@ -179,7 +179,7 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color: 'white',
-    fontWeight: 'bold'
+    fontWeight: 'bold',
   },
   successText: {
     fontSize: 14,
@@ -187,7 +187,7 @@ const styles = StyleSheet.create({
   },
   errText: {
     color: 'red',
-  }
+  },
 });
 
 export default ForgotPassword;

@@ -117,7 +117,7 @@ function UploadPicture({imgList, setImgList, positions}) {
       const result = await launchImageLibraryAsync({
         mediaTypes: MediaTypeOptions.All,
         allowsEditing: true,
-        aspect: [4, 3],
+        aspect: [1, 1],
         quality: 1,
       });
       if (!result.cancelled) {
