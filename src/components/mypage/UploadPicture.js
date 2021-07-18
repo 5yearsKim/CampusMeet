@@ -108,7 +108,6 @@ function AddPicture({index, addPicture}) {
 }
 
 function UploadPicture({imgList, setImgList, positions}) {
-  const auth = useContext(MyContext);
   const uploadImage = async () => {
     if (imgList.length > 5) {
       return;
@@ -128,7 +127,7 @@ function UploadPicture({imgList, setImgList, positions}) {
           // const key = result.uri.split('/').pop();
           // const awsrsp = await Storage.put(path + key, blob);
           // setImgList([...imgList, awsrsp.key]);
-          setImgList([...imgList, result.uri]);
+          setImgList([result.uri, ...imgList]);
           // setImgList([result.uri, ...imgList]);
         } catch (err) {
           console.warn(err);
@@ -147,11 +146,14 @@ function UploadPicture({imgList, setImgList, positions}) {
       setImgList(newImgList);
     }
   };
+
+  const posImgList = Object.keys(positions.value).sort((a, b) => (positions.value[a] - positions.value[b]));
+  console.log(posImgList);
   return (
     <View style={{backgroundColor: '#eeeeee', height: IMGHEIGHT * 2 + 30}}>
       {[0, 1, 2, 3, 4, 5].map((idx) => {
-        if (idx < imgList.length) {
-          return <AnimatedPicture key={idx} imgKey={imgList[idx]} positions={positions}/>;
+        if (idx < posImgList.length) {
+          return <AnimatedPicture key={idx} imgKey={posImgList[idx]} positions={positions}/>;
         } else {
           return <AddPicture key={idx} index={idx} addPicture={uploadImage}/>;
         }
@@ -165,6 +167,8 @@ function UploadPicture({imgList, setImgList, positions}) {
             name="closecircle"
             style={{position: 'absolute', left: pos.x, top: pos.y}}
             onPress={() => deletePicture(idx)}
+            backgroundColor='white'
+            // iconStyle={{backgroundColor: 'white'}}
           />
         );
       })}

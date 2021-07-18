@@ -15,12 +15,15 @@ function ModifyProfile({navigation}) {
   const {refreshMypage, setRefreshMypage} = useContext(UserContext);
 
   const [imgList, setImgList] = useState([]);
-  const imgIndex = imgList.map((img, idx) => ({[img]: idx}));
-  const initpos = Object.assign({}, ...imgIndex);
-  const positions = useSharedValue(initpos);
-  positions.value = initpos;
+  const positions = useSharedValue({});
   // console.log(imgList);
   // console.log(positions.value);
+
+  useEffect(() => {
+    const imgIndex = imgList.map((img, idx) => ({[img]: idx}));
+    const initpos = Object.assign({}, ...imgIndex);
+    positions.value = initpos;
+  }, [imgList]);
 
   const [name, setName] = useState('');
   const [year, setYear] = useState('');
