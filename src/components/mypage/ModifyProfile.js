@@ -19,6 +19,8 @@ function ModifyProfile({navigation}) {
   // console.log(imgList);
   // console.log(positions.value);
 
+  console.log(positions.value, imgList);
+
   useEffect(() => {
     const imgIndex = imgList.map((img, idx) => ({[img]: idx}));
     const initpos = Object.assign({}, ...imgIndex);

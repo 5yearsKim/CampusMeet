@@ -1,5 +1,5 @@
-import React, {useContext} from 'react';
-import {View, Image, TouchableOpacity, StyleSheet} from 'react-native';
+import React, {useContext, useState} from 'react';
+import {View, Image, TouchableOpacity, StyleSheet, Button} from 'react-native';
 import {launchImageLibraryAsync, MediaTypeOptions} from 'expo-image-picker';
 import {AntDesign} from '@expo/vector-icons';
 import {PanGestureHandler} from 'react-native-gesture-handler';
@@ -9,6 +9,8 @@ import Animated, {
   useSharedValue,
   useAnimatedReaction,
   withTiming,
+  useDerivedValue,
+  runOnJS,
 } from 'react-native-reanimated';
 import {getPosition, getOrder, IMGWIDTH, IMGHEIGHT, checkLocalImage} from 'src/utils/UploadPicture';
 import {KeyImage} from 'src/blocks/Image';
@@ -108,6 +110,7 @@ function AddPicture({index, addPicture}) {
 }
 
 function UploadPicture({imgList, setImgList, positions}) {
+  const [imgListTemp, setImgListTemp] = useState(imgList);
   const uploadImage = async () => {
     if (imgList.length > 5) {
       return;
@@ -147,17 +150,23 @@ function UploadPicture({imgList, setImgList, positions}) {
     }
   };
 
-  const posImgList = Object.keys(positions.value).sort((a, b) => (positions.value[a] - positions.value[b]));
-  console.log(posImgList);
+  // const posImgList = Object.keys(positions.value).sort((a, b) => (positions.value[a] - positions.value[b]));
+  const posImgList = useDerivedValue(() => {
+    const newPosImg = Object.keys(positions.value).sort((a, b) => (positions.value[a] - positions.value[b]));
+    runOnJS(setImgListTemp)(newPosImg);
+    return newPosImg;
+  }, [positions]);
+  // console.log(posImgList.value);
   return (
     <View style={{backgroundColor: '#eeeeee', height: IMGHEIGHT * 2 + 30}}>
       {[0, 1, 2, 3, 4, 5].map((idx) => {
-        if (idx < posImgList.length) {
-          return <AnimatedPicture key={idx} imgKey={posImgList[idx]} positions={positions}/>;
+        if (idx < imgList.length) {
+          return <AnimatedPicture key={idx} imgKey={imgList[idx]} positions={positions}/>;
         } else {
           return <AddPicture key={idx} index={idx} addPicture={uploadImage}/>;
         }
       })}
+      {/* <Button onPress={() => console.log('hi', posImgList.value, positions.value)} title='test'/> */}
       {imgList.map((key, idx) => {
         const pos = getPosition(idx);
         return (
