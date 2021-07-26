@@ -4,6 +4,7 @@ import Text from 'src/blocks/Text';
 import {Button, TextInput} from 'react-native-paper';
 import {login} from 'src/utils/Auth';
 import {MyContext} from 'src/context';
+import {Auth} from 'aws-amplify';
 
 // todo: button disabled logic
 function Login(props) {
@@ -11,7 +12,6 @@ function Login(props) {
   const [password, setPassword] = useState('');
   const [errText, setErrText] = useState('');
   const auth = useContext(MyContext);
-
   const checkFormat = () => {
     if (username.length < 4) {
       setErrText('id가 너무 짧습니다.');
@@ -83,6 +83,11 @@ function Login(props) {
           labelStyle={styles.buttonText}
         >
           로그인
+        </Button>
+        <Button
+          onPress={() => Auth.federatedSignIn({provider: 'Google'})}
+        >
+          google login
         </Button>
       </View>
     </View>
