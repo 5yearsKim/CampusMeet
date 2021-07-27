@@ -12,7 +12,7 @@ const {width, height} = Dimensions.get('window');
 
 export default function SendSignalModal({toID, popupVisible, setPopupVisible, onConfirmSend}) {
   const auth = useContext(MyContext);
-  const userSub = auth.user.attributes.sub;
+  const userSub = auth.user.sub;
   const {theme} = useContext(ThemeContext);
   const {signalCnt, setSignalCnt, refreshCandidate, setRefreshCandidate, refreshSentSignal, setRefreshSentSignal, setNewCand} = useContext(UserContext);
   const [message, setMessage] = useState('');

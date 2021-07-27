@@ -15,7 +15,7 @@ const {width, height} = Dimensions.get('window');
 
 export default function Preference({filterOpen, setFilterOpen}) {
   const auth = useContext(MyContext);
-  const userSub = auth.user.attributes.sub;
+  const userSub = auth.user.sub;
   const {theme} = useContext(ThemeContext);
   const [exist, setExist] = useState(false);
   const [genderLike, setGenderLike] = useState(0);

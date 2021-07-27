@@ -35,7 +35,7 @@ function CreateBoard({navigation}) {
           ],
       );
     } else {
-      const userSub = auth.user.attributes.sub;
+      const userSub = auth.user.sub;
       makeBoard(userSub, boardName, boardDescription, boardOptions[optionIndex]);
       navigation.goBack();
     }

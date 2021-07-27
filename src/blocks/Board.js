@@ -21,7 +21,7 @@ export function Nickname({type, nickname, userID, style}) {
     );
   }
   const {user} = useContext(MyContext);
-  const userSub = user.attributes.sub;
+  const userSub = user.sub;
   const {signalCnt} = useContext(UserContext);
   const [menuShow, setMenuShow] = useState(false);
   const [popupVisible, setPopupVisible] = useState(false);

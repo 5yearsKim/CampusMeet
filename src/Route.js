@@ -34,7 +34,7 @@ const BottomTab = createBottomTabNavigator();
 
 function HomeTab({navigation}) {
   const {user, setName} = useContext(MyContext);
-  const userSub = user.attributes.sub;
+  const userSub = user.sub;
   const {signalBadge, matchBadge} = useContext(BadgeContext);
 
   useEffect(() => {
@@ -44,10 +44,10 @@ function HomeTab({navigation}) {
         if (userData == null) {
           navigation.navigate('CreateProfile');
           return;
-        } 
+        }
         if (userData.status == 'inactive') {
           navigation.navigate('Deactivate');
-          return
+          return;
         }
         setName(userData.name);
       } catch (err) {

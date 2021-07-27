@@ -88,7 +88,7 @@ function CandidateFooter({loading, setLoading}) {
 
 function Candidate({navigation}) {
   const auth = useContext(MyContext);
-  const userSub = auth.user.attributes.sub;
+  const userSub = auth.user.sub;
   const {refreshCandidate, setRefreshCandidate} = useContext(UserContext);
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);

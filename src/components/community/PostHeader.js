@@ -14,7 +14,7 @@ import {MyContext, ThemeContext} from 'src/context';
 
 function PostHeader({post, board, navigation}) {
   const auth = useContext(MyContext);
-  const userSub = auth.user.attributes.sub;
+  const userSub = auth.user.sub;
   const {theme} = useContext(ThemeContext);
   const [modalVisible, setModalVisible] = useState(false);
   const [alreadyLikeOpen, setAlreadyLikeOpen] = useState(false);

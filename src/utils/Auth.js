@@ -1,13 +1,9 @@
 import {Auth} from 'aws-amplify';
 
-export async function handleSignup(username, password, email) {
+export async function handleSignup(username, password) {
   const rsp = await Auth.signUp({
     username,
     password,
-    attributes: {
-      email: email,
-      gender: 'unknown',
-    },
   });
   return rsp;
 }
@@ -20,7 +16,10 @@ export async function confirmSignup(username, emailVerification) {
 export async function login(auth, username, password) {
   const rsp = await Auth.signIn(username, password);
   // order important
-  auth.setUser(rsp);
+  const userTmp = {
+    sub: rsp.signInUserSession.accessToken.payload.sub,
+  };
+  auth.setUser(userTmp);
   auth.setIsAuthenticated(true);
   return rsp;
 }

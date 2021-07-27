@@ -12,7 +12,7 @@ function ReceivedSignal({navigation}) {
   const [loading, setLoading] = useState(true);
 
   const auth = useContext(MyContext);
-  const userSub = auth.user.attributes.sub;
+  const userSub = auth.user.sub;
   const {refreshReceivedSignal, setRefreshReceivedSignal, refreshMatch, setRefreshMatch} = useContext(UserContext);
   const {setSignalBadge} = useContext(BadgeContext);
 

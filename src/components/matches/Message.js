@@ -39,7 +39,7 @@ function LeftContent({user, showTime, navigation}) {
 
 function Message({item, showTime, showDate, myCkp, yourCkp, navigation}) {
   const auth = useContext(MyContext);
-  const isMyMessage = (item.userID == auth.user.attributes.sub);
+  const isMyMessage = (item.userID == auth.user.sub);
   if (item == 'undefined') {
     return (
       <View></View>

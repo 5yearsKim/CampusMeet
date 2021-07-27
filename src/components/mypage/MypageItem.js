@@ -41,7 +41,7 @@ export function MyLogout() {
 
 export function MyDeactivate({navigation}) {
   const auth = useContext(MyContext);
-  const userSub = auth.user.attributes.sub;
+  const userSub = auth.user.sub;
   const {theme} = useContext(ThemeContext);
   const {refreshMypage, setRefreshMypage} = useContext(UserContext);
   const [alertOpen, setAlertOpen] = useState(false);

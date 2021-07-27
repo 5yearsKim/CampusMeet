@@ -10,7 +10,7 @@ import {relativeTimePrettify} from 'src/utils/Time';
 
 function CandidateDetail({item, useAction, clearModal}) {
   // const auth = useContext(MyContext);
-  // const userSub = auth.user.attributes.sub;
+  // const userSub = auth.user.sub;
   const {theme} = useContext(ThemeContext);
   const {signalCnt} = useContext(UserContext);
   const [popupVisible, setPopupVisible] = useState(false);

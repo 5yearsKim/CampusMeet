@@ -11,7 +11,7 @@ import {imageListToS3} from 'src/utils/UploadPicture';
 
 function ModifyProfile({navigation}) {
   const auth = useContext(MyContext);
-  const userSub = auth.user.attributes.sub;
+  const userSub = auth.user.sub;
   const {refreshMypage, setRefreshMypage} = useContext(UserContext);
 
   const [imgList, setImgList] = useState([]);
@@ -19,7 +19,7 @@ function ModifyProfile({navigation}) {
   // console.log(imgList);
   // console.log(positions.value);
 
-  console.log(positions.value, imgList);
+  // console.log(positions.value, imgList);
 
   useEffect(() => {
     const imgIndex = imgList.map((img, idx) => ({[img]: idx}));
@@ -238,7 +238,7 @@ const styles = StyleSheet.create({
   errText: {
     color: 'red',
     margin: 5,
-  }
+  },
 });
 
 export default ModifyProfile;

@@ -1,6 +1,6 @@
 {
   "auth": {
-    "campusmeetf778f6fc": {
+    "campusmeetcaf9d178": {
       "service": "Cognito",
       "serviceType": "imported",
       "providerPlugin": "awscloudformation",
@@ -17,7 +17,7 @@
           "defaultAuthentication": {
             "authenticationType": "AMAZON_COGNITO_USER_POOLS",
             "userPoolConfig": {
-              "userPoolId": "authcampusmeetf778f6fc"
+              "userPoolId": "authcampusmeetcaf9d178"
             }
           },
           "additionalAuthenticationProviders": []

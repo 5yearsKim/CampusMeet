@@ -14,7 +14,7 @@ import config from 'src/config';
 function InputBox({route, chatUser}) {
   const {chatRoomID} = route.params;
   const {user, name}= useContext(MyContext);
-  const userSub = user.attributes.sub;
+  const userSub = user.sub;
   const [message, setMessage] = useState('');
   const [gifVisible, setGifVisible] = useState(false);
   const [sending, setSending] = useState(false);
@@ -80,7 +80,7 @@ function InputBox({route, chatUser}) {
     if (message) {
       if (message.trim() == '') {
         setMessage('');
-        return ;
+        return;
       }
       sendMessage(message.trim(), 'text');
       setMessage('');

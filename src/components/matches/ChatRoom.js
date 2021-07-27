@@ -12,7 +12,7 @@ import {notificationHandlerForChatRoom} from 'src/utils/PushNotification';
 function ChatRoom({navigation, route}) {
   const {user, pushNoti} = useContext(MyContext);
   const {refreshMatch, setRefreshMatch} = useContext(UserContext);
-  const userSub = user.attributes.sub;
+  const userSub = user.sub;
   const {chatRoomID, name} = route.params;
   const [messageList, setMessageList] = useState([]);
   const [nextToken, setNextToken] = useState('');

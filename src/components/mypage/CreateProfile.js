@@ -19,7 +19,7 @@ function CreateProfile({navigation}) {
   const auth = useContext(MyContext);
   const {theme} = useContext(ThemeContext);
   const {refreshCandidate, setRefreshCandidate} = useContext(UserContext);
-  const userSub = auth.user.attributes.sub;
+  const userSub = auth.user.sub;
 
   const [imgList, setImgList] = useState([]);
   const imgIndex = imgList.map((img, idx) => ({[img]: idx}));
@@ -87,7 +87,7 @@ function CreateProfile({navigation}) {
         setErrText('학과를 입력해주세요');
         return false;
       }
-      if (isNaN(year)) { 
+      if (isNaN(year)) {
         setErrText('학번을 바르게 기입해주세요');
         return false;
       }

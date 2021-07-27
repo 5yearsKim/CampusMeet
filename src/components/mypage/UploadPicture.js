@@ -1,4 +1,4 @@
-import React, {useContext, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {View, Image, TouchableOpacity, StyleSheet, Button} from 'react-native';
 import {launchImageLibraryAsync, MediaTypeOptions} from 'expo-image-picker';
 import {AntDesign} from '@expo/vector-icons';
@@ -110,7 +110,11 @@ function AddPicture({index, addPicture}) {
 }
 
 function UploadPicture({imgList, setImgList, positions}) {
-  const [imgListTemp, setImgListTemp] = useState(imgList);
+  const [confirmAdd, setConfirmAdd] = useState(false);
+  useEffect(() => {
+    setConfirmAdd(true);
+  }, [imgList.length]);
+
   const uploadImage = async () => {
     if (imgList.length > 5) {
       return;
@@ -130,7 +134,7 @@ function UploadPicture({imgList, setImgList, positions}) {
           // const key = result.uri.split('/').pop();
           // const awsrsp = await Storage.put(path + key, blob);
           // setImgList([...imgList, awsrsp.key]);
-          setImgList([result.uri, ...imgList]);
+          setImgList([...imgList, result.uri]);
           // setImgList([result.uri, ...imgList]);
         } catch (err) {
           console.warn(err);
@@ -153,21 +157,25 @@ function UploadPicture({imgList, setImgList, positions}) {
   // const posImgList = Object.keys(positions.value).sort((a, b) => (positions.value[a] - positions.value[b]));
   const posImgList = useDerivedValue(() => {
     const newPosImg = Object.keys(positions.value).sort((a, b) => (positions.value[a] - positions.value[b]));
-    runOnJS(setImgListTemp)(newPosImg);
+    runOnJS(setConfirmAdd)(!confirmAdd);
     return newPosImg;
   }, [positions]);
+
+
   // console.log(posImgList.value);
   return (
     <View style={{backgroundColor: '#eeeeee', height: IMGHEIGHT * 2 + 30}}>
       {[0, 1, 2, 3, 4, 5].map((idx) => {
-        if (idx < imgList.length) {
-          return <AnimatedPicture key={idx} imgKey={imgList[idx]} positions={positions}/>;
+        if (!confirmAdd && idx < posImgList.value.length) {
+          return <AnimatedPicture key={idx} imgKey={posImgList.value[idx]} positions={positions}/>;
+        } else if (confirmAdd && idx < posImgList.value.length) {
+          return <AnimatedPicture key={idx} imgKey={posImgList.value[idx]} positions={positions}/>;
         } else {
           return <AddPicture key={idx} index={idx} addPicture={uploadImage}/>;
         }
       })}
-      {/* <Button onPress={() => console.log('hi', posImgList.value, positions.value)} title='test'/> */}
-      {imgList.map((key, idx) => {
+      {/* <Button onPress={() => setChangeOrder(!changeOrder)} title='test'/> */}
+      {posImgList.value.map((key, idx) => {
         const pos = getPosition(idx);
         return (
           <AntDesign
@@ -181,6 +189,9 @@ function UploadPicture({imgList, setImgList, positions}) {
           />
         );
       })}
+      {/* { confirmAdd &&
+        <Button onPress={() => setConfirmAdd(!confirmAdd)} title='confi'/>
+      } */}
     </View>
   );
 }

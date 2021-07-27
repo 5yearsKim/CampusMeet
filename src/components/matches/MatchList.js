@@ -7,7 +7,7 @@ import {MyContext, UserContext, BadgeContext} from 'src/context';
 
 function MatchList({navigation}) {
   const auth = useContext(MyContext);
-  const userSub = auth.user.attributes.sub;
+  const userSub = auth.user.sub;
   const {refreshMatch, setRefreshMatch} = useContext(UserContext);
   const {setMatchBadge} = useContext(BadgeContext);
   const [loading, setLoading] = useState(true);

@@ -2,7 +2,8 @@
   "name": "campusMeet",
   "displayName": "campusMeet",
   "expo": {
-    "name": "campusMeet",
+    "name": "campusmeet",
+    "scheme": "campusmeet",
     "slug": "campusMeet",
     "version": "1.0",
     "assetBundlePatterns": [
@@ -19,7 +20,7 @@
       "buildNumber": "1.0.3"
     },
     "android": {
-      "versionCode": 26,
+      "versionCode": 27,
       "package": "com.onion.campusMeet",
       "permissions": [],
       "adaptiveIcon": {

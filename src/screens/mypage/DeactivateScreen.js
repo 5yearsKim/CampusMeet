@@ -10,7 +10,7 @@ const {width, height} = Dimensions.get('window');
 
 export default function DeactivateScreen({navigation}) {
   const auth = useContext(MyContext);
-  const userSub = auth.user.attributes.sub;
+  const userSub = auth.user.sub;
   useEffect(() => {
     const unsubscribe = navigation.addListener('beforeRemove', (e) => {
       if (e.data.action.type == 'RESET') {

@@ -12,7 +12,7 @@ import {MyContext, ChatContext, ThemeContext} from 'src/context';
 
 function Comment({item, index, board, focusComment, refresh}) {
   const auth = useContext(MyContext);
-  const userSub = auth.user.attributes.sub;
+  const userSub = auth.user.sub;
   const {theme} = useContext(ThemeContext);
   const nested = useContext(ChatContext);
   const likeList = item.likes.items.map((item) => item.userID);

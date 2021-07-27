@@ -7,7 +7,7 @@ import {MyContext, UserContext} from 'src/context';
 
 function SentSignal({navigation}) {
   const auth = useContext(MyContext);
-  const userSub = auth.user.attributes.sub;
+  const userSub = auth.user.sub;
   const [userList, setUserList] = useState([]);
   const {refreshSentSignal, setRefreshSentSignal} = useContext(UserContext);
 

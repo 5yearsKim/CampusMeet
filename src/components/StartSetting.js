@@ -9,7 +9,7 @@ import {bringReceivedSignal} from 'src/utils/Signal';
 
 export default function StartSetting({navigation, user}) {
   const auth = useContext(MyContext);
-  const userSub = auth.user.attributes.sub;
+  const userSub = auth.user.sub;
   const {setMatchBadge, setSignalBadge} = useContext(BadgeContext);
   const {pushNoti} = useContext(MyContext);
   // const notificationListener = useRef();
@@ -92,7 +92,7 @@ export default function StartSetting({navigation, user}) {
         token = null;
       }
       try {
-        modifyUser(auth.user.attributes.sub, {pushToken: token});
+        modifyUser(auth.user.sub, {pushToken: token});
       } catch (err) {
         console.warn(err);
       }

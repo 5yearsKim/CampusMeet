@@ -37,7 +37,7 @@ function TopIntro({user, navigation}) {
 
 export default function Mypage({navigation}) {
   const auth = useContext(MyContext);
-  const userSub = auth.user.attributes.sub;
+  const userSub = auth.user.sub;
   const {theme} = useContext(ThemeContext);
   const {refreshMypage} = useContext(UserContext);
   const [user, setUser] = useState({

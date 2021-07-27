@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {useFonts} from 'expo-font';
 import AppLoading from 'expo-app-loading';
 import {StatusBar} from 'expo-status-bar';
-import {Auth} from 'aws-amplify';
+import {Auth, Hub} from 'aws-amplify';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {DefaultTheme as PaperTheme, Provider as PaperProvider} from 'react-native-paper';
 import {
@@ -20,7 +20,7 @@ export default function App() {
   const [authChecked, setAuthChecked] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [pushNoti, setPushNoti] = useState(true);
-  const [user, setUser] = useState([]);
+  const [user, setUser] = useState({});
   const [name, setName] = useState('');
   const [scheme, setScheme] = useState('light');
   const [font, setFont] = useState();
@@ -53,7 +53,11 @@ export default function App() {
     const bringCurrentUser = async () => {
       try {
         const userData = await Auth.currentAuthenticatedUser();
-        setUser(userData);
+        const sub = userData.signInUserSession.accessToken.payload.sub;
+        const userTmp = {
+          sub: sub,
+        };
+        setUser(userTmp);
         setIsAuthenticated(true);
       } catch (err) {
         console.warn(err);
@@ -61,6 +65,23 @@ export default function App() {
       setAuthChecked(true);
     };
     bringCurrentUser();
+  }, []);
+
+  // for social signin
+  useEffect(() => {
+    Hub.listen('auth', ({payload: {event, data}}) => {
+      switch (event) {
+        case 'signIn':
+          console.log('signin');
+          setUser(data);
+          setIsAuthenticated(true);
+          break;
+        case 'signOut':
+          // setUser(null);
+          setIsAuthenticated(false);
+          break;
+      }
+    });
   }, []);
 
   // theme schem load
@@ -101,13 +122,13 @@ export default function App() {
         setFont(fontData);
       }
     };
-    bringFont()
+    bringFont();
   }, []);
   // user state load
   useEffect(() => {
     const m_bringSentSignalToday = async () => {
       try {
-        const userSub = user.attributes.sub;
+        const userSub = user.sub;
         const signalData = await bringSentSignalToday(userSub);
         setSignalCnt(signalData.length);
       } catch (err) {
@@ -136,7 +157,7 @@ export default function App() {
     return {
       scheme: scheme,
       setScheme: setScheme,
-      font: font, 
+      font: font,
       setFont, setFont,
       theme: config.themes[scheme],
     };

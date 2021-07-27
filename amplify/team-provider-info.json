@@ -13,18 +13,18 @@
     },
     "categories": {
       "auth": {
-        "campusmeetf778f6fc": {
-          "userPoolId": "ap-northeast-2_RVWkkCfhn",
-          "userPoolName": "campusUser",
-          "webClientId": "5gncum46eo4v1umnqvfqla646u",
-          "nativeClientId": "5gncum46eo4v1umnqvfqla646u",
-          "identityPoolId": "ap-northeast-2:a7232e3d-3c13-47cb-9046-38fa7dc5d780",
-          "identityPoolName": "campusIdentity",
+        "campusmeetcaf9d178": {
+          "userPoolId": "ap-northeast-2_MXs3L8pGk",
+          "userPoolName": "campusmeetUser",
+          "webClientId": "rd3ikjup7oqfa8ns509h02dk3",
+          "nativeClientId": "rd3ikjup7oqfa8ns509h02dk3",
+          "identityPoolId": "ap-northeast-2:bf9b46ef-a111-4458-978e-40c335225863",
+          "identityPoolName": "campusmeetIdentity",
           "allowUnauthenticatedIdentities": false,
-          "authRoleArn": "arn:aws:iam::303045752476:role/Cognito_campusIdentityAuth_Role",
-          "authRoleName": "Cognito_campusIdentityAuth_Role",
-          "unauthRoleArn": "arn:aws:iam::303045752476:role/Cognito_campusIdentityUnauth_Role",
-          "unauthRoleName": "Cognito_campusIdentityUnauth_Role"
+          "authRoleArn": "arn:aws:iam::303045752476:role/Cognito_campusmeetIdentityAuth_Role",
+          "authRoleName": "Cognito_campusmeetIdentityAuth_Role",
+          "unauthRoleArn": "arn:aws:iam::303045752476:role/Cognito_campusmeetIdentityUnauth_Role",
+          "unauthRoleName": "Cognito_campusmeetIdentityUnauth_Role"
         }
       }
     }

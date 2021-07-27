@@ -1,5 +1,5 @@
 import React, {useState, useContext} from 'react';
-import {Dimensions,  View, Image, TouchableOpacity, StyleSheet} from 'react-native';
+import {Dimensions, View, Image, TouchableOpacity, StyleSheet} from 'react-native';
 import {Portal, Dialog} from 'react-native-paper';
 import Text from 'src/blocks/Text';
 import Badge from 'src/blocks/Badge';
@@ -33,7 +33,7 @@ function LeftContent({navigation, matcher}) {
 
 function MatchListItem({item, navigation, deleteMatch}) {
   const auth = useContext(MyContext);
-  const userSub = auth.user.attributes.sub;
+  const userSub = auth.user.sub;
   const {theme} = useContext(ThemeContext);
   const [menuShow, setMenuShow] = useState(false);
   const [deleteAlert, setDeleteAlert] = useState(false);

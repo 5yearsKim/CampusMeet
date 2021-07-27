@@ -11,7 +11,7 @@ import {MyContext, ThemeContext} from 'src/context';
 function NestedComment({item, board}) {
   // console.log(item);
   const auth = useContext(MyContext);
-  const userSub = auth.user.attributes.sub;
+  const userSub = auth.user.sub;
   const {theme} = useContext(ThemeContext);
   const likeList = item.likes.items.map((item) => item.userID);
   const [isLike, setIsLike] = useState(false);

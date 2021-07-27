@@ -8,7 +8,7 @@ import {useKeyboard} from 'src/blocks/Keyboard';
 
 function CommentInput({board, post, refresh}) {
   const auth = useContext(MyContext);
-  const userSub = auth.user.attributes.sub;
+  const userSub = auth.user.sub;
   const nested = useContext(ChatContext);
   const [message, setMessage] = useState('');
   const [nickname, setNickname] = useState('');
@@ -34,7 +34,7 @@ function CommentInput({board, post, refresh}) {
   }, [nested.isNested]);
 
   const onSend = async () => {
-    const trimmed = message.trim()
+    const trimmed = message.trim();
     setMessage(trimmed);
     if (trimmed == '') {
       return;
