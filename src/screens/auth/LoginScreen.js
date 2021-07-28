@@ -1,8 +1,9 @@
 import React from 'react';
-import {StyleSheet, Dimensions, TouchableOpacity, Text, View, KeyboardAvoidingView} from 'react-native';
+import {StyleSheet, Dimensions, TouchableOpacity, Image, Text, View, KeyboardAvoidingView} from 'react-native';
 import {Button} from 'react-native-paper';
 import Login from 'src/components/auth/Login';
 import AuthBackground from 'src/blocks/AuthBackground';
+import {Auth} from 'aws-amplify';
 
 const {width, height} = Dimensions.get('window');
 
@@ -23,6 +24,15 @@ export default function LoginScreen(props) {
         >
           회원가입
         </Button>
+
+        <TouchableOpacity onPress={() => Auth.federatedSignIn({provider: 'Google'})}>
+          <View style={styles.googleButton}>
+            <Image source={require('assets/images/google_logo.png')} style={styles.googleLogo}/>
+            <Text style={styles.googleText}>Google 로 시작하기</Text>
+          </View>
+        </TouchableOpacity>
+
+
         <View style={{alignItems: 'center', marginTop: 10}}>
           <TouchableOpacity onPress={() => props.navigation.navigate('ForgotPassword')}>
             <Text style={styles.forgotPassword}>비밀번호를 잊으셨나요?</Text>
@@ -59,5 +69,26 @@ const styles = StyleSheet.create({
     right: 0,
     top: 0,
     bottom: 0,
+  },
+  googleButton: {
+    backgroundColor: 'white',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 20,
+    borderWidth: 1,
+    borderColor: '#dddddd',
+    padding: 5,
+    margin: 5,
+    marginTop: 15,
+  },
+  googleLogo: {
+    width: 25,
+    height: 25,
+  },
+  googleText: {
+    fontSize: 15,
+    marginLeft: 10,
+    color: 'gray',
   },
 });

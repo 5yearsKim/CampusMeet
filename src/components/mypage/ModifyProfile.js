@@ -53,10 +53,6 @@ function ModifyProfile({navigation}) {
   };
 
   useEffect(() => {
-    return () => setRefreshMypage(!refreshMypage);
-  }, []);
-
-  useEffect(() => {
     m_bringUser();
   }, []);
 
@@ -112,6 +108,7 @@ function ModifyProfile({navigation}) {
         profileDescription: profileDescription,
       };
       await modifyUser(userSub, newUser);
+      setRefreshMypage(!refreshMypage);
       auth.setName(name);
       navigation.navigate('Mypage');
     } catch (err) {

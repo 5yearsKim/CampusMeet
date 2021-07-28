@@ -33,7 +33,7 @@ export async function bringUser(userSub) {
 
 export async function modifyUser(userSub, newUser) {
   newUser.id = userSub;
-  API.graphql(
+  await API.graphql(
       graphqlOperation(updateUser, {input: newUser}),
   );
 };
@@ -61,7 +61,7 @@ export async function makePreference(userID, likeGender, likeGraduate, likeCampu
 
 export async function modifyPreference(userID, newPreference) {
   newPreference.id = userID;
-  API.graphql(
+  await API.graphql(
       graphqlOperation(updatePreference, {input: newPreference}),
   );
 }

@@ -1,10 +1,8 @@
 import React, {useState, useContext} from 'react';
-import {StyleSheet, View} from 'react-native';
-import Text from 'src/blocks/Text';
+import {StyleSheet, Text, View} from 'react-native';
 import {Button, TextInput} from 'react-native-paper';
 import {login} from 'src/utils/Auth';
 import {MyContext} from 'src/context';
-import {Auth} from 'aws-amplify';
 
 // todo: button disabled logic
 function Login(props) {
@@ -84,11 +82,7 @@ function Login(props) {
         >
           로그인
         </Button>
-        <Button
-          onPress={() => Auth.federatedSignIn({provider: 'Google'})}
-        >
-          google login
-        </Button>
+
       </View>
     </View>
   );
@@ -106,6 +100,7 @@ const styles = StyleSheet.create({
   errText: {
     color: 'red',
   },
+
 });
 
 export default Login;

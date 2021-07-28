@@ -53,6 +53,7 @@ export default function Mypage({navigation}) {
     const m_bringUser = async () => {
       try {
         const userData = await bringUser(userSub);
+        console.log(userData);
         setUser(userData);
       } catch (err) {
         console.warn(err);

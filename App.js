@@ -72,8 +72,11 @@ export default function App() {
     Hub.listen('auth', ({payload: {event, data}}) => {
       switch (event) {
         case 'signIn':
-          console.log('signin');
-          setUser(data);
+          const sub = data.signInUserSession.accessToken.payload.sub;
+          const userTmp = {
+            sub: sub,
+          };
+          setUser(userTmp);
           setIsAuthenticated(true);
           break;
         case 'signOut':
