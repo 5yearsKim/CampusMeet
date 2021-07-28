@@ -8,6 +8,7 @@ import {Button, TextInput, RadioButton} from 'react-native-paper';
 import {MyContext, UserContext} from 'src/context';
 import {bringUser, modifyUser} from 'src/utils/User';
 import {imageListToS3} from 'src/utils/UploadPicture';
+import {isNumeric} from 'src/utils/Misc'
 
 function ModifyProfile({navigation}) {
   const auth = useContext(MyContext);
@@ -61,7 +62,7 @@ function ModifyProfile({navigation}) {
       setErrText('이름을 적어주세요');
       return false;
     }
-    if (isNaN(year)) {
+    if (!isNumeric(year)) {
       setErrText('학번을 바르게 기입해주세요');
       return false;
     }
@@ -182,7 +183,7 @@ function ModifyProfile({navigation}) {
         maxLength={20}
       />
       <TextInput
-        label='친구에게 한마디'
+        label='프로필 메세지'
         value={profileMessage}
         onChangeText={(text) => setProfileMessage(text)}
         style={styles.textInput}

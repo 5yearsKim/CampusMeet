@@ -5,7 +5,7 @@ import {login} from 'src/utils/Auth';
 import {MyContext} from 'src/context';
 
 // todo: button disabled logic
-function Login(props) {
+function Login() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [errText, setErrText] = useState('');

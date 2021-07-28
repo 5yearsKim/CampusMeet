@@ -27,6 +27,8 @@ export default function Preference({filterOpen, setFilterOpen}) {
   const departmentOptions = config.campus.departmentOptions;
   const campusCand = campusList.map((item) => item.name);
 
+  const [refreshFilter, setRefreshFilter] = useState(false);
+
   useEffect(() => {
     const m_bringPreference = async () => {
       try {
@@ -45,7 +47,7 @@ export default function Preference({filterOpen, setFilterOpen}) {
       }
     };
     m_bringPreference();
-  }, []);
+  }, [refreshFilter]);
 
   const onSave = () => {
     if (exist) {
@@ -163,7 +165,10 @@ export default function Preference({filterOpen, setFilterOpen}) {
                     <Button
                       mode="outlined"
                       style={{width: 100, margin: 5}}
-                      onPress={() => setFilterOpen(false)}
+                      onPress={() => {
+                        setRefreshFilter(!refreshFilter);
+                        setFilterOpen(false);
+                      }}
                     >
                     취소
                     </Button>

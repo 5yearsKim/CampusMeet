@@ -1,17 +1,14 @@
 import React, {useRef} from 'react';
-import {Dimensions, View, ScrollView, StyleSheet} from 'react-native';
-import {AntDesign} from '@expo/vector-icons';
+import {Dimensions, View, ScrollView, Image, StyleSheet} from 'react-native';
 import {KeyImage} from './Image';
 
 const {width, height} = Dimensions.get('window');
 
-export function ImageViewer({imageKeys, page, modalSwitch}) {
+export function ImageViewer({imageKeys, page}) {
   const scrollViewRef = useRef();
+  const isUrl = (str) => str.startsWith('https:/');
   return (
     <View style={styles.container}>
-      <View style={styles.modalTop}>
-        <AntDesign name='close' size={32} color='white' onPress={() => modalSwitch()}/>
-      </View>
       <ScrollView
         ref={scrollViewRef}
         onContentSizeChange={() => scrollViewRef.current.scrollTo({animated: false, x: page?(width*page):undefined})}
@@ -21,12 +18,21 @@ export function ImageViewer({imageKeys, page, modalSwitch}) {
       >
         {imageKeys.map((imgKey) => (
           <View key={imgKey}>
-            <KeyImage
-              imgKey={imgKey}
-              cached={false}
-              style={styles.image}
-              resizeMode='contain'
-            />
+            {isUrl(imgKey) ?
+              <Image
+                source={{
+                  uri: imgKey,
+                }}
+                style={styles.image}
+                resizeMode='contain'
+              /> :
+              <KeyImage
+                imgKey={imgKey}
+                cached={false}
+                style={styles.image}
+                resizeMode='contain'
+              />
+            }
           </View>
         ))}
       </ScrollView>

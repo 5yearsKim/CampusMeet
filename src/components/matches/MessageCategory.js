@@ -19,32 +19,34 @@ export function TextMessage({text, isMyMessage}) {
 }
 
 export function GifMessage({gifUrl, isMyMessage}) {
-  const style = {
-    width: 120,
-    height: 90,
-  };
+  const [modalVisible, setModalVisible] = useState(false);
   return (
     <View style={styles.gifContainer}>
-      <Image
-        source={{
-          uri: gifUrl,
-        }}
-        style={style}
-      />
+      <TouchableOpacity onPress={() => setModalVisible(true)}>
+        <Image
+          source={{
+            uri: gifUrl,
+          }}
+          style={styles.gifImage}
+          resizeMode='contain'
+        />
+      </TouchableOpacity>
+      <Modal visible={modalVisible} onRequestClose={() => setModalVisible(false)}>
+        <ImageViewer imageKeys={[gifUrl]}/>
+      </Modal>
     </View>
   );
 }
 
 export function ImageMessage({imageKey, isMyMessage}) {
   const [modalVisible, setModalVisible] = useState(false);
-  const modalSwitch = () => setModalVisible(!modalVisible);
   return (
     <View style={styles.imageContainer}>
       <TouchableOpacity onPress={() => setModalVisible(true)}>
-        <KeyImage imgKey={imageKey} cached={true} style={styles.image}/>
+        <KeyImage imgKey={imageKey} cached={true} style={styles.image} resizeMode='contain'/>
       </TouchableOpacity>
-      <Modal visible={modalVisible}>
-        <ImageViewer imageKeys={[imageKey]} modalSwitch={modalSwitch}/>
+      <Modal visible={modalVisible} onRequestClose={() => setModalVisible(false)}>
+        <ImageViewer imageKeys={[imageKey]}/>
       </Modal>
     </View>
   );
@@ -81,8 +83,12 @@ const styles = StyleSheet.create({
     marginLeft: 10,
   },
   image: {
-    width: 160,
-    height: 120,
+    width: 180,
+    height: 160,
+  },
+  gifImage: {
+    minWidth: 160,
+    minHeight: 120,
   },
   imageContainer: {
     margin: 10,

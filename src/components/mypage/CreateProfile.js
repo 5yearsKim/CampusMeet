@@ -13,7 +13,7 @@ import {setupIndividual} from 'src/utils/User';
 import MyPicker from 'src/blocks/Picker';
 import campusList from 'assets/campusLogos';
 import {imageListToS3} from 'src/utils/UploadPicture';
-
+import {isNumeric} from 'src/utils/Misc';
 
 function CreateProfile({navigation}) {
   const auth = useContext(MyContext);
@@ -87,7 +87,7 @@ function CreateProfile({navigation}) {
         setErrText('학과를 입력해주세요');
         return false;
       }
-      if (isNaN(year)) {
+      if (!isNumeric(year)) {
         setErrText('학번을 바르게 기입해주세요');
         return false;
       }
@@ -112,6 +112,7 @@ function CreateProfile({navigation}) {
   const _prev = () => {
     if (currentStep == 2 || currentStep == 3) {
       setCurrentStep(currentStep - 1);
+      setErrText('')
     }
   };
 
@@ -281,7 +282,7 @@ function CreateProfile({navigation}) {
           label='자기 소개'
           value={profileDescription}
           onChangeText={(text) => setProfileDescription(text)}
-          style={[styles.textInput, {height: 80}]}
+          style={styles.textInput}
           multiline={true}
           maxLength={3000}
         />

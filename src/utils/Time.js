@@ -31,7 +31,7 @@ export const relativeTimePrettify = (dateString, mode='day') => {
       return `${absday.toFixed(0)}일 전`;
     }
   }
-  const month = date.getMonth();
+  const month = date.getMonth() + 1;
   const day = twoDigit(date.getDate());
   return `${month}/${day}`;
 };
@@ -40,7 +40,7 @@ export const relativeTimePrettify = (dateString, mode='day') => {
 export const absoluteTime = (dateString) => {
   const date = date2local(new Date(dateString));
   const year = date.getFullYear();
-  const month = date.getMonth();
+  const month = date.getMonth() + 1;
   const day = twoDigit(date.getDate());
   const hour = date.getHours();
   const minute = twoDigit(date.getMinutes());
@@ -62,7 +62,7 @@ export function strTime2Min(strTime) {
 
 export function strTime2Date(strTime) {
   const date = date2local(new Date(strTime));
-  const month = date.getMonth();
+  const month = date.getMonth() + 1;
   const day = date.getDate();
   return `${month}월 ${day}일`;
 }

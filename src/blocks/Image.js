@@ -41,7 +41,7 @@ export function KeyImage({imgKey, style, cached, resizeMode}) {
     } else {
       getUncachedImage();
     }
-  }, []);
+  }, [imgKey]);
   if (uri) {
     return (
       <Image

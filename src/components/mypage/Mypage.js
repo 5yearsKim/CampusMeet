@@ -16,7 +16,7 @@ function TopIntro({user, navigation}) {
   return (
     <View style={{alignItems: 'center', minHeight: 100}}>
       <TouchableOpacity onPress={() => navigation.navigate('ViewProfile', {userID: user.id})}>
-        {user.imageKeys.length > 0 ?
+        {user.imageKeys[0] ?
           <KeyImage
             imgKey={user.imageKeys[0]}
             cached={true}
@@ -53,7 +53,6 @@ export default function Mypage({navigation}) {
     const m_bringUser = async () => {
       try {
         const userData = await bringUser(userSub);
-        console.log(userData);
         setUser(userData);
       } catch (err) {
         console.warn(err);

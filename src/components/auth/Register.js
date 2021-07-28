@@ -68,7 +68,7 @@ function Register() {
         return;
       }
       try {
-        await handleSignup(username, password);
+        await handleSignup(username, password, email);
         // console.log(rsp);
         setErrText('');
         setEmailSent(true);
