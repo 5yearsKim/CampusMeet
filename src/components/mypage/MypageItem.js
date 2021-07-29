@@ -203,6 +203,17 @@ export function MyPushNoti() {
   );
 }
 
+export function MyVerifyCampus({navigation}) {
+  const {theme} = useContext(ThemeContext);
+  return (
+    <View>
+      <TouchableOpacity onPress={() => navigation.navigate('VerifyCampus')}>
+        <Text style={[styles.itemText, {color: theme.text}]}>캠퍼스 인증</Text>
+      </TouchableOpacity>
+    </View>
+  );
+}
+
 const styles = StyleSheet.create({
   itemText: {
     margin: 3,

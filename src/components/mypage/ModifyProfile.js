@@ -8,7 +8,7 @@ import {Button, TextInput, RadioButton} from 'react-native-paper';
 import {MyContext, UserContext} from 'src/context';
 import {bringUser, modifyUser} from 'src/utils/User';
 import {imageListToS3} from 'src/utils/UploadPicture';
-import {isNumeric} from 'src/utils/Misc'
+import {isNumeric} from 'src/utils/Misc';
 
 function ModifyProfile({navigation}) {
   const auth = useContext(MyContext);

@@ -4,7 +4,7 @@ import Text from 'src/blocks/Text';
 import {KeyImage} from 'src/blocks/Image';
 import {bringUser} from 'src/utils/User';
 import {MyContext, ThemeContext, UserContext} from 'src/context';
-import {MyModifyProfile, MyLogout, MyDeactivate, MyPushNoti, MyFont} from './MypageItem';
+import {MyModifyProfile, MyLogout, MyDeactivate, MyPushNoti, MyFont, MyVerifyCampus} from './MypageItem';
 
 // import {makeMessage} from 'src/utils/Chat';
 
@@ -69,6 +69,7 @@ export default function Mypage({navigation}) {
       <View style={styles.sectionBox}>
         <Text style={[styles.sectionText, {color: theme.text}]}>프로필</Text>
         <MyModifyProfile navigation={navigation}/>
+        <MyVerifyCampus navigation={navigation}/>
       </View>
       <View style={styles.sectionBox}>
         <Text style={[styles.sectionText, {color: theme.text}]}>앱 설정</Text>

@@ -22,6 +22,7 @@ import CreateProfileScreen from 'src/screens/mypage/CreateProfileScreen';
 import ModifyProfileScreen from 'src/screens/mypage/ModifyProfileScreen';
 import ViewProfileScreen from 'src/screens/mypage/ViewProfileScreen';
 import DeactivateScreen from 'src/screens/mypage/DeactivateScreen';
+import VerifyCampusScreen from 'src/screens/mypage/VerifyCampusScreen';
 
 import CreateBoardScreen from 'src/screens/community/CreateBoardScreen';
 import CreatePostScreen from 'src/screens/community/CreatePostScreen';
@@ -166,6 +167,7 @@ function Route() {
         <MainStack.Screen name='CreateBoard' component={CreateBoardScreen} options={{title: '게시판만들기'}}/>
         <MainStack.Screen name='CreatePost' component={CreatePostScreen} options={{title: '글쓰기'}}/>
         <MainStack.Screen name='Deactivate' component={DeactivateScreen} options={{title: '휴면계정', headerLeft: () => null}}/>
+        <MainStack.Screen name='VerifyCampus' component={VerifyCampusScreen} options={{title: '캠퍼스 인증'}}/>
       </MainStack.Navigator>
     );
   } else {

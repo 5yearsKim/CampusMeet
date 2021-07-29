@@ -1,4 +1,9 @@
-export function isNumeric(str) {
-  if (typeof str != "string") return false
-  return !isNaN(str) && !isNaN(parseFloat(str))
+export function isNumeric(num) {
+  if (typeof num == 'number') {
+    return true;
+  }
+  if (typeof num == 'string') {
+    return !isNaN(num) && !isNaN(parseFloat(num));
+  }
+  return false;
 }
