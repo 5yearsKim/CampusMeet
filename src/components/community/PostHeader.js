@@ -10,6 +10,7 @@ import {AntDesign} from '@expo/vector-icons';
 import {KeyImage} from 'src/blocks/Image';
 import {ImageViewer} from 'src/blocks/ImageViewer';
 import {MyContext, ThemeContext} from 'src/context';
+import GestureRecognizer from 'react-native-swipe-gestures';
 
 
 function PostHeader({post, board, navigation}) {
@@ -25,9 +26,6 @@ function PostHeader({post, board, navigation}) {
   const [isLike, setIsLike] = useState(likeList.includes(userSub));
   const [likeCnt, setLikeCnt] = useState(post.likes.items.length);
 
-  const modalSwitch = () => {
-    setModalVisible(!modalVisible);
-  };
 
   const renderImage = ({item, index}) => {
     return (
@@ -36,7 +34,7 @@ function PostHeader({post, board, navigation}) {
           setPage(index);
           setModalVisible(true);
         }}>
-          <KeyImage imgKey={item} style={styles.image} cached={false}/>
+          <KeyImage imgKey={item} style={styles.image} cached={true}/>
         </TouchableOpacity>
       </View>
     );
@@ -109,9 +107,11 @@ function PostHeader({post, board, navigation}) {
             keyExtractor={(item) => item}
             horizontal
           />
-          <Modal visible={modalVisible}>
-            <ImageViewer imageKeys={post.imageKeys} page={page} modalSwitch={modalSwitch}/>
-          </Modal>
+          <GestureRecognizer onSwipeUp={() => setModalVisible(false)} onSwipeDown={() => setModalVisible(false)}>
+            <Modal visible={modalVisible} onRequestClose={() => setModalVisible(false)}>
+              <ImageViewer imageKeys={post.imageKeys} page={page}/>
+            </Modal>
+          </GestureRecognizer>
         </View>
       )}
       <SimpleAlert
@@ -143,6 +143,7 @@ const styles = StyleSheet.create({
   image: {
     height: 150,
     width: 150,
+    borderRadius: 10,
   },
   titleText: {
     fontSize: 18,

@@ -4,6 +4,7 @@ import Text from 'src/blocks/Text';
 import {KeyImage} from 'src/blocks/Image';
 import {ImageViewer} from 'src/blocks/ImageViewer';
 import {AntDesign} from '@expo/vector-icons';
+import GestureRecognizer from 'react-native-swipe-gestures';
 import config from 'src/config';
 
 const {width, height} = Dimensions.get('window');
@@ -28,12 +29,14 @@ export function GifMessage({gifUrl, isMyMessage}) {
             uri: gifUrl,
           }}
           style={styles.gifImage}
-          resizeMode='contain'
+          resizeMode='cover'
         />
       </TouchableOpacity>
-      <Modal visible={modalVisible} onRequestClose={() => setModalVisible(false)}>
-        <ImageViewer imageKeys={[gifUrl]}/>
-      </Modal>
+      <GestureRecognizer onSwipeUp={() => setModalVisible(false)} onSwipeDown={() => setModalVisible(false)}>
+        <Modal visible={modalVisible} onRequestClose={() => setModalVisible(false)}>
+          <ImageViewer imageKeys={[gifUrl]}/>
+        </Modal>
+      </GestureRecognizer>
     </View>
   );
 }
@@ -43,11 +46,13 @@ export function ImageMessage({imageKey, isMyMessage}) {
   return (
     <View style={styles.imageContainer}>
       <TouchableOpacity onPress={() => setModalVisible(true)}>
-        <KeyImage imgKey={imageKey} cached={true} style={styles.image} resizeMode='contain'/>
+        <KeyImage imgKey={imageKey} cached={true} style={styles.image} resizeMode='cover'/>
       </TouchableOpacity>
-      <Modal visible={modalVisible} onRequestClose={() => setModalVisible(false)}>
-        <ImageViewer imageKeys={[imageKey]}/>
-      </Modal>
+      <GestureRecognizer onSwipeUp={() => setModalVisible(false)} onSwipeDown={() => setModalVisible(false)}>
+        <Modal visible={modalVisible} onRequestClose={() => setModalVisible(false)}>
+          <ImageViewer imageKeys={[imageKey]}/>
+        </Modal>
+      </GestureRecognizer>
     </View>
   );
 }

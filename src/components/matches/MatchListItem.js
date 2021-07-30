@@ -13,7 +13,8 @@ const {width, height} = Dimensions.get('window');
 
 function LeftContent({navigation, matcher}) {
   return (
-    <TouchableOpacity onPress={() => navigation.navigate('ViewProfile', {userID: matcher.id})}>
+    // <TouchableOpacity onPress={() => navigation.navigate('ViewProfile', {userID: matcher.id})}>
+    <View>
       {matcher.imageKeys.length > 0 ?
         <KeyImage
           imgKey={matcher.imageKeys[0]}
@@ -26,7 +27,8 @@ function LeftContent({navigation, matcher}) {
           style={styles.avatar}
         />
       }
-    </TouchableOpacity>
+    </View>
+    // </TouchableOpacity>
   );
 }
 
@@ -111,6 +113,12 @@ function MatchListItem({item, navigation, deleteMatch}) {
       <Portal>
         <Dialog visible={menuShow} onDismiss={() => setMenuShow(false)}>
           <Dialog.Content>
+            <TouchableOpacity onPress={() => {
+              navigation.navigate('ViewProfile', {userID: matcher.id});
+              setMenuShow(false);
+            }}>
+              <Text style={styles.menuText}>프로필 보기</Text>
+            </TouchableOpacity>
             <TouchableOpacity onPress={() => setDeleteAlert(true)}>
               <Text style={styles.menuText}>매칭 삭제</Text>
             </TouchableOpacity>
@@ -170,6 +178,8 @@ const styles = StyleSheet.create({
   },
   menuText: {
     color: 'black',
+    padding: 5,
+    fontSize: 14,
   },
 });
 export default MatchListItem;

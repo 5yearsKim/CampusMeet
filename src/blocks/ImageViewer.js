@@ -28,7 +28,7 @@ export function ImageViewer({imageKeys, page}) {
               /> :
               <KeyImage
                 imgKey={imgKey}
-                cached={false}
+                cached={true}
                 style={styles.image}
                 resizeMode='contain'
               />

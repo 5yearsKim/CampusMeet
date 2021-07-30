@@ -19,7 +19,7 @@ function ProfilePicture({imageKeys}) {
           <KeyImage
             key={imgKey}
             imgKey={imgKey}
-            cached={false}
+            cached={true}
             style={styles.profileImage}
             resizeMode='contain'
           />
