@@ -4,6 +4,7 @@ import Text from 'src/blocks/Text';
 import SimpleAlert from 'src/blocks/SimpleAlert';
 import {TextInput, Button} from 'react-native-paper';
 import {MyContext} from 'src/context';
+import {getVerification, createVerification, confirmVerification} from 'src/utils/EmailVerification';
 
 
 export default function VerifyCampus() {
@@ -14,11 +15,23 @@ export default function VerifyCampus() {
   const [step, setStep] = useState(1);
   const [sentAlertOpen, setSentAlertOpen] = useState(false);
 
-  const onButtonPress = () => {
+  const onButtonPress = async () => {
     if (step == 1) {
-      setStep(step + 1);
+      try {
+        await createVerification(email);
+        setStep(step + 1);
+      } catch (err) {
+        console.warn(err);
+      }
     } else if (step == 2) {
-      setStep(step + 1);
+      try {
+        const rsp = await confirmVerification(code);
+        if (rsp.is_success) {
+          setStep(step + 1);
+        }
+      } catch (err) {
+        console.warn(err);
+      }
     }
   };
   return (
@@ -32,8 +45,10 @@ export default function VerifyCampus() {
         style={styles.textInput}
         value={email}
         autoCapitalize='none'
+        keyboardType='email-address'
         left={<TextInput.Icon name='email'/>}
         onChangeText={(text) => setEmail(text)}
+        editable={step < 3}
       />
       {step == 2 &&
         <View style={{paddingTop: 10}}>
