@@ -3,24 +3,66 @@ import {View, StyleSheet} from 'react-native';
 import Text from 'src/blocks/Text';
 import SimpleAlert from 'src/blocks/SimpleAlert';
 import {TextInput, Button} from 'react-native-paper';
-import {MyContext} from 'src/context';
-import {getVerification, createVerification, confirmVerification} from 'src/utils/EmailVerification';
+import {MyContext, ThemeContext} from 'src/context';
+import {getVerification, createVerification, confirmVerification, checkEmailFormat, hideEmail} from 'src/utils/EmailVerification';
+import {bringUser} from 'src/utils/User';
+import {Ionicons} from '@expo/vector-icons';
 
 
 export default function VerifyCampus() {
   const auth = useContext(MyContext);
+  const {theme} = useContext(ThemeContext);
   const userSub = auth.user.sub;
+  const [campus, setCampus] = useState('');
   const [email, setEmail] = useState('');
   const [code, setCode] = useState('');
   const [step, setStep] = useState(1);
   const [sentAlertOpen, setSentAlertOpen] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [disabled, setDisabled] = useState(false);
+
+  useEffect(() => {
+    const m_bringUser = async () => {
+      try {
+        const userData = await bringUser(userSub);
+        setCampus(userData.campus);
+      } catch (err) {
+        console.warn(err);
+      }
+    };
+    m_bringUser();
+  }, []);
+
+  useEffect(() => {
+    const m_getVerification = async () => {
+      try {
+        const rsp = await getVerification();
+        if (rsp.is_success) {
+          const data = rsp.data;
+          setEmail(data.email);
+          if (data.status == 'pending') {
+            setStep(2);
+          } else if (data.status == 'verified') {
+            setStep(3);
+          }
+        }
+      } catch (err) {
+        console.warn(err);
+      }
+      setLoading(false);
+    };
+    m_getVerification();
+  }, []);
 
   const onButtonPress = async () => {
     if (step == 1) {
       try {
+        setDisabled(true);
         await createVerification(email);
+        setDisabled(false);
         setStep(step + 1);
       } catch (err) {
+        setDisabled(false);
         console.warn(err);
       }
     } else if (step == 2) {
@@ -32,8 +74,19 @@ export default function VerifyCampus() {
       } catch (err) {
         console.warn(err);
       }
+    } else if (step == 3) {
+      setEmail('');
+      setStep(1);
+      setDisabled(true);
     }
   };
+  if (loading) {
+    return (
+      <View style={{alignItems: 'center'}}>
+        <Text>loading..</Text>
+      </View>
+    );
+  }
   return (
     <View style={styles.container}>
       <View style={styles.notiBox}>
@@ -47,7 +100,11 @@ export default function VerifyCampus() {
         autoCapitalize='none'
         keyboardType='email-address'
         left={<TextInput.Icon name='email'/>}
-        onChangeText={(text) => setEmail(text)}
+        onChangeText={(text) => {
+          setEmail(text);
+          const isValid = checkEmailFormat(text);
+          setDisabled(!isValid);
+        }}
         editable={step < 3}
       />
       {step == 2 &&
@@ -72,16 +129,31 @@ export default function VerifyCampus() {
           </View>
         </View>
       }
+      <View style={styles.verifiedBox}>
+        <View style={{flexDirection: 'row', alignItems: 'center'}}>
+          <Ionicons name="checkmark-done" size={24} color={theme.verified} />
+          <Text style={styles.verifiedText}>캠퍼스 메일이 인증되었습니다!</Text>
+        </View>
+        <View style={{flexDirection: 'row'}}>
+          <Text style={styles.campusText}>{hideEmail(email)}({campus})</Text>
+        </View>
+      </View>
       <View style={{flexDirection: 'row', justifyContent: 'center'}}>
         <Button
-          mode='contained'
+          mode={step < 3 ? 'contained' : 'text'}
           style={{flex: 1, marginTop: 10}}
-          labelStyle={{color: 'white'}}
+          labelStyle={step < 3 ? {color: 'white'} : undefined}
           onPress={onButtonPress}
+          disabled={disabled}
         >
-          {step == 1 ?
-            '메일 인증':
-            '제출하기'
+          {step == 1 &&
+            '인증 코드 받기'
+          }
+          {step == 2 &&
+            '메일 인증'
+          }
+          {step == 3 &&
+            '다시 인증하기'
           }
         </Button>
       </View>
@@ -109,6 +181,17 @@ const styles = StyleSheet.create({
     padding: 10,
     marginBottom: 20,
   },
+  verifiedBox: {
+    alignItems: 'center',
+    padding: 20,
+  },
+  verifiedText: {
+    fontSize: 18,
+  },
+  campusText: {
+    marginTop: 4,
+    fontSize: 14,
+  },
   titleText: {
     fontSize: 20,
     fontWeight: 'bold',
@@ -120,5 +203,5 @@ const styles = StyleSheet.create({
   sentText: {
     fontSize: 14,
     color: 'blue',
-  }
+  },
 });

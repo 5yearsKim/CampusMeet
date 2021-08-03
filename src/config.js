@@ -38,6 +38,7 @@ export default config = {
       nestedComment: '#rgba(0, 0, 0, 0.2)',
       men: '#083965',
       women: '#d62252',
+      verified: '#00aa00',
     },
     dark: {
       text: '#ffffff',
@@ -46,6 +47,7 @@ export default config = {
       nestedComment: 'rgba(255, 255, 255, 0.2)',
       men: '#083965',
       women: '#FF9AA2',
+      verified: '#ff00ff',
     },
   },
   manage: {

@@ -2,6 +2,7 @@ import React, {useEffect, useState, useContext} from 'react';
 import {Dimensions, View, ScrollView, StyleSheet} from 'react-native';
 import Text from 'src/blocks/Text';
 import {KeyImage} from 'src/blocks/Image';
+import VerifiedMarker from 'src/blocks/VerifiedMarker';
 import {bringUser} from 'src/utils/User';
 import {ThemeContext} from 'src/context';
 
@@ -53,7 +54,10 @@ function ViewProfile({navigation, route}) {
       <View style={{alignItems: 'center'}}>
         <ProfilePicture imageKeys={user.imageKeys}/>
         <Text style={[styles.nameText, {color: theme.text}]}>{user.name}</Text>
-        <Text style={[styles.campusText, {color: theme.subText}]}>{user.campus} {user.division} {user.graduate} {user.year}학번</Text>
+        <View style={{flexDirection: 'row', alignItems: 'center'}}>
+          <Text style={[styles.campusText, {color: theme.subText}]}>{user.campus} {user.division} {user.graduate} {user.year}학번</Text>
+          <VerifiedMarker userSub={user.id}/>
+        </View>
       </View>
       <View style={{padding: 10}}>
         <View style={styles.itemWrapper}>

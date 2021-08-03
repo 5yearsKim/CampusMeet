@@ -3,6 +3,7 @@ import {ScrollView, Animated, View, Image, TouchableWithoutFeedback, StyleSheet}
 import Text from 'src/blocks/Text';
 import SimpleAlert from 'src/blocks/SimpleAlert';
 import SendSignalModal from 'src/blocks/SendSignalModal';
+import VerifiedMarker from 'src/blocks/VerifiedMarker';
 import {Button} from 'react-native-paper';
 import config from 'src/config';
 import {ThemeContext, UserContext} from 'src/context';
@@ -28,8 +29,11 @@ function CandidateDetail({item, useAction, clearModal}) {
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <View style={styles.topContainer}>
-        <Text style={styles.titleText}>{item.campus} {item.graduate}</Text>
-        <Text style={styles.subtitleText}>{item.division} {item.year}학번</Text>
+        <View style={{flexDirection: 'row', alignItems: 'center'}}>
+          <Text style={styles.titleText}>{item.campus} {item.division}</Text>
+          <VerifiedMarker userSub={item.id}/>
+        </View>
+        <Text style={styles.subtitleText}>{item.graduate} {item.year}학번</Text>
       </View>
       <View style={styles.middleContainer}>
         <View style={styles.imageWrapper}>
