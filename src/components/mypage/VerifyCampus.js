@@ -19,7 +19,8 @@ export default function VerifyCampus() {
   const [step, setStep] = useState(1);
   const [sentAlertOpen, setSentAlertOpen] = useState(false);
   const [loading, setLoading] = useState(true);
-  const [disabled, setDisabled] = useState(false);
+  const [disabled, setDisabled] = useState(true);
+  const [errText, setErrText] = useState('');
 
   useEffect(() => {
     const m_bringUser = async () => {
@@ -39,10 +40,10 @@ export default function VerifyCampus() {
         const rsp = await getVerification();
         if (rsp.is_success) {
           const data = rsp.data;
+          console.log(data);
           setEmail(data.email);
-          if (data.status == 'pending') {
-            setStep(2);
-          } else if (data.status == 'verified') {
+          setDisabled(false);
+          if (data.status == 'verified') {
             setStep(3);
           }
         }
@@ -70,6 +71,11 @@ export default function VerifyCampus() {
         const rsp = await confirmVerification(code);
         if (rsp.is_success) {
           setStep(step + 1);
+          setErrText('');
+        } else {
+          if (rsp.code == 'WrongCode') {
+            setErrText('인증 코드가 틀립니다.');
+          }
         }
       } catch (err) {
         console.warn(err);
@@ -129,15 +135,20 @@ export default function VerifyCampus() {
           </View>
         </View>
       }
-      <View style={styles.verifiedBox}>
-        <View style={{flexDirection: 'row', alignItems: 'center'}}>
-          <Ionicons name="checkmark-done" size={24} color={theme.verified} />
-          <Text style={styles.verifiedText}>캠퍼스 메일이 인증되었습니다!</Text>
+      {step == 3 &&
+        <View style={styles.verifiedBox}>
+          <View style={{flexDirection: 'row', alignItems: 'center'}}>
+            <Ionicons name="checkmark-done" size={24} color={theme.verified} />
+            <Text style={styles.verifiedText}>캠퍼스 메일이 인증되었습니다!</Text>
+          </View>
+          <View style={{flexDirection: 'row'}}>
+            <Text style={styles.campusText}>{hideEmail(email)}({campus})</Text>
+          </View>
         </View>
-        <View style={{flexDirection: 'row'}}>
-          <Text style={styles.campusText}>{hideEmail(email)}({campus})</Text>
-        </View>
-      </View>
+      }
+      {errText != '' &&
+        <Text style={styles.errText}>{errText}</Text>
+      }
       <View style={{flexDirection: 'row', justifyContent: 'center'}}>
         <Button
           mode={step < 3 ? 'contained' : 'text'}
@@ -203,5 +214,9 @@ const styles = StyleSheet.create({
   sentText: {
     fontSize: 14,
     color: 'blue',
+  },
+  errText: {
+    color: 'red',
+    fontSize: 14,
   },
 });

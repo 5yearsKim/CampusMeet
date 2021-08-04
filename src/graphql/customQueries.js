@@ -81,6 +81,7 @@ export const signalByFrom = /* GraphQL */ `
           year
           profileMessage
           profileDescription
+          updatedAt
         }
       }
       nextToken
@@ -155,6 +156,7 @@ export const signalByTo = /* GraphQL */ `
           year
           profileMessage
           imageKeys
+          updatedAt
         }
       }
       nextToken

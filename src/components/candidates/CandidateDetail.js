@@ -25,7 +25,6 @@ function CandidateDetail({item, useAction, clearModal}) {
       useNativeDriver: true,
     }).start();
   };
-
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <View style={styles.topContainer}>
