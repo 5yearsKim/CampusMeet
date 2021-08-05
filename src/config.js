@@ -51,7 +51,7 @@ export default config = {
     },
   },
   manage: {
-    signalMax: 3,
+    signalMax: 5,
   },
 };
 
