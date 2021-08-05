@@ -28,7 +28,7 @@ function LeftContent({item}) {
   }
   return (
     <View style={{justifyContent: 'center', marginLeft: 20}}>
-      <KeyImage imgKey={logo.logo} style={[styles.logo, customStyle]}/>
+      <KeyImage imgKey={logo.logo} cached={true} style={[styles.logo, customStyle]}/>
     </View>
   );
 }

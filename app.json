@@ -17,10 +17,10 @@
     },
     "ios": {
       "bundleIdentifier": "com.onion.campusMeet",
-      "buildNumber": "1.0.3"
+      "buildNumber": "1.0.4"
     },
     "android": {
-      "versionCode": 27,
+      "versionCode": 28,
       "package": "com.onion.campusMeet",
       "permissions": [],
       "adaptiveIcon": {
@@ -28,6 +28,9 @@
         "backgroundColor": "#FFF"
       },
       "googleServicesFile": "./google-services.json"
+    },
+    "notification": {
+      "androidMode": "collapse"
     }
   }
 }

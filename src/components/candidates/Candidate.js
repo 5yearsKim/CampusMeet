@@ -94,7 +94,6 @@ function Candidate({navigation}) {
   const [loading, setLoading] = useState(true);
   const [userList, setUserList] = useState([]);
 
-
   useEffect(() => {
     const m_bringCandidate = async () => {
       try {

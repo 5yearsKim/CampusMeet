@@ -13,8 +13,8 @@ import {
 import Route from 'src/Route';
 import {bringSentSignalToday} from 'src/utils/Signal';
 import {ThemeContext, MyContext, UserContext, BadgeContext} from 'src/context';
+import IntroSlider from 'src/blocks/IntroSlider';
 import config from 'src/config';
-
 
 export default function App() {
   const [authChecked, setAuthChecked] = useState(false);
@@ -46,6 +46,7 @@ export default function App() {
     cuteB: require('assets/fonts/SingleDay-Regular.ttf'),
     // nanumL: require('assets/fonts/NanumSquareRoundL.ttf'),
   });
+  const [introShow, setIntroShow] = useState(false);
 
   // auth init
   useEffect(() => {
@@ -94,12 +95,32 @@ export default function App() {
         const val = await AsyncStorage.getItem('scheme');
         if (val != null) {
           setScheme(val);
+        } else {
+          setScheme('light');
         }
       } catch (err) {
-        setScheme('light');
+        console.warn(err);
       }
     };
     getScheme();
+  }, []);
+
+  // intro slider view
+  useEffect(() => {
+    const getIntroShow = async () => {
+      try {
+        const val = await AsyncStorage.getItem('introShow');
+        if (val != null) {
+          setIntroShow(JSON.parse(val));
+          // setIntroShow(true);
+        } else {
+          setIntroShow(true);
+        }
+      } catch (err) {
+        console.warn(err);
+      }
+    };
+    getIntroShow();
   }, []);
 
   // pushNoti status load
@@ -195,6 +216,17 @@ export default function App() {
       setMatchBadge: setMatchBadge,
     };
   };
+
+  if (introShow) {
+    return (
+      <IntroSlider
+        onDone={async () => {
+          setIntroShow(false);
+          await AsyncStorage.setItem('introShow', JSON.stringify(false));
+        }}
+      />
+    );
+  }
 
   if (fontLoaded && authChecked) {
     return (
