@@ -63,7 +63,7 @@
       <dict>
         <key>CFBundleURLSchemes</key>
         <array>
-          <string>com.onion.campusMeet</string>
+          <string>campusmeet</string>
         </array>
       </dict>
     </array>
