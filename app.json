@@ -1,10 +1,10 @@
 {
-  "name": "campusMeet",
-  "displayName": "campusMeet",
+  "name": "campusmeet",
+  "displayName": "campusmeet",
   "expo": {
     "name": "campusmeet",
     "scheme": "campusmeet",
-    "slug": "campusMeet",
+    "slug": "campusmeet",
     "version": "1.0",
     "assetBundlePatterns": [
       "assets/images/*"
@@ -16,12 +16,12 @@
       "backgroundColor": "#ffffff"
     },
     "ios": {
-      "bundleIdentifier": "com.onion.campusMeet",
+      "bundleIdentifier": "com.onion.campusmeet",
       "buildNumber": "1.0.4"
     },
     "android": {
-      "versionCode": 30,
-      "package": "com.onion.campusMeet",
+      "versionCode": 32,
+      "package": "com.onion.campusmeet",
       "permissions": [],
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/campusmeet_adaptive_icon.png",
