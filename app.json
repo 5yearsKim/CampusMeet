@@ -16,12 +16,12 @@
       "backgroundColor": "#ffffff"
     },
     "ios": {
-      "bundleIdentifier": "com.onion.campusmeet",
+      "bundleIdentifier": "com.onion.campusMeet",
       "buildNumber": "1.0.4"
     },
     "android": {
       "versionCode": 32,
-      "package": "com.onion.campusmeet",
+      "package": "com.onion.campusMeet",
       "permissions": [],
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/campusmeet_adaptive_icon.png",
