@@ -1,8 +1,25 @@
 import React, {useRef} from 'react';
-import {Dimensions, View, ScrollView, Image, StyleSheet} from 'react-native';
+import {Dimensions, View, ScrollView, Image, StyleSheet, Platform} from 'react-native';
+import GestureRecognizer from 'react-native-swipe-gestures';
 import {KeyImage} from './Image';
 
 const {width, height} = Dimensions.get('window');
+
+export function ImageSwipeOff({setModalVisible, children}) {
+  if (Platform.OS ==='ios') {
+    return (
+      <GestureRecognizer onSwipeUp={() => setModalVisible(false)} onSwipeDown={() => setModalVisible(false)}>
+        {children}
+      </GestureRecognizer>
+    );
+  } else {
+    return (
+      <View>
+        {children}
+      </View>
+    );
+  }
+}
 
 export function ImageViewer({imageKeys, page}) {
   const scrollViewRef = useRef();

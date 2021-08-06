@@ -40,7 +40,6 @@ export default function VerifyCampus() {
         const rsp = await getVerification();
         if (rsp.is_success) {
           const data = rsp.data;
-          console.log(data);
           setEmail(data.email);
           setDisabled(false);
           if (data.status == 'verified') {
@@ -128,7 +127,13 @@ export default function VerifyCampus() {
             />
             <Button
               compact
-              onPress={() => setSentAlertOpen(true)}
+              disabled={disabled}
+              onPress={async () => {
+                setDisabled(true);
+                await createVerification(email);
+                setDisabled(false);
+                setSentAlertOpen(true);
+              }}
             >
               재전송
             </Button>

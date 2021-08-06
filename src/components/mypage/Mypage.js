@@ -10,7 +10,9 @@ import {MyModifyProfile, MyLogout, MyDeactivate, MyPushNoti, MyFont, MyVerifyCam
 
 function TopIntro({user, navigation}) {
   if (!user || user.id == '') {
-    return null;
+    return (
+      <View style={{minHeight: 120}}/>
+    );
   }
   const {theme} = useContext(ThemeContext);
   return (

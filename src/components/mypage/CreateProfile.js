@@ -1,6 +1,6 @@
 import React, {useState, useEffect, useContext} from 'react';
 import {useSharedValue} from 'react-native-reanimated';
-import {ScrollView, View, SafeAreaView, TouchableOpacity, StyleSheet} from 'react-native';
+import {ScrollView, View, TouchableOpacity, StyleSheet} from 'react-native';
 import UploadPicture from './UploadPicture';
 import {RadioButton, TextInput, Button} from 'react-native-paper';
 import {MaterialCommunityIcons} from '@expo/vector-icons';
@@ -112,7 +112,7 @@ function CreateProfile({navigation}) {
   const _prev = () => {
     if (currentStep == 2 || currentStep == 3) {
       setCurrentStep(currentStep - 1);
-      setErrText('')
+      setErrText('');
     }
   };
 

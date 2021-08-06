@@ -8,9 +8,8 @@ import {makeLikePost, deletePost} from 'src/utils/Community';
 import {absoluteTime} from 'src/utils/Time';
 import {AntDesign} from '@expo/vector-icons';
 import {KeyImage} from 'src/blocks/Image';
-import {ImageViewer} from 'src/blocks/ImageViewer';
+import {ImageViewer, ImageSwipeOff} from 'src/blocks/ImageViewer';
 import {MyContext, ThemeContext} from 'src/context';
-import GestureRecognizer from 'react-native-swipe-gestures';
 
 
 function PostHeader({post, board, navigation}) {
@@ -107,11 +106,11 @@ function PostHeader({post, board, navigation}) {
             keyExtractor={(item) => item}
             horizontal
           />
-          <GestureRecognizer onSwipeUp={() => setModalVisible(false)} onSwipeDown={() => setModalVisible(false)}>
+          <ImageSwipeOff setModalVisible={setModalVisible}>
             <Modal visible={modalVisible} onRequestClose={() => setModalVisible(false)}>
               <ImageViewer imageKeys={post.imageKeys} page={page}/>
             </Modal>
-          </GestureRecognizer>
+          </ImageSwipeOff>
         </View>
       )}
       <SimpleAlert

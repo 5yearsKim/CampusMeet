@@ -45,7 +45,7 @@ function CandidateHeader({loading}) {
             modalOpen={alertOpen}
             setModalOpen={setAlertOpen}
             title='오늘의 시그널'
-            content='친해지고 싶은 친구에게 시그널을 보내보아요. 시그널은 매일 3개씩 충전돼요.'
+            content='친해지고 싶은 친구에게 시그널을 보내보세요. 시그널은 매일 충전됩니다.'
             onOk={() => {}}
           />
         </View>

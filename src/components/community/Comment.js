@@ -20,6 +20,7 @@ function Comment({item, index, board, focusComment, refresh}) {
   const [likeCnt, setLikeCnt] = useState('');
   const [dialog, setDialog] = useState(false);
   const [alreadyLikeOpen, setAlreadyLikeOpen] = useState(false);
+  const [reportOpen, setReportOpen] = useState(false);
   const [deleteOpen, setDeleteOpen] = useState(false);
   // console.log('board ', board) ;
 
@@ -85,11 +86,11 @@ function Comment({item, index, board, focusComment, refresh}) {
           nested.isNested == item.id && {backgroundColor: 'rgba(240, 200, 50, 0.2)'},
           {borderColor: theme.subText},
         ]}>
-          <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+          <View style={styles.topBox}>
             <Nickname type={board.type} nickname={item.nickname} userID={item.userID} style={styles.nickname} />
             {renderDelete()}
           </View>
-          <View>
+          <View style={styles.middleBox}>
             <Text style={{color: theme.subText}}>{item.content}</Text>
           </View>
           <View style={styles.belowBox}>
@@ -110,7 +111,10 @@ function Comment({item, index, board, focusComment, refresh}) {
             }}>
               <Text style={styles.menuText}>대댓글 달기</Text>
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => {}}>
+            <TouchableOpacity onPress={() => {
+              setReportOpen(true);
+              setDialog(false);
+            }}>
               <Text style={styles.menuText}>신고</Text>
             </TouchableOpacity>
           </Dialog.Content>
@@ -121,6 +125,13 @@ function Comment({item, index, board, focusComment, refresh}) {
         setModalOpen={setAlreadyLikeOpen}
         title='알림'
         content='이미 좋아한 댓글입니다'
+        onOk={() => {}}
+      />
+      <SimpleAlert
+        modalOpen={reportOpen}
+        setModalOpen={setReportOpen}
+        title='댓글 신고'
+        content='댓글 신고가 접수되었습니다.'
         onOk={() => {}}
       />
       <FlatList
@@ -139,7 +150,16 @@ const styles = StyleSheet.create({
     paddingRight: 15,
     borderTopWidth: 1,
   },
+  topBox: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    padding: 3,
+  },
+  middleBox: {
+    padding: 3,
+  },
   belowBox: {
+    padding: 3,
     flexDirection: 'row',
     justifyContent: 'space-between',
   },

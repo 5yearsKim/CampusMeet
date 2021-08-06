@@ -39,8 +39,12 @@ function NestedComment({item, board}) {
     <View style={{flexDirection: 'row'}}>
       <MaterialIcons name="subdirectory-arrow-right" size={15} color='#111155'/>
       <View style={[styles.container, {backgroundColor: theme.nestedComment}]}>
-        <Nickname type={board.type} nickname={item.nickname} userID={item.userID} style={styles.nickname} />
-        <Text>{item.content}</Text>
+        <View style={styles.topBox}>
+          <Nickname type={board.type} nickname={item.nickname} userID={item.userID} style={styles.nickname} />
+        </View>
+        <View style={styles.middleBox}>
+          <Text>{item.content}</Text>
+        </View>
         <View style={styles.belowBox}>
           <Text>{visTime}</Text>
           <AntDesign color='green' size={15} onPress={onClickLike} name='like2' >
@@ -68,10 +72,16 @@ const styles = StyleSheet.create({
     margin: 1,
     borderRadius: 15,
   },
+  topBox: {
+    padding: 3,
+  },
+  middleBox: {
+    padding: 3,
+  },
   belowBox: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    paddingRight: 10,
+    padding: 3,
   },
   nickname: {
     fontSize: 14,
