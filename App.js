@@ -218,6 +218,7 @@ export default function App() {
   };
 
   if (introShow) {
+  // if (true) {
     return (
       <IntroSlider
         onDone={async () => {

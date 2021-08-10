@@ -34,6 +34,8 @@ function LeftContent({sender, navigation}) {
 function ReceivedSignalItem({item, navigation, onReject, onMatch}) {
   const [matchAlertOpen, setMatchAlertOpen] = useState(false);
   const [rejectAlertOpen, setRejectAlertOpen] = useState(false);
+  const [showMessage, setShowMessage] = useState(false);
+
   const {theme} = useContext(ThemeContext);
   const {refreshReceivedSignal, setRefreshReceivedSignal} = useContext(UserContext);
   const sender = item.sender;
@@ -76,7 +78,9 @@ function ReceivedSignalItem({item, navigation, onReject, onMatch}) {
               {!item.checked && <Badge containerStyle={{margin: 5}}/>}
             </View>
             <Text style={[styles.subtitleText, {color: theme.subText}]}>{sender.graduate} {sender.year}학번</Text>
-            <Text style={[styles.messageText]}>{item.message}</Text>
+            <TouchableWithoutFeedback onPress={() => setShowMessage(!showMessage)}>
+              <Text style={[styles.messageText]} numberOfLines={showMessage ? undefined : 5}>{item.message}</Text>
+            </TouchableWithoutFeedback>
           </View>
         </View>
         <View style={styles.bottomContainer}>

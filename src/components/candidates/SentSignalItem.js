@@ -24,9 +24,11 @@ function SentSignalItem({item}) {
   const receiver = item.receiver;
   const [popupVisible, setPopupVisible] = useState(false);
   const [alertOpen, setAlertOpen] = useState(false);
+  const [showMessage, setShowMessage] = useState(false);
 
   const {theme} = useContext(ThemeContext);
   const {refreshSentSignal, setRefreshSentSignal} = useContext(UserContext);
+
 
   const onRemoveSignal = async () => {
     try {
@@ -45,7 +47,9 @@ function SentSignalItem({item}) {
           <View>
             <Text style={[styles.titleText, {color: theme.text}]}>{receiver.campus} {receiver.division}</Text>
             <Text style={[styles.subtitleText, {color: theme.subText}]}>{receiver.graduate} {receiver.year}학번</Text>
-            <Text style={styles.messageText}>{item.message}</Text>
+            <TouchableWithoutFeedback onPress={() => setShowMessage(!showMessage)}>
+              <Text style={styles.messageText} numberOfLines={showMessage ? undefined : 5}>{item.message}</Text>
+            </TouchableWithoutFeedback>
           </View>
         </View>
         <View style={styles.bottomContainer}>

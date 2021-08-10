@@ -26,7 +26,7 @@ function CreatePost({navigation, route}) {
     const userSub = auth.user.sub;
     const nickname = await getNickname(userSub, board.type);
     const newImgList = await imageListToS3(imgList, `board/${board.id}`);
-    await makePost(userSub, board.id, nickname, title, content, newImgList);
+    await makePost(userSub, board.id, nickname, title.trim(), content.trim(), newImgList);
     setRefreshBoard(!refreshBoard);
     navigation.goBack();
   };

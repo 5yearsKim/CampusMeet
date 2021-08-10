@@ -8,7 +8,7 @@ type User @model {
   name: String!
   campus: String!
   graduate: String!
-  year: Int!
+  year: Float!
   department: String
   division: String
   imageKeys: [String]
