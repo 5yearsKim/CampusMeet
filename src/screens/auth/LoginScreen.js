@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, Dimensions, TouchableOpacity, Image, Text, View, KeyboardAvoidingView} from 'react-native';
+import {StyleSheet, Dimensions, TouchableOpacity, Image, Text, View, KeyboardAvoidingView, Platform} from 'react-native';
 import {Button} from 'react-native-paper';
 import Login from 'src/components/auth/Login';
 import AuthBackground from 'src/blocks/AuthBackground';
@@ -32,6 +32,14 @@ export default function LoginScreen(props) {
           </View>
         </TouchableOpacity>
 
+        {Platform.OS === 'ios' &&
+          <TouchableOpacity onPress={() => Auth.federatedSignIn({provider: 'SignInWithApple'})}>
+            <View style={styles.appleButton}>
+              <Image source={require('assets/images/apple_logo.png')} style={styles.appleLogo} reesizeMode='contain'/>
+              <Text style={styles.appleText}>Apple 로 시작하기</Text>
+            </View>
+          </TouchableOpacity>
+        }
 
         <View style={{alignItems: 'center', marginTop: 10}}>
           <TouchableOpacity onPress={() => props.navigation.navigate('ForgotPassword')}>
@@ -90,5 +98,24 @@ const styles = StyleSheet.create({
     fontSize: 15,
     marginLeft: 10,
     color: 'gray',
+  },
+  appleButton: {
+    backgroundColor: 'black',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 20,
+    borderColor: '#dddddd',
+    padding: 5,
+    margin: 5,
+  },
+  appleLogo: {
+    width: 20,
+    height: 24,
+  },
+  appleText: {
+    fontSize: 15,
+    marginLeft: 10,
+    color: 'white',
   },
 });
