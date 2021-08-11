@@ -3,10 +3,11 @@ import {View, FlatList, TouchableOpacity, Modal, StyleSheet} from 'react-native'
 import SimpleAlert from 'src/blocks/SimpleAlert';
 import Text from 'src/blocks/Text';
 import {Nickname} from 'src/blocks/Board';
-import {Button} from 'react-native-paper';
+import {Button, Portal, Dialog} from 'react-native-paper';
 import {makeLikePost, deletePost} from 'src/utils/Community';
 import {absoluteTime} from 'src/utils/Time';
 import {AntDesign} from '@expo/vector-icons';
+import {MaterialCommunityIcons} from '@expo/vector-icons';
 import {KeyImage} from 'src/blocks/Image';
 import {ImageViewer, ImageSwipeOff} from 'src/blocks/ImageViewer';
 import {MyContext, ThemeContext} from 'src/context';
@@ -18,7 +19,6 @@ function PostHeader({post, board, navigation}) {
   const {theme} = useContext(ThemeContext);
   const [modalVisible, setModalVisible] = useState(false);
   const [alreadyLikeOpen, setAlreadyLikeOpen] = useState(false);
-  const [deleteOpen, setDeleteOpen] = useState(false);
   const [page, setPage] = useState(0);
   const visTime = absoluteTime(post.createdAt);
   const likeList = post.likes.items.map((item) => item.userID);
@@ -61,15 +61,35 @@ function PostHeader({post, board, navigation}) {
     }
   };
 
-  const renderDelete = () => {
-    if (userSub != post.userID) {
-      return null;
-    }
+  const renderMenu = () => {
+    const [deleteOpen, setDeleteOpen] = useState(false);
+    const [menuShow, setMenuShow] = useState(false);
     return (
-      <View style={{flexDirection: 'row', justifyContent: 'flex-end'}}>
-        <TouchableOpacity onPress={() => setDeleteOpen(true)}>
-          <Text style={styles.deleteText}>게시글 삭제</Text>
+      <View>
+        <TouchableOpacity onPress={() => setMenuShow(true)}>
+          <View style={{margin: 1}}>
+            <MaterialCommunityIcons name='dots-vertical' size={25} color='black'/>
+          </View>
         </TouchableOpacity>
+        <Portal>
+          <Dialog visible={menuShow} onDismiss={() => setMenuShow(false)}>
+            <Dialog.Content>
+              {userSub == post.userID &&
+                <TouchableOpacity onPress={() => {
+                  setMenuShow(false);
+                  setDeleteOpen(true);
+                }}>
+                  <Text style={styles.menuText}>게시글 삭제</Text>
+                </TouchableOpacity>
+              }
+              <TouchableOpacity onPress={() => {
+                setMenuShow(false);
+              }}>
+                <Text style={styles.menuText}>게시글 신고</Text>
+              </TouchableOpacity>
+            </Dialog.Content>
+          </Dialog>
+        </Portal>
         <SimpleAlert
           modalOpen={deleteOpen}
           setModalOpen={setDeleteOpen}
@@ -83,8 +103,10 @@ function PostHeader({post, board, navigation}) {
   };
   return (
     <View style={styles.container}>
-      <Text style={[styles.titleText, {color: theme.text}]}>{post.title}</Text>
-      {renderDelete()}
+      <View style={styles.titleBox}>
+        <Text style={[styles.titleText, {color: theme.text}]}>{post.title}</Text>
+        {renderMenu()}
+      </View>
       <View style={{flexDirection: 'row', justifyContent: 'space-between', marginTop: 10}}>
         <Nickname type={board.type} nickname={post.nickname} userID={userSub} style={styles.nicknameText}/>
         <Text style={[styles.timeText, {color: theme.subText}]}>{visTime}</Text>
@@ -126,7 +148,12 @@ function PostHeader({post, board, navigation}) {
 
 const styles = StyleSheet.create({
   container: {
-    margin: 10,
+    margin: 15,
+  },
+  titleBox: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
   },
   like: {
     width: 50,
@@ -161,6 +188,11 @@ const styles = StyleSheet.create({
   },
   deleteText: {
     color: '#aaaaaa',
+  },
+  menuText: {
+    color: 'black',
+    padding: 5,
+    fontSize: 16,
   },
 });
 export default PostHeader;

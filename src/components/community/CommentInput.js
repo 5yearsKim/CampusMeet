@@ -40,13 +40,13 @@ function CommentInput({board, post, refresh}) {
       return;
     }
     if (nested.isNested) {
-      const nestedCommentData = await makeNestedComment(userSub, nested.isNested, nickname, message);
+      const nestedCommentData = await makeNestedComment(userSub, nested.isNested, nickname, trimmed);
       if (nestedCommentData) {
         setMessage('');
         nested.setIsNested(false);
       }
     } else {
-      const commentData = await makeComment(userSub, post.id, nickname, message);
+      const commentData = await makeComment(userSub, post.id, nickname, trimmed);
       if (commentData) {
         setMessage('');
       }
