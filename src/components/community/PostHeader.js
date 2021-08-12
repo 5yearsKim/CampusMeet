@@ -3,14 +3,16 @@ import {View, FlatList, TouchableOpacity, Modal, StyleSheet} from 'react-native'
 import SimpleAlert from 'src/blocks/SimpleAlert';
 import Text from 'src/blocks/Text';
 import {Nickname} from 'src/blocks/Board';
-import {Button, Portal, Dialog} from 'react-native-paper';
+import Dialog from 'src/blocks/Dialog';
+import ReportDialog from 'src/blocks/ReportDialog';
+import {Button} from 'react-native-paper';
 import {makeLikePost, deletePost} from 'src/utils/Community';
-import {absoluteTime} from 'src/utils/Time';
 import {AntDesign} from '@expo/vector-icons';
 import {MaterialCommunityIcons} from '@expo/vector-icons';
 import {KeyImage} from 'src/blocks/Image';
 import {ImageViewer, ImageSwipeOff} from 'src/blocks/ImageViewer';
 import {MyContext, ThemeContext} from 'src/context';
+import {absoluteTime} from 'src/utils/Time';
 
 
 function PostHeader({post, board, navigation}) {
@@ -52,18 +54,20 @@ function PostHeader({post, board, navigation}) {
       }
     }
   };
-  const onDeletePost = async () => {
-    try {
-      await deletePost(post.id);
-      navigation.goBack();
-    } catch (err) {
-      console.warn(err);
-    }
-  };
 
   const renderMenu = () => {
     const [deleteOpen, setDeleteOpen] = useState(false);
+    const [reportDialogOpen, setReportDialogOpen] = useState(false);
     const [menuShow, setMenuShow] = useState(false);
+
+    const onDeletePost = async () => {
+      try {
+        await deletePost(post.id);
+        navigation.goBack();
+      } catch (err) {
+        console.warn(err);
+      }
+    };
     return (
       <View>
         <TouchableOpacity onPress={() => setMenuShow(true)}>
@@ -71,25 +75,29 @@ function PostHeader({post, board, navigation}) {
             <MaterialCommunityIcons name='dots-vertical' size={25} color='black'/>
           </View>
         </TouchableOpacity>
-        <Portal>
-          <Dialog visible={menuShow} onDismiss={() => setMenuShow(false)}>
-            <Dialog.Content>
-              {userSub == post.userID &&
-                <TouchableOpacity onPress={() => {
-                  setMenuShow(false);
-                  setDeleteOpen(true);
-                }}>
-                  <Text style={styles.menuText}>게시글 삭제</Text>
-                </TouchableOpacity>
-              }
+        <Dialog visible={menuShow} onDismiss={() => setMenuShow(false)}>
+          {userSub == post.userID &&
               <TouchableOpacity onPress={() => {
                 setMenuShow(false);
+                setDeleteOpen(true);
               }}>
-                <Text style={styles.menuText}>게시글 신고</Text>
+                <Text style={styles.menuText}>게시글 삭제</Text>
               </TouchableOpacity>
-            </Dialog.Content>
-          </Dialog>
-        </Portal>
+          }
+          <TouchableOpacity onPress={() => {
+            setReportDialogOpen(true);
+            setMenuShow(false);
+          }}>
+            <Text style={styles.menuText}>게시글 신고</Text>
+          </TouchableOpacity>
+        </Dialog>
+        <ReportDialog
+          visible={reportDialogOpen}
+          onDismiss={() => setReportDialogOpen(false)}
+          objectID={post.id}
+          userID={post.userID}
+          type='Post'
+        />
         <SimpleAlert
           modalOpen={deleteOpen}
           setModalOpen={setDeleteOpen}
@@ -190,9 +198,8 @@ const styles = StyleSheet.create({
     color: '#aaaaaa',
   },
   menuText: {
-    color: 'black',
     padding: 5,
-    fontSize: 16,
+    fontSize: 14,
   },
 });
 export default PostHeader;

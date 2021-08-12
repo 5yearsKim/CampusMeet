@@ -29,7 +29,7 @@ function BelowContent({type, item}) {
   return (
     <View style={styles.belowContainer}>
       <View style={{flexDirection: 'row'}}>
-        <Text style={[styles.time, {color: theme.subText}]}>{visTime}  </Text>
+        <Text style={styles.timeText}>{visTime}  </Text>
         <Nickname type={type} nickname={item.nickname} userID={item.userID} style={styles.nickname}/>
       </View>
       <View style={styles.iconList}>
@@ -97,6 +97,8 @@ const styles = StyleSheet.create({
   },
   contentText: {
     fontSize: 13,
+    marginTop: 5,
+    marginBottom: 8,
     margin: 2,
   },
   image: {
@@ -117,9 +119,11 @@ const styles = StyleSheet.create({
   },
   nickname: {
     fontSize: 12,
+    color: '#aaaaaa',
   },
-  time: {
+  timeText: {
     fontSize: 12,
+    color: '#aaaaaa',
   },
 });
 

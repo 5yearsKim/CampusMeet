@@ -1,6 +1,7 @@
-import React, {useEffect, useState, useContext} from 'react';
+import React, {useState, useContext} from 'react';
 import {View, TouchableOpacity, StyleSheet} from 'react-native';
-import {Portal, Dialog, RadioButton, Button} from 'react-native-paper';
+import {RadioButton, Button} from 'react-native-paper';
+import Dialog from 'src/blocks/Dialog';
 import Text from 'src/blocks/Text';
 import SimpleAlert from 'src/blocks/SimpleAlert';
 import {MyContext, ThemeContext, UserContext} from 'src/context';
@@ -112,37 +113,29 @@ export function MyFont() {
       <TouchableOpacity onPress={() => setMenuOpen(true)}>
         <Text style={[styles.itemText, {color: theme.text}]}>폰트 설정</Text>
       </TouchableOpacity>
-      <Portal>
-        <Dialog visible={menuOpen} onDismiss={() => setMenuOpen(false)}>
-          <Dialog.Content>
-            <View style={{flexDirection: 'row', alignItems: 'center'}}>
-              <RadioButton
-                value='off'
-                status={myFont == 'nanum' ? 'checked' : 'unchecked'}
-                onPress={() => setMyFont('nanum')}
-                color={config.colors.main.primary}
-              />
-              <Text style={styles.menuText} font='nanum'>일반</Text>
-            </View>
-            <View style={{flexDirection: 'row', alignItems: 'center'}}>
-              <RadioButton
-                value='on'
-                status={myFont == 'cute' ? 'checked' : 'unchecked'}
-                onPress={() => setMyFont('cute')}
-                color={config.colors.main.primary}
-              />
-              <Text style={styles.menuText} font='cute'>귀여운</Text>
-            </View>
-          </Dialog.Content>
-          <Dialog.Actions>
-            <Button
-              onPress={() => onOk()}
-            >
-              OK
-            </Button>
-          </Dialog.Actions>
-        </Dialog>
-      </Portal>
+      <Dialog visible={menuOpen} onDismiss={() => setMenuOpen(false)}>
+        <View style={{flexDirection: 'row', alignItems: 'center'}}>
+          <RadioButton
+            value='off'
+            status={myFont == 'nanum' ? 'checked' : 'unchecked'}
+            onPress={() => setMyFont('nanum')}
+            color={config.colors.main.primary}
+          />
+          <Text style={styles.menuText} font='nanum'>일반</Text>
+        </View>
+        <View style={{flexDirection: 'row', alignItems: 'center'}}>
+          <RadioButton
+            value='on'
+            status={myFont == 'cute' ? 'checked' : 'unchecked'}
+            onPress={() => setMyFont('cute')}
+            color={config.colors.main.primary}
+          />
+          <Text style={styles.menuText} font='cute'>귀여운</Text>
+        </View>
+        <View style={styles.buttonWrapper}>
+          <Button onPress={() => onOk()}> OK </Button>
+        </View>
+      </Dialog>
     </View>
   );
 }
@@ -168,37 +161,29 @@ export function MyPushNoti() {
       <TouchableOpacity onPress={() => setMenuOpen(true)}>
         <Text style={[styles.itemText, {color: theme.text}]}>푸시알림 설정</Text>
       </TouchableOpacity>
-      <Portal>
-        <Dialog visible={menuOpen} onDismiss={() => setMenuOpen(false)}>
-          <Dialog.Content>
-            <View style={{flexDirection: 'row', alignItems: 'center'}}>
-              <RadioButton
-                value='off'
-                status={!isNoti ? 'checked' : 'unchecked'}
-                onPress={() => setIsNoti(false)}
-                color={config.colors.main.primary}
-              />
-              <Text style={styles.menuText}>끄기</Text>
-            </View>
-            <View style={{flexDirection: 'row', alignItems: 'center'}}>
-              <RadioButton
-                value='on'
-                status={isNoti ? 'checked' : 'unchecked'}
-                onPress={() => setIsNoti(true)}
-                color={config.colors.main.primary}
-              />
-              <Text style={styles.menuText}>켜기</Text>
-            </View>
-          </Dialog.Content>
-          <Dialog.Actions>
-            <Button
-              onPress={() => onOk()}
-            >
-              OK
-            </Button>
-          </Dialog.Actions>
-        </Dialog>
-      </Portal>
+      <Dialog visible={menuOpen} onDismiss={() => setMenuOpen(false)}>
+        <View style={{flexDirection: 'row', alignItems: 'center'}}>
+          <RadioButton
+            value='off'
+            status={!isNoti ? 'checked' : 'unchecked'}
+            onPress={() => setIsNoti(false)}
+            color={config.colors.main.primary}
+          />
+          <Text style={styles.menuText}>끄기</Text>
+        </View>
+        <View style={{flexDirection: 'row', alignItems: 'center'}}>
+          <RadioButton
+            value='on'
+            status={isNoti ? 'checked' : 'unchecked'}
+            onPress={() => setIsNoti(true)}
+            color={config.colors.main.primary}
+          />
+          <Text style={styles.menuText}>켜기</Text>
+        </View>
+        <View style={styles.buttonWrapper}>
+          <Button onPress={() => onOk()}> OK </Button>
+        </View>
+      </Dialog>
     </View>
   );
 }
@@ -215,11 +200,15 @@ export function MyVerifyCampus({navigation}) {
 }
 
 const styles = StyleSheet.create({
+  buttonWrapper: {
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+  },
   itemText: {
     margin: 3,
     fontSize: 15,
   },
   menuText: {
-    fontSize: 15,
+    fontSize: 14,
   },
 });

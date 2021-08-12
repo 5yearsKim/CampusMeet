@@ -1,6 +1,6 @@
 import React, {useState, useContext} from 'react';
 import {Dimensions, View, Image, TouchableOpacity, StyleSheet} from 'react-native';
-import {Portal, Dialog} from 'react-native-paper';
+import Dialog from 'src/blocks/Dialog';
 import Text from 'src/blocks/Text';
 import Badge from 'src/blocks/Badge';
 import SimpleAlert from 'src/blocks/SimpleAlert';
@@ -110,21 +110,17 @@ function MatchListItem({item, navigation, deleteMatch}) {
           </View>
         </View>
       </TouchableOpacity>
-      <Portal>
-        <Dialog visible={menuShow} onDismiss={() => setMenuShow(false)}>
-          <Dialog.Content>
-            <TouchableOpacity onPress={() => {
-              navigation.navigate('ViewProfile', {userID: matcher.id});
-              setMenuShow(false);
-            }}>
-              <Text style={styles.menuText}>프로필 보기</Text>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={() => setDeleteAlert(true)}>
-              <Text style={styles.menuText}>매칭 삭제</Text>
-            </TouchableOpacity>
-          </Dialog.Content>
-        </Dialog>
-      </Portal>
+      <Dialog visible={menuShow} onDismiss={() => setMenuShow(false)}>
+        <TouchableOpacity onPress={() => {
+          navigation.navigate('ViewProfile', {userID: matcher.id});
+          setMenuShow(false);
+        }}>
+          <Text style={styles.menuText}>프로필 보기</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => setDeleteAlert(true)}>
+          <Text style={styles.menuText}>매칭 삭제</Text>
+        </TouchableOpacity>
+      </Dialog>
       <SimpleAlert
         modalOpen={deleteAlert}
         setModalOpen={setDeleteAlert}
@@ -177,7 +173,6 @@ const styles = StyleSheet.create({
     marginLeft: 8,
   },
   menuText: {
-    color: 'black',
     padding: 5,
     fontSize: 14,
   },

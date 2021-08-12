@@ -1,9 +1,9 @@
 import React, {useContext, useState} from 'react';
-import {View, TouchableOpacity} from 'react-native';
+import {View, TouchableOpacity, StyleSheet} from 'react-native';
 import Text from './Text';
 import SimpleAlert from './SimpleAlert';
 import config from 'src/config';
-import {Portal, Dialog} from 'react-native-paper';
+import Dialog from 'src/blocks/Dialog';
 import SendSignalModal from './SendSignalModal';
 import {MyContext, ThemeContext, UserContext} from 'src/context';
 
@@ -17,7 +17,7 @@ export function Nickname({type, nickname, userID, style}) {
   // if board type is '익명'
   if (type == boardOptions[0]) {
     return (
-      <Text style={[style, {color: theme.subText}]}>{name}</Text>
+      <Text style={style}>{name}</Text>
     );
   }
   const {user} = useContext(MyContext);
@@ -37,23 +37,19 @@ export function Nickname({type, nickname, userID, style}) {
       <TouchableOpacity onPress={() => setMenuShow(true)}>
         <Text style={[style, gender=='남자'?{color: theme.men}:{color: theme.women}]}>{name}</Text>
       </TouchableOpacity>
-      <Portal>
-        <Dialog visible={menuShow} onDismiss={() => setMenuShow(false)}>
-          <Dialog.Content>
-            <TouchableOpacity onPress={() => {
-              if (signalCnt >= config.manage.signalMax) {
-                setAlertOpen(true);
-                setMenuShow(false);
-              } else {
-                setPopupVisible(true);
-                setMenuShow(false);
-              }
-            }}>
-              <Text style={{color: 'black'}}>시그널 보내기</Text>
-            </TouchableOpacity>
-          </Dialog.Content>
-        </Dialog>
-      </Portal>
+      <Dialog visible={menuShow} onDismiss={() => setMenuShow(false)}>
+        <TouchableOpacity onPress={() => {
+          if (signalCnt >= config.manage.signalMax) {
+            setAlertOpen(true);
+            setMenuShow(false);
+          } else {
+            setPopupVisible(true);
+            setMenuShow(false);
+          }
+        }}>
+          <Text style={styles.menuText}>시그널 보내기</Text>
+        </TouchableOpacity>
+      </Dialog>
       <SimpleAlert
         modalOpen={alertOpen}
         setModalOpen={setAlertOpen}
@@ -65,3 +61,10 @@ export function Nickname({type, nickname, userID, style}) {
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  menuText: {
+    padding: 5,
+    fontSize: 14,
+  },
+});

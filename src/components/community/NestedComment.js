@@ -1,7 +1,9 @@
 import React, {useEffect, useState, useContext} from 'react';
-import {View, StyleSheet} from 'react-native';
+import {View, TouchableOpacity, TouchableWithoutFeedback, StyleSheet} from 'react-native';
 import SimpleAlert from 'src/blocks/SimpleAlert';
 import Text from 'src/blocks/Text';
+import Dialog from 'src/blocks/Dialog';
+import ReportDialog from 'src/blocks/ReportDialog';
 import {Nickname} from 'src/blocks/Board';
 import {AntDesign, MaterialIcons} from '@expo/vector-icons';
 import {makeLikeComment} from 'src/utils/Community';
@@ -16,7 +18,9 @@ function NestedComment({item, board}) {
   const likeList = item.likes.items.map((item) => item.userID);
   const [isLike, setIsLike] = useState(false);
   const [likeCnt, setLikeCnt] = useState('');
-  const [alertOpen, setAlertOpen] = useState(false);
+  const [alreadyLikeAlert, setAlreadyLikeAlert] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [reportDialogOpen, setReportDialogOpen] = useState(false);
 
   useEffect(() => {
     setLikeCnt(likeList.length);
@@ -38,23 +42,40 @@ function NestedComment({item, board}) {
   return (
     <View style={{flexDirection: 'row'}}>
       <MaterialIcons name="subdirectory-arrow-right" size={15} color='#111155'/>
-      <View style={[styles.container, {backgroundColor: theme.nestedComment}]}>
-        <View style={styles.topBox}>
-          <Nickname type={board.type} nickname={item.nickname} userID={item.userID} style={styles.nickname} />
+      <TouchableWithoutFeedback onLongPress={() => setMenuOpen(true)}>
+        <View style={[styles.container, {backgroundColor: theme.nestedComment}]}>
+          <View style={styles.topBox}>
+            <Nickname type={board.type} nickname={item.nickname} userID={item.userID} style={styles.nickname} />
+          </View>
+          <View style={styles.middleBox}>
+            <Text>{item.content}</Text>
+          </View>
+          <View style={styles.belowBox}>
+            <Text>{visTime}</Text>
+            <AntDesign color='green' size={15} onPress={onClickLike} name='like2' >
+              {likeCnt}
+            </AntDesign>
+          </View>
         </View>
-        <View style={styles.middleBox}>
-          <Text>{item.content}</Text>
-        </View>
-        <View style={styles.belowBox}>
-          <Text>{visTime}</Text>
-          <AntDesign color='green' size={15} onPress={onClickLike} name='like2' >
-            {likeCnt}
-          </AntDesign>
-        </View>
-      </View>
+      </TouchableWithoutFeedback>
+      <Dialog visible={menuOpen} onDismiss={() => setMenuOpen(false)}>
+        <TouchableOpacity onPress={() => {
+          setReportDialogOpen(true);
+          setMenuOpen(false);
+        }}>
+          <Text style={styles.menuText}>대댓글 신고</Text>
+        </TouchableOpacity>
+      </Dialog>
+      <ReportDialog
+        visible={reportDialogOpen}
+        onDismiss={() => setReportDialogOpen(false)}
+        objectID={item.id}
+        userID={item.userID}
+        type='NestedComment'
+      />
       <SimpleAlert
-        modalOpen={alertOpen}
-        setModalOpen={setAlertOpen}
+        modalOpen={alreadyLikeAlert}
+        setModalOpen={setAlreadyLikeAlert}
         title='알림'
         content='이미 좋아한 대댓글입니다.'
         onOk={() => {}}
@@ -86,6 +107,10 @@ const styles = StyleSheet.create({
   nickname: {
     fontSize: 14,
     fontWeight: 'bold',
+  },
+  menuText: {
+    fontSize: 14,
+    margin: 10,
   },
 });
 

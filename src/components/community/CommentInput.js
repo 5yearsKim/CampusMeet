@@ -5,6 +5,7 @@ import {Nickname} from 'src/blocks/Board';
 import {FontAwesome} from '@expo/vector-icons';
 import {MyContext, ChatContext} from 'src/context';
 import {useKeyboard} from 'src/blocks/Keyboard';
+import config from 'src/config';
 
 function CommentInput({board, post, refresh}) {
   const auth = useContext(MyContext);
@@ -84,6 +85,7 @@ function CommentInput({board, post, refresh}) {
             >
               <FontAwesome
                 name='send-o'
+                color={config.colors.main.primary}
                 size={26}
               />
             </TouchableOpacity>
@@ -101,6 +103,7 @@ const styles = StyleSheet.create({
     padding: 5,
     borderWidth: 1,
     borderRadius: 15,
+    borderColor: config.colors.main.primary,
     // backgroundColor: 'white',
     justifyContent: 'flex-end',
   },

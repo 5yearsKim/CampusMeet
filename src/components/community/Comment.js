@@ -2,7 +2,8 @@ import React, {useEffect, useState, useContext} from 'react';
 import {View, TouchableWithoutFeedback, TouchableOpacity, FlatList, StyleSheet} from 'react-native';
 import SimpleAlert from 'src/blocks/SimpleAlert';
 import Text from 'src/blocks/Text';
-import {Portal, Dialog} from 'react-native-paper';
+import Dialog from 'src/blocks/Dialog';
+import ReportDialog from 'src/blocks/ReportDialog';
 import {Nickname} from 'src/blocks/Board';
 import {AntDesign} from '@expo/vector-icons';
 import {makeLikeComment, deleteComment} from 'src/utils/Community';
@@ -18,9 +19,9 @@ function Comment({item, index, board, focusComment, refresh}) {
   const likeList = item.likes.items.map((item) => item.userID);
   const [isLike, setIsLike] = useState(false);
   const [likeCnt, setLikeCnt] = useState('');
-  const [dialog, setDialog] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
   const [alreadyLikeOpen, setAlreadyLikeOpen] = useState(false);
-  const [reportOpen, setReportOpen] = useState(false);
+  const [reportDialogOpen, setReportDialogOpen] = useState(false);
   const [deleteOpen, setDeleteOpen] = useState(false);
   // console.log('board ', board) ;
 
@@ -78,9 +79,7 @@ function Comment({item, index, board, focusComment, refresh}) {
   const visTime = relativeTimePrettify(item.createdAt);
   return (
     <View>
-      <TouchableWithoutFeedback
-        onLongPress={() => setDialog(true)}
-      >
+      <TouchableWithoutFeedback onLongPress={() => setMenuOpen(true)}>
         <View style={[
           styles.container,
           nested.isNested == item.id && {backgroundColor: 'rgba(240, 200, 50, 0.2)'},
@@ -101,37 +100,33 @@ function Comment({item, index, board, focusComment, refresh}) {
           </View>
         </View>
       </TouchableWithoutFeedback>
-      <Portal>
-        <Dialog visible={dialog} onDismiss={() => setDialog(false)}>
-          <Dialog.Content>
-            <TouchableOpacity onPress={() => {
-              nested.setIsNested(item.id);
-              setDialog(false);
-              focusComment(index);
-            }}>
-              <Text style={styles.menuText}>대댓글 달기</Text>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={() => {
-              setReportOpen(true);
-              setDialog(false);
-            }}>
-              <Text style={styles.menuText}>신고</Text>
-            </TouchableOpacity>
-          </Dialog.Content>
-        </Dialog>
-      </Portal>
+      <Dialog visible={menuOpen} onDismiss={() => setMenuOpen(false)}>
+        <TouchableOpacity onPress={() => {
+          nested.setIsNested(item.id);
+          setMenuOpen(false);
+          focusComment(index);
+        }}>
+          <Text style={styles.menuText}>대댓글 달기</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => {
+          setReportDialogOpen(true);
+          setMenuOpen(false);
+        }}>
+          <Text style={styles.menuText}>댓글 신고</Text>
+        </TouchableOpacity>
+      </Dialog>
+      <ReportDialog
+        visible={reportDialogOpen}
+        onDismiss={() => setReportDialogOpen(false)}
+        objectID={item.id}
+        userID={item.userID}
+        type='Comment'
+      />
       <SimpleAlert
         modalOpen={alreadyLikeOpen}
         setModalOpen={setAlreadyLikeOpen}
         title='알림'
         content='이미 좋아한 댓글입니다'
-        onOk={() => {}}
-      />
-      <SimpleAlert
-        modalOpen={reportOpen}
-        setModalOpen={setReportOpen}
-        title='댓글 신고'
-        content='댓글 신고가 접수되었습니다.'
         onOk={() => {}}
       />
       <FlatList
@@ -168,8 +163,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   menuText: {
-    fontSize: 13,
-    fontWeight: 'bold',
+    fontSize: 14,
     margin: 10,
   },
   deleteText: {

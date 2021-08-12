@@ -1,13 +1,13 @@
 import React from 'react';
 import {View, Dimensions, Image, StyleSheet, Platform} from 'react-native';
 import AppIntroSlider from 'react-native-app-intro-slider';
-import config from 'src/config';
 
 const {width, height} = Dimensions.get('window');
 
 const ratio = height/width;
 const threshold = 1.85;
-const bgcolor = config.colors.main.primary;
+// const bgcolor = config.colors.main.primary;
+const bgcolor = '#cdd6ff';
 
 const slides = [
   {
@@ -60,7 +60,7 @@ const slides = [
 export default function IntroSlider({onDone}) {
   const renderItem = ({item}) => {
     return (
-      <View>
+      <View style={{backgroundColor: item.backgroundColor}}>
         <Image source={item.image} resizeMode='contain' style={{width: '100%', height: '100%'}}/>
       </View>
     );
