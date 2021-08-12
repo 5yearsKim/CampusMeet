@@ -2,16 +2,20 @@ import React, {useContext} from 'react';
 import {View, Dimensions, StyleSheet, Modal, TouchableWithoutFeedback} from 'react-native';
 import {ThemeContext} from 'src/context';
 
-const {width} = Dimensions.get('window');
+const windowWidth = Dimensions.get('window').width;
 
-export default function Dialog({visible, onDismiss, children}) {
+export default function Dialog({visible, onDismiss, width, children}) {
   const {theme} = useContext(ThemeContext);
+  const customStyle = {
+    backgroundColor: theme.background,
+    width: width ? width : windowWidth*0.7
+  };
   return (
     <Modal visible={visible} onRequestClose={onDismiss} transparent={true}>
       <TouchableWithoutFeedback onPress={onDismiss}>
         <View style={styles.background}>
           <TouchableWithoutFeedback onPress={() => {}}>
-            <View style={[styles.mainBox, {backgroundColor: theme.background}]}>
+            <View style={[styles.mainBox, customStyle]}>
               {children}
             </View>
           </TouchableWithoutFeedback>
@@ -30,7 +34,6 @@ const styles = StyleSheet.create({
   },
   mainBox: {
     justifyContent: 'space-evenly',
-    width: width*0.7,
     borderRadius: 10,
     padding: 10,
   },
