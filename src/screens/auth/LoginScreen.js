@@ -1,13 +1,27 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {StyleSheet, Dimensions, TouchableOpacity, Image, Text, View, KeyboardAvoidingView, Platform} from 'react-native';
 import {Button} from 'react-native-paper';
 import Login from 'src/components/auth/Login';
 import AuthBackground from 'src/blocks/AuthBackground';
 import {Auth} from 'aws-amplify';
+import Agreement from 'src/blocks/Agreement';
 
-const {width, height} = Dimensions.get('window');
+const {width} = Dimensions.get('window');
 
 export default function LoginScreen(props) {
+  const [mode, setMode] = useState(); // mode in ['register', 'google', 'apple']
+  const [agreeOpen, setAgreeOpen] = useState(false);
+
+  const onAgreementOk = () => {
+    if (mode == 'register') {
+      props.navigation.navigate('Register');
+    } else if (mode == 'google') {
+      Auth.federatedSignIn({provider: 'Google'});
+    } else if (mode == 'apple') {
+      Auth.federatedSignIn({provider: 'SignInWithApple'});
+    }
+  };
+
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
@@ -16,16 +30,17 @@ export default function LoginScreen(props) {
       <AuthBackground/>
       <View style={styles.loginBox}>
         <Login {...props}/>
-        <Button
-          mode='outlined'
-          onPress={() => {
-            props.navigation.navigate('Register');
-          }}
-        >
+        <Button mode='outlined' onPress={() => {
+          setMode('register');
+          setAgreeOpen(true);
+        }}>
           회원가입
         </Button>
 
-        <TouchableOpacity onPress={() => Auth.federatedSignIn({provider: 'Google'})}>
+        <TouchableOpacity onPress={() => {
+          setMode('google');
+          setAgreeOpen(true);
+        }}>
           <View style={styles.googleButton}>
             <Image source={require('assets/images/google_logo.png')} style={styles.googleLogo}/>
             <Text style={styles.googleText}>Google 로 시작하기</Text>
@@ -33,7 +48,10 @@ export default function LoginScreen(props) {
         </TouchableOpacity>
 
         {Platform.OS === 'ios' &&
-          <TouchableOpacity onPress={() => Auth.federatedSignIn({provider: 'SignInWithApple'})}>
+          <TouchableOpacity onPress={() => {
+            setMode('apple');
+            setAgreeOpen(true)
+          }}>
             <View style={styles.appleButton}>
               <Image source={require('assets/images/apple_logo.png')} style={styles.appleLogo} reesizeMode='contain'/>
               <Text style={styles.appleText}>Apple 로 시작하기</Text>
@@ -47,6 +65,11 @@ export default function LoginScreen(props) {
           </TouchableOpacity>
         </View>
       </View>
+      <Agreement
+        visible={agreeOpen}
+        onDismiss={() => setAgreeOpen(false)}
+        onOk={onAgreementOk}
+      />
     </KeyboardAvoidingView>
   );
 }
