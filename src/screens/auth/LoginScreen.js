@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {StyleSheet, Dimensions, TouchableOpacity, Image, Text, View, KeyboardAvoidingView, Platform} from 'react-native';
+import {StyleSheet, ScrollView, Dimensions, TouchableOpacity, Image, Text, View, KeyboardAvoidingView, Platform} from 'react-native';
 import {Button} from 'react-native-paper';
 import Login from 'src/components/auth/Login';
 import AuthBackground from 'src/blocks/AuthBackground';
@@ -27,6 +27,7 @@ export default function LoginScreen(props) {
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       style={styles.container}
     >
+
       <AuthBackground/>
       <View style={styles.loginBox}>
         <Login {...props}/>
