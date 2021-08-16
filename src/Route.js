@@ -1,10 +1,12 @@
 import React, {useContext, useEffect} from 'react';
+import {Button} from 'react-native-paper';
 import {getFocusedRouteNameFromRoute} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {MaterialCommunityIcons, FontAwesome, AntDesign, Feather} from '@expo/vector-icons';
 import {MyContext, ThemeContext, BadgeContext} from 'src/context';
 import {bringUser} from 'src/utils/User';
+import {logout} from 'src/utils/Auth';
 import config from 'src/config';
 // Before login
 import LoginScreen from 'src/screens/auth/LoginScreen';
@@ -34,8 +36,8 @@ const MainStack = createStackNavigator();
 const BottomTab = createBottomTabNavigator();
 
 function HomeTab({navigation}) {
-  const {user, setName} = useContext(MyContext);
-  const userSub = user.sub;
+  const auth = useContext(MyContext);
+  const userSub = auth.user.sub;
   const {signalBadge, matchBadge} = useContext(BadgeContext);
 
   useEffect(() => {
@@ -50,7 +52,7 @@ function HomeTab({navigation}) {
           navigation.navigate('Deactivate');
           return;
         }
-        setName(userData.name);
+        auth.setName(userData.name);
       } catch (err) {
         console.warn(err);
       }
@@ -159,7 +161,29 @@ function Route() {
           }) }
         />
         <MainStack.Screen name='ChatRoom' component={ChatRoomScreen}/>
-        <MainStack.Screen name='CreateProfile' component={CreateProfileScreen} options={{title: '프로필작성', headerLeft: () => null}}/>
+        <MainStack.Screen
+          name='CreateProfile'
+          component={CreateProfileScreen}
+          options={{
+            title: '프로필작성',
+            headerLeft: () => null,
+            headerRight: () => (
+              <Button
+                mode='text'
+                labelStyle={{color: 'white'}}
+                onPress={async () => {
+                  try {
+                    await logout(auth);
+                  } catch (err) {
+                    console.warn(err);
+                  }
+                }}
+              >
+                LOGOUT
+              </Button>
+            ),
+          }}
+        />
         <MainStack.Screen name='ModifyProfile' component={ModifyProfileScreen} options={{title: '프로필수정'}}/>
         <MainStack.Screen name='ViewProfile' component={ViewProfileScreen} options={{title: '프로필보기'}}/>
         <MainStack.Screen name='Board' component={BoardScreen} options={{title: '게시판'}}/>

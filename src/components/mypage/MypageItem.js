@@ -1,8 +1,9 @@
 import React, {useState, useContext} from 'react';
-import {View, TouchableOpacity, StyleSheet} from 'react-native';
+import {View, TouchableOpacity, Dimensions, ScrollView, StyleSheet} from 'react-native';
 import {RadioButton, Button} from 'react-native-paper';
 import Dialog from 'src/blocks/Dialog';
 import Text from 'src/blocks/Text';
+import {termsOfService, privacyPolicy} from 'assets/policy';
 import SimpleAlert from 'src/blocks/SimpleAlert';
 import {MyContext, ThemeContext, UserContext} from 'src/context';
 import {logout} from 'src/utils/Auth';
@@ -10,6 +11,8 @@ import {handleNotification} from 'src/utils/PushNotification';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {modifyUser} from 'src/utils/User';
 import config from 'src/config';
+
+const {width, height} = Dimensions.get('window');
 
 export function MyModifyProfile({navigation}) {
   const {theme} = useContext(ThemeContext);
@@ -199,10 +202,47 @@ export function MyVerifyCampus({navigation}) {
   );
 }
 
+export function MyPolicy() {
+  const {theme} = useContext(ThemeContext);
+  const [modalOpen, setModalOpen] = useState(false)
+  return (
+    <View>
+      <TouchableOpacity onPress={() => setModalOpen(true)}>
+        <Text style={[styles.itemText, {color: theme.text}]}>이용 약관</Text>
+      </TouchableOpacity>
+      <Dialog visible={modalOpen} onDismiss={() => setModalOpen(false)} width={width * 0.85}>
+        <View style={styles.policyContainer}>
+          <Text style={styles.policyText}>캠퍼스밋 서비스 이용약관</Text>
+          <View style={styles.termBox}>
+            <ScrollView>
+              <View onStartShouldSetResponder={() => true}>
+                <Text>{termsOfService}</Text>
+              </View>
+            </ScrollView>
+          </View>
+          <Text style={styles.policyText}>캠퍼스밋 개인정보 처리 방침</Text>
+          <View style={styles.termBox}>
+            <ScrollView>
+              <View onStartShouldSetResponder={() => true}>
+                <Text>{privacyPolicy}</Text>
+              </View>
+            </ScrollView>
+          </View>
+        </View>
+      </Dialog>
+    </View>
+  );
+}
+
 const styles = StyleSheet.create({
   buttonWrapper: {
     flexDirection: 'row',
     justifyContent: 'flex-end',
+  },
+  termBox: {
+    padding: 3,
+    height: height * 0.15,
+    backgroundColor: '#dddddd'
   },
   itemText: {
     margin: 3,
@@ -211,4 +251,10 @@ const styles = StyleSheet.create({
   menuText: {
     fontSize: 14,
   },
+  policyText: {
+    paddingTop: 10,
+    paddingBottom: 5,
+    fontSize: 16,
+    fontWeight: 'bold',
+  }
 });
