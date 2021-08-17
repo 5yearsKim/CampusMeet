@@ -3,19 +3,19 @@ import {View, Dimensions, Text, Image, ScrollView, StyleSheet} from 'react-nativ
 import {Checkbox, Button} from 'react-native-paper';
 import Dialog from './Dialog';
 import config from 'src/config';
-import { termsOfService, privacyPolicy } from 'assets/policy';
+import {termsOfService, privacyPolicy} from 'assets/policy';
 
-const {width, height} = Dimensions.get('window')
+const {width, height} = Dimensions.get('window');
 
 export default function Agreement({visible, onDismiss, onOk}) {
   const [valid, setValid] = useState(false);
   const [agreeService, setAgreeService] = useState(false);
   const [agreePrivacy, setAgreePrivacy] = useState(false);
-  
+
   useEffect(() => {
     checkValid();
-  }, [agreeService, agreePrivacy])
-  
+  }, [agreeService, agreePrivacy]);
+
   const agreeAll = () => {
     if (valid) {
       setAgreePrivacy(false);
@@ -32,7 +32,7 @@ export default function Agreement({visible, onDismiss, onOk}) {
     } else {
       setValid(false);
     }
-  }
+  };
 
   return (
     <Dialog visible={visible} onDismiss={onDismiss} width={width*0.85}>
@@ -132,7 +132,7 @@ const styles = StyleSheet.create({
   termBox: {
     padding: 3,
     height: height * 0.15,
-    backgroundColor: '#dddddd'
+    backgroundColor: '#dddddd',
   },
   buttonWrapper: {
     flexDirection: 'row',
@@ -151,4 +151,4 @@ const styles = StyleSheet.create({
   listText: {
     fontSize: 15,
   },
-})
+});
