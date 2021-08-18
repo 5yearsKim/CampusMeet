@@ -5,11 +5,12 @@ import Dialog from 'src/blocks/Dialog';
 import Text from 'src/blocks/Text';
 import {termsOfService, privacyPolicy} from 'assets/policy';
 import SimpleAlert from 'src/blocks/SimpleAlert';
-import {MyContext, ThemeContext, UserContext} from 'src/context';
+import {MyContext, ThemeContext} from 'src/context';
 import {logout} from 'src/utils/Auth';
 import {handleNotification} from 'src/utils/PushNotification';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {modifyUser} from 'src/utils/User';
+import {modifyUser, removeUser} from 'src/utils/User';
+import {deleteVerification} from 'src/utils/EmailVerification';
 import config from 'src/config';
 
 const {width, height} = Dimensions.get('window');
@@ -26,6 +27,7 @@ export function MyModifyProfile({navigation}) {
 export function MyLogout() {
   const auth = useContext(MyContext);
   const {theme} = useContext(ThemeContext);
+  const [confirmOpen, setConfirmOpen] = useState(false);
 
   const onLogout = async () => {
     try {
@@ -37,9 +39,19 @@ export function MyLogout() {
   };
 
   return (
-    <TouchableOpacity onPress={() => onLogout()}>
-      <Text style={[styles.itemText, {color: theme.text}]}>로그아웃</Text>
-    </TouchableOpacity>
+    <View>
+      <TouchableOpacity onPress={() => setConfirmOpen(true)}>
+        <Text style={[styles.itemText, {color: theme.text}]}>로그아웃</Text>
+      </TouchableOpacity>
+      <SimpleAlert
+        modalOpen={confirmOpen}
+        setModalOpen={setConfirmOpen}
+        title='로그아웃'
+        content='로그아웃 하시겠습니까?'
+        onCancel={() => {}}
+        onOk={() => onLogout()}
+      />
+    </View>
   );
 }
 
@@ -47,7 +59,6 @@ export function MyDeactivate({navigation}) {
   const auth = useContext(MyContext);
   const userSub = auth.user.sub;
   const {theme} = useContext(ThemeContext);
-  const {refreshMypage, setRefreshMypage} = useContext(UserContext);
   const [alertOpen, setAlertOpen] = useState(false);
   const [confirmOpen, setConfirmOpen] = useState(false);
 
@@ -78,7 +89,7 @@ export function MyDeactivate({navigation}) {
       <SimpleAlert
         modalOpen={alertOpen}
         setModalOpen={setAlertOpen}
-        title='휴면전환하시겠습니까?'
+        title='캠퍼스밋 휴면전환'
         content='휴면전환하시게 되면 나의 카드가 노출되지 않고 시그널 전송, 커뮤니티 이용 등의 활동을 하실 수 없습니다.'
         onCancel={() => {}}
         onOk={() => {
@@ -204,7 +215,7 @@ export function MyVerifyCampus({navigation}) {
 
 export function MyPolicy() {
   const {theme} = useContext(ThemeContext);
-  const [modalOpen, setModalOpen] = useState(false)
+  const [modalOpen, setModalOpen] = useState(false);
   return (
     <View>
       <TouchableOpacity onPress={() => setModalOpen(true)}>
@@ -234,6 +245,66 @@ export function MyPolicy() {
   );
 }
 
+export function MyContactDeveloper() {
+  const {theme} = useContext(ThemeContext);
+  const [alertOpen, setAlertOpen] = useState(false);
+  return (
+    <View>
+      <TouchableOpacity onPress={() => setAlertOpen(true)}>
+        <Text style={[styles.itemText, {color: theme.text}]}>캠퍼스밋 연락처</Text>
+      </TouchableOpacity>
+      <SimpleAlert
+        modalOpen={alertOpen}
+        setModalOpen={setAlertOpen}
+        title='캠퍼스밋 연락처'
+        content='문의사항은 campusmeetask@gmail.com 으로 접수해주시기 바랍니다.'
+        onOk={() => {}}
+      />
+    </View>
+  );
+}
+
+export function MyDeleteAccount() {
+  const {theme} = useContext(ThemeContext);
+  const [confirmOpen, setConfirmOpen] = useState(false);
+  const auth = useContext(MyContext);
+  const userSub = auth.user.sub;
+  const onLogout = async () => {
+    try {
+      await logout(auth);
+      handleNotification(false);
+    } catch (err) {
+      console.warn(err);
+    }
+  };
+
+
+  const deleteAccount = async () => {
+    try {
+      await removeUser(userSub);
+      await deleteVerification();
+      await onLogout();
+    } catch (err) {
+      console.warn(err);
+    }
+  };
+  return (
+    <View>
+      <TouchableOpacity onPress={() => setConfirmOpen(true)}>
+        <Text style={[styles.itemText, {color: theme.text}]}>회원 탈퇴</Text>
+      </TouchableOpacity>
+      <SimpleAlert
+        modalOpen={confirmOpen}
+        setModalOpen={setConfirmOpen}
+        title='캠퍼스밋 탈퇴'
+        content='회원 탈퇴를 하시게 되면 계정 정보를 제외한 모든 프로필, 메일 인증 정보가 삭제됩니다. 탈퇴하시겠습니까?'
+        onCancel={() => {}}
+        onOk={() => deleteAccount()}
+      />
+    </View>
+  );
+}
+
 const styles = StyleSheet.create({
   buttonWrapper: {
     flexDirection: 'row',
@@ -241,20 +312,21 @@ const styles = StyleSheet.create({
   },
   termBox: {
     padding: 3,
-    height: height * 0.15,
-    backgroundColor: '#dddddd'
+    height: height * 0.3,
+    backgroundColor: '#dddddd',
   },
   itemText: {
-    margin: 3,
+    margin: 4,
     fontSize: 15,
   },
   menuText: {
     fontSize: 14,
+    // margin: 2,
   },
   policyText: {
     paddingTop: 10,
     paddingBottom: 5,
     fontSize: 16,
     fontWeight: 'bold',
-  }
+  },
 });

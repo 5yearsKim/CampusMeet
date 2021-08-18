@@ -17,10 +17,10 @@
     },
     "ios": {
       "bundleIdentifier": "com.onion.campusMeet",
-      "buildNumber": "1.0.7"
+      "buildNumber": "1.0.8"
     },
     "android": {
-      "versionCode": 37,
+      "versionCode": 38,
       "package": "com.onion.campusMeet",
       "permissions": [],
       "adaptiveIcon": {

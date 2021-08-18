@@ -250,7 +250,7 @@ function CreateProfile({navigation}) {
         <View>
           <TextInput
             mode='flat'
-            label='학번'
+            label='학번(입학년도)'
             placeholder='ex)20'
             keyboardType='numeric'
             defaultValue={year}

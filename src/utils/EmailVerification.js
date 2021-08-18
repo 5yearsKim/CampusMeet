@@ -25,6 +25,14 @@ export async function confirmVerification(code) {
   return rsp.data;
 }
 
+export async function deleteVerification() {
+  const sess = await Auth.currentSession();
+  const token = sess.getAccessToken().getJwtToken();
+  const headers = {'Authorization': `Bearer ${token}`};
+  const rsp = await server.delete('/campus_verification', {headers: headers});
+  return rsp;
+}
+
 export function checkEmailFormat(email) {
   const re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   return re.test(email);

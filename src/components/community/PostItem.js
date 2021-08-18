@@ -67,7 +67,7 @@ function PostItem({item, board, navigation}) {
       <TouchableOpacity
         onPress={() => onClickItem()}
       >
-        <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+        <View style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
           <View style={{flex: 1, justifyContent: 'space-between'}}>
             <Text ellipsizeMode='tail' numberOfLines={1} style={[styles.titleText, {color: theme.text}]}>{item.title}</Text>
             <Text ellipsizeMode='tail' numberOfLines={1} style={[styles.contentText, {color: theme.subText}]}>{item.content}</Text>
@@ -82,7 +82,7 @@ function PostItem({item, board, navigation}) {
 
 const styles = StyleSheet.create({
   container: {
-    height: 75,
+    // height: 75,
     padding: 5,
     borderBottomWidth: 1,
     borderColor: '#bbbbbb',
@@ -98,7 +98,7 @@ const styles = StyleSheet.create({
   contentText: {
     fontSize: 13,
     marginTop: 5,
-    marginBottom: 8,
+    marginBottom: 2,
     margin: 2,
   },
   image: {
@@ -111,7 +111,9 @@ const styles = StyleSheet.create({
   belowContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
+    alignItems: 'center',
     margin: 2,
+    marginBottom: 0,
   },
   iconList: {
     flexDirection: 'row',

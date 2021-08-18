@@ -27,7 +27,6 @@ export default function LoginScreen(props) {
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       style={styles.container}
     >
-
       <AuthBackground/>
       <View style={styles.loginBox}>
         <Login {...props}/>
@@ -44,18 +43,18 @@ export default function LoginScreen(props) {
         }}>
           <View style={styles.googleButton}>
             <Image source={require('assets/images/google_logo.png')} style={styles.googleLogo}/>
-            <Text style={styles.googleText}>Google 로 시작하기</Text>
+            <Text style={styles.googleText}>Google 로 로그인</Text>
           </View>
         </TouchableOpacity>
 
         {Platform.OS === 'ios' &&
           <TouchableOpacity onPress={() => {
             setMode('apple');
-            setAgreeOpen(true)
+            setAgreeOpen(true);
           }}>
             <View style={styles.appleButton}>
               <Image source={require('assets/images/apple_logo.png')} style={styles.appleLogo} reesizeMode='contain'/>
-              <Text style={styles.appleText}>Apple 로 시작하기</Text>
+              <Text style={styles.appleText}>Apple 로 로그인</Text>
             </View>
           </TouchableOpacity>
         }

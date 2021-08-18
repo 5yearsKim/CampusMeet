@@ -65,13 +65,16 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'flex-end',
     padding: 10,
+    paddingBottom: 0,
   },
   titleText: {
     fontSize: 20,
     fontWeight: 'bold',
     padding: 5,
+    paddingBottom: 10,
   },
   contentText: {
     fontSize: 14,
+    lineHeight: 22,
   },
 });

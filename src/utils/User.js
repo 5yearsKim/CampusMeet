@@ -1,5 +1,5 @@
 import {API, graphqlOperation, Auth} from 'aws-amplify';
-import {createUser, updateUser, createPreference, updatePreference} from 'src/graphql/mutations';
+import {createUser, updateUser, deleteUser, createPreference, updatePreference} from 'src/graphql/mutations';
 import {getUser, getPreference} from 'src/graphql/queries';
 import {server} from './axios';
 
@@ -37,6 +37,12 @@ export async function modifyUser(userSub, newUser) {
       graphqlOperation(updateUser, {input: newUser}),
   );
 };
+
+export async function removeUser(userSub) {
+  await API.graphql(
+      graphqlOperation(deleteUser, {input: {id: userSub}}),
+  );
+}
 
 export async function bringPreference(userSub) {
   const rsp = await API.graphql(
