@@ -150,3 +150,13 @@ type NestedComment
   likes: [LikeComment] @connection(keyName: "byComment", fields: ["id"])
   createdAt: AWSDateTime!
 }
+
+type Block
+@key(name: "byUser", fields: ["userID", "createdAt"], queryField:"BlockByUser") 
+@model {
+  id: ID!
+  userID: ID!
+  objectID: ID!
+  objectType: String!
+  createdAt: AWSDateTime!
+}

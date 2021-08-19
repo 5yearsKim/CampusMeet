@@ -1,7 +1,7 @@
 import React, {useEffect, useState, useContext, useRef} from 'react';
 import {FlatList, StyleSheet} from 'react-native';
 import {UserContext} from 'src/context';
-import {bringComment, bringPost} from 'src/utils/Community';
+import {bringComment} from 'src/utils/Community';
 import CommentInput from './CommentInput';
 import Comment from './Comment';
 import PostHeader from './PostHeader';
@@ -13,7 +13,7 @@ function Post({navigation, route}) {
   const [refreshComment, setRefreshComment] = useState(false);
   const [comment, setComment] = useState('');
   const commentList = useRef(null);
-  const {refreshBoard, setRefreshBoard} = useContext(UserContext);
+  const {refreshBoard, setRefreshBoard, blockList} = useContext(UserContext);
 
   useEffect(() => {
     return () => setRefreshBoard(!refreshBoard);
@@ -22,7 +22,25 @@ function Post({navigation, route}) {
   useEffect(() => {
     const m_bringComment = async () => {
       const commentData = await bringComment(post.id);
-      setComment(commentData);
+      const blockIdList = blockList.map((item) => item.objectID);
+      const newCommentList = commentData.map((item) => {
+        if (blockIdList.includes(item.id)) {
+          item.isHide = true;
+        };
+        const nestedComment = item.nestedComments.items;
+        if (nestedComment.length > 0) {
+          const newNestedComment = nestedComment.map((item) => {
+            if (blockIdList.includes(item.id)) {
+              item.isHide = true;
+            }
+            return item;
+          });
+          // console.log(newNestedComment);
+          item.nestedComments.items = newNestedComment;
+        }
+        return item;
+      });
+      setComment(newCommentList);
     };
     m_bringComment();
   }, [refreshComment]);

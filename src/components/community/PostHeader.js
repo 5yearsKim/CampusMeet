@@ -6,13 +6,13 @@ import {Nickname} from 'src/blocks/Board';
 import Dialog from 'src/blocks/Dialog';
 import ReportDialog from 'src/blocks/ReportDialog';
 import {Button} from 'react-native-paper';
-import {makeLikePost, deletePost} from 'src/utils/Community';
 import {AntDesign} from '@expo/vector-icons';
 import {MaterialCommunityIcons} from '@expo/vector-icons';
 import {KeyImage} from 'src/blocks/Image';
 import {ImageViewer, ImageSwipeOff} from 'src/blocks/ImageViewer';
-import {MyContext, ThemeContext} from 'src/context';
+import {MyContext, ThemeContext, UserContext} from 'src/context';
 import {absoluteTime} from 'src/utils/Time';
+import {makeLikePost, deletePost, makeBlock} from 'src/utils/Community';
 
 
 function PostHeader({post, board, navigation}) {
@@ -26,6 +26,7 @@ function PostHeader({post, board, navigation}) {
   const likeList = post.likes.items.map((item) => item.userID);
   const [isLike, setIsLike] = useState(likeList.includes(userSub));
   const [likeCnt, setLikeCnt] = useState(post.likes.items.length);
+  const {refreshBoard, setRefreshBoard} = useContext(UserContext);
 
 
   const renderImage = ({item, index}) => {
@@ -57,12 +58,25 @@ function PostHeader({post, board, navigation}) {
 
   const renderMenu = () => {
     const [deleteOpen, setDeleteOpen] = useState(false);
+    const [hideOpen, setHideOpen] = useState(false);
     const [reportDialogOpen, setReportDialogOpen] = useState(false);
     const [menuShow, setMenuShow] = useState(false);
+
+    const [abusiveUserOpen, setAbusiveUserOpen] = useState(false);
 
     const onDeletePost = async () => {
       try {
         await deletePost(post.id);
+        setRefreshBoard(!refreshBoard);
+        navigation.goBack();
+      } catch (err) {
+        console.warn(err);
+      }
+    };
+    const onHidePost = async () => {
+      try {
+        await makeBlock(userSub, post.id, 'Post');
+        setRefreshBoard(!refreshBoard);
         navigation.goBack();
       } catch (err) {
         console.warn(err);
@@ -76,12 +90,18 @@ function PostHeader({post, board, navigation}) {
           </View>
         </TouchableOpacity>
         <Dialog visible={menuShow} onDismiss={() => setMenuShow(false)}>
-          {userSub == post.userID &&
+          {userSub == post.userID ?
               <TouchableOpacity onPress={() => {
                 setMenuShow(false);
                 setDeleteOpen(true);
               }}>
                 <Text style={styles.menuText}>게시글 삭제</Text>
+              </TouchableOpacity> :
+              <TouchableOpacity onPress={() => {
+                setMenuShow(false);
+                setHideOpen(true);
+              }}>
+                <Text style={styles.menuText}>게시글 숨기기</Text>
               </TouchableOpacity>
           }
           <TouchableOpacity onPress={() => {
@@ -89,6 +109,12 @@ function PostHeader({post, board, navigation}) {
             setMenuShow(false);
           }}>
             <Text style={styles.menuText}>게시글 신고</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => {
+            setAbusiveUserOpen(true);
+            setMenuShow(false);
+          }}>
+            <Text style={styles.menuText}>작성자 글 차단</Text>
           </TouchableOpacity>
         </Dialog>
         <ReportDialog
@@ -101,10 +127,26 @@ function PostHeader({post, board, navigation}) {
         <SimpleAlert
           modalOpen={deleteOpen}
           setModalOpen={setDeleteOpen}
-          title='게시글을 삭제하시겠습니까?'
+          title='게시글을 삭제'
           content='게시글을 삭제하면 게시판에 노출되지 않습니다.'
           onCancel={() => {}}
-          onOk={() => onDeletePost()}
+          onOk={async () => await onDeletePost()}
+        />
+        <SimpleAlert
+          modalOpen={hideOpen}
+          setModalOpen={setHideOpen}
+          title='게시글 숨기기'
+          content='게시글 숨기기를 적용될 시 더 이상 게시글이 게시판에 노출되지 않습니다.'
+          onCancel={() => {}}
+          onOk={async () => await onHidePost()}
+        />
+        <SimpleAlert
+          modalOpen={abusiveUserOpen}
+          setModalOpen={setAbusiveUserOpen}
+          title='작성자 글 차단'
+          content='작성자 글 차단이 적용될 시 더 이상 게시판에 이 글의 작성자가 작성한 게시글이 노출되지 않습니다.'
+          onCancel={() => {}}
+          onOk={async () => await onHidePost()}
         />
       </View>
     );
@@ -198,8 +240,8 @@ const styles = StyleSheet.create({
     color: '#aaaaaa',
   },
   menuText: {
-    padding: 5,
-    fontSize: 14,
+    padding: 8,
+    fontSize: 15,
   },
 });
 export default PostHeader;

@@ -1,7 +1,8 @@
 import {API, graphqlOperation} from 'aws-amplify';
 import {createBoard, createPost, createComment, createNestedComment, createLikePost, createLikeComment,
-  updatePost, updateComment, updateNestedComment} from 'src/graphql/mutations';
+  updatePost, updateComment, updateNestedComment, createBlock} from 'src/graphql/mutations';
 import {getUser, listBoards, boardByType, postByBoard, getPost, commentByPost} from 'src/graphql/customQueries';
+import {blockByUser} from 'src/graphql/queries';
 import {campusDict} from 'assets/campusLogos';
 import config from 'src/config';
 
@@ -245,3 +246,24 @@ export const getNickname = async (userID, boardType, short=false) => {
   }
 };
 
+export const makeBlock = async (userID, objectID, objectType) => {
+  const inputData = {
+    userID: userID,
+    objectID: objectID,
+    objectType: objectType,
+  };
+  await API.graphql(
+      graphqlOperation(
+          createBlock, {input: inputData},
+      ),
+  );
+};
+
+export const bringBlock = async (userID, limit=30) => {
+  const rsp = await API.graphql(
+      graphqlOperation(
+          blockByUser, {userID: userID, limit: limit},
+      ),
+  );
+  return rsp.data.BlockByUser.items;
+};

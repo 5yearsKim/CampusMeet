@@ -12,6 +12,7 @@ import {
 } from '@react-navigation/native';
 import Route from 'src/Route';
 import {bringSentSignalToday} from 'src/utils/Signal';
+import {bringBlock} from 'src/utils/Community';
 import {ThemeContext, MyContext, UserContext, BadgeContext} from 'src/context';
 import IntroSlider from 'src/blocks/IntroSlider';
 import config from 'src/config';
@@ -37,6 +38,8 @@ export default function App() {
   // badge props
   const [signalBadge, setSignalBadge] = useState(0);
   const [matchBadge, setMatchBadge] = useState(0);
+  // Community block
+  const [blockList, setBlockList] = useState([]);
 
   const [fontLoaded] = useFonts({
     // nanumEB: require('assets/fonts/NanumSquareRoundEB.ttf'),
@@ -159,10 +162,26 @@ export default function App() {
         console.warn(err);
       }
     };
-    if (!!user.attributes) {
+    if (!!user.sub) {
       m_bringSentSignalToday();
     }
   }, [user]);
+
+  // user community block
+  useEffect(() => {
+    const userSub = user.sub;
+    const m_bringBlock = async () => {
+      try {
+        const blockData = await bringBlock(userSub);
+        setBlockList(blockData);
+      } catch (err) {
+        console.warn(err);
+      }
+    };
+    if (!!userSub) {
+      m_bringBlock();
+    }
+  }, [user, refreshBoard]);
 
   const authProps = () => {
     return {
@@ -192,6 +211,8 @@ export default function App() {
       setNewCand: setNewCand,
       signalCnt: signalCnt,
       setSignalCnt: setSignalCnt,
+      blockList: blockList,
+      setBlockList: setBlockList,
 
       refreshCandidate: refreshCandidate,
       setRefreshCandidate: setRefreshCandidate,

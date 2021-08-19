@@ -6,7 +6,7 @@ import Dialog from 'src/blocks/Dialog';
 import ReportDialog from 'src/blocks/ReportDialog';
 import {Nickname} from 'src/blocks/Board';
 import {AntDesign, MaterialIcons} from '@expo/vector-icons';
-import {makeLikeComment} from 'src/utils/Community';
+import {makeLikeComment, makeBlock} from 'src/utils/Community';
 import {relativeTimePrettify} from 'src/utils/Time';
 import {MyContext, ThemeContext} from 'src/context';
 
@@ -21,10 +21,17 @@ function NestedComment({item, board}) {
   const [alreadyLikeAlert, setAlreadyLikeAlert] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [reportDialogOpen, setReportDialogOpen] = useState(false);
+  const [isHide, setIsHide] = useState(false);
 
   useEffect(() => {
     setLikeCnt(likeList.length);
     setIsLike(likeList.includes(userSub));
+  }, []);
+
+  useEffect(() => {
+    if (item.isHide) {
+      setIsHide(true);
+    }
   }, []);
 
   const onClickLike = async () => {
@@ -38,6 +45,19 @@ function NestedComment({item, board}) {
       }
     }
   };
+
+  const onHideComment = async () => {
+    try {
+      await makeBlock(userSub, item.id, 'NestedComment');
+      setIsHide(true);
+    } catch (err) {
+      console.warn(err);
+    }
+  };
+
+  if (isHide) {
+    return null;
+  }
   const visTime = relativeTimePrettify(item.createdAt);
   return (
     <View style={{flexDirection: 'row'}}>
@@ -64,6 +84,12 @@ function NestedComment({item, board}) {
           setMenuOpen(false);
         }}>
           <Text style={styles.menuText}>대댓글 신고</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => {
+          onHideComment();
+          setMenuOpen(false);
+        }}>
+          <Text style={styles.menuText}>대댓글 숨기기</Text>
         </TouchableOpacity>
       </Dialog>
       <ReportDialog

@@ -282,7 +282,7 @@ function CreateProfile({navigation}) {
           label='자기 소개'
           value={profileDescription}
           onChangeText={(text) => setProfileDescription(text)}
-          style={styles.textInput}
+          style={styles.profileDescription}
           multiline={true}
           maxLength={3000}
         />
@@ -387,6 +387,16 @@ const styles = StyleSheet.create({
   },
   textInput: {
     backgroundColor: 'transparent',
+  },
+  profileDescription: {
+    backgroundColor: 'transparent',
+    marginTop: 5,
+    // borderRadius: 10,
+    borderWidth: 1,
+    borderColor: '#cccccc',
+    height: 100,
+    flex: 1,
+    textAlignVertical: 'top',
   },
   introText: {
     fontSize: 16,

@@ -190,11 +190,13 @@ function ModifyProfile({navigation}) {
         maxLength={300}
       />
       <TextInput
+        // mode='outlined'
         label='자기 소개'
         value={profileDescription}
         onChangeText={(text) => setProfileDescription(text)}
-        style={styles.textInput}
+        style={styles.profileDescription}
         multiline={true}
+        numberOfLines={10}
         maxLength={3000}
       />
       <Button
@@ -219,6 +221,16 @@ function ModifyProfile({navigation}) {
 const styles = StyleSheet.create({
   textInput: {
     backgroundColor: 'transparent',
+  },
+  profileDescription: {
+    backgroundColor: 'transparent',
+    marginTop: 5,
+    // borderRadius: 10,
+    borderWidth: 1,
+    borderColor: '#cccccc',
+    height: 100,
+    flex: 1,
+    textAlignVertical: 'top',
   },
   graduateWrapper: {
     flexDirection: 'row',

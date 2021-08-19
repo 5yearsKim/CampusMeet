@@ -19,12 +19,27 @@ function ImgPreview({imageKeys}) {
   );
 }
 
+function countComment(commentList) {
+  let cnt = 0;
+  for (let i = 0; i < commentList.length; i ++) {
+    const comm = commentList[i];
+    const nestedComm = comm.nestedComments.items;
+    if (!comm.deleted) {
+      cnt++;
+    }
+    for (let j = 0; j < nestedComm.length; j ++) {
+      if (!nestedComm[j].deleted) {
+        cnt ++;
+      }
+    }
+  }
+  return cnt;
+}
 
 function BelowContent({type, item}) {
   // console.log(comments, createdAt, like, nickname, imageKeys);
-  const {theme} = useContext(ThemeContext);
   const imgCount = item.imageKeys.length;
-  const commentCount = item.comments.items.length;
+  const commentCount = countComment(item.comments.items);
   const visTime = relativeTimePrettify(item.createdAt);
   return (
     <View style={styles.belowContainer}>

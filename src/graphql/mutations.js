@@ -1300,3 +1300,48 @@ export const deleteNestedComment = /* GraphQL */ `
     }
   }
 `;
+export const createBlock = /* GraphQL */ `
+  mutation CreateBlock(
+    $input: CreateBlockInput!
+    $condition: ModelBlockConditionInput
+  ) {
+    createBlock(input: $input, condition: $condition) {
+      id
+      userID
+      objectID
+      objectType
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const updateBlock = /* GraphQL */ `
+  mutation UpdateBlock(
+    $input: UpdateBlockInput!
+    $condition: ModelBlockConditionInput
+  ) {
+    updateBlock(input: $input, condition: $condition) {
+      id
+      userID
+      objectID
+      objectType
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const deleteBlock = /* GraphQL */ `
+  mutation DeleteBlock(
+    $input: DeleteBlockInput!
+    $condition: ModelBlockConditionInput
+  ) {
+    deleteBlock(input: $input, condition: $condition) {
+      id
+      userID
+      objectID
+      objectType
+      createdAt
+      updatedAt
+    }
+  }
+`;

@@ -1086,3 +1086,39 @@ export const onDeleteNestedComment = /* GraphQL */ `
     }
   }
 `;
+export const onCreateBlock = /* GraphQL */ `
+  subscription OnCreateBlock {
+    onCreateBlock {
+      id
+      userID
+      objectID
+      objectType
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onUpdateBlock = /* GraphQL */ `
+  subscription OnUpdateBlock {
+    onUpdateBlock {
+      id
+      userID
+      objectID
+      objectType
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onDeleteBlock = /* GraphQL */ `
+  subscription OnDeleteBlock {
+    onDeleteBlock {
+      id
+      userID
+      objectID
+      objectType
+      createdAt
+      updatedAt
+    }
+  }
+`;

@@ -378,6 +378,13 @@ export const postByBoard = /* GraphQL */ `
         comments {
           items {
             id
+            deleted
+            nestedComments {
+              items {
+                id
+                deleted
+              }
+            }
           }
         }
         likes {

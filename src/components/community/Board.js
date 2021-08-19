@@ -10,17 +10,19 @@ function Board({navigation, route}) {
   const [postList, setPostList] = useState([]);
   const [loading, setLoading] = useState(true);
   const [nextToken, setNextToken] = useState('');
-  const {refreshBoard, setRefreshBoard} = useContext(UserContext);
+  const {refreshBoard, setRefreshBoard, blockList} = useContext(UserContext);
 
   useEffect(() => {
     const m_bringPostByBoard = async () => {
       const [postData, tokenData] = await bringPostByBoard(board.id, '', 20);
-      setPostList(postData);
+      const blockIdList = blockList.map((item) => item.objectID);
+      const newPostList = postData.filter((item) => !blockIdList.includes(item.id));
+      setPostList(newPostList);
       setNextToken(tokenData);
       setLoading(false);
     };
     m_bringPostByBoard();
-  }, [refreshBoard]);
+  }, [refreshBoard, blockList]);
 
   const onEndReached = () => {
     const m_bringPostByBoard = async () => {

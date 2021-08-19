@@ -760,6 +760,37 @@ export const listNestedComments = /* GraphQL */ `
     }
   }
 `;
+export const getBlock = /* GraphQL */ `
+  query GetBlock($id: ID!) {
+    getBlock(id: $id) {
+      id
+      userID
+      objectID
+      objectType
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listBlocks = /* GraphQL */ `
+  query ListBlocks(
+    $filter: ModelBlockFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listBlocks(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        userID
+        objectID
+        objectType
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
 export const signalByFrom = /* GraphQL */ `
   query SignalByFrom(
     $fromID: ID
@@ -1289,6 +1320,35 @@ export const nestedCommentByUser = /* GraphQL */ `
         likes {
           nextToken
         }
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const blockByUser = /* GraphQL */ `
+  query BlockByUser(
+    $userID: ID
+    $createdAt: ModelStringKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelBlockFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    BlockByUser(
+      userID: $userID
+      createdAt: $createdAt
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        userID
+        objectID
+        objectType
         createdAt
         updatedAt
       }

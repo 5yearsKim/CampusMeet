@@ -6,7 +6,7 @@ import Dialog from 'src/blocks/Dialog';
 import ReportDialog from 'src/blocks/ReportDialog';
 import {Nickname} from 'src/blocks/Board';
 import {AntDesign} from '@expo/vector-icons';
-import {makeLikeComment, deleteComment} from 'src/utils/Community';
+import {makeLikeComment, deleteComment, makeBlock} from 'src/utils/Community';
 import {relativeTimePrettify} from 'src/utils/Time';
 import NestedComment from './NestedComment';
 import {MyContext, ChatContext, ThemeContext} from 'src/context';
@@ -23,11 +23,20 @@ function Comment({item, index, board, focusComment, refresh}) {
   const [alreadyLikeOpen, setAlreadyLikeOpen] = useState(false);
   const [reportDialogOpen, setReportDialogOpen] = useState(false);
   const [deleteOpen, setDeleteOpen] = useState(false);
+  const [isHide, setIsHide] = useState(false);
   // console.log('board ', board) ;
+
+  const nestedComments = item.nestedComments.items.filter((item) => item.isHide !== true);
 
   useEffect(() => {
     setLikeCnt(likeList.length);
     setIsLike(likeList.includes(userSub));
+  }, []);
+
+  useEffect(() => {
+    if (item.isHide) {
+      setIsHide(true);
+    }
   }, []);
 
 
@@ -40,6 +49,14 @@ function Comment({item, index, board, focusComment, refresh}) {
         setIsLike(true);
         setLikeCnt(likeCnt + 1);
       }
+    }
+  };
+  const onHideComment = async () => {
+    try {
+      await makeBlock(userSub, item.id, 'Comment');
+      setIsHide(true);
+    } catch (err) {
+      console.warn(err);
     }
   };
 
@@ -76,7 +93,34 @@ function Comment({item, index, board, focusComment, refresh}) {
     );
   };
 
+  const renderNestedComment = () => {
+    return (
+      <FlatList
+        data={nestedComments}
+        renderItem={({item}) => <NestedComment item={item} board={board}/>}
+        keyExtractor={(item) => item.id}
+      />
+    );
+  };
+
   const visTime = relativeTimePrettify(item.createdAt);
+
+  if (isHide && nestedComments.length == 0) {
+    return null;
+  }
+  if (isHide && nestedComments.length > 0) {
+    return (
+      <View>
+        <View style={[
+          styles.container,
+          {borderColor: theme.subText},
+        ]}>
+          <Text style={{color: theme.subText}}>숨겨진 댓글입니다.</Text>
+        </View>
+        {renderNestedComment()}
+      </View>
+    );
+  }
   return (
     <View>
       <TouchableWithoutFeedback onLongPress={() => setMenuOpen(true)}>
@@ -114,6 +158,12 @@ function Comment({item, index, board, focusComment, refresh}) {
         }}>
           <Text style={styles.menuText}>댓글 신고</Text>
         </TouchableOpacity>
+        <TouchableOpacity onPress={() => {
+          onHideComment();
+          setMenuOpen(false);
+        }}>
+          <Text style={styles.menuText}>댓글 숨기기</Text>
+        </TouchableOpacity>
       </Dialog>
       <ReportDialog
         visible={reportDialogOpen}
@@ -129,11 +179,7 @@ function Comment({item, index, board, focusComment, refresh}) {
         content='이미 좋아한 댓글입니다'
         onOk={() => {}}
       />
-      <FlatList
-        data={item.nestedComments.items}
-        renderItem={({item}) => <NestedComment item={item} board={board}/>}
-        keyExtractor={(item) => item.id}
-      />
+      {renderNestedComment()}
     </View>
   );
 }
