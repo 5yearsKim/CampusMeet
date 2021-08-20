@@ -6,25 +6,25 @@ import {IconButton, TextInput} from 'react-native-paper';
 
 export default function Text(props) {
   const fontType = useContext(ThemeContext).font;
-  var style = props.style ? props.style : {};
-  let tmpstyle = {};
-  
+  let style = props.style ? props.style : {};
+  const tmpstyle = {};
+
   const list2style = (list) => {
     for (let i = 0; i < list.length; i++) {
-      let st = list[i];
+      const st = list[i];
       if (Array.isArray(st)) {
         list2style(st);
       } else {
-        Object.assign(tmpstyle, st)
+        Object.assign(tmpstyle, st);
       }
     }
-  }
+  };
   if (Array.isArray(style)) {
     list2style(style);
     style = tmpstyle;
   }
-  
-  let type = props.font ? props.font : (fontType ? fontType : 'nanum');
+
+  const type = props.font ? props.font : (fontType ? fontType : 'nanum');
   let font = 'nanumR';
   if (type == 'nanum') {
     font = style.fontWeight == 'bold' ? 'nanumB' : 'nanumR';

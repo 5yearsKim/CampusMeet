@@ -135,7 +135,7 @@ export function MyFont() {
             onPress={() => setMyFont('nanum')}
             color={config.colors.main.primary}
           />
-          <Text style={styles.menuText} font='nanum'>일반</Text>
+          <Text style={styles.menuText} font='nanum'>나눔</Text>
         </View>
         <View style={{flexDirection: 'row', alignItems: 'center'}}>
           <RadioButton
@@ -144,7 +144,7 @@ export function MyFont() {
             onPress={() => setMyFont('cute')}
             color={config.colors.main.primary}
           />
-          <Text style={styles.menuText} font='cute'>귀여운</Text>
+          <Text style={styles.menuText} font='cute'>큐트</Text>
         </View>
         <View style={styles.buttonWrapper}>
           <Button onPress={() => onOk()}> OK </Button>

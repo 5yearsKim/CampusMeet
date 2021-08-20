@@ -93,16 +93,15 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
   subtitleText: {
-    fontSize: 13,
+    fontSize: 14,
     // fontWeight: 'bold',
     marginTop: 5,
     marginBottom: 5,
     // marginLeft: 70,
   },
   messageText: {
-    fontSize: 13,
+    fontSize: 14,
     marginTop: 8,
-    fontStyle: 'italic',
     color: 'gray',
   },
   modalContainer: {

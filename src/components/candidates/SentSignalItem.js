@@ -112,7 +112,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
   subtitleText: {
-    fontSize: 13,
+    fontSize: 14,
     // fontWeight: 'bold',
     marginTop: 5,
     // marginLeft: 70,
@@ -120,9 +120,8 @@ const styles = StyleSheet.create({
   messageText: {
     marginTop: 10,
     marginLeft: 5,
-    fontSize: 13,
+    fontSize: 14,
     fontWeight: 'bold',
-    fontStyle: 'italic',
     color: 'gray',
   },
   bottomContainer: {

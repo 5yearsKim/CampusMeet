@@ -140,17 +140,16 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
   subtitleText: {
-    fontSize: 13,
+    fontSize: 14,
     // fontWeight: 'bold',
     marginTop: 5,
     // marginLeft: 70,
   },
   messageText: {
     marginTop: 10,
-    fontSize: 13,
+    fontSize: 14,
     fontWeight: 'bold',
     marginLeft: 5,
-    fontStyle: 'italic',
     color: 'gray',
   },
   bottomContainer: {

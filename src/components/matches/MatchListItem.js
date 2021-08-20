@@ -163,7 +163,7 @@ const styles = StyleSheet.create({
     margin: 5,
   },
   messageText: {
-    fontSize: 13,
+    fontSize: 14,
     marginLeft: 5,
     maxWidth: width - 200,
   },
