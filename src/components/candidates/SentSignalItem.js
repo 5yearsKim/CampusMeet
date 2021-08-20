@@ -121,7 +121,6 @@ const styles = StyleSheet.create({
     marginTop: 10,
     marginLeft: 5,
     fontSize: 14,
-    fontWeight: 'bold',
     color: 'gray',
   },
   bottomContainer: {

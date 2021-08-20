@@ -30,7 +30,9 @@ export default function Text(props) {
     font = style.fontWeight == 'bold' ? 'nanumB' : 'nanumR';
   } else if (type == 'cute') {
     font = style.fontWeight == 'bold' ? 'cuteB' : 'cuteR';
-  }
+  } else if (type == 'surround') {
+    font = style.fontWeight == 'bold' ? 'surroundB' : 'surroundR';
+  } 
   // style['fontFamily'] = font
   // style.fontWeight = undefined
   return (

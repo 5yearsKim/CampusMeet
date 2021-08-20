@@ -148,7 +148,6 @@ const styles = StyleSheet.create({
   messageText: {
     marginTop: 10,
     fontSize: 14,
-    fontWeight: 'bold',
     marginLeft: 5,
     color: 'gray',
   },

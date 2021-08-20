@@ -146,6 +146,15 @@ export function MyFont() {
           />
           <Text style={styles.menuText} font='cute'>큐트</Text>
         </View>
+        <View style={{flexDirection: 'row', alignItems: 'center'}}>
+          <RadioButton
+            value='on'
+            status={myFont == 'surround' ? 'checked' : 'unchecked'}
+            onPress={() => setMyFont('surround')}
+            color={config.colors.main.primary}
+          />
+          <Text style={styles.menuText} font='surround'>달팽이</Text>
+        </View>
         <View style={styles.buttonWrapper}>
           <Button onPress={() => onOk()}> OK </Button>
         </View>

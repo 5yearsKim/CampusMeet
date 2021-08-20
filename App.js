@@ -47,6 +47,8 @@ export default function App() {
     nanumR: require('assets/fonts/NanumGothic-Regular.ttf'),
     cuteR: require('assets/fonts/GamjaFlower-Regular.ttf'),
     cuteB: require('assets/fonts/SingleDay-Regular.ttf'),
+    surroundR: require('assets/fonts/Cafe24SsurroundAir.ttf'),
+    surroundB: require('assets/fonts/Cafe24Ssurround.ttf'),
     // nanumL: require('assets/fonts/NanumSquareRoundL.ttf'),
   });
   const [introShow, setIntroShow] = useState(false);
