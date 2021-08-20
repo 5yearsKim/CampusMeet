@@ -266,7 +266,7 @@ export function MyContactDeveloper() {
         modalOpen={alertOpen}
         setModalOpen={setAlertOpen}
         title='캠퍼스밋 연락처'
-        content='문의사항은 campusmeetask@gmail.com 으로 접수해주시기 바랍니다.'
+        content='문의사항 및 피드백은 campusmeetask@gmail.com 으로 접수해주시기 바랍니다.'
         onOk={() => {}}
       />
     </View>
