@@ -5,7 +5,7 @@
     "name": "campusMeet",
     "scheme": "campusmeet",
     "slug": "campusmeet",
-    "version": "1.01",
+    "version": "1.1",
     "assetBundlePatterns": [
       "assets/images/*"
     ],
