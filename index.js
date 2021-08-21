@@ -23,10 +23,10 @@ const updatedAwsConfig = {
   oauth: {
     ...awsconfig.oauth,
     urlOpener,
-    // redirectSignIn: 'exp://10.70.171.35:19000/',
-    // redirectSignOut: 'exp://10.70.171.35:19000/',
-    redirectSignIn: 'campusmeet://',
-    redirectSignOut: 'campusmeet://',
+    redirectSignIn: 'exp://10.70.171.35:19000/',
+    redirectSignOut: 'exp://10.70.171.35:19000/',
+    // redirectSignIn: 'campusmeet://',
+    // redirectSignOut: 'campusmeet://',
   },
 };
 

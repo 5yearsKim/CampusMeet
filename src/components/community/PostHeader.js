@@ -110,6 +110,12 @@ function PostHeader({post, board, navigation}) {
           }}>
             <Text style={styles.menuText}>게시글 신고</Text>
           </TouchableOpacity>
+          <TouchableOpacity onPress={() => {
+            setAbusiveUserOpen(true);
+            setMenuShow(false);
+          }}>
+            <Text style={styles.menuText}>작성자 글 차단</Text>
+          </TouchableOpacity>
         </Dialog>
         <ReportDialog
           visible={reportDialogOpen}
@@ -131,6 +137,14 @@ function PostHeader({post, board, navigation}) {
           setModalOpen={setHideOpen}
           title='게시글 숨기기'
           content='게시글 숨기기를 적용될 시 더 이상 게시글이 게시판에 노출되지 않습니다.'
+          onCancel={() => {}}
+          onOk={async () => await onHidePost()}
+        />
+        <SimpleAlert
+          modalOpen={abusiveUserOpen}
+          setModalOpen={setAbusiveUserOpen}
+          title='작성자 글 차단'
+          content='작성자 글 차단이 적용될 시 해당 작성자의 게시글이 게시판에 노출되지 않습니다.'
           onCancel={() => {}}
           onOk={async () => await onHidePost()}
         />
