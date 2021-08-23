@@ -59,6 +59,10 @@ export default function App() {
     const bringCurrentUser = async () => {
       try {
         const userData = await Auth.currentAuthenticatedUser();
+
+        const userInfo = await Auth.currentUserInfo();
+        console.log(userInfo);
+
         const sub = userData.signInUserSession.accessToken.payload.sub;
         const userTmp = {
           sub: sub,

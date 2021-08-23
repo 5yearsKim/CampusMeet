@@ -11,6 +11,8 @@ import {makeMessage} from 'src/utils/Chat';
 import {sendPushNotification} from 'src/utils/PushNotification';
 import config from 'src/config';
 
+import Dialog from 'src/blocks/Dialog';
+
 function InputBox({route, chatUser}) {
   const {chatRoomID} = route.params;
   const {user, name}= useContext(MyContext);
