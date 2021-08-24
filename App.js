@@ -60,12 +60,12 @@ export default function App() {
       try {
         const userData = await Auth.currentAuthenticatedUser();
 
-        const userInfo = await Auth.currentUserInfo();
-        console.log(userInfo);
-
         const sub = userData.signInUserSession.accessToken.payload.sub;
+        const socialName = userData.attributes?.name;
+
         const userTmp = {
           sub: sub,
+          name: socialName,
         };
         setUser(userTmp);
         setIsAuthenticated(true);
@@ -82,9 +82,13 @@ export default function App() {
     Hub.listen('auth', ({payload: {event, data}}) => {
       switch (event) {
         case 'signIn':
+          console.log(data);
           const sub = data.signInUserSession.accessToken.payload.sub;
+          const socialName = data.signInUserSession.idToken?.payload.name;
+
           const userTmp = {
             sub: sub,
+            name: socialName,
           };
           setUser(userTmp);
           setIsAuthenticated(true);

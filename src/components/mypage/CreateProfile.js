@@ -20,7 +20,6 @@ function CreateProfile({navigation}) {
   const {theme} = useContext(ThemeContext);
   const {refreshCandidate, setRefreshCandidate} = useContext(UserContext);
   const userSub = auth.user.sub;
-
   const [imgList, setImgList] = useState([]);
   const imgIndex = imgList.map((img, idx) => ({[img]: idx}));
   const initpos = Object.assign({}, ...imgIndex);
@@ -61,6 +60,12 @@ function CreateProfile({navigation}) {
 
   useEffect(() => {
     return () => setRefreshCandidate(!refreshCandidate);
+  }, []);
+
+  useEffect(() => {
+    if (auth.user.name) {
+      setName(auth.user.name);
+    }
   }, []);
 
   const checkFormat = () => {
