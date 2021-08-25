@@ -5,7 +5,7 @@ import {KeyImage} from 'src/blocks/Image';
 import {bringUser} from 'src/utils/User';
 import {MyContext, ThemeContext, UserContext} from 'src/context';
 import {MyModifyProfile, MyLogout, MyDeactivate, MyPushNoti, MyFont,
-  MyVerifyCampus, MyPolicy, MyDeleteAccount, MyContactDeveloper} from './MypageItem';
+  MyVerifyCampus, MyPolicy, MyDeleteAccount, MyContactDeveloper, MyIntroSlider} from './MypageItem';
 
 // import {makeMessage} from 'src/utils/Chat';
 
@@ -87,6 +87,7 @@ export default function Mypage({navigation}) {
       </View>
       <View style={styles.sectionBox}>
         <Text style={[styles.sectionText, {color: theme.text}]}>기타</Text>
+        <MyIntroSlider/>
         <MyPolicy/>
         <MyContactDeveloper/>
 

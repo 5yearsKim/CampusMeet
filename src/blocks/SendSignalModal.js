@@ -54,11 +54,11 @@ export default function SendSignalModal({toID, popupVisible, setPopupVisible, on
                   mode='flat'
                   label='Message'
                   placeholder='메세지가 상대에게 전달됩니다.'
-                  value={message}
                   onChangeText={(text) => setMessage(text)}
                   maxLength={300}
                   multiline={true}
                   style = {{backgroundColor: 'transparent', maxHeight: 120}}
+                  value={message}
                 />
                 {popupError.length > 0 &&
                   <Text style={styles.errorText}>{popupError}</Text>

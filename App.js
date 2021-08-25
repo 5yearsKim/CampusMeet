@@ -236,6 +236,9 @@ export default function App() {
       setRefreshBoard: setRefreshBoard,
       refreshMypage: refreshMypage,
       setRefreshMypage: setRefreshMypage,
+
+      introShow: introShow,
+      setIntroShow: setIntroShow,
     };
   };
 

@@ -2,6 +2,7 @@ import React, {useState, useEffect, useContext, useRef} from 'react';
 import {View, KeyboardAvoidingView, TextInput, Keyboard, TouchableOpacity, StyleSheet} from 'react-native';
 import {makeComment, makeNestedComment, getNickname} from 'src/utils/Community';
 import {Nickname} from 'src/blocks/Board';
+import Text from 'src/blocks/Text';
 import {FontAwesome} from '@expo/vector-icons';
 import {MyContext, ChatContext} from 'src/context';
 import {useKeyboard} from 'src/blocks/Keyboard';
@@ -69,7 +70,6 @@ function CommentInput({board, post, refresh}) {
             <TextInput
               onChangeText={(text) => setMessage(text)}
               ref={chatInput}
-              value={message}
               multiline
               onContentSizeChange={(event) => {
                 setHeight(event.nativeEvent.contentSize.height);
@@ -77,7 +77,9 @@ function CommentInput({board, post, refresh}) {
               onBlur={() => nested.setIsNested(false)}
               placeholder={placeholder}
               style={{flex: 1, height: Math.max(inputHeight, 30)}}
-            />
+            >
+              <Text>{message}</Text>
+            </TextInput>
           </View>
           <View style={{marginRight: 15}}>
             <TouchableOpacity

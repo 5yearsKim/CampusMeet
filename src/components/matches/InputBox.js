@@ -1,5 +1,6 @@
 import React, {useState, useContext} from 'react';
 import {StyleSheet, ActivityIndicator, View, TextInput, TouchableOpacity, KeyboardAvoidingView, Platform} from 'react-native';
+import Text from 'src/blocks/Text';
 import {Portal, Modal} from 'react-native-paper';
 import * as ImagePicker from 'expo-image-picker';
 import {Storage} from 'aws-amplify';
@@ -11,7 +12,6 @@ import {makeMessage} from 'src/utils/Chat';
 import {sendPushNotification} from 'src/utils/PushNotification';
 import config from 'src/config';
 
-import Dialog from 'src/blocks/Dialog';
 
 function InputBox({route, chatUser}) {
   const {chatRoomID} = route.params;
@@ -117,9 +117,10 @@ function InputBox({route, chatUser}) {
           <TextInput
             style={styles.textInput}
             multiline
-            value={message}
             onChangeText={setMessage}
-          />
+          >
+            <Text>{message}</Text>
+          </TextInput>
           <TouchableOpacity onPress={() => setGifVisible(true)}>
             <MaterialCommunityIcons name='gif' size={28}/>
           </TouchableOpacity>

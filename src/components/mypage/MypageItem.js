@@ -3,9 +3,10 @@ import {View, TouchableOpacity, Dimensions, ScrollView, StyleSheet} from 'react-
 import {RadioButton, Button} from 'react-native-paper';
 import Dialog from 'src/blocks/Dialog';
 import Text from 'src/blocks/Text';
+import IntroSlider from 'src/blocks/IntroSlider';
 import {termsOfService, privacyPolicy} from 'assets/policy';
 import SimpleAlert from 'src/blocks/SimpleAlert';
-import {MyContext, ThemeContext} from 'src/context';
+import {MyContext, UserContext, ThemeContext} from 'src/context';
 import {logout} from 'src/utils/Auth';
 import {handleNotification} from 'src/utils/PushNotification';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -310,6 +311,18 @@ export function MyDeleteAccount() {
         onCancel={() => {}}
         onOk={() => deleteAccount()}
       />
+    </View>
+  );
+}
+
+export function MyIntroSlider() {
+  const {theme} = useContext(ThemeContext);
+  const {setIntroShow} = useContext(UserContext);
+  return (
+    <View>
+      <TouchableOpacity onPress={() => setIntroShow(true)}>
+        <Text style={[styles.itemText, {color: theme.text}]}>튜토리얼</Text>
+      </TouchableOpacity>
     </View>
   );
 }
