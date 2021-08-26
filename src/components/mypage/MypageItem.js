@@ -279,6 +279,7 @@ export function MyDeleteAccount() {
   const [confirmOpen, setConfirmOpen] = useState(false);
   const auth = useContext(MyContext);
   const userSub = auth.user.sub;
+
   const onLogout = async () => {
     try {
       await logout(auth);
