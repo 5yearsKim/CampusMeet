@@ -31,6 +31,7 @@ function Login() {
   };
 
   const onSubmit = async () => {
+    setErrText('');
     if (checkFormat() == false) {
       return;
     }

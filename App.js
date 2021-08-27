@@ -81,7 +81,7 @@ export default function App() {
     Hub.listen('auth', ({payload: {event, data}}) => {
       switch (event) {
         case 'signIn':
-          console.log(data);
+          // console.log(data);
           const sub = data.signInUserSession.accessToken.payload.sub;
           const socialName = data.signInUserSession.idToken?.payload.name;
 

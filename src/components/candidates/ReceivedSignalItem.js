@@ -61,12 +61,6 @@ function ReceivedSignalItem({item, navigation, onReject, onMatch}) {
     sender.imageKeys = [];
   }
 
-  if (sender == null) {
-    return (
-      <View>
-      </View>
-    );
-  }
   return (
     <TouchableWithoutFeedback onPress={() => onClick()}>
       <View style={styles.container}>

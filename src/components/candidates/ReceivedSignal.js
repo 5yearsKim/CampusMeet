@@ -19,7 +19,8 @@ function ReceivedSignal({navigation}) {
   useEffect(() => {
     const m_bringReceivedSignal = async () => {
       try {
-        const userData = await bringReceivedSignal(userSub);
+        let userData = await bringReceivedSignal(userSub);
+        userData = userData.filter((item) => item.sender != null);
         setUserList(userData);
         setLoading(false);
       } catch (err) {
