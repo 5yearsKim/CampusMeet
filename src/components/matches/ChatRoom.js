@@ -113,7 +113,10 @@ function ChatRoom({navigation, route}) {
     if (index >= messageList.length -1) {
       return <Message item={item} showTime={true} showDate={true} myCkp={myCkp} yourCkp={yourCkp} navigation={navigation}/>;
     }
+    // console.log(isDateDifferent(item.createdAt, messageList[index].createdAt));
+    // console.log(item.createdAt, '/', messageList[index].createdAt);
     const showDate = isDateDifferent(item.createdAt, messageList[index + 1].createdAt);
+    console.log(showDate);
     if (index == 0) {
       return <Message item={item} showTime={true} showDate={showDate} myCkp={myCkp} yourCkp={yourCkp} navigation={navigation}/>;
     }

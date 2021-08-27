@@ -24,19 +24,28 @@ export default function Text(props) {
     style = tmpstyle;
   }
 
+  let fontSize = style.fontSize ? style.fontSize : 15;
   const type = props.font ? props.font : (fontType ? fontType : 'nanum');
   let font = 'nanumR';
   if (type == 'nanum') {
-    font = style.fontWeight == 'bold' ? 'nanumB' : 'nanumR';
+    if (style.fontWeight == 'bold') {
+      font = 'nanumB';
+      fontSize -= 1;
+    } else {
+      font = 'nanumR';
+    }
   } else if (type == 'cute') {
-    font = style.fontWeight == 'bold' ? 'cuteB' : 'cuteR';
+    if (style.fontWeight == 'bold') {
+      fontSize += 2;
+    }
+    font = 'penR';
   } else if (type == 'surround') {
     font = style.fontWeight == 'bold' ? 'surroundB' : 'surroundR';
-  } 
+  }
   // style['fontFamily'] = font
   // style.fontWeight = undefined
   return (
-    <PaperText {...props} style={[style, {fontFamily: font, fontWeight: undefined}]} >{props.children}</PaperText>
+    <PaperText {...props} style={[style, {fontFamily: font, fontWeight: undefined, fontSize: fontSize}]} >{props.children}</PaperText>
   );
 }
 

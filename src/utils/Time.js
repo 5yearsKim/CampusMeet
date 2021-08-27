@@ -79,7 +79,7 @@ export function isMinDifferent(strTime1, strTime2) {
 export function isDateDifferent(strTime1, strTime2) {
   const date1 = date2local(new Date(strTime1));
   const date2 = date2local(new Date(strTime2));
-  if ((date1.getDate() != date2.getDate()) && (date1.getMonth() != date2.getMonth())) {
+  if ((date1.getDate() != date2.getDate()) || (date1.getMonth() != date2.getMonth())) {
     return true;
   }
   return false;

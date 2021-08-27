@@ -58,10 +58,12 @@ export function ImageMessage({imageKey, isMyMessage}) {
 
 export function AdminMessage({content}) {
   return (
-    <View style={styles.alertBox}>
-      <View style={styles.alertWrapper}>
-        <AntDesign name='sound' size={28} color='yellow'/>
-        <Text style={styles.alertText}>{content}</Text>
+    <View style={{flexDirection: 'row', justifyContent: 'center'}}>
+      <View style={styles.alertBox}>
+        <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
+          <AntDesign name='sound' size={28} color='#f3f333'/>
+          <Text style={styles.alertText}>{content}</Text>
+        </View>
       </View>
     </View>
   );
@@ -101,14 +103,12 @@ const styles = StyleSheet.create({
     margin: 10,
   },
   alertBox: {
+    flexDirection: 'column',
     backgroundColor: 'white',
-    marginBottom: 5,
-  },
-  alertWrapper: {
-    flex: 0,
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
+    padding: 3,
+    paddingLeft: 20,
+    paddingRight: 20,
+    borderRadius: 20,
   },
   alertText: {
     fontSize: 15,

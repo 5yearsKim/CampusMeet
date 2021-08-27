@@ -1,5 +1,5 @@
 import React, {useState, useContext} from 'react';
-import {View, FlatList, TouchableOpacity, Modal, StyleSheet} from 'react-native';
+import {View, FlatList, TouchableOpacity, Modal, StyleSheet, Platform} from 'react-native';
 import SimpleAlert from 'src/blocks/SimpleAlert';
 import Text from 'src/blocks/Text';
 import {Nickname} from 'src/blocks/Board';
@@ -110,12 +110,14 @@ function PostHeader({post, board, navigation}) {
           }}>
             <Text style={styles.menuText}>게시글 신고</Text>
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => {
-            setAbusiveUserOpen(true);
-            setMenuShow(false);
-          }}>
-            <Text style={styles.menuText}>작성자 글 차단</Text>
-          </TouchableOpacity>
+          {Platform.OS == 'ios' &&
+            <TouchableOpacity onPress={() => {
+              setAbusiveUserOpen(true);
+              setMenuShow(false);
+            }}>
+              <Text style={styles.menuText}>작성자 글 차단</Text>
+            </TouchableOpacity>
+          }
         </Dialog>
         <ReportDialog
           visible={reportDialogOpen}

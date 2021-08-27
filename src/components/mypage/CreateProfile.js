@@ -103,7 +103,7 @@ function CreateProfile({navigation}) {
         return false;
       }
       if (profileMessage.trim() == '') {
-        setErrText('친구에게 한마디를 간단히 적어주세요.');
+        setErrText('프로필메세지를 적어주세요.');
         return false;
       }
       if (profileDescription.trim() == '') {
@@ -284,11 +284,13 @@ function CreateProfile({navigation}) {
           maxLength={300}
         />
         <TextInput
+          mode='outlined'
           label='자기 소개'
           value={profileDescription}
           onChangeText={(text) => setProfileDescription(text)}
           style={styles.profileDescription}
           multiline={true}
+          numberOfLines={3}
           maxLength={3000}
         />
         {errText.length > 0 &&
@@ -395,13 +397,6 @@ const styles = StyleSheet.create({
   },
   profileDescription: {
     backgroundColor: 'transparent',
-    marginTop: 5,
-    // borderRadius: 10,
-    borderWidth: 1,
-    borderColor: '#cccccc',
-    height: 100,
-    flex: 1,
-    textAlignVertical: 'top',
   },
   introText: {
     fontSize: 16,

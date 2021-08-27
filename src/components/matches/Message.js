@@ -60,6 +60,7 @@ function Message({item, showTime, showDate, myCkp, yourCkp, navigation}) {
       );
     }
   };
+
   const renderDate = () => {
     return (
       <View style={{alignItems: 'center'}}>
@@ -67,6 +68,7 @@ function Message({item, showTime, showDate, myCkp, yourCkp, navigation}) {
       </View>
     );
   };
+
   if (item.type == 'admin') {
     return (
       <View>
@@ -117,11 +119,11 @@ const styles = StyleSheet.create({
   },
   date: {
     padding: 5,
-    paddingLeft: 5,
-    paddingRight: 5,
-    marginBottom: 10,
+    paddingLeft: 10,
+    paddingRight: 10,
+    margin: 5,
     color: 'black',
-    backgroundColor: '#BFEEEE',
+    backgroundColor: 'rgba(0, 0, 0, 0.08)',
     borderRadius: 15,
     overflow: 'hidden',
   },
