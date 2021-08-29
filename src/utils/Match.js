@@ -93,7 +93,7 @@ export async function makeNewMatch(fromID, toID) {
   }
 
   const newChatRoom = newChatRoomData.data.createChatRoom;
-  makeMessage(fromID, newChatRoom.id, 'New Match!', 'admin');
+  await makeMessage(fromID, newChatRoom.id, 'New Match!', 'admin');
 
   // 2. Add match to the Chat Room
   const myMatch = await API.graphql(

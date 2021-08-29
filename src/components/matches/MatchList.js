@@ -18,7 +18,7 @@ function MatchList({navigation}) {
       try {
         setLoading(true);
         let userData = await bringMatch(userSub);
-        userData = userData.filter((item) => item.matcher != null)
+        userData = userData.filter((item) => item.matcher != null);
         const orderedMatch = userData.sort((a, b) => {
           const getMessageTime = (message) => new Date(message.chatRoom.lastMessage.createdAt).getTime();
           if (getMessageTime(a) < getMessageTime(b)) {

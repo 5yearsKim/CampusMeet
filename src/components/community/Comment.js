@@ -134,11 +134,11 @@ function Comment({item, index, board, focusComment, refresh}) {
             {renderDelete()}
           </View>
           <View style={styles.middleBox}>
-            <Text style={{color: theme.subText}}>{item.content}</Text>
+            <Text selectable style={{color: theme.subText}}>{item.content}</Text>
           </View>
           <View style={styles.belowBox}>
-            <Text style={{color: theme.subText}}>{visTime}</Text>
-            <AntDesign color='green' size={16} onPress={onClickLike} name='like2' >
+            <Text style={styles.timeText}>{visTime}</Text>
+            <AntDesign color='#22aa55' size={16} onPress={onClickLike} name='like2' >
               {likeCnt}
             </AntDesign>
           </View>
@@ -213,6 +213,10 @@ const styles = StyleSheet.create({
     margin: 10,
   },
   deleteText: {
+    color: '#aaaaaa',
+  },
+  timeText: {
+    fontSize: 12,
     color: '#aaaaaa',
   },
 });

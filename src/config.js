@@ -20,7 +20,7 @@ export default config = {
       secondary: 'green',
     },
     inputBox: {
-      mainButton: '#0C6157',
+      mainButton: '#889DF8',
     },
     chat: {
       background: '#FFF0F5',

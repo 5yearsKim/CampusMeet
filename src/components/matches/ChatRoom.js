@@ -9,7 +9,7 @@ import {MyContext, UserContext} from 'src/context';
 import {onCreateMessage} from 'src/graphql/subscriptions';
 import {notificationHandlerForChatRoom} from 'src/utils/PushNotification';
 
-function ChatRoom({navigation, route}) {
+function ChatRoom({navigation, route, chatUser}) {
   const {user, pushNoti} = useContext(MyContext);
   const {refreshMatch, setRefreshMatch} = useContext(UserContext);
   const userSub = user.sub;
@@ -116,7 +116,7 @@ function ChatRoom({navigation, route}) {
     // console.log(isDateDifferent(item.createdAt, messageList[index].createdAt));
     // console.log(item.createdAt, '/', messageList[index].createdAt);
     const showDate = isDateDifferent(item.createdAt, messageList[index + 1].createdAt);
-    console.log(showDate);
+    // console.log(showDate);
     if (index == 0) {
       return <Message item={item} showTime={true} showDate={showDate} myCkp={myCkp} yourCkp={yourCkp} navigation={navigation}/>;
     }

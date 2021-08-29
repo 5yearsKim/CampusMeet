@@ -42,7 +42,7 @@ export default function StartSetting({navigation, user}) {
     const settingSignalBadge = async () => {
       try {
         const userList = await bringReceivedSignal(userSub);
-        const newList = userList.filter((item) => !item.checked);
+        const newList = userList.filter((item) => !item.checked && item.sender != null);
         setSignalBadge(newList.length);
       } catch (err) {
         console.warn(err);

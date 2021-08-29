@@ -114,7 +114,8 @@ const styles = StyleSheet.create({
     alignItems: 'flex-end',
   },
   time: {
-    color: 'black',
+    color: '#666666',
+    fontSize: 12,
     margin: 5,
   },
   date: {

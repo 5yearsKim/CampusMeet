@@ -156,14 +156,14 @@ function PostHeader({post, board, navigation}) {
   return (
     <View style={styles.container}>
       <View style={styles.titleBox}>
-        <Text style={[styles.titleText, {color: theme.text}]}>{post.title}</Text>
+        <Text selectable style={[styles.titleText, {color: theme.text}]}>{post.title}</Text>
         {renderMenu()}
       </View>
       <View style={{flexDirection: 'row', justifyContent: 'space-between', marginTop: 10}}>
         <Nickname type={board.type} nickname={post.nickname} userID={userSub} style={styles.nicknameText}/>
         <Text style={[styles.timeText, {color: theme.subText}]}>{visTime}</Text>
       </View>
-      <Text style={[styles.contentText, {color: theme.subText}]}>{post.content}</Text>
+      <Text selectable style={[styles.contentText, {color: theme.subText}]}>{post.content}</Text>
       <Button
         icon={() => <AntDesign name='like2' size={15}/>}
         mode='outlined'

@@ -16,7 +16,7 @@ function ChatRoomScreen(props) {
     const m_bringMatchByChatRoom = async () => {
       try {
         const matches = await bringMatchByChatRoom(chatRoomID);
-        setChatUser(matches.map((item) => ({id: item.toID, name: item.matcher.name})));
+        setChatUser(matches.map((item) => ({id: item.toID, name: item.matcher.name, imageKeys: item.matcher.imageKeys})));
       } catch (err) {
         console.warn(err);
         setChatUser([]);
@@ -30,11 +30,11 @@ function ChatRoomScreen(props) {
       setDisableInput(true);
       setAlertOpen(true);
     }
-  }, [chatUser])
+  }, [chatUser]);
 
   return (
     <SafeAreaView style={styles.container}>
-      <ChatRoom {...props}/>
+      <ChatRoom {...props} chatUser={chatUser}/>
       {!disableInput &&
         <InputBox {...props} chatUser={chatUser}/>
       }

@@ -12,6 +12,7 @@ export function TextMessage({text, isMyMessage}) {
   return (
     <Text
       style={[styles.messageBox, isMyMessage? styles.myBox : styles.yourBox]}
+      selectable
     >
       {text}
     </Text>

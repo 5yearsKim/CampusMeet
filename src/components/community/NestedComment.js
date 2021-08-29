@@ -71,8 +71,8 @@ function NestedComment({item, board}) {
             <Text>{item.content}</Text>
           </View>
           <View style={styles.belowBox}>
-            <Text>{visTime}</Text>
-            <AntDesign color='green' size={15} onPress={onClickLike} name='like2' >
+            <Text style={styles.timeText}>{visTime}</Text>
+            <AntDesign color='#119944' size={15} onPress={onClickLike} name='like2' >
               {likeCnt}
             </AntDesign>
           </View>
@@ -137,6 +137,10 @@ const styles = StyleSheet.create({
   menuText: {
     fontSize: 14,
     margin: 10,
+  },
+  timeText: {
+    fontSize: 12,
+    color: '#666666',
   },
 });
 
