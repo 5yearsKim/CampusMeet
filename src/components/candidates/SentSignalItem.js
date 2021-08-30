@@ -44,7 +44,7 @@ function SentSignalItem({item}) {
       <TouchableOpacity onPress={() => setPopupVisible(true)}>
         <View style={{flexDirection: 'row', alignItems: 'center'}}>
           <LeftContent gender={receiver.gender}/>
-          <View>
+          <View style={{flex: 1}}>
             <Text style={[styles.titleText, {color: theme.text}]}>{receiver.campus} {receiver.division}</Text>
             <Text style={[styles.subtitleText, {color: theme.subText}]}>{receiver.graduate} {receiver.year}학번</Text>
             <TouchableWithoutFeedback onPress={() => setShowMessage(!showMessage)}>

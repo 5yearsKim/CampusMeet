@@ -1,5 +1,7 @@
 import React, {useState, useEffect, useContext, Fragment} from 'react';
-import {FlatList} from 'react-native';
+import {Dimensions, FlatList, View, TouchableOpacity, StyleSheet} from 'react-native';
+import Text from 'src/blocks/Text';
+import {KeyImage} from 'src/blocks/Image';
 import Message from './Message';
 import {bringMessages, checkMessage, makeMessage} from 'src/utils/Chat';
 import {isDateDifferent, isMinDifferent} from 'src/utils/Time';
@@ -8,6 +10,8 @@ import {API, graphqlOperation} from 'aws-amplify';
 import {MyContext, UserContext} from 'src/context';
 import {onCreateMessage} from 'src/graphql/subscriptions';
 import {notificationHandlerForChatRoom} from 'src/utils/PushNotification';
+
+const {width} = Dimensions.get('window');
 
 function ChatRoom({navigation, route, chatUser}) {
   const {user, pushNoti} = useContext(MyContext);
@@ -125,6 +129,34 @@ function ChatRoom({navigation, route, chatUser}) {
 
     return <Message item={item} showTime={showTime} showDate={showDate} myCkp={myCkp} yourCkp={yourCkp} navigation={navigation}/>;
   };
+
+  const renderInitialProfile = () => {
+    if (!(messageList.length == 1 && messageList[0].type == 'admin')) {
+      return null;
+    }
+    if (chatUser == []) {
+      return null;
+    }
+    return (
+      <View style={{flex: 6, flexDirection: 'column-reverse'}}>
+        <View style={{flexDirection: 'row', justifyContent: 'center'}}>
+          {chatUser.map((item) => {
+            if (item.id == userSub) {
+              return null;
+            }
+            return (
+              <View key={item.name} style={styles.profileBox}>
+                <TouchableOpacity onPress={() => navigation.navigate('ViewProfile', {userID: item.id})}>
+                  <KeyImage style={styles.initProfile} imgKey={item.imageKeys[0]} cached={true}/>
+                </TouchableOpacity>
+              </View>
+            );
+          })}
+        </View>
+      </View>
+    );
+  };
+
   return (
     <Fragment>
       <FlatList
@@ -136,9 +168,25 @@ function ChatRoom({navigation, route, chatUser}) {
         inverted
         onEndReached={() => onEndReached()}
         removeClippedSubviews={false}
+        ListHeaderComponent={() => renderInitialProfile()}
       />
     </Fragment>
   );
 }
 
+const styles = StyleSheet.create({
+  profileBox: {
+    backgroundColor: 'white',
+    margin: 5,
+    marginBottom: 0,
+    padding: 5,
+    borderRadius: 100,
+    alignItems: 'center',
+  },
+  initProfile: {
+    width: width / 3,
+    height: width / 3,
+    borderRadius: 100,
+  },
+});
 export default ChatRoom;

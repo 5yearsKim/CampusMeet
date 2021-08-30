@@ -66,7 +66,7 @@ function ReceivedSignalItem({item, navigation, onReject, onMatch}) {
       <View style={styles.container}>
         <View style={{flexDirection: 'row', alignItems: 'center'}}>
           <LeftContent sender={sender} navigation={navigation}/>
-          <View>
+          <View style={{flex: 1}}>
             <View style={{flexDirection: 'row', alighItems: 'center'}}>
               <Text style={[styles.titleText, {color: theme.text}]}>{sender.campus} {sender.division}</Text>
               {!item.checked && <Badge containerStyle={{margin: 5}}/>}

@@ -19,7 +19,7 @@ function ChatRoomScreen(props) {
         setChatUser(matches.map((item) => ({id: item.toID, name: item.matcher.name, imageKeys: item.matcher.imageKeys})));
       } catch (err) {
         console.warn(err);
-        setChatUser([]);
+        // setChatUser([]);
       }
     };
     m_bringMatchByChatRoom();
