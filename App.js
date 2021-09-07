@@ -43,8 +43,8 @@ export default function App() {
 
   const [fontLoaded] = useFonts({
     // nanumEB: require('assets/fonts/NanumSquareRoundEB.ttf'),
-    nanumB: require('assets/fonts/NanumGothic-Bold.ttf'),
-    nanumR: require('assets/fonts/NanumGothic-Regular.ttf'),
+    nanumB: require('assets/fonts/NanumBarunGothicBold.ttf'),
+    nanumR: require('assets/fonts/NanumBarunGothic.ttf'),
     penR: require('assets/fonts/KyoboHandwriting2019.ttf'),
     surroundR: require('assets/fonts/Cafe24SsurroundAir.ttf'),
     surroundB: require('assets/fonts/Cafe24Ssurround.ttf'),

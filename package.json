@@ -42,7 +42,8 @@
     "react-native-swipe-gestures": "^1.0.5",
     "react-native-tab-view": "^2.16.0",
     "react-native-unimodules": "~0.13.3",
-    "react-native-web": "~0.13.12"
+    "react-native-web": "~0.13.12",
+    "react-native-webview": "^11.13.0"
   },
   "devDependencies": {
     "@babel/core": "^7.9.0",

@@ -3,7 +3,6 @@ import {View, TouchableOpacity, Dimensions, ScrollView, StyleSheet} from 'react-
 import {RadioButton, Button} from 'react-native-paper';
 import Dialog from 'src/blocks/Dialog';
 import Text from 'src/blocks/Text';
-import IntroSlider from 'src/blocks/IntroSlider';
 import {termsOfService, privacyPolicy} from 'assets/policy';
 import SimpleAlert from 'src/blocks/SimpleAlert';
 import {MyContext, UserContext, ThemeContext} from 'src/context';
@@ -299,6 +298,7 @@ export function MyDeleteAccount() {
       console.warn(err);
     }
   };
+
   return (
     <View>
       <TouchableOpacity onPress={() => setConfirmOpen(true)}>
@@ -323,6 +323,16 @@ export function MyIntroSlider() {
     <View>
       <TouchableOpacity onPress={() => setIntroShow(true)}>
         <Text style={[styles.itemText, {color: theme.text}]}>튜토리얼</Text>
+      </TouchableOpacity>
+    </View>
+  );
+}
+
+export function MyEvent({navigation}) {
+  return (
+    <View>
+      <TouchableOpacity onPress={() => navigation.navigate('Event')}>
+        <Text style={[styles.itemText, {color: '#ee3322', fontWeight: 'bold'}]}>Event!</Text>
       </TouchableOpacity>
     </View>
   );

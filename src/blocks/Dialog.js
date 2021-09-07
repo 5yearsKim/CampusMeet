@@ -8,7 +8,7 @@ export default function Dialog({visible, onDismiss, width, children}) {
   const {theme} = useContext(ThemeContext);
   const customStyle = {
     backgroundColor: theme.background,
-    width: width ? width : windowWidth*0.7
+    width: width ? width : windowWidth*0.7,
   };
   return (
     <Modal visible={visible} onRequestClose={onDismiss} transparent={true}>
