@@ -13,7 +13,7 @@ const slides = [
   {
     key: '1',
     image: Platform.OS == 'android' ?
-      require('assets/images/intro/android_preview1.png') :
+      require('assets/images/intro/android_preview1.jpg') :
       ratio < threshold ?
         require('assets/images/intro/ios_preview1(5.5).png' ) :
         require('assets/images/intro/ios_preview1(6.5).png' ),
@@ -22,7 +22,7 @@ const slides = [
   {
     key: '2',
     image: Platform.OS === 'android' ?
-      require('assets/images/intro/android_preview2.png') :
+      require('assets/images/intro/android_preview2.jpg') :
       ratio < threshold ?
         require('assets/images/intro/ios_preview2(5.5).png' ) :
         require('assets/images/intro/ios_preview2(6.5).png' ),
@@ -31,7 +31,7 @@ const slides = [
   {
     key: '3',
     image: Platform.OS === 'android' ?
-      require('assets/images/intro/android_preview3.png') :
+      require('assets/images/intro/android_preview3.jpg') :
       ratio < threshold ?
         require('assets/images/intro/ios_preview3(5.5).png' ) :
         require('assets/images/intro/ios_preview3(6.5).png' ),
@@ -40,7 +40,7 @@ const slides = [
   {
     key: '4',
     image: Platform.OS === 'android' ?
-      require('assets/images/intro/android_preview4.png') :
+      require('assets/images/intro/android_preview4.jpg') :
       ratio < threshold ?
         require('assets/images/intro/ios_preview4(5.5).png' ) :
         require('assets/images/intro/ios_preview4(6.5).png' ),
@@ -49,7 +49,7 @@ const slides = [
   {
     key: '5',
     image: Platform.OS === 'android' ?
-      require('assets/images/intro/android_preview5.png') :
+      require('assets/images/intro/android_preview5.jpg') :
       ratio < threshold ?
         require('assets/images/intro/ios_preview5(5.5).png' ) :
         require('assets/images/intro/ios_preview5(6.5).png' ),
