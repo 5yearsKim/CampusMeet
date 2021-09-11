@@ -21,7 +21,7 @@
       "buildNumber": "1.26"
     },
     "android": {
-      "versionCode": 46,
+      "versionCode": 47,
       "package": "com.onion.campusMeet",
       "permissions": [],
       "adaptiveIcon": {
