@@ -14,7 +14,7 @@ import Animated, {
 } from 'react-native-reanimated';
 import {getPosition, getOrder, IMGWIDTH, IMGHEIGHT, checkLocalImage} from 'src/utils/UploadPicture';
 import {KeyImage} from 'src/blocks/Image';
-import {MyContext} from 'src/context';
+import {MyContext, ThemeContext} from 'src/context';
 // import {Storage} from 'aws-amplify';
 
 function AnimatedPicture({imgKey, positions}) {
@@ -110,6 +110,7 @@ function AddPicture({index, addPicture}) {
 }
 
 function UploadPicture({imgList, setImgList, positions}) {
+  const {theme} = useContext(ThemeContext);
   const [confirmAdd, setConfirmAdd] = useState(false);
   useEffect(() => {
     setConfirmAdd(true);
@@ -164,7 +165,7 @@ function UploadPicture({imgList, setImgList, positions}) {
 
   // console.log(posImgList.value);
   return (
-    <View style={{backgroundColor: '#eeeeee', height: IMGHEIGHT * 2 + 30}}>
+    <View style={{backgroundColor: theme.backgroundColor, height: IMGHEIGHT * 2 + 30}}>
       {[0, 1, 2, 3, 4, 5].map((idx) => {
         if (!confirmAdd && idx < posImgList.value.length) {
           return <AnimatedPicture key={idx} imgKey={posImgList.value[idx]} positions={positions}/>;

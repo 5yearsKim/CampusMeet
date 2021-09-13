@@ -317,7 +317,7 @@ const navigationTheme = {
     colors: {
       ...NavDefaultTheme.colors,
       primary: config.colors.main.primary,
-      background: '#f5f5f5',
+      background: '#fafafa',
     },
   },
   dark: {
