@@ -32,33 +32,39 @@ function CandidateHeader({loading}) {
       );
     } else {
       return (
-        <View style={{flexDirection: 'row', alignItems: 'center'}}>
-          <TouchableOpacity onPress={() => setAlertOpen(true)}>
+        <TouchableOpacity onPress={() => setAlertOpen(true)}>
+          <View style={{flexDirection: 'row', alignItems: 'center'}}>
+            <FontAwesome5 name="heartbeat" size={22} color={config.colors.main.primary} style={{marginRight: 6}}/>
+            <View style={{marginRight: 10}}>
+              <Text style={{color: config.colors.main.primary, fontWeight: 'bold'}}>x {Math.max(0, signalMax - signalCnt)}</Text>
+            </View>
+            {/* <TouchableOpacity onPress={() => setAlertOpen(true)}>
             <Text style={[styles.heartText, {color: theme.subText}]}>오늘의 시그널: </Text>
           </TouchableOpacity>
           {[...Array(Math.max(0, signalMax - signalCnt))].map((_, index) => {
             return (
               <FontAwesome5 name="heartbeat" size={24} color="pink" key={index} style={{margin: 2}}/>
             );
-          })}
-          <SimpleAlert
-            modalOpen={alertOpen}
-            setModalOpen={setAlertOpen}
-            title='오늘의 시그널'
-            content='친해지고 싶은 친구에게 시그널을 보내보세요. 시그널은 매일 충전됩니다.'
-            onOk={() => {}}
-          />
-        </View>
+          })} */}
+            <SimpleAlert
+              modalOpen={alertOpen}
+              setModalOpen={setAlertOpen}
+              title='오늘의 시그널'
+              content='친해지고 싶은 친구에게 시그널을 보내보세요. 시그널은 매일 충전됩니다.'
+              onOk={() => {}}
+            />
+          </View>
+        </TouchableOpacity>
       );
     }
   };
   return (
     <View style={styles.headerContainer} key='header'>
-      {todaySignal()}
-      <Preference filterOpen={filterOpen} setFilterOpen={setFilterOpen}/>
       <Button icon='filter' mode='text' onPress={() => setFilterOpen(true)}>
         FILTER
       </Button>
+      <Preference filterOpen={filterOpen} setFilterOpen={setFilterOpen}/>
+      {todaySignal()}
     </View>
   );
 }

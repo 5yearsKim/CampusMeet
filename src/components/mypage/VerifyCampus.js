@@ -192,7 +192,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent',
   },
   notiBox: {
-    backgroundColor: '#eeeecc',
+    backgroundColor: 'rgba(255, 255, 100, 0.3)',
     borderRadius: 20,
     padding: 10,
     marginBottom: 20,

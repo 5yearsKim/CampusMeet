@@ -332,7 +332,7 @@ export function MyEvent({navigation}) {
   return (
     <View>
       <TouchableOpacity onPress={() => navigation.navigate('Event')}>
-        <Text style={[styles.itemText, {color: '#ee3322', fontWeight: 'bold'}]}>Event!</Text>
+        <Text style={[styles.itemText, {color: '#dd6677', fontWeight: 'bold'}]}>Event!</Text>
       </TouchableOpacity>
     </View>
   );

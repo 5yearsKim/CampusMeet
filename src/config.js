@@ -34,7 +34,7 @@ export default config = {
     light: {
       text: '#000000',
       subText: '#222222',
-      background: '#eeeeee',
+      background: '#f5f5f5',
       nestedComment: '#rgba(0, 0, 0, 0.2)',
       men: '#083965',
       women: '#d62252',
