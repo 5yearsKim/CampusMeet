@@ -5,7 +5,7 @@
     "name": "campusMeet",
     "scheme": "campusmeet",
     "slug": "campusmeet",
-    "version": "1.26",
+    "version": "1.27",
     "assetBundlePatterns": [
       "assets/images/*",
       "assets/images/intro/*"
@@ -18,10 +18,10 @@
     },
     "ios": {
       "bundleIdentifier": "com.onion.campusMeet",
-      "buildNumber": "1.26"
+      "buildNumber": "1.27"
     },
     "android": {
-      "versionCode": 47,
+      "versionCode": 48,
       "package": "com.onion.campusMeet",
       "permissions": [],
       "adaptiveIcon": {

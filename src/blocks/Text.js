@@ -30,7 +30,6 @@ export default function Text(props) {
   if (type == 'nanum') {
     if (style.fontWeight == 'bold') {
       font = 'nanumB';
-      fontSize -= 1;
     } else {
       font = 'nanumR';
     }

@@ -158,7 +158,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   nameText: {
-    fontSize: 18,
+    fontSize: 17,
     fontWeight: 'bold',
     margin: 5,
   },

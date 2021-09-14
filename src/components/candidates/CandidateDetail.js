@@ -48,16 +48,22 @@ function CandidateDetail({item, useAction, clearModal}) {
         </View>
         <View style={{padding: 5}}>
           <View style={styles.itemWrapper}>
-            <Text style={styles.categoryText}>성별</Text>
-            <Text style={styles.detailText}>{item.gender}</Text>
+            <Text style={styles.detailText}>
+              <Text style={styles.categoryText}>성별 </Text>
+              {item.gender}
+            </Text>
           </View>
           <View style={styles.itemWrapper}>
-            <Text style={styles.categoryText}>소개</Text>
-            <Text style={styles.detailText}>{item.profileDescription}</Text>
+            <Text style={styles.detailText}>
+              <Text style={styles.categoryText}>소개 </Text>
+              {item.profileDescription}
+            </Text>
           </View>
           <View style={styles.itemWrapper}>
-            <Text style={styles.categoryText}>마지막 접속일</Text>
-            <Text style={styles.detailText}>{relativeTimePrettify(item.updatedAt)}</Text>
+            <Text style={styles.detailText}>
+              <Text style={styles.categoryText}>마지막 접속일 </Text>
+              {relativeTimePrettify(item.updatedAt)}
+            </Text>
           </View>
         </View>
       </View>
@@ -136,7 +142,6 @@ const styles = StyleSheet.create({
   categoryText: {
     fontWeight: 'bold',
     fontSize: 14,
-    marginRight: 5,
   },
   detailText: {
     color: 'gray',
