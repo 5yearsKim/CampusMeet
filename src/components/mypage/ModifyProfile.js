@@ -4,7 +4,7 @@ import {View, TouchableOpacity, StyleSheet} from 'react-native';
 import NotiText from 'src/blocks/NotiText';
 import Text from 'src/blocks/Text';
 import UploadPicture from './UploadPicture';
-import {Button, TextInput, RadioButton} from 'react-native-paper';
+import {Button, TextInput, RadioButton, Snackbar} from 'react-native-paper';
 import {MyContext, UserContext} from 'src/context';
 import {bringUser, modifyUser} from 'src/utils/User';
 import {imageListToS3} from 'src/utils/UploadPicture';
@@ -19,7 +19,6 @@ function ModifyProfile({navigation}) {
   const positions = useSharedValue({});
   // console.log(imgList);
   // console.log(positions.value);
-
   // console.log(positions.value, imgList);
 
   useEffect(() => {
@@ -39,6 +38,8 @@ function ModifyProfile({navigation}) {
   const [errText, setErrText] = useState('');
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
+
+  const [descriptionHeight, setDescriptionHeight] = useState(0);
 
   const m_bringUser = async () => {
     const userData = await bringUser(userSub);
@@ -191,12 +192,18 @@ function ModifyProfile({navigation}) {
       />
       <TextInput
         label='자기 소개'
-        mode='outlined'
+        // mode='outlined'
         value={profileDescription}
         onChangeText={(text) => setProfileDescription(text)}
+        onContentSizeChange={(event) => {
+          var myheight = event.nativeEvent.contentSize.height;
+          myheight = Math.min(160, myheight);
+          setDescriptionHeight(myheight);
+        }}
         style={styles.profileDescription}
-        multiline
-        numberOfLines={3}
+        multiline={true}
+        height={Math.max(65, descriptionHeight)}
+        // numberOfLines={4}
         maxLength={3000}
       />
       <Button
@@ -211,9 +218,18 @@ function ModifyProfile({navigation}) {
           '제출하기'
         }
       </Button>
-      {!errText == '' &&
-        <Text style={styles.errText}>{errText}</Text>
-      }
+      <Snackbar
+        visible={errText.length > 0}
+        onDismiss={() => setErrText('')}
+        duration={2000}
+        action={{
+          label: '확인',
+          onPress: () => {
+            setErrText('');
+          },
+        }}>
+          {errText}
+      </Snackbar>
     </View>
   );
 }
@@ -237,10 +253,6 @@ const styles = StyleSheet.create({
   },
   graduateText: {
     fontWeight: 'bold',
-  },
-  errText: {
-    color: 'red',
-    margin: 5,
   },
 });
 

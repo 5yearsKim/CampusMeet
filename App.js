@@ -305,7 +305,7 @@ const paperTheme = {
     colors: {
       ...PaperTheme.colors,
       primary: config.colors.main.primary,
-      accent: config.colors.main.secondary,
+      accent: config.colors.main.primary,
     },
     dark: false,
   },

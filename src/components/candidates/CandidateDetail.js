@@ -46,7 +46,7 @@ function CandidateDetail({item, useAction, clearModal}) {
             <Text style={{fontSize: 13, color: 'red'}}>매칭 이전에 프로필 사진을 볼 수 없습니다.</Text>
           </Animated.View>
         </View>
-        <View style={{padding: 5}}>
+        <View>
           <View style={styles.itemWrapper}>
             <Text style={styles.detailText}>
               <Text style={styles.categoryText}>성별 </Text>
@@ -103,8 +103,7 @@ function CandidateDetail({item, useAction, clearModal}) {
 
 const styles = StyleSheet.create({
   container: {
-    paddingTop: 10,
-    paddingBottom: 10,
+    padding: 5,
   },
   topContainer: {
     alignItems: 'center',

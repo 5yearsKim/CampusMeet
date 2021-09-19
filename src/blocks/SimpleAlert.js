@@ -59,18 +59,19 @@ const styles = StyleSheet.create({
     width: width*0.85,
     minHeight: height*0.2,
     borderRadius: 15,
-    padding: 10,
+    padding: 18,
+    paddingBottom: 10,
   },
   buttonWrapper: {
     flexDirection: 'row',
     justifyContent: 'flex-end',
     padding: 10,
+    paddingRight: 0,
     paddingBottom: 0,
   },
   titleText: {
     fontSize: 20,
     fontWeight: 'bold',
-    padding: 5,
     paddingBottom: 10,
   },
   contentText: {

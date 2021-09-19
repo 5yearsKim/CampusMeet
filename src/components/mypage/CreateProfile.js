@@ -2,7 +2,7 @@ import React, {useState, useEffect, useContext} from 'react';
 import {useSharedValue} from 'react-native-reanimated';
 import {ScrollView, View, TouchableOpacity, StyleSheet} from 'react-native';
 import UploadPicture from './UploadPicture';
-import {RadioButton, TextInput, Button} from 'react-native-paper';
+import {RadioButton, TextInput, Button, Snackbar} from 'react-native-paper';
 import {MaterialCommunityIcons} from '@expo/vector-icons';
 import Text from 'src/blocks/Text';
 import SimpleAlert from 'src/blocks/SimpleAlert';
@@ -43,7 +43,9 @@ function CreateProfile({navigation}) {
   const [profileMessage, setProfileMessage] = useState('');
   const [profileDescription, setProfileDescription] = useState('');
 
+
   const [submitting, setSubmitting] = useState(false);
+  const [descriptionHeight, setDescriptionHeight] = useState(0);
 
   useEffect(() => {
     const unsubscribe = navigation.addListener('beforeRemove', (e) => {
@@ -284,7 +286,7 @@ function CreateProfile({navigation}) {
           maxLength={300}
         />
         <TextInput
-          mode='outlined'
+          // mode='outlined'
           label='자기 소개'
           value={profileDescription}
           onChangeText={(text) => setProfileDescription(text)}
@@ -292,10 +294,13 @@ function CreateProfile({navigation}) {
           multiline={true}
           numberOfLines={3}
           maxLength={3000}
+          onContentSizeChange={(event) => {
+            var myheight = event.nativeEvent.contentSize.height;
+            myheight = Math.min(160, myheight);
+            setDescriptionHeight(myheight);
+          }}
+          height={Math.max(65, descriptionHeight)}
         />
-        {errText.length > 0 &&
-          <Text style={styles.errText}>{errText}</Text>
-        }
       </ScrollView>
     );
   };
@@ -305,11 +310,23 @@ function CreateProfile({navigation}) {
       {step1()}
       {step2()}
       {step3()}
-      {errText.length > 0 && currentStep <= 2 &&
+      {/* {errText.length > 0 && currentStep <= 2 &&
         <View style={{alignItems: 'center'}}>
           <Text style={styles.errText}>{errText}</Text>
         </View>
-      }
+      } */}
+      <Snackbar
+        visible={errText.length > 0}
+        onDismiss={() => setErrText('')}
+        duration={2000}
+        action={{
+          label: '확인',
+          onPress: () => {
+            setErrText('');
+          },
+        }}>
+          {errText}
+      </Snackbar>
       <View style={{flexDirection: 'row', justifyContent: 'center', marginBottom: 5}}>
         {currentStep > 1 &&
         <Button
@@ -401,9 +418,6 @@ const styles = StyleSheet.create({
   introText: {
     fontSize: 16,
     margin: 10,
-  },
-  errText: {
-    color: 'red',
   },
 });
 
