@@ -5,46 +5,27 @@ import Text from 'src/blocks/Text';
 import Dialog from 'src/blocks/Dialog';
 import ReportDialog from 'src/blocks/ReportDialog';
 import {Nickname} from 'src/blocks/Board';
-import {AntDesign, MaterialIcons} from '@expo/vector-icons';
-import {makeLikeComment, makeBlock} from 'src/utils/Community';
+import {MaterialIcons} from '@expo/vector-icons';
+import {makeBlock} from 'src/utils/Community';
 import {relativeTimePrettify} from 'src/utils/Time';
 import {MyContext, ThemeContext} from 'src/context';
+import LikeComment from './LikeComment';
 
 function NestedComment({item, board}) {
   // console.log(item);
   const auth = useContext(MyContext);
   const userSub = auth.user.sub;
   const {theme} = useContext(ThemeContext);
-  const likeList = item.likes.items.map((item) => item.userID);
-  const [isLike, setIsLike] = useState(false);
-  const [likeCnt, setLikeCnt] = useState('');
-  const [alreadyLikeAlert, setAlreadyLikeAlert] = useState(false);
+  const likeList = item.likes.items;
   const [menuOpen, setMenuOpen] = useState(false);
   const [reportDialogOpen, setReportDialogOpen] = useState(false);
   const [isHide, setIsHide] = useState(false);
-
-  useEffect(() => {
-    setLikeCnt(likeList.length);
-    setIsLike(likeList.includes(userSub));
-  }, []);
 
   useEffect(() => {
     if (item.isHide) {
       setIsHide(true);
     }
   }, []);
-
-  const onClickLike = async () => {
-    if (isLike) {
-      setAlertOpen(true);
-    } else {
-      const likeData = await makeLikeComment(userSub, item.id);
-      if (likeData) {
-        setIsLike(true);
-        setLikeCnt(likeCnt + 1);
-      }
-    }
-  };
 
   const onHideComment = async () => {
     try {
@@ -72,9 +53,7 @@ function NestedComment({item, board}) {
           </View>
           <View style={styles.belowBox}>
             <Text style={styles.timeText}>{visTime}</Text>
-            <AntDesign color='#119944' size={15} onPress={onClickLike} name='like2' >
-              {likeCnt}
-            </AntDesign>
+            <LikeComment likeList={likeList} commentID={item.id}/>
           </View>
         </View>
       </TouchableWithoutFeedback>
@@ -99,13 +78,6 @@ function NestedComment({item, board}) {
         userID={item.userID}
         type='NestedComment'
       />
-      <SimpleAlert
-        modalOpen={alreadyLikeAlert}
-        setModalOpen={setAlreadyLikeAlert}
-        title='알림'
-        content='이미 좋아한 대댓글입니다.'
-        onOk={() => {}}
-      />
     </View>
   );
 }
@@ -127,6 +99,7 @@ const styles = StyleSheet.create({
   },
   belowBox: {
     flexDirection: 'row',
+    alignItems: 'center',
     justifyContent: 'space-between',
     padding: 3,
   },

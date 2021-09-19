@@ -42,7 +42,7 @@ function CandidateItem({item}) {
       <TouchableOpacity onPress={() => setPopupVisible(true)}>
         <View style={{flexDirection: 'row'}}>
           <LeftContent item={item} />
-          <View style={{marginLeft: 10, paddingTop: 10}}>
+          <View style={{flex: 1, marginLeft: 10, paddingTop: 10}}>
             <Text style={[styles.titleText, {color: theme.text}]}>{item.campus} {item.division}</Text>
             <Text style={[styles.subtitleText, {color: theme.subText}]}>{item.graduate} {item.year}학번</Text>
             <Text style={[styles.messageText]}>{item.profileMessage}</Text>
@@ -66,6 +66,7 @@ function CandidateItem({item}) {
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
     margin: 5,
     marginBottom: 10,
     borderBottomColor: '#dddddd',

@@ -15,14 +15,6 @@ import config from 'src/config';
 
 const {width, height} = Dimensions.get('window');
 
-export function MyModifyProfile({navigation}) {
-  const {theme} = useContext(ThemeContext);
-  return (
-    <TouchableOpacity onPress={() => navigation.navigate('ModifyProfile')}>
-      <Text style={[styles.itemText, {color: theme.text}]}>프로필 수정</Text>
-    </TouchableOpacity>
-  );
-}
 
 export function MyLogout() {
   const auth = useContext(MyContext);
@@ -329,10 +321,11 @@ export function MyIntroSlider() {
 }
 
 export function MyEvent({navigation}) {
+  const {theme} = useContext(ThemeContext);
   return (
     <View>
       <TouchableOpacity onPress={() => navigation.navigate('Event')}>
-        <Text style={[styles.itemText, {color: '#dd6677', fontWeight: 'bold'}]}>Event!</Text>
+        <Text style={[styles.itemText, {color: theme.primary, fontWeight: 'bold'}]}>EVENT!</Text>
       </TouchableOpacity>
     </View>
   );

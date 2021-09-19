@@ -389,6 +389,7 @@ export const postByBoard = /* GraphQL */ `
         }
         likes {
           items {
+            id
             userID
             type
           }
@@ -453,6 +454,7 @@ export const commentByPost = /* GraphQL */ `
         deleted
         likes {
           items {
+            id
             userID
             type
           }
@@ -469,6 +471,7 @@ export const commentByPost = /* GraphQL */ `
             deleted
             likes {
               items {
+                id
                 userID
                 type
               }

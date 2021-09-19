@@ -44,7 +44,12 @@ export default function Text(props) {
   // style['fontFamily'] = font
   // style.fontWeight = undefined
   return (
-    <PaperText {...props} style={[style, {fontFamily: font, fontWeight: undefined, fontSize: fontSize}]} >{props.children}</PaperText>
+    <PaperText {...props} style={[
+      style,
+      {fontFamily: font, fontWeight: undefined, fontSize: fontSize, letterSpacing: 0.3, lineHeight: fontSize + 5}
+    ]}>
+      {props.children}
+    </PaperText>
   );
 }
 

@@ -1,5 +1,6 @@
 import React, {useState, useEffect, useContext, useRef} from 'react';
 import {View, KeyboardAvoidingView, TextInput, Keyboard, TouchableOpacity, StyleSheet} from 'react-native';
+import {Button} from 'react-native-paper';
 import {makeComment, makeNestedComment, getNickname} from 'src/utils/Community';
 import {Nickname} from 'src/blocks/Board';
 import Text from 'src/blocks/Text';
@@ -81,7 +82,7 @@ function CommentInput({board, post, refresh}) {
               <Text>{message}</Text>
             </TextInput>
           </View>
-          <View style={{marginRight: 15}}>
+          <View style={{alignItems: 'center', marginRight: 10}}>
             <TouchableOpacity
               onPress={onSend}
             >
@@ -105,7 +106,7 @@ const styles = StyleSheet.create({
     padding: 5,
     borderWidth: 1,
     borderRadius: 15,
-    borderColor: config.colors.main.primary,
+    borderColor: '#bbbbbb',
     // backgroundColor: 'white',
     justifyContent: 'flex-end',
   },

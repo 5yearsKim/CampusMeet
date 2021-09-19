@@ -48,22 +48,28 @@ function CandidateDetail({item, useAction, clearModal}) {
         </View>
         <View>
           <View style={styles.itemWrapper}>
-            <Text style={styles.detailText}>
-              <Text style={styles.categoryText}>성별 </Text>
-              {item.gender}
-            </Text>
+            <Text style={styles.categoryText}>성별 </Text>
+            <View style={{flex: 1}}>
+              <Text style={styles.detailText}>
+                {item.gender}
+              </Text>
+            </View>
           </View>
           <View style={styles.itemWrapper}>
-            <Text style={styles.detailText}>
-              <Text style={styles.categoryText}>소개 </Text>
-              {item.profileDescription}
-            </Text>
+            <Text style={styles.categoryText}>소개 </Text>
+            <View style={{flex: 1}}>
+              <Text style={styles.detailText}>
+                {item.profileDescription}
+              </Text>
+            </View>
           </View>
           <View style={styles.itemWrapper}>
-            <Text style={styles.detailText}>
-              <Text style={styles.categoryText}>마지막 접속일 </Text>
-              {relativeTimePrettify(item.updatedAt)}
-            </Text>
+            <Text style={styles.categoryText}>접속일 </Text>
+            <View style={{flex: 1}}>
+              <Text style={styles.detailText}>
+                {relativeTimePrettify(item.updatedAt)}
+              </Text>
+            </View>
           </View>
         </View>
       </View>
@@ -116,7 +122,7 @@ const styles = StyleSheet.create({
   },
   subtitleText: {
     marginTop: 3,
-    fontSize: 14,
+    fontSize: 15,
     color: 'gray',
   },
   middleContainer: {
@@ -140,11 +146,12 @@ const styles = StyleSheet.create({
   },
   categoryText: {
     fontWeight: 'bold',
-    fontSize: 14,
+    fontSize: 15,
+    marginRight: 2,
   },
   detailText: {
     color: 'gray',
-    fontSize: 14,
+    fontSize: 15,
   },
   bottomContainer: {
     alignItems: 'center',

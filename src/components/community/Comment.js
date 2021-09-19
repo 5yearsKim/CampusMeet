@@ -5,22 +5,19 @@ import Text from 'src/blocks/Text';
 import Dialog from 'src/blocks/Dialog';
 import ReportDialog from 'src/blocks/ReportDialog';
 import {Nickname} from 'src/blocks/Board';
-import {AntDesign} from '@expo/vector-icons';
-import {makeLikeComment, deleteComment, makeBlock} from 'src/utils/Community';
+import {deleteComment, makeBlock} from 'src/utils/Community';
 import {relativeTimePrettify} from 'src/utils/Time';
 import NestedComment from './NestedComment';
 import {MyContext, ChatContext, ThemeContext} from 'src/context';
+import LikeComment from './LikeComment';
 
 function Comment({item, index, board, focusComment, refresh}) {
   const auth = useContext(MyContext);
   const userSub = auth.user.sub;
   const {theme} = useContext(ThemeContext);
   const nested = useContext(ChatContext);
-  const likeList = item.likes.items.map((item) => item.userID);
-  const [isLike, setIsLike] = useState(false);
-  const [likeCnt, setLikeCnt] = useState('');
+  const likeList = item.likes.items;
   const [menuOpen, setMenuOpen] = useState(false);
-  const [alreadyLikeOpen, setAlreadyLikeOpen] = useState(false);
   const [reportDialogOpen, setReportDialogOpen] = useState(false);
   const [deleteOpen, setDeleteOpen] = useState(false);
   const [isHide, setIsHide] = useState(false);
@@ -29,28 +26,12 @@ function Comment({item, index, board, focusComment, refresh}) {
   const nestedComments = item.nestedComments.items.filter((item) => item.isHide !== true);
 
   useEffect(() => {
-    setLikeCnt(likeList.length);
-    setIsLike(likeList.includes(userSub));
-  }, []);
-
-  useEffect(() => {
     if (item.isHide) {
       setIsHide(true);
     }
   }, []);
 
 
-  const onClickLike = async () => {
-    if (isLike) {
-      setAlreadyLikeOpen(true);
-    } else {
-      const likeData = await makeLikeComment(userSub, item.id);
-      if (likeData) {
-        setIsLike(true);
-        setLikeCnt(likeCnt + 1);
-      }
-    }
-  };
   const onHideComment = async () => {
     try {
       await makeBlock(userSub, item.id, 'Comment');
@@ -138,9 +119,7 @@ function Comment({item, index, board, focusComment, refresh}) {
           </View>
           <View style={styles.belowBox}>
             <Text style={styles.timeText}>{visTime}</Text>
-            <AntDesign color='#22aa55' size={16} onPress={onClickLike} name='like2' >
-              {likeCnt}
-            </AntDesign>
+            <LikeComment likeList={likeList} commentID={item.id}/>
           </View>
         </View>
       </TouchableWithoutFeedback>
@@ -172,13 +151,6 @@ function Comment({item, index, board, focusComment, refresh}) {
         userID={item.userID}
         type='Comment'
       />
-      <SimpleAlert
-        modalOpen={alreadyLikeOpen}
-        setModalOpen={setAlreadyLikeOpen}
-        title='알림'
-        content='이미 좋아한 댓글입니다'
-        onOk={() => {}}
-      />
       {renderNestedComment()}
     </View>
   );
@@ -202,6 +174,7 @@ const styles = StyleSheet.create({
   belowBox: {
     padding: 3,
     flexDirection: 'row',
+    alignItems: 'center',
     justifyContent: 'space-between',
   },
   nickname: {

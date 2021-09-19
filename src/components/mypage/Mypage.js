@@ -1,10 +1,12 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {View, Image, TouchableOpacity, StyleSheet} from 'react-native';
+import {Button} from 'react-native-paper';
 import Text from 'src/blocks/Text';
 import {KeyImage} from 'src/blocks/Image';
 import {bringUser} from 'src/utils/User';
 import {MyContext, ThemeContext, UserContext} from 'src/context';
-import {MyModifyProfile, MyLogout, MyDeactivate, MyPushNoti, MyFont,
+import config from 'src/config';
+import {MyLogout, MyDeactivate, MyPushNoti, MyFont,
   MyVerifyCampus, MyPolicy, MyDeleteAccount, MyContactDeveloper,
   MyIntroSlider, MyEvent} from './MypageItem';
 
@@ -17,26 +19,64 @@ function TopIntro({user, navigation}) {
     );
   }
   const {theme} = useContext(ThemeContext);
+
   return (
-    <View style={{alignItems: 'center', minHeight: 100}}>
-      <TouchableOpacity onPress={() => navigation.navigate('ViewProfile', {userID: user.id})}>
-        {user.imageKeys[0] ?
-          <KeyImage
-            imgKey={user.imageKeys[0]}
-            cached={true}
-            resizemode='contain'
-            style={[styles.avatar, {borderColor: user.gender=='남자'?theme.men:theme.women}]}
-          /> :
-          <Image
-            source={require('assets/images/no_profile3.png')}
-            style={[styles.avatar, {borderColor: user.gender=='남자'?theme.men:theme.women}]}
-          />
-        }
-      </TouchableOpacity>
-      <Text style={styles.nameText}>{user.name}</Text>
-      <Text style={styles.messageText}>{user.profileMessage}</Text>
+    <View style={{margin: 5}}>
+      <View style={{flexDirection: 'row', minHeight: 100}}>
+        <View style={{flex: 5, alignItems: 'center', justifyContent: 'center'}}>
+          <TouchableOpacity onPress={() => navigation.navigate('ViewProfile', {userID: user.id})}>
+            {user.imageKeys[0] ?
+              <KeyImage
+                imgKey={user.imageKeys[0]}
+                cached={true}
+                resizemode='contain'
+                style={[styles.avatar, {borderColor: user.gender=='남자'?theme.men:theme.women}]}
+              /> :
+              <Image
+                source={require('assets/images/no_profile3.png')}
+                style={[styles.avatar, {borderColor: user.gender=='남자'?theme.men:theme.women}]}
+              />
+            }
+          </TouchableOpacity>
+        </View>
+        <View style={{flex: 7, flexDirection: 'column', justifyContent:'space-evenly', margin: 5}}>
+          <Text style={styles.nameText}>{user.name}</Text>
+          <Text style={styles.messageText}>{user.profileMessage}</Text>
+          <Text style={styles.descriptionText}>{user.profileDescription}</Text>
+        </View>        
+      </View>
+      <View style={{alignItems: 'center'}}>
+        <Button
+          style={styles.modifyProfileButton}
+          // labelStyle={{color: '#444444'}}
+          onPress={() => navigation.navigate('ModifyProfile')}
+        >
+          프로필 수정
+        </Button>
+      </View>
     </View>
   );
+
+  // return (
+  //   <View style={{alignItems: 'center', minHeight: 100}}>
+  //     <TouchableOpacity onPress={() => navigation.navigate('ViewProfile', {userID: user.id})}>
+  //       {user.imageKeys[0] ?
+  //         <KeyImage
+  //           imgKey={user.imageKeys[0]}
+  //           cached={true}
+  //           resizemode='contain'
+  //           style={[styles.avatar, {borderColor: user.gender=='남자'?theme.men:theme.women}]}
+  //         /> :
+  //         <Image
+  //           source={require('assets/images/no_profile3.png')}
+  //           style={[styles.avatar, {borderColor: user.gender=='남자'?theme.men:theme.women}]}
+  //         />
+  //       }
+  //     </TouchableOpacity>
+  //     <Text style={styles.nameText}>{user.name}</Text>
+  //     <Text style={styles.messageText}>{user.profileMessage}</Text>
+  //   </View>
+  // );
 }
 
 export default function Mypage({navigation}) {
@@ -70,11 +110,9 @@ export default function Mypage({navigation}) {
   return (
     <View style={styles.container}>
       <TopIntro navigation={navigation} user={user}/>
-      <View style={styles.sectionBox}>
-        <Text style={[styles.sectionText, {color: theme.text}]}>프로필</Text>
-        <MyModifyProfile navigation={navigation}/>
-        <MyVerifyCampus navigation={navigation}/>
-      </View>
+
+      <View style={{margin: 5}}/>
+
       <View style={styles.sectionBox}>
         <Text style={[styles.sectionText, {color: theme.text}]}>앱 설정</Text>
         <MyPushNoti/>
@@ -82,6 +120,7 @@ export default function Mypage({navigation}) {
       </View>
       <View style={styles.sectionBox}>
         <Text style={[styles.sectionText, {color: theme.text}]}>계정</Text>
+        <MyVerifyCampus navigation={navigation}/>
         <MyLogout/>
         <MyDeactivate navigation={navigation}/>
         <MyDeleteAccount/>
@@ -106,25 +145,36 @@ const styles = StyleSheet.create({
     borderRadius: 50,
     borderWidth: 3,
   },
+  modifyProfileButton: {
+    borderWidth: 1,
+    borderColor: config.colors.main.primary,
+    borderRadius: 10,
+    width: '80%',
+    margin: 5,
+  },
   nameText: {
-    fontSize: 16,
+    color: config.colors.main.primary,
+    fontSize: 18,
     fontWeight: 'bold',
-    margin: 3,
+    marginBottom: 2,
   },
   messageText: {
-    fontSize: 14,
-    color: 'gray',
-    marginBottom: 15,
+    fontSize: 15,
+    color: '#444444',
+    marginBottom: 2,
+  },
+  descriptionText: {
+    fontSize: 15,
+    color: '#aaaaaa',
   },
   container: {
     padding: 15,
   },
   sectionBox: {
-    borderRadius: 10,
-    borderWidth: 1,
-    borderColor: '#bbbbbb',
-    padding: 5,
-    marginBottom: 15,
+    borderTopWidth: 2,
+    borderColor: '#cccccc',
+    padding: 10,
+    paddingLeft: 15,
   },
   sectionText: {
     fontWeight: 'bold',

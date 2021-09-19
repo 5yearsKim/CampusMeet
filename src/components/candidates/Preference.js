@@ -83,13 +83,13 @@ export default function Preference({filterOpen, setFilterOpen}) {
           <View style={{flexDirection: 'row', alignItems: 'center'}}>
             <Text style={[styles.genderText, {color: theme.women}]}>여자 선호</Text>
             <Slider
-              style={{width: 200, height: 40}}
+              style={{width: 150, height: 40}}
               minimumValue={-1}
               maximumValue={1}
               minimumTrackTintColor={theme.men}
               maximumTrackTintColor={theme.women}
               value={genderLike}
-              thumbTintColor="#006644"
+              thumbTintColor={theme.primary}
               onSlidingComplete={(value) => setGenderLike(value)}
               step={0.25}
             />

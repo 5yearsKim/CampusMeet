@@ -1,6 +1,6 @@
 import {API, graphqlOperation} from 'aws-amplify';
 import {createBoard, createPost, createComment, createNestedComment, createLikePost, createLikeComment,
-  updatePost, updateComment, updateNestedComment, createBlock} from 'src/graphql/mutations';
+  updatePost, updateComment, updateNestedComment, createBlock, deleteLikePost, deleteLikeComment} from 'src/graphql/mutations';
 import {getUser, listBoards, boardByType, postByBoard, getPost, commentByPost} from 'src/graphql/customQueries';
 import {blockByUser} from 'src/graphql/queries';
 import {campusDict} from 'assets/campusLogos';
@@ -89,6 +89,7 @@ export const makeNestedComment = async (userID, commentID, nickname, content) =>
 
 export const makeLikePost = async (userID, postID) => {
   const inputLike = {
+    id: userID + postID,
     userID: userID,
     postID: postID,
     type: 'good',
@@ -98,25 +99,42 @@ export const makeLikePost = async (userID, postID) => {
           createLikePost, {input: inputLike},
       ),
   );
+  return likeData.data.createLikePost;
+};
+
+export const removeLikePost = async (likeID) => {
+  // console.log(likeID);
+  const likeData = await API.graphql(
+    graphqlOperation(
+      deleteLikePost, {input: {id: likeID}}
+    ),
+  );
   return likeData;
 };
 
 export const makeLikeComment = async (userID, commentID) => {
   const inputLike = {
+    id: userID + commentID,
     userID: userID,
     commentID: commentID,
     type: 'good',
   };
-  try {
-    const likeData = await API.graphql(
-        graphqlOperation(
-            createLikeComment, {input: inputLike},
-        ),
-    );
-    return likeData;
-  } catch (err) {
-    console.warn(err);
-  }
+  const likeData = await API.graphql(
+      graphqlOperation(
+          createLikeComment, {input: inputLike},
+      ),
+  );
+  return likeData.data.createLikeComment;
+};
+
+export const removeLikeComment = async (likeID) => {
+  // console.log(likeID);
+  const likeData = await API.graphql(
+    graphqlOperation(
+      deleteLikeComment, {input: {id: likeID}}
+    ),
+  );
+  return likeData;
 };
 
 export const bringBoardAll = async () => {

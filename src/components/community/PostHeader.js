@@ -1,18 +1,17 @@
 import React, {useState, useContext} from 'react';
-import {View, FlatList, TouchableOpacity, Modal, StyleSheet, Platform} from 'react-native';
+import {View, FlatList, TouchableOpacity, Modal, StyleSheet, Platform, Text as NativeText} from 'react-native';
 import SimpleAlert from 'src/blocks/SimpleAlert';
 import Text from 'src/blocks/Text';
 import {Nickname} from 'src/blocks/Board';
 import Dialog from 'src/blocks/Dialog';
 import ReportDialog from 'src/blocks/ReportDialog';
-import {Button} from 'react-native-paper';
 import {AntDesign} from '@expo/vector-icons';
 import {MaterialCommunityIcons} from '@expo/vector-icons';
 import {KeyImage} from 'src/blocks/Image';
 import {ImageViewer, ImageSwipeOff} from 'src/blocks/ImageViewer';
 import {MyContext, ThemeContext, UserContext} from 'src/context';
 import {absoluteTime} from 'src/utils/Time';
-import {makeLikePost, deletePost, makeBlock} from 'src/utils/Community';
+import {makeLikePost, removeLikePost, deletePost, makeBlock} from 'src/utils/Community';
 
 
 function PostHeader({post, board, navigation}) {
@@ -47,14 +46,30 @@ function PostHeader({post, board, navigation}) {
       setAlreadyLikeOpen(true);
     } else {
       try {
-        await makeLikePost(userSub, post.id);
+        const likeData = await makeLikePost(userSub, post.id);
         setIsLike(true);
         setLikeCnt(likeCnt + 1);
+        post.likes.items = [...post.likes.items, likeData];
       } catch (err) {
         console.warn(err);
       }
     }
   };
+
+  const onDeleteLike = async () => {
+    var mylike = post.likes.items.filter((item) => item.userID == userSub);
+    if (mylike == []) {
+      return ;
+    }
+    try {
+      mylike = mylike[0];
+      const data = await removeLikePost(mylike.id);
+      setIsLike(false);
+      setLikeCnt(likeCnt - 1);
+    } catch (err) {
+      console.warn(err);
+    }
+  }
 
   const renderMenu = () => {
     const [deleteOpen, setDeleteOpen] = useState(false);
@@ -153,6 +168,20 @@ function PostHeader({post, board, navigation}) {
       </View>
     );
   };
+
+  const renderLikeButton = () => {
+    const mystyle = isLike ? {color: theme.primary} : {color: '#888888'};
+    return (
+      <TouchableOpacity onPress={onClickLike}>
+        <View style={styles.likeBox}>
+          <AntDesign name={isLike ? 'like1' : 'like2'} size={16} color={mystyle.color} />
+          <NativeText style={mystyle}>
+            {String(likeCnt)}
+          </NativeText>
+        </View>
+      </TouchableOpacity>
+    );
+  }
   return (
     <View style={styles.container}>
       <View style={styles.titleBox}>
@@ -164,14 +193,9 @@ function PostHeader({post, board, navigation}) {
         <Text style={[styles.timeText, {color: theme.subText}]}>{visTime}</Text>
       </View>
       <Text selectable style={[styles.contentText, {color: theme.subText}]}>{post.content}</Text>
-      <Button
-        icon={() => <AntDesign name='like2' size={15}/>}
-        mode='outlined'
-        onPress={onClickLike}
-        style={styles.like}
-      >
-        {String(likeCnt)}
-      </Button>
+      <View style={{flexDirection: 'row', justifyContent: 'flex-end', alignItems: 'center'}}>
+        {renderLikeButton()}
+      </View>
       {post.imageKeys.length > 0 && (
         <View>
           <FlatList
@@ -191,8 +215,9 @@ function PostHeader({post, board, navigation}) {
         modalOpen={alreadyLikeOpen}
         setModalOpen={setAlreadyLikeOpen}
         title='알림'
-        content='이미 좋아한 게시글입니다.'
-        onOk={() => {}}
+        content='이미 좋아한 게시글입니다. 좋아요를 취소하시겠습니까?'
+        onCancel={() => {}}
+        onOk={async () => {await onDeleteLike();}}
       />
     </View>
   );
@@ -207,11 +232,13 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
   },
-  like: {
-    width: 50,
-    minHeight: 30,
-    justifyContent: 'center',
-    marginBottom: 10,
+  likeBox: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    width: 40,
+    padding: 5,
+    // backgroundColor: 'yellow',
   },
   imageWrapper: {
     padding: 3,
