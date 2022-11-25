@@ -23,6 +23,7 @@ React Native 로 제작한 대학생 만남 앱입니다. (현재 운영 X)
 <br>
 
 매칭이 되면 프로필이 공개되고 채팅으로 대화를 나눌 수 있습니다.
+
 <img src="demo_imgs/screen5.webp" width="250">
 
 <br>
