@@ -116,7 +116,7 @@ const styles = StyleSheet.create({
     margin: 20,
     padding: 20,
     borderRadius: 20,
-    backgroundColor: '#eeeedd',
+    backgroundColor: 'rgba(255, 255, 0, 0.1)',
   },
   notiTitle: {
     fontSize: 15,

@@ -97,12 +97,11 @@ const styles = StyleSheet.create({
     fontSize: 14,
     // fontWeight: 'bold',
     marginTop: 5,
-    marginBottom: 5,
-    // marginLeft: 70,
+    // marginBottom: 5,
   },
   messageText: {
     fontSize: 14,
-    marginTop: 8,
+    marginTop: 5,
     color: 'gray',
   },
   modalContainer: {

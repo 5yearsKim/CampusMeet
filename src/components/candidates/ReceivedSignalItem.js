@@ -140,7 +140,7 @@ const styles = StyleSheet.create({
     // marginLeft: 70,
   },
   messageText: {
-    marginTop: 10,
+    marginTop: 5,
     fontSize: 14,
     color: 'gray',
   },

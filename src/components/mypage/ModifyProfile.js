@@ -218,18 +218,20 @@ function ModifyProfile({navigation}) {
           '제출하기'
         }
       </Button>
-      <Snackbar
-        visible={errText.length > 0}
-        onDismiss={() => setErrText('')}
-        duration={2000}
-        action={{
-          label: '확인',
-          onPress: () => {
-            setErrText('');
-          },
-        }}>
-          {errText}
-      </Snackbar>
+      <View>
+        <Snackbar
+          visible={errText.length > 0}
+          onDismiss={() => setErrText('')}
+          duration={2000}
+          action={{
+            label: '확인',
+            onPress: () => {
+              setErrText('');
+            },
+          }}>
+            {errText}
+        </Snackbar>
+      </View>
     </View>
   );
 }

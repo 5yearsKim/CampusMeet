@@ -89,7 +89,7 @@ export default function Preference({filterOpen, setFilterOpen}) {
               minimumTrackTintColor={theme.men}
               maximumTrackTintColor={theme.women}
               value={genderLike}
-              thumbTintColor={theme.primary}
+              thumbTintColor={'#226644'}
               onSlidingComplete={(value) => setGenderLike(value)}
               step={0.25}
             />
